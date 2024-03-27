@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_form_crm_booking_calendar_event" model="ir.ui.view">
+            <field name="name">inherit_form_crm_booking_calendar_event</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="create_an_appointment" type="object" string="Tạo lịch hẹn cho Booking này" class="btn-info"/>
+                    <button name="create_an_appointment_surgery" type="object" string="Tạo lịch hẹn Phẫu thuật" class="btn-info"/>
+                </xpath>
+                <xpath expr="//notebook" position="inside">
+                    <page name="calendar_event" string="Danh sách lịch hẹn">
+                        <field name="calendar_event">
+                            <tree create="false">
+                                <field name="start" string='Thời gian hẹn'/>
+                                <field name="physician" options="{'no_open':True,'no_create':True}"/>
+                                <field name="services" widget="many2many_tags"/>
+                                <field name="state"/>
+                                <button name="view_calendar_event" type="object" icon="fa-calendar" title="Chi tiết" style="font-size: 20px;"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

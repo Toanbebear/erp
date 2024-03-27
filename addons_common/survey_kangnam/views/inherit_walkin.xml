@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="sh_medical_register_for_walkin_view" model="ir.ui.view">
+            <field name="name">sh_medical_register_for_walkin_view</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//button[@name='view_walkin_material']" position="after">
+                    <button name="survey_walkin" string="Tham gia khảo sát" type="object" class="btn-info"
+                            attrs="{'invisible': [('state', 'in', ['Scheduled', 'WaitPayment'])]}"/>
+                </xpath>
+
+            </field>
+        </record>
+    </data>
+</odoo>

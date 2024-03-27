@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data>
+		<record id="crm_hh_ehc_utm_source_view_inherit" model="ir.ui.view">
+			<field name="name">utm.source.hh</field>
+			<field name="model">utm.source</field>
+			<field name="inherit_id" ref="utm.utm_source_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet" position="before">
+					<header>
+						<button string="SYNC EHC"
+								type="object" name="button_post_source_to_ehc"/>
+					</header>
+				</xpath>
+				<xpath expr="//field[@name='name']" position="after">
+					<field name="sync_ehc"/>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_utm_category_source_view_inherit" model="ir.ui.view">
+			<field name="name">utm.category.source.hh</field>
+			<field name="model">crm.category.source</field>
+			<field name="inherit_id" ref="crm_base.view_form_utm_category_source_crm"/>
+			<field name="arch" type="xml">
+				<xpath expr="//form/sheet" position="before">
+					<header>
+						<button string="SYNC EHC"
+								type="object" name="post_ctg_source_to_ehc"/>
+					</header>
+				</xpath>
+				<xpath expr="//field[@name='name']" position="after">
+					<field name="sync_ehc"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

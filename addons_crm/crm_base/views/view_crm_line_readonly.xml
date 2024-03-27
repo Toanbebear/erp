@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="form_crm_line_readonly" model="ir.ui.view">
+            <field name="name">Form crm line readonly</field>
+            <field name="model">crm.line</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false" delete="false" duplicate="false">
+                    <sheet>
+                        <group>
+                            <field name="crm_id" options="{'no_open':True,'no_create':True}" string="Booking" readonly="1"/>
+                            <field name="product_id" options="{'no_open':True,'no_create':True}" readonly="1"/>
+                            <field name="total" readonly="1"/>
+                            <field name="source_extend_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="consultants_1" options="{'no_open':True,'no_create':True}"/>
+                            <field name="consulting_role_1"/>
+                            <field name="consultants_2" options="{'no_open':True,'no_create':True}"/>
+                            <field name="consulting_role_2"/>
+                            <field name="consultants_3" options="{'no_open':True,'no_create':True}"/>
+                            <field name="consulting_role_3"/>
+                            <field name="ho_tro"/>
+                            <field name="company_id" options="{'no_open':True,'no_create':True}" readonly="1"/>
+                            <field name="company_shared" widget="many2many_tags" readonly="1"/>
+                            <field name="stage" readonly="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="tree_crm_line_readonly" model="ir.ui.view">
+            <field name="name">Tree crm line readonly</field>
+            <field name="model">crm.line</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false" duplicate="false">
+                    <field name="crm_id" string="Booking"/>
+                    <field name="product_id"/>
+                    <field name="total"/>
+                    <field name="source_extend_id"/>
+                    <field name="consultants_1" optional="hide"/>
+                    <field name="consulting_role_1" optional="hide"/>
+                    <field name="consultants_2" optional="hide"/>
+                    <field name="consulting_role_2" optional="hide"/>
+                    <field name="consultants_3" optional="hide"/>
+                    <field name="consulting_role_3" optional="hide"/>
+                    <field name="ho_tro" optional="hide"/>
+                    <field name="company_id" optional="hide"/>
+                    <field name="company_shared" optional="hide" widget="many2many_tags"/>
+                    <field name="stage"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_line_view_readonly_filter" model="ir.ui.view">
+            <field name="name">crm.line.search.readonly</field>
+            <field name="model">crm.line</field>
+            <field name="arch" type="xml">
+                <search string="Search line">
+                    <field name="crm_id" filter_domain="[('crm_id.name','ilike',self)]" string="Booking"/>
+                    <field name="product_id" filter_domain="[('product_id','ilike',self)]" string="Dịch vụ"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="open_crm_line_readonly" model="ir.actions.act_window">
+            <field name="name">Chi tiết Booking</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="crm_line_view_readonly_filter"/>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('tree_crm_line_readonly')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('form_crm_line_readonly')})]"/>
+        </record>
+
+        <menuitem id="menu_crm_line_readonly"
+                  name="Chi tiết Booking"
+                  parent="crm_base.crm_other"
+                  action="open_crm_line_readonly"
+                  sequence="10"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+
+        <!--        <template id="customer_persona_document">-->
+        <!--            <t t-call="web.external_layout">-->
+        <!--                <div class="page" style="font-family:Times New Roman;font-size:20px;">-->
+        <!--                    <div class="oe_structure"/>-->
+        <!--                    <div class="row mt32 mb32">-->
+        <!--                        <div class="col-3" style="font-size:17px;">-->
+        <!--                        </div>-->
+        <!--                        <div class="col-9 text-center">-->
+        <!--                            <div style="font-size: 29px;">-->
+        <!--                                <b>DANH MỤC THUỐC/VTTH VƯỢT ĐỊNH MỨC</b>-->
+        <!--                            </div>-->
+        <!--                            <span>Đây là obj:-->
+        <!--                                <t t-esc="obj"/>-->
+        <!--                            </span>-->
+        <!--                            <div>-->
+        <!--                                <t t-if="obj and obj['name']">-->
+        <!--                                    <t t-esc="obj['name']"/>-->
+        <!--                                </t>-->
+
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <div class="oe_structure"/>-->
+        <!--                </div>-->
+        <!--            </t>-->
+        <!--        </template>-->
+
+
+        <template id="lich_su_tham_kham_document">
+
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:14px;">
+
+                    <div class="oe_structure"/>
+                    <div class="text-center" style="font-family:Times New Roman;font-weight:bolder;">
+                        <div style="font-size: 24px;">LỊCH SỬ THĂM KHÁM</div>
+                    </div>
+                    <style>
+                        .border.border-dark{padding:2px}
+                    </style>
+
+                    <table class="table table-condensed">
+                        <tr style="background-color: #f2f2f2;">
+                            <th class="text-center border border-dark text-center" style="width: 1%;">STT</th>
+                            <th class="text-center border border-dark" style="width: 10%;">Mã Booking</th>
+                            <th class="text-center border border-dark" style="width: 7%;">Ngày tư vấn</th>
+                            <th class="text-center border border-dark" style="width: 7%;">Ngày thực hiện</th>
+                            <th class="text-center border border-dark" style="width: 15%;">Dịch vụ</th>
+                            <th class="text-center border border-dark" style="width: 15%;">Tình trạng hiện tại</th>
+                            <th class="text-center border border-dark" style="width: 15%;">Nội dung tư vấn</th>
+                            <th class="text-center border border-dark" style="width: 10%;">Lễ tân tư vấn</th>
+                            <th class="text-center border border-dark" style="width: 10%;">Bác sĩ tư vấn</th>
+                            <th class="text-center border border-dark" style="width: 10%;">Bác sĩ Thực hiện</th>
+                        </tr>
+                        <t t-set="data" t-value="data['data']"/>
+                        <t t-set="i" t-value="0"/>
+                        <t t-foreach="data" t-as="d">
+                            <t t-set="i" t-value="i + 1"/>
+                            <tr>
+                                <td class="border border-dark"><t t-esc="i"/> </td>
+                                <td class="border border-dark"><t t-esc="d['booking']"/> </td>
+                                <td class="border border-dark"><t t-esc="d['ngay_tu_van']"/> </td>
+                                <td class="border border-dark"><t t-esc="d['ngay_thuc_hien']"/> </td>
+                                <td class="border border-dark"><t t-esc="d['dich_vu']"/> </td>
+                                <td class="border border-dark"><t t-esc="d['tinh_trang']"/> </td>
+                                <td class="border border-dark"><t t-esc="d['noi_dung_tu_van']"/> </td>
+                                <td class="border border-dark"><t t-esc="d['le_tan_tu_van']"/> </td>
+                                <td class="border border-dark"><t t-esc="d['bsi_tu_van']"/> </td>
+                                <td class="border border-dark"><t t-esc="d['bac_si_thuc_hien']"/> </td>
+                            </tr>
+                        </t>
+                    </table>
+
+
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+
+        <template id="lich_su_tham_kham">
+            <t t-call="web.html_container">
+                <t t-if="docs">
+                    <t t-set="o" t-value="docs[0].with_user(1)"/>
+                    <t t-set="obj" t-value="o.lich_su_tham_kham()"/>
+                    <t t-set="data" t-value="obj"/>
+                    <t t-call="restful.lich_su_tham_kham_document"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+                string="LỊCH SỬ THĂM KHÁM"
+                id="lich_su_tham_kham_report"
+                model="crm.lead"
+                report_type="qweb-pdf"
+                name="restful.lich_su_tham_kham"
+                file="restful.lich_su_tham_kham"
+                paperformat="crm_base.paper_format_crm_landscape"
+        />
+    </data>
+</odoo>

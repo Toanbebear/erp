@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_program_renewal">
+            <field name="name">Gia hạn Coupon</field>
+            <field name="model">crm.program.renewal</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="brand_id" required="True" options="{'no_open':True,'no_create':True}" readonly="True" force_save="True"/>
+                            <field name="campaign_id" required="True" options="{'no_open':True,'no_create':True}"/>
+                            <field name="coupon_id" readonly="True" options="{'no_open':True,'no_create':True}"/>
+
+                        </group>
+                        <field name="name" placeholder="Nếu không nhập trường này, hệ thống sẽ lấy mặc định tên coupon là tên của chiến dịch cũ"/>
+                    </group>
+                    <footer class="text-center">
+                        <button name="action_program_renewal" type="object" string="Gia hạn" class="oe_highlight"/>
+                        <button string="Hủy thao tác" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

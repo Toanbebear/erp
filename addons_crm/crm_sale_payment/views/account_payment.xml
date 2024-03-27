@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_account_payment" model="ir.ui.view">
+            <field name="name">Payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='button_journal_entries']" position="replace">
+                    <button class="oe_stat_button" name="button_journal_entries"
+                            string="Bút toán phát sinh:" type="object"
+                            groups="account.group_account_user"
+                            attrs="{'invisible':[('move_line_ids','=',[])]}" icon="fa-bars">
+                        <field name="num_of_move_line" widget="boolean_button" options="{'terminology': 'archive'}"/>
+                    </button>
+                </xpath>
+                <xpath expr="//header//button[@name='cancel']" position="attributes">
+                    <attribute name="attrs">{'invisible':['|', ('move_line_ids', '!=', []), ('state', '!=', 'draft')]}</attribute>
+<!--                    <attribute name="invisible">1</attribute>-->
+                </xpath>
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="transfer_payment_id"/>
+                </xpath>
+                <xpath expr="//header//button[@name='cancel']" position="before">
+                    <field name="is_old_payment" invisible="1"/>
+                    <button name="update_payment_list" string="Cập nhật phiếu" type="object"
+                            class="oe_highlight oe_edit_only"
+                            attrs="{'invisible':[('is_old_payment', '=', False)]}"
+                            groups="shealth_all_in_one.group_sh_medical_accountant"/>
+                    <button name="update_old_payment" string="Xác nhận phiếu cũ" type="object"
+                            class="btn btn-secondary"
+                            attrs="{'invisible':[('is_update_payment_list', '=', False)]}"/>
+                    <button name="edit"
+                            class="btn btn-secondary"
+                            states="posted"
+                            string="Sửa phiếu"
+                            type="object"
+                            invisible="1"/>
+<!--                    <button name="delete_payment_list" class="btn-danger"-->
+<!--                            groups="crm_sale_payment.group_delete_payment_detail_posted" string="Sửa phiếu thanh toán"-->
+<!--                            type="object"/>-->
+                </xpath>
+                <xpath expr="//header//button[@name='action_draft']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//header//button[@name='view_choose_walkin']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('move_line_ids', '!=', []), ('state', '=', 'draft')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//header//button[@name='post']" position="replace">
+                    <button name="post" string="Xác nhận" type="object"
+                            class="oe_highlight"
+                            attrs="{'invisible':['|', ('move_line_ids', '!=', []), ('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//div//field[@name='amount']" position="after">
+                    <field name="move_line_ids" invisible="1"/>
+                </xpath>
+                <xpath expr="//div//field[@name='amount']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//div//field[@name='currency_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_type']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='internal_payment_type']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='journal_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='transfer_payment_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_method']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_type']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='patient']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='crm_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_date']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='communication']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('move_line_ids', '!=', [])]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

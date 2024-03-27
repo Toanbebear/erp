@@ -1,0 +1,1132 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* account_standard_report
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-22 03:05+0000\n"
+"PO-Revision-Date: 2020-12-22 03:05+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__summary
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__summary
+msgid ""
+" * Chọn : generate a trial balance.\n"
+" * Không chọn : detail report.\n"
+msgstr ""
+" * Check : số dư tổng hợp các tài khoản.\n"
+" * Uncheck : số dư chi tiết.\n"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__init_balance_history
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__init_balance_history
+msgid ""
+" * Check this box if you need to report all the debit and the credit sum before the Start Date.\n"
+" * Uncheck this box to report only the balance before the Start Date\n"
+msgstr ""
+" * Chọn ô này nếu bạn cần xuất chi tiết số dư đầu kỳ.\n"
+" * Không chọn ô này nếu bạn cần xuất tổng số dư đầu kỳ\n"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__ledger_type
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__ledger_type
+msgid ""
+" * General Ledger : Journal entries group by account\n"
+" * Partner Leger : Journal entries group by partner, with only payable/recevable accounts\n"
+" * Journal Ledger : Journal entries group by journal, without initial balance\n"
+" * Open Ledger : Openning journal at Start date\n"
+msgstr ""
+" * Sổ cái : Các bút toán theo tài khoản\n"
+" * Công nợ : Công nợ phải thu/trả\n"
+" * Journal Ledger : Bút toán theo sổ, không bao gồm số dư đầu kỳ\n"
+" * Open Ledger : Openning journal tại Ngày bắt đầu\n"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/wizard/account_standard_report.py:0
+#, python-format
+msgid " Balance"
+msgstr " Số dư"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#, python-format
+msgid " Totals"
+msgstr " Tổng"
+
+#. module: account_standard_report
+#: model:ir.actions.report,print_report_name:account_standard_report.action_standard_excel
+#: model:ir.actions.report,print_report_name:account_standard_report.action_standard_report
+msgid "(object.report_id.report_name)"
+msgstr ""
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "0-30"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__1
+msgid "01 Junary"
+msgstr "01 Tháng 1"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__2
+msgid "02 Febuary"
+msgstr "02 Tháng 2"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__3
+msgid "03 March"
+msgstr "03 Tháng 3"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__4
+msgid "04 April"
+msgstr "04 Tháng 4"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__5
+msgid "05 May"
+msgstr "05 Tháng 5"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__6
+msgid "06 June"
+msgstr "06 Tháng 6"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__7
+msgid "07 Jully"
+msgstr "07 Tháng 7"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__8
+msgid "08 August"
+msgstr "08 Tháng 8"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__9
+msgid "09 September"
+msgstr "09 Tháng 9"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__10
+msgid "10 October"
+msgstr "10 Tháng 10"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__11
+msgid "11 November"
+msgstr "11 Tháng 11"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__month_selec__12
+msgid "12 December"
+msgstr "12 Tháng 12"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__age_120_days
+msgid "120 days"
+msgstr "120 ngày"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "30-60"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__age_30_days
+msgid "30 days"
+msgstr "30 ngày"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "60-90"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__age_60_days
+msgid "60 days"
+msgstr "60 ngày"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "90-120"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__age_90_days
+msgid "90 days"
+msgstr "90 ngày"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+msgid "<strong>Company:</strong>"
+msgstr "<strong>Công ty:</strong>"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+msgid "<strong>Devise:</strong>"
+msgstr "<strong>Thiết bị:</strong>"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+msgid "<strong>End Date :</strong>"
+msgstr "<strong>Ngày kết thúc :</strong>"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+msgid "<strong>Start Date :</strong>"
+msgstr "<strong>Ngày kết thúc :</strong>"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+msgid "<strong>Target Moves:</strong>"
+msgstr "<strong>Lọc bút toán:</strong>"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model,name:account_standard_report.model_account_account
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__account_ids
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__account_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__account_id
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__report_type__account
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Account"
+msgstr "Tài khoản"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#, python-format
+msgid "Account Name"
+msgstr "Tên tài khoản"
+
+#. module: account_standard_report
+#: model:ir.model,name:account_standard_report.model_account_report_standard_ledger_line
+msgid "Account Standard Ledger Line"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model,name:account_standard_report.model_account_report_standard_ledger_report_object
+msgid "Account Standard Ledger Object"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model,name:account_standard_report.model_account_report_standard_ledger_periode
+msgid "Account Standard Ledger Periode"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model,name:account_standard_report.model_account_report_standard_ledger_report
+msgid "Account Standard Ledger Report"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model,name:account_standard_report.model_account_report_template
+msgid "Account Standard Ledger Template"
+msgstr "Mẫu báo cáo"
+
+#. module: account_standard_report
+#: model:ir.model,name:account_standard_report.model_account_report_standard_ledger
+msgid "Account Standard Ledger Wizard"
+msgstr ""
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_ledger_line_form
+msgid "Accounting Documents"
+msgstr "Chứng từ kế toán"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__account_in_ex_clude_ids
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__account_in_ex_clude_ids
+msgid "Accounts"
+msgstr "Các tài khoản"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__account_group_ids
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__account_group_ids
+msgid "Accounts Group"
+msgstr "Nhóm tài khoản"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/wizard/account_standard_report.py:0
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__ledger_type__aged
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__ledger_type__aged
+#, python-format
+msgid "Aged Balance"
+msgstr "Tuổi nợ"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__target_move__all
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__target_move__all
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "All Entries"
+msgstr "Tất cả bút toán"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__target_move__posted
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__target_move__posted
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "All Posted Entries"
+msgstr "Tất cả bút toán đã vào sổ"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+msgid "Ammount Currency"
+msgstr "Số tiền theo ngoại tệ"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_ledger_line_form
+msgid "Amount"
+msgstr "Tổng tiền"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__amount_currency
+#, python-format
+msgid "Amount Currency"
+msgstr "Số tiền theo ngoại tệ"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__report_type__analytic
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Analytic"
+msgstr "Phân tích"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__analytic_account_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__analytic_account_id
+msgid "Analytic Account"
+msgstr "Tài khoản phân tích"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__analytic_account_select_ids
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__analytic_account_select_ids
+msgid "Analytic Accounts"
+msgstr "Tài khoản phân tích"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/wizard/account_standard_report.py:0
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__ledger_type__analytic
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__ledger_type__analytic
+#, python-format
+msgid "Analytic Ledger"
+msgstr "Báo cáo các tài khoản phân tích"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__periode_date
+msgid "Auto complete Start and End date."
+msgstr "Tự động chọn ngày bắt đầu và kết thúc"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__balance
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Balance"
+msgstr "Số dư"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+msgid "Compact"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__compact_account
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__compact_account
+msgid "Compacte account."
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_account__compacted
+msgid "Compacte entries."
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger_line__line_type__3_compact
+msgid "Compacted"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__company_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__company_id
+msgid "Company"
+msgstr "Công ty"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__company_currency_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__company_currency_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__company_currency_id
+msgid "Company Currency"
+msgstr "Loại tiền của công ty"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#, python-format
+msgid "Company:"
+msgstr "Công ty:"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__create_uid
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__create_uid
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_periode__create_uid
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__create_uid
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__create_uid
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__create_uid
+msgid "Created by"
+msgstr "Được tạo bởi"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__create_date
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__create_date
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_periode__create_date
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__create_date
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__create_date
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__create_date
+msgid "Created on"
+msgstr "Thời điểm tạo"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__credit
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Credit"
+msgstr "Có"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__cumul_balance
+msgid "Cumul Balance"
+msgstr "Số dư"
+
+#. module: account_standard_report
+#: model:ir.model,name:account_standard_report.model_res_currency
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__currency_id
+msgid "Currency"
+msgstr "Tiền tệ"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_account__type_third_parties__customer
+msgid "Customer"
+msgstr "Khách hàng"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__result_selection__customer
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__result_selection__customer
+msgid "Customers"
+msgstr "Khách hàng"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__result_selection__customer_supplier
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__result_selection__customer_supplier
+msgid "Customers and Suppliers"
+msgstr "Khách hàng và Nhà cung cấp"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__date
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Date"
+msgstr "Ngày"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_periode__date_from
+msgid "Date from"
+msgstr "Từ ngày"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_periode__date_to
+msgid "Date to"
+msgstr "Đến ngày"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_ledger_line_form
+msgid "Dates"
+msgstr "Ngày"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__debit
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Debit"
+msgstr "Nợ"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__display_name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__display_name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_periode__display_name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__display_name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__display_name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__display_name
+#: model:ir.model.fields,field_description:account_standard_report.field_report_account_standard_report_report_account_standard_excel__display_name
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__date_maturity
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Due Date"
+msgstr "Ngày đến hạn"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__date_to
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__date_to
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__date_to
+msgid "End Date"
+msgstr "Ngày kết thúc"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#, python-format
+msgid "End Date : %s "
+msgstr "Ngày kết thúc : %s "
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__move_id
+msgid "Entrie"
+msgstr "Bút toán"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_view
+msgid "Excel File"
+msgstr "Xuất excel"
+
+#. module: account_standard_report
+#: model:ir.actions.report,name:account_standard_report.action_standard_excel
+msgid "Excel Report"
+msgstr "Báo cáo excel"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_res_currency__excel_format
+msgid "Excel format"
+msgstr "Định dạng excel"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__account_methode__exclude
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__account_methode__exclude
+msgid "Exclude"
+msgstr "Không bao gồm"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/wizard/account_standard_report.py:0
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__ledger_type__general
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__ledger_type__general
+#, python-format
+msgid "General Ledger"
+msgstr "Sổ cái"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__group_by_key
+msgid "Group By Key"
+msgstr "Nhóm theo từ khóa"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_periode__id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__id
+#: model:ir.model.fields,field_description:account_standard_report.field_report_account_standard_report_report_account_standard_excel__id
+msgid "ID"
+msgstr ""
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+msgid "INIT"
+msgstr "SỐ DƯ ĐẦU KỲ"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__account_in_ex_clude_ids
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__account_in_ex_clude_ids
+msgid "If empty, get all accounts"
+msgstr "Nếu rỗng, lấy tất cả các tài khoản"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__partner_select_ids
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__partner_select_ids
+msgid "If empty, get all partners"
+msgstr "Nếu rỗng, lấy tất cả các đối tác"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_account__compacted
+msgid ""
+"If flagged, no details will be displayed in the Standard report, only "
+"compacted amounts."
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__account_methode__include
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__account_methode__include
+msgid "Include"
+msgstr "Bao gồm"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_ledger_line_form
+msgid "Information"
+msgstr "Thông tin"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger_line__view_type__init
+msgid "Init"
+msgstr "Đầu kỳ"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger_line__line_type__0_init
+msgid "Initial"
+msgstr "Đầu kỳ"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__init_balance_history
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__init_balance_history
+msgid "Initial balance with history."
+msgstr "Chi tiết số dư đầu kỳ"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger_line__line_type__1_init_line
+msgid "Init Line"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__amount_currency
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__amount_currency
+msgid ""
+"It adds the currency column on report if the currency differs from the "
+"company currency."
+msgstr ""
+"Thêm cột ngoại tệ trong báo cáo nếu có sử dụng ngoại tệ."
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "JRNL"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__journal_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__journal_id
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__report_type__journal
+msgid "Journal"
+msgstr "Sổ nhật ký"
+
+#. module: account_standard_report
+#: model:ir.model,name:account_standard_report.model_account_move_line
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_ledger_line_form
+msgid "Journal Item"
+msgstr "Bút toán"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_ledger_line_search_view
+msgid "Journal Items"
+msgstr "Bút toán phát sinh"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/wizard/account_standard_report.py:0
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__ledger_type__journal
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__ledger_type__journal
+#, python-format
+msgid "Journal Ledger"
+msgstr ""
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Journal entries"
+msgstr "Bút toán"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__journal_ids
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__journal_ids
+msgid "Journals"
+msgstr "Các sổ nhật ký"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger____last_update
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line____last_update
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_periode____last_update
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report____last_update
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object____last_update
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template____last_update
+#: model:ir.model.fields,field_description:account_standard_report.field_report_account_standard_report_report_account_standard_excel____last_update
+msgid "Last Modified on"
+msgstr "Sửa lần cuối"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__write_uid
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__write_uid
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_periode__write_uid
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__write_uid
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__write_uid
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__write_uid
+msgid "Last Updated by"
+msgstr "Cập nhật gần đây bởi"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__write_date
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__write_date
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_periode__write_date
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__write_date
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__write_date
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__write_date
+msgid "Last Updated on"
+msgstr "Cập nhật gần đây vào"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__line_ids
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger_line__line_type__2_line
+msgid "Line"
+msgstr "Dòng"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__line_super_total_id
+msgid "Line Super Total"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__line_total_ids
+msgid "Line Total"
+msgstr ""
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__full_reconcile_id
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Match."
+msgstr "Khớp thanh toán"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_ledger_line_form
+msgid "Matching"
+msgstr "Khớp"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__account_methode
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__account_methode
+msgid "Methode"
+msgstr "Phương thức"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__month_selec
+msgid "Month"
+msgstr "Tháng"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__move_line_id
+msgid "Move Line"
+msgstr "Bút toán phát sinh"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_move_line__move_line_rec_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__move_line_rec_id
+msgid "Move line đối ứng"
+msgstr ""
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_periode__name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__name
+#, python-format
+msgid "Name"
+msgstr "Tên"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_account__type_third_parties__no
+msgid "No"
+msgstr "Không"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger_line__view_type__normal
+msgid "Normal"
+msgstr "Thông thường"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Not Due"
+msgstr "Chưa tới hạn"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__current
+msgid "Not due"
+msgstr "Chưa tới hạn"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_view
+msgid "OPEN TEMPLATES"
+msgstr "Mở các mẫu BC"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__object_id
+msgid "Object"
+msgstr "Đối tượng"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__older
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Older"
+msgstr "Cũ hơn"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Only UnReconciled Entries"
+msgstr "Chỉ những bút toán chưa đối soát"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__reconciled
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__reconciled
+msgid ""
+"Only for entrie with a payable/receivable account.\n"
+" * Check this box to see un-reconcillied and reconciled entries with payable.\n"
+" * Uncheck to see only un-reconcillied entries. Can be use only with parnter ledger.\n"
+msgstr ""
+"Chỉ những bút toán với tài khoản là Phải thu/trả.\n"
+" * Chọn ô này để xem tất cả các bút toán chưa và đã đối soát.\n"
+" * Không chọn để xem tất cả các bút toán chưa đối soát.\n"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/wizard/account_standard_report.py:0
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__ledger_type__open
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__ledger_type__open
+#, python-format
+msgid "Open Ledger"
+msgstr ""
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_ledger_line_form
+msgid "Other"
+msgstr "Khác"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__partner_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__partner_id
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__report_type__partner
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Partner"
+msgstr "Đối tác"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/wizard/account_standard_report.py:0
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__ledger_type__partner
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__ledger_type__partner
+#, python-format
+msgid "Partner Ledger"
+msgstr "Sổ cái đối tác"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__partner_select_ids
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__partner_select_ids
+msgid "Partners"
+msgstr "Đối tác"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__result_selection
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__result_selection
+msgid "Partners Selection"
+msgstr "Chọn đối tác"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__partner_ids
+msgid "Partners in report"
+msgstr "Đối tác trên báo cáo"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__periode_date
+msgid "Periode"
+msgstr "Kỳ"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_view
+msgid "Print PDF"
+msgstr "In PDF"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__print_time
+msgid "Print Time"
+msgstr "Thời gian in"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#, python-format
+msgid "Print on %s"
+msgstr "In vào lúc %s"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__reconciled
+msgid "Reconciled"
+msgstr "Đã được đối soát"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "Ref"
+msgstr "Tham chiếu"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__report_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__report_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report_object__report_id
+msgid "Report"
+msgstr "Báo cáo"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__report_name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__report_name
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__report_name
+msgid "Report Name"
+msgstr "Tên báo cáo"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__report_object_id
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__report_object_ids
+msgid "Report Object"
+msgstr "Đối tượng báo cáo"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_view
+msgid "Report Options"
+msgstr "Lựa chọn báo cáo"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__report_type
+msgid "Report Type"
+msgstr "Loại báo cáo"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_view
+msgid "SAVE"
+msgstr "LƯU"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__journal_ids
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__journal_ids
+msgid "Select journal, for the Open Ledger you need to set all journals."
+msgstr " "
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_template_form_view
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_template_tree_view
+msgid "Standard Ledger Template"
+msgstr "Mẫu báo cáo cơ bản"
+
+#. module: account_standard_report
+#: model:ir.actions.act_window,name:account_standard_report.action_account_standard_report
+#: model:ir.actions.act_window,name:account_standard_report.action_account_standard_report_template
+#: model:ir.actions.report,name:account_standard_report.action_standard_report
+#: model:ir.ui.menu,name:account_standard_report.menu_account_standard_report
+msgid "Standard Report"
+msgstr "Báo cáo cơ bản"
+
+#. module: account_standard_report
+#: model:ir.model,name:account_standard_report.model_report_account_standard_report_report_account_standard_excel
+msgid "Standard Report Excel"
+msgstr "Báo cáo cơ bản excel"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__date_from
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_report__date_from
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__date_from
+msgid "Start Date"
+msgstr "Ngày bắt đầu"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#, python-format
+msgid "Start Date : %s "
+msgstr "Ngày bắt đầu : %s "
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger_line__line_type__5_super_total
+msgid "Super Total"
+msgstr "Tổng hợp"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_account__type_third_parties__supplier
+msgid "Supplier"
+msgstr "Nhà cung cấp"
+
+#. module: account_standard_report
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger__result_selection__supplier
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_template__result_selection__supplier
+msgid "Suppliers"
+msgstr "Nhà cung cấp"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_move_line__account_rec_id
+#, python-format
+msgid "TK Đối ứng"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__target_move
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__target_move
+msgid "Target Moves"
+msgstr "Lọc bút toán"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#, python-format
+msgid "Target Moves:"
+msgstr "Lọc bút toán: "
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__template_id
+msgid "Template"
+msgstr "Mẫu"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/wizard/account_standard_report.py:0
+#, python-format
+msgid "Template of %s"
+msgstr "Mẫu cho %s"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_account__type_third_parties
+msgid "Third Partie"
+msgstr "Loại đối tác"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger_line__line_type__4_total
+#: model:ir.model.fields.selection,name:account_standard_report.selection__account_report_standard_ledger_line__view_type__total
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.view_account_report_standard_ledger_line_tree
+#: model_terms:ir.ui.view,arch_db:account_standard_report.view_aged_tree
+#, python-format
+msgid "Total"
+msgstr "Tổng"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__summary
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__summary
+msgid "Trial Balance"
+msgstr "Số dư tổng"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__ledger_type
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__line_type
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__ledger_type
+msgid "Type"
+msgstr "Loại"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#, python-format
+msgid "Tên TK Đối ứng"
+msgstr ""
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__date_from
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger_report__date_from
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__date_from
+msgid "Use to compute initial balance."
+msgstr "Sử dụng để tính toán số dư đầu kỳ"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__date_to
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger_report__date_to
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__date_to
+msgid "Use to compute the entrie matched with futur."
+msgstr "Sử dụng để khớp bút toán tương lai"
+
+#. module: account_standard_report
+#: model:ir.model.fields,help:account_standard_report.field_account_report_standard_ledger__company_currency_id
+#: model:ir.model.fields,help:account_standard_report.field_account_report_template__company_currency_id
+msgid "Utility field to express amount currency"
+msgstr "Trường ghi nhận số tiền theo loại tiền tệ"
+
+#. module: account_standard_report
+#: model_terms:ir.ui.view,arch_db:account_standard_report.account_report_standard_view
+msgid "View Lines"
+msgstr "Xem"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__view_type
+msgid "View Type"
+msgstr "Dạng hiển thị"
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__amount_currency
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__amount_currency
+msgid "With Currency"
+msgstr "Với tiền tệ"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/report/report_account_standard_excel.py:0
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger__reconciled
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_template__reconciled
+#: model_terms:ir.ui.view,arch_db:account_standard_report.report_account_standard_report
+#, python-format
+msgid "With Reconciled Entries"
+msgstr "Với bút toán đã đối soát"
+
+#. module: account_standard_report
+#: code:addons/account_standard_report/wizard/account_standard_report.py:0
+#, python-format
+msgid "Your are not an accountant."
+msgstr "Bạn không phải là kế toán."
+
+#. module: account_standard_report
+#: model:ir.model.fields,field_description:account_standard_report.field_account_report_standard_ledger_line__account_rec_id
+msgid "Đối ứng"
+msgstr ""

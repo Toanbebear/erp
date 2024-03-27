@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+<!--    <menuitem id="vn_base_unit" name="VN-Base Unit" sequence="1"/>-->
+    <menuitem id="country_district_menu_item" name="Quận/Huyện" parent="contacts.menu_localisation" action="open_view_res_country_district"/>
+    <menuitem id="country_ward_menu_item" name="Phường/Xã" parent="contacts.menu_localisation" action="open_view_res_country_ward"/>
+    <menuitem id="nation_menu_item" name="Dân Tộc" parent="contacts.menu_localisation" action="open_view_nation"/>
+<!--    <menuitem id="country_state_menu_item" name="Tỉnh Thành" parent="contact.menu_localisation" action="base.action_country_state"/>-->
+</odoo>

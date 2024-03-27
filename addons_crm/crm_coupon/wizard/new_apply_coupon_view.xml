@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_apply_coupon_new">
+            <field name="name">Apply coupon</field>
+            <field name="model">crm.apply.coupon</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="type_action" required="True"/>
+                            <field name="campaign_id" options="{'no_open':True,'no_create':True}"
+                                   attrs="{'invisible': [('type_action', '!=', 'apply')], 'required': [('type_action', '=', 'apply')]}"/>
+                            <field name="group_customer_id" options="{'no_open':True,'no_create':True}"
+                                   attrs="{'invisible': ['|',('type_action', '!=', 'apply'), ('show_group', '=', False)]}"
+                                   domain="[('partner_ids', '=', partner_id), ('status', '=', 'can_use')]"/>
+                            <field name="coupon_id" options="{'no_open':True,'no_create':True}"
+                                   attrs="{'invisible': [('type_action', '=', 'apply')], 'required': [('type_action', '!=', 'apply')]}"/>
+                            <field name="crm_id" invisible="1"/>
+                            <field name="partner_id" invisible="True"/>
+                            <field name="show_group" invisible="1"/>
+                        </group>
+                        <group>
+                            <field name="line_ids"
+                                   options="{'no_open':True,'no_create_edit':True}"
+                                   attrs="{'invisible': [('type_action', '!=', 'apply')], 'required': [('type_action', '=', 'apply')]}"
+                                   widget="many2many_tags" string="Danh sách dịch vụ áp dụng"
+                                   domain="[('crm_id', '=', crm_id), ('stage', '!=', 'cancel')]"/>
+                            <field name="line_product_ids"
+                                   options="{'no_open':True,'no_create_edit':True}"
+                                   attrs="{'invisible': [('type_action', '!=', 'apply')]}"
+                                   widget="many2many_tags"
+                                   string="Danh sách sản phẩm áp dụng"
+                                   domain="[('booking_id', '=', crm_id), ('stage_line_product', '!=', 'cancel')]"
+                                   readonly="0"/>
+                        </group>
+                        <field name="apply_coupon_list_ids" attrs="{'invisible': [('type_action', '!=', 'apply')]}" string="Danh sách coupon">
+                            <tree create="false" editable="false" options="{'no_open':True,'no_create':True,'no_delete':True}">
+                                <field name="index" invisible="1"/>
+                                <field name="type_coupon" width="20%"/>
+                                <field name="coupon_id" width="30%"/>
+                                <field name="description" width="40%"/>
+                                <button name="apply_coupon" type="object" string="Áp dụng" class="btn-info" width="10%"/>
+                            </tree>
+                        </field>
+                        <footer class="text-center">
+                            <button name="reverse_prg_ids" type="object" string="Hoàn lại" class="btn-warning"
+                                    attrs="{'invisible': [('type_action', '=', 'apply')]}"/>
+                            <button special="cancel" string="Cancel" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

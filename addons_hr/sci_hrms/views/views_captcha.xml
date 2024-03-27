@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.website.crm</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <div id="webmaster_settings" position="after">
+                <h2>ReCaptcha Configuration</h2>
+                <div class="row mt16 o_settings_container" id="recaptcha_site_key">
+                    <div class="col-xs-12 col-md-6 o_setting_box" id="recaptcha_site_key">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="recaptcha_site_key" />
+                            <div class="text-muted">
+                                <field name="recaptcha_site_key" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box" id="recaptcha_private_key">
+                        <div class="o_setting_left_pane">
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="recaptcha_private_key" />
+                            <div class="text-muted">
+                                <field name="recaptcha_private_key" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+    <record id="view_website_form" model="ir.ui.view">
+        <field name="name">website.form</field>
+        <field name="model">website</field>
+        <field name="inherit_id" ref="website.view_website_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//form" position='inside'>
+                <div name="goole_recaptcha">
+                    <separator string="Google reCAPTCHA Reloaded" />
+                    <group name="social_media">
+                        <field name="recaptcha_site_key" placeholder="Your reCAPTCHA site key" />
+                        <field name="recaptcha_private_key" placeholder="Your reCAPTCHA private key" />
+                    </group>
+                </div>
+            </xpath>
+        </field>
+    </record>
+</odoo>

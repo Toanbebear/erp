@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="bao_cao_thuoc_gay_nghien_huong_than_report_attachment" model="ir.attachment">
+            <field name="name">Tổng hợp thuốc gây nghiện hướng thần</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/bao_cao_thuoc_gay_nghien_huong_than.xlsx"/>
+            <field name="store_fname">bao_cao_thuoc_gay_nghien_huong_than.xlsx</field>
+        </record>
+
+        <record model="ir.ui.view" id="bao_cao_thuoc_gay_nghien_huong_than_form">
+            <field name="name">report.drug.addiction.psychotropic.form</field>
+            <field name="model">report.drug.addiction.psychotropic</field>
+            <field name="arch" type="xml">
+                <form string="Tổng hợp thuốc gây nghiện - hướng thần">
+                    <group>
+                        <field name="company_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                        <field name="start_date" required="1"/>
+                        <field name="end_date" required="1"/>
+                        <field name="type" required="1"/>
+                        <field name="type_pttt" required="1" attrs="{'invisible': [('type', 'in', ('spa','laser','nha','cshp'))]}"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_bao_cao_thuoc_gay_nghien_huong_than" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_thuoc_gay_nghien_huong_than_act">
+            <field name="name">Tổng hợp thuốc gây nghiện hướng thần</field>
+            <field name="res_model">report.drug.addiction.psychotropic</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_thuoc_gay_nghien_huong_than_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_thuoc_gay_nghien_huong_than"
+                  name="Tổng hợp thuốc gây nghiện - hướng thần"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="bao_cao_thuoc_gay_nghien_huong_than_act"
+                  sequence="11"
+                  groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_stock_user"/>
+
+    </data>
+</odoo>

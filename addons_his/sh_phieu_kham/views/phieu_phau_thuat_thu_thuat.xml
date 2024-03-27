@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="phieu_phau_thua_thu_thuat_filter" model="ir.ui.view">
+            <field name="name">Phẫu thuật - Thủ thuật</field>
+            <field name="model">sh.medical.surgery</field>
+            <field name="type">search</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <search string="Search Surgeries">
+                    <separator orientation="vertical"/>
+                    <field name="name" select="1"/>
+                    <field name="patient" string="Patient" select="1"/>
+                    <field name="booking_id" string="Booking" select="1"/>
+<!--                    <field name="code_booking" string="Booking tương ứng" select="1"/>-->
+<!--                    <field name="surgeon" string="Surgeon" select="1"/>-->
+<!--                    <field name="anesthetist" string="Anesthetist" select="1"/>-->
+                    <field name="info" string="Tư vấn trước mổ" select="1"/>
+                    <newline/>
+                    <filter string="Not Done" name="filter_not_done" domain="[('state','!=','Done')]" context="{}"/>
+                    <!--                        <filter string="Not Signed" name="filter_not_signed" domain="[('state','!=','Signed')]" context="{}"/>-->
+                    <!--                        <filter string="My institution" name="filter_my_institution" domain="[('institution.user_access','in', [uid])]" context="{}"/>-->
+                    <!--                        <filter string="My institution and Not Done" name="filter_not_done_and_my_institution" domain="[('state','!=','Done'),('institution.user_access','in', [uid])]" context="{}"/>-->
+                    <filter string="Ngày thực hiện" name="surgery_date" date="surgery_date"/>
+                    <newline/>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter name="group_date_requested" string="Ngày chỉ định"
+                                context="{'group_by':'date_requested:day'}"/>
+                        <filter name="group_services_date" string="Ngày thực hiện"
+                                context="{'group_by':'surgery_date:day'}"/>
+                        <filter name="group_patient" string="Patient" context="{'group_by':'patient'}"/>
+                        <filter name="group_walkin" string="Phiếu khám" context="{'group_by':'walkin'}"/>
+<!--                        <filter name="group_surgeon" string="Surgeon" context="{'group_by':'surgeon'}"/>-->
+                        <filter name="group_anesthetist" string="Anesthetist" context="{'group_by':'anesthetist'}"/>
+                        <filter name="group_states" string="States" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="phieu_phau_thua_thu_thuat_tree" model="ir.ui.view" >
+            <field name="name">Phẫu thuật - Thủ thuật</field>
+            <field name="model">sh.medical.surgery</field>
+            <field name="type">tree</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false" string="Surgeries" decoration-bf="state=='Signed'"
+                      decoration-it="state=='Confirmed'" decoration-info="state=='Draft'"
+                      decoration-success="state=='Done'" decoration-danger="state=='In Progress'"
+                      editable="bottom" class="tree_no_open">
+                    <field name="is_new_request" invisible="1"/>
+                    <field name="id" invisible="1"/>
+                    <field name="name"/>
+                    <field name="walkin" optional="hide" readonly="1" force_save="1"/>
+                    <!--                                        <field name="description"/>-->
+                    <field name="patient" class="text-uppercase" readonly="1" force_save="1"/>
+                    <field name="services" options="{'no_create': True,'no_open': True}" required="1" widget="many2many_tags" attrs="{'readonly': [('state','in',['Done','Signed'])]}" domain="[('id', 'in', parent.service)]" force_save="1"/>
+                    <field name="surgery_date"/>
+                    <field name="pathology" options="{'no_create': True,'no_open': True}" optional="hide"/>
+                    <field name="institution" options="{'no_create': True,'no_open': True}" required="1" domain="[('id', 'in', parent.allow_institutions)]" attrs="{'readonly': [('id','!=',False)]}" force_save="1"/>
+                    <field name="department" options="{'no_create': True,'no_open': True}" required="1"/>
+                    <field name="operating_room" options="{'no_create': True,'no_open': True}" required="1" domain="[('department','=',department),('state','=','Free'),('is_operating_theater','=',True)]"/>
+                    <field name="surgeon" options="{'no_create': True,'no_open': True}"/>
+                    <field name="anesthetist" options="{'no_create': True,'no_open': True}"/>
+                    <field name="state"/>
+                    <button name="view_detail_surgery" groups="shealth_all_in_one.group_sh_medical_physician_surgery"
+                            type="object" icon="fa-file-text-o" title="Chi tiết"/>
+                    <button confirm="Bạn có chắc chắn muốn xóa phiếu PTTT này?"
+                            attrs="{'invisible': ['|',('state','!=','Draft'),('id','=',False)]}" class="oe_edit_only"
+                            name="unlink" type="object" icon="fa-trash-o" title="Xóa"/>
+                    <!--                                        <button name="action_confirm_and_print" string="Print" type="object"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="phieu_phau_thua_thu_thuat_form" model="ir.ui.view">
+            <field name="name">Phẫu thuật - Thủ thuật</field>
+            <field name="model">sh.medical.surgery</field>
+            <field name="type">form</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <form string="Surgeries" create="false" duplicate="false" edit_expr="state not in ['Done','Signed']"
+                      delete="false">
+                    <header>
+                        <button confirm="Are you sure you want to confirm the surgery detail?"
+                                name="action_surgery_confirm" states="Draft" string="Confirm Surgery" type="object"
+                                class="oe_highlight"
+                                groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Are you sure you want to start surgery?" name="action_surgery_start"
+                                states="Confirmed" string="Start Surgery" type="object" class="oe_highlight"
+                                groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Bạn có chắc chắn muốn đặt lại phiếu phẫu thuật về trạng thái Nháp?"
+                                name="action_surgery_set_to_draft" states="Confirmed" string="Set To Draft"
+                                type="object" class="btn-warning" groups="shealth_all_in_one.group_sh_medical_physician_surgery"/>
+                        <button confirm="Are you sure you want to end surgery?" name="action_surgery_end"
+                                states="In Progress" string="End Surgery" type="object" class="oe_highlight"
+                                context="{'ignore_expired': surgery_date}"
+                                groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Bạn có chắc muốn đặt lại phiếu PT ở trạng thái Xác nhận?"
+                                name="action_surgery_confirm" states="In Progress" string="Set Confirm Surgery "
+                                type="object" class="btn-warning" groups="shealth_all_in_one.group_sh_medical_physician_surgery"/>
+                        <button confirm="Are you sure you want to sign the surgery record?" invisible="1"
+                                name="action_surgery_sign" states="Done" string="Sign &amp; Archive" type="object"
+                                class="oe_highlight"
+                                groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_manager"/>
+                        <!--                        <button confirm="Are you sure you want to cancel the surgery?" name="action_surgery_cancel" states="Draft,Confirmed" string="Cancel Surgery" type="object" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+                        <!--                        <button confirm="Are you sure you want to set surgery record in Draft state?" name="action_surgery_set_to_draft" states="Cancelled" string="Set To Draft" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+                        <button confirm="Bạn có chắc muốn tạo phiếu lưu bệnh nhân?" name="add_inpatient" type="object"
+                                states="Done" class="btn-info" groups="shealth_all_in_one.group_sh_medical_physician_surgery"
+                                context="{'default_institution': institution,'default_walkin': walkin,'default_admission_reason':pathology,'default_admission_type':'Elective','default_patient':patient,'default_operating_physician':surgeon,'default_attending_physician':anesthetist,'default_services':services}"
+                                string="Tạo phiếu Lưu bệnh nhân"/>
+                        <button confirm="Are you sure you want to set in progress this surgery (Only Admin)?"
+                                name="action_surgery_start" string="Set In progress" type="object" class="btn-warning"
+                                groups="base.group_system,shealth_all_in_one.group_sh_medical_manager"
+                                attrs="{'invisible':['|', ('check_current_company', '!=', True), ('state', 'not in', ('Done', 'Signed'))]}"/>
+                        <button confirm="Bạn có chắc chắn muốn hủy phiếu không?"
+                                name="action_cancelled" string="Hủy" type="object" class="btn-danger"
+                                groups="base.group_system,shealth_all_in_one.group_sh_medical_manager"
+                                attrs="{'invisible':['|', ('check_current_company', '!=', True), ('state', '!=', 'Draft')]}"/>
+                        <field name="check_current_company" invisible="1"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="Draft,Confirmed,In Progress,Done"
+                               statusbar_colors='{"Draft":"blue","Confirmed":"red","In Progress":"red","Done":"green","Signed":"green"}'/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="CHỈ ĐỊNH THÊM" text="CHỈ ĐỊNH THÊM" bg_color="bg-warning" attrs="{'invisible': [('is_new_request', '=', False)]}"/>
+                        <div class="oe_title">
+                            <label for="name" class="oe_edit_only"/>
+                            <h1>
+                                <field name="name" widget="copy_char"/>
+                            </h1>
+                            <div>
+                                <label for="is_new_request" groups="shealth_all_in_one.group_sh_medical_stock_user,shealth_all_in_one.group_sh_medical_manager"/>
+                                <field name="is_new_request" attrs="{'readonly':[('state','in',['Done','Signed'])]}" force_save="1" groups="shealth_all_in_one.group_sh_medical_stock_user,shealth_all_in_one.group_sh_medical_manager"/>
+                            </div>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="patient" class="text-uppercase"
+                                       attrs="{'readonly':['|',('state','in',['Done','Signed']),('patient','!=',False)]}"
+                                       force_save="1"/>
+                            </group>
+                            <group>
+                                <field name="booking_id"/>
+                                <field name="walkin"/>
+<!--                                <field name="gender" invisible="1"/>-->
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="computed_age" readonly="1"/>
+                                <field name="date_requested" attrs="{'readonly': [('state','in',['Done','Signed'])]}"/>
+                                <field name="surgery_date"
+                                       attrs="{'invisible':[('state','in',['Draft','Cancelled'])], 'readonly': [('state','in',['Done','Signed'])]}"/>
+                            </group>
+                            <group>
+                                <field name="surgery_end_date"
+                                       attrs="{'invisible':[('state','in',['Draft','Cancelled'])], 'readonly': [('state','in',['Done','Signed'])]}"/>
+                                <field name="surgery_length" widget="float_time"
+                                       attrs="{'invisible':[('state','in',['Draft','Confirmed','Cancelled','In Progress'])]}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+<!--                                <field name="classification" invisible="1"/>-->
+                                <field name="allow_institutions" invisible="1"/>
+                                <field name="region" invisible="1"/>
+                                <field name="institution" domain="[('id', 'in', allow_institutions)]"
+                                       options="{'no_create': True,'no_open': True}" force_save="1"/>
+                                <field name="department" options="{'no_create': True,'no_open': True}" readonly="1" force_save="1"/>
+                                <field name="operating_room" required="1"
+                                       domain="[('department','=',department),('state','=','Free'),('is_operating_theater','=',True)]" force_save="1"
+                                       options="{'no_create': True,'no_open': True}"
+                                       attrs="{'readonly':[('state','in',['Done','Signed'])]}"/>
+                                <field name="services_domain" invisible="1"/>
+                                <field name="supply_domain" invisible="1"/>
+                                <field name="services" string="Dịch vụ thực hiện" required="1" force_save="1"
+                                       widget="many2many_tags" options="{'no_create': True}"
+                                       domain="[('id','in',services_domain)]"
+                                       attrs="{'readonly': [('state','in',['Done','Signed'])]}"/>
+                            </group>
+                            <group string="Hồ sơ 83 tiêu chí">
+                                <field name="surgeon" options="{'no_create': True,'no_open': True}" required="0"
+                                       domain="[('is_pharmacist', '=', False),('department','in',department)]"/>
+                                <field name="pathology" attrs="{'readonly':['|',('state','in',['Done','Signed'])]}"
+                                       options="{'no_open': True}"/>
+                                <field name="anesthetist" options="{'no_create': True,'no_open': True}"
+                                       domain="[('is_pharmacist', '=', False),('department','in',department)]"/>
+                                <field name="anesthetist_type"/>
+                                <field name="surgery_type"/>
+                                <!--                                <field name="building" domain="[('institution','=',institution)]" options="{'no_create': True}"/>-->
+<!--                                <field name="signed_by" readonly="1" invisible="1"/>-->
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Operation Info">
+                                <group string="Description">
+                                    <field name="description" nolabel="1"/>
+                                </group>
+                                <group string="Lược đồ phẫu thuật" invisible="1">
+                                    <field name="surgical_diagram" nolabel="1"/>
+                                </group>
+                                <group string="Trình tự phẫu thuật" invisible="1">
+                                    <field name="surgical_order" nolabel="1"/>
+                                </group>
+
+<!--                                <group string="Patient Surgical Risk Assessment" invisible="1">-->
+<!--                                    <group>-->
+<!--                                        <field name="preop_asa"/>-->
+<!--                                        <field name="preop_mallampati"/>-->
+<!--                                    </group>-->
+<!--                                    <group>-->
+<!--                                        <field name="preop_rcri"/>-->
+<!--                                        <field name="surgical_wound"/>-->
+<!--                                    </group>-->
+<!--                                </group>-->
+
+                                <group string="Preoperative Checklist">
+                                    <group>
+<!--                                        <field name="preop_bleeding_risk"/>-->
+                                        <field name="preop_vital_signs"/>
+                                        <field name="preop_normal_check"/>
+                                        <field name="preop_advise"/>
+                                        <field name="preop_signed_commitment"/>
+                                    </group>
+                                    <group>
+<!--                                        <field name="preop_oximeter"/>-->
+<!--                                        <field name="preop_antibiotics"/>-->
+                                        <field name="preop_photo_shoot"/>
+                                        <field name="preop_sterility"/>
+                                        <field name="preop_site_marking"/>
+                                    </group>
+                                </group>
+                                <group string="Thông tin khám mê">
+                                    <field name="anesthesia_report" nolabel="1"/>
+                                </group>
+                                <group string="Thông tin tư vấn trước mổ">
+                                    <field name="info" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Thành viên tham gia">
+                                <field name="surgery_team" context="{'default_service_performances': services}">
+                                    <tree string="Team Members" class="tree_no_open" editable="bottom">
+                                        <!--                                        <field name="team_member" on_change="onchange_team_member(team_member)"/>-->
+                                        <field name="service_performances"
+                                               domain="[('id','in',parent.services)]"
+                                               options="{'no_create': True}" required="1" widget="many2many_tags"/>
+                                        <field name="team_member" options="{'no_create': True}"/>
+                                        <field name="role" options="{'no_create': True}" required="1"/>
+                                        <field name="notes" optional="hide"/>
+                                        <!--                                        <field name="doctor_member" widget="many2many_tags" options="{'no_create': True}"/>-->
+                                        <!--                                        <field name="nursing_member" widget="many2many_tags" options="{'no_create': True}"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Supplies and Medicines" attrs="{'invisible': [('state','=','Draft')]}">
+                                <group>
+                                    <group>
+                                        <field name="other_bom" string="CHỌN BOM" widget="many2many_tags"
+                                               options="{'no_create': True}"
+                                               attrs="{'readonly': [('state','in',['Draft','Done','Signed'])]}"
+                                               force_save="1"/>
+                                        <div class="sh-box-control-print">
+                                            <button name="reset_all_supply" attrs="{'invisible':[('state','in',['Done','Signed'])]}"
+                                                    confirm="Bạn có chắc chắn muốn reset toàn bộ Thuốc/VTTH đã kê bên dưới?"
+                                                    string="Xóa tất cả VTTH" type="object"
+                                                    class="btn-warning fa fa-trash mr-5 oe_edit_only"
+                                                    groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+                                            <!--                                    <button name="781" type="action" class="btn-info fa fa-plus oe_edit_only" context="{'default_notes':'Surgery','default_model_binding':'sh.medical.surgery.supply','default_room_use': operating_room}" string="Chọn nhiều Thuốc/vật tư"/>-->
+                                        </div>
+                                    </group>
+                                    <group string="Lưu ý:">
+                                        <ul class="text-info">
+                                            <li>
+                                                <i><i class="text-warning">Màu vàng</i>: Vật tư/Thuốc <b>vượt quá định
+                                                    mức
+                                                </b> hoặc <b>không có trong BOM</b>.
+                                                </i>
+                                            </li>
+                                            <li>
+                                                <i><i class="text-danger">Màu đỏ</i>: Vật tư/Thuốc <b>hết toàn viện</b>.
+                                                </i>
+                                            </li>
+                                            <li>
+                                                <i><i class="fa fa-warning text-warning"/>: Vật tư/Thuốc <b>hết tại khoa
+                                                    phòng</b>.
+                                                </i>
+                                            </li>
+                                        </ul>
+                                    </group>
+                                </group>
+                                <group string="Supplies">
+                                    <field name="supplies" nolabel="1" context="{'view_only_name': True, 'ignore_expired': surgery_date}"
+                                           attrs="{'readonly': [('state','in',['Draft','Done','Signed'])]}"
+                                           force_save="1">
+                                        <tree string="Supplies" class="tree_no_open" editable="bottom" limit="200"
+                                              decoration-danger="parent.state in ['Confirmed','In Progress'] and qty_used > qty_avail"
+                                              decoration-warning="qty_used > qty">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="medicament_type"/>
+                                            <field name="supply" domain="[('id', 'in', parent.supply_domain)]"
+                                                   options="{'no_create': True,'no_open': True}"
+                                                   attrs="{'readonly': [('qty','>',0)]}" force_save="1"/>
+                                            <field name="qty" readonly="1" force_save="1" optional="hide"/>
+                                            <field name="qty_avail" optional="hide" readonly="1" force_save="1"
+                                                   attrs="{'column_invisible':[('parent.state', 'in', ['Done','Signed'])]}"
+                                                   groups="shealth_all_in_one.group_sh_medical_manager"/>
+                                            <field name="qty_in_loc" optional="hide" readonly="1" force_save="1"/>
+                                            <field name="is_warning_location" invisible="1" readonly="1"
+                                                   force_save="1"/>
+                                            <field name="qty_used"/>
+                                            <field name="uom_id" readonly="1" force_save="1"
+                                                   options="{'no_create': True,'no_open': True}" required="1"/>
+                                            <field name="services" required="1" domain="[('id', 'in', parent.services)]"
+                                                   widget="many2many_tags"
+                                                   options="{'no_create': True,'no_open': True}"/>
+                                            <field name="service_related" invisible="1"/>
+                                            <field name="location_id" optional="hide" required="1"
+                                                   options="{'no_create': True,'no_open': True}"
+                                                   context="{'view_only_name': True}" domain="[('name','ilike','Tủ')]" readonly="1" force_save="1"/>
+                                            <field name="explanation_supply" optional="show" attrs="{'required':[('is_diff_bom', '=', True)]}"/>
+                                            <field name="notes" optional="show" attrs="{'required':[('explanation_supply', '=', 'other')]}"/>
+                                            <field name="is_diff_bom" invisible="1"/>
+                                            <button readonly="True" icon="fa-warning text-warning"
+                                                    title="Tủ trực không đủ số lượng"
+                                                    attrs="{'invisible': ['|',('is_warning_location', '=', False),('parent.state','in',['Done','Signed'])]}"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <!--                                    <group string="Medicines">-->
+                                <!--                                        <field name="medicines" nolabel="1">-->
+                                <!--                                            <tree string="Medicines" editable="bottom">-->
+                                <!--                                                <field name="medicine"/>-->
+                                <!--                                                <field name="qty" readonly="1" force_save="1"/>-->
+                                <!--                                                <field name="qty_used"/>-->
+                                <!--                                                <field name="uom_id"/>-->
+                                <!--                                                <field name="notes"/>-->
+                                <!--                                            </tree>-->
+                                <!--                                        </field>-->
+                                <!--                                    </group>-->
+                                <!--                                </group>-->
+                            </page>
+                        </notebook>
+                    </sheet>
+<!--                    <div class="oe_chatter" style="display:none;">-->
+<!--                        &lt;!&ndash;                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>&ndash;&gt;-->
+<!--                        &lt;!&ndash;                        <field name="activity_ids" widget="mail_activity"/>&ndash;&gt;-->
+<!--                        <field name="message_ids" widget="mail_thread"/>-->
+<!--                    </div>-->
+                </form>
+            </field>
+        </record>
+
+        <record id="phieu_phau_thua_thu_thuat_action" model="ir.actions.act_window">
+            <field name="name">Phẫu thuật - Thủ thuật</field>
+            <field name="res_model">sh.medical.surgery</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('phieu_phau_thua_thu_thuat_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('phieu_phau_thua_thu_thuat_form')})]"/>
+            <field name="search_view_id" ref="phieu_phau_thua_thu_thuat_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Chưa có phiếu Phẫu thuật - Thủ thuật
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

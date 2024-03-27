@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="service_sale_report_wizard" model="ir.ui.view">
+            <field name="name">Báo doanh thu thực hiện dịch vụ</field>
+            <field name="model">service.sale.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="date_from" required="1"/>
+                            </group>
+                            <group>
+                                <field name="date_to" required="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="company_id" options="{'no_create': True, 'no_open': True}" force_save="1"/>
+                        </group>
+                        <footer>
+                            <button name="action_export" string="Xuất" type="object" class="btn-primary"/>
+                            <button special="cancel" string="Huỷ" type="object" class="btn-secondary"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_service_sale_report" model="ir.actions.act_window">
+            <field name="name">Báo cáo thu thực hiện dịch vụ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">service.sale.report</field>
+            <field name="view_id" ref="service_sale_report_wizard"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem
+                name="Báo cáo doanh thu thực hiện dịch vụ"
+                action="action_wizard_service_sale_report"
+                id="menu_fixed_account_report"
+                parent="sale.menu_sale_report"
+                sequence="8"
+                />
+    </data>
+</odoo>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_crm_line_view_inherit" model="ir.ui.view">
+			<field name="name">crm_hh_ehc_crm_line_view_inherit</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='crm_line_ids']//form//group//group[1]" position="after">
+					<group name="ehc" string="Thông tin EHC" attrs="{'invisible': [('is_hh', '!=', True)]}">
+						<field name="key_data_master" invisible="0"/>
+						<field name="key_data" invisible="0"/>
+						<field name="service_order_form_id" invisible="1"/>
+						<field name="service_order_form_code" invisible="1"/>
+						<field name="service_object"/>
+						<field name="service_designated_date"/>
+						<field name="service_date"/>
+						<field name="service_result_day"/>
+						<field name="service_designator"/>
+						<field name="service_executor"/>
+						<field name="service_result_payer"/>
+						<field name="service_result_payer"/>
+						<field name="service_designated_room"/>
+						<field name="service_implementation_room"/>
+						<field name="service_result_room"/>
+						<field name="service_status"/>
+						<field name="allotted" invisible="1"/>
+						<field name="is_hh" invisible="1"/>
+						<field name="create_phone_call" invisible="1"/>
+						<field name="source_payment" invisible="0"/>
+					</group>
+				</xpath>
+			</field>
+		</record>
+	
+	</data>
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_crm_line_guarantee" model="ir.ui.view">
+            <field name="name">view.form.crm.line.guarantee</field>
+            <field name="model">crm.line</field>
+            <field name="inherit_id" ref="crm_base.form_crm_line"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type_guarantee']" position="replace">
+                    <field name="type_guarantee_2"/>
+                    <field name="reason_guarantee_id"/>
+                    <field name="user_guarantee"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="crm_lead_form_booking_guarantee" model="ir.ui.view">
+            <field name="name">crm.lead.form.booking.guarantee</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type_guarantee']" position="replace">
+                    <field name="type_guarantee" invisible="1"/>
+                    <field name="type_guarantee_2" readonly="1" attrs="{'readonly':['|',('parent.type_price_list','!=','guarantee'),('type_guarantee','!=',False)],
+                                                           'required': ['|',('type_pricelist','=','guarantee'),('initial_product_id','!=',False)],
+                                                           'invisible':[('parent.type_price_list','!=','guarantee')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='bh_ngoai_goi']" position="replace">
+                    <field name="reason_guarantee_id" readonly="1" attrs="{'invisible':[('parent.type_price_list','!=','guarantee')], 'required': ['|',('type_pricelist','=','guarantee'),('initial_product_id','!=',False)]}"/>
+                    <field name="user_guarantee" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

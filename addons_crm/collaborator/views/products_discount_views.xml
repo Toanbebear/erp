@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--#Bảng giá chiết khấu ̀ hoa hồng dịch vụ cho ctv-->
+        <record id="view_form_collaborator_products_discount" model="ir.ui.view">
+            <field name="name">Bảng giá chiết khấu sản phẩm</field>
+            <field name="model">products.discount</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="set_to_new" type="object" string="Được sử dụng" class="btn-info"
+                                confirm="Bạn có chắc muốn sử dụng?" title="Xác nhận loại hợp đồng sẽ có hiệu lực"
+                                attrs="{'invisible':[('state','!=','draft')]}"
+                                groups="collaborator.collaborator_group_manager"/>
+                        <button name="set_to_draft" type="object" string="Mở lại" class="btn-info"
+                                attrs="{'invisible':[('state','!=','new')]}"
+                                groups="collaborator.collaborator_group_manager"
+                                confirm="Bạn có chắc muốn mở lại hợp đồng?" title="Mở lại để sửa hợp đồng"/>
+                        <button name="reopen_contract" type="object" string="Cập nhật" class="btn-info"
+                                title="Cập nhật những thông tin đã sửa cho loại hợp đồng"
+                                attrs="{'invisible':[('state','!=','open')]}"
+                                groups="collaborator.collaborator_group_manager"/>
+                        <button name="set_to_cancel" type="object" string="Hủy" class="btn-danger"
+                                title="Hủy loại hợp đồng"
+                                attrs="{'invisible':[('state','!=','new')]}"
+                                groups="collaborator.collaborator_group_manager"/>
+                        <field name="state" statusbar_visible="draft,new" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group string="Thông tin">
+                            <group>
+                                <field name="name" required="True"
+                                       attrs="{'readonly':[('state','in', ('new','cancel'))]}"/>
+                                <field name="company_id" options="{'no_create': True, 'no_open': True}"
+                                       attrs="{'readonly':[('state','in', ('new','cancel'))]}"/>
+                                <field name="brand_id" options="{'no_create': True, 'no_open': True}" readonly="True"/>
+                                <field name="price_list_id" required="True"
+                                       options="{'no_create': True, 'no_open': True}"
+                                       attrs="{'readonly':[('state','in', ('new','cancel'))]}"/>
+<!--                                <field name="discount_percent" required="True" force_save="True"-->
+<!--                                       attrs="{'readonly':[('state','in', ('new','cancel'))]}"/>-->
+                            </group>
+                            <group>
+                                <field name="create_uid" force_save="True" readonly="True" string="Người tạo"/>
+                                <field name="description" string="Ghi chú"
+                                       attrs="{'readonly':[('state','in', ('new','cancel'))]}"/>
+                            </group>
+                            <group string="Thông tin hủy dịch vụ"
+                                   attrs="{'invisible':[('state','!=','cancel')]}">
+                                <field name="cancel_reason" string="Lý do hủy dịch vụ"
+                                       attrs="{'invisible':[('cancel_reason','=',False)]}"
+                                       readonly="True"/>
+                                <field name="note" optional="hide" string="Ghi chú"
+                                       attrs="{'invisible':[('cancel_reason','=',False)]}"
+                                       readonly="True"/>
+                                <field name="cancel_user"
+                                       options="{'no_create':True}" readonly="True"
+                                       attrs="{'invisible':[('cancel_user','=',False)]}"/>
+                                <field name="cancel_date" readonly="True"
+                                       attrs="{'invisible':[('cancel_date','=',False)]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Dịch vụ/Sản phẩm">
+                                <field name="service_id" attrs="{'readonly':[('state','in', ('new','cancel'))]}"
+                                       options="{'no_open':True,'no_create':True}">
+                                    <tree>
+<!--                                        <field name="service_category" optional="show" width="40%"/>-->
+                                        <field name="default_code" optional="show" width="40%"/>
+                                        <field name="name" optional="show" width="40%"/>
+<!--                                        <field name="his_service_type" optional="hide" width="40%"/>-->
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                    <div class="crm_lead_box_change_infor">
+                        <div class="col-lg-12">
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm tạo:
+                                <strong>
+                                    <field name="create_date" readonly="True" force_save="True"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Tạo bởi:
+                                <strong>
+                                    <field name="create_uid" readonly="True" force_save="True"
+                                           options="{'no_open':True,}"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm cập nhật:
+                                <strong>
+                                    <field name="write_date"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Cập nhật bởi:
+                                <strong>
+                                    <field name="write_uid"/>
+                                </strong>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="collaborator_products_discount_search" model="ir.ui.view">
+            <field name="name">source ctv products Search</field>
+            <field name="model">products.discount</field>
+            <field name="arch" type="xml">
+                <search string="state Search">
+                    <field name="name" string="loại hợp đồng"/>
+                    <group>
+                        <filter string="Trạng Thái" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Thương hiệu" name="group_brand_id" context="{'group_by': 'brand_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_tree_collaborator_products_discount" model="ir.ui.view">
+            <field name="name">Bảng giá chiết khấu sản phẩm</field>
+            <field name="model">products.discount</field>
+            <field name="arch" type="xml">
+                <tree decoration-success="state=='new'"
+                      decoration-danger="state=='cancel'"
+                      decoration-warning="state=='open'"
+                      default_order="create_date desc">
+                    <field name="name"/>
+                    <field name="company_id"/>
+                    <field name="brand_id"/>
+<!--                    <field name="discount_percent"/>-->
+                    <field name="create_uid" string="Người tạo"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+        <record id="action_open_view_collaborator_products_discount" model="ir.actions.act_window">
+            <field name="name">Loại hợp đồng</field>
+            <field name="res_model">products.discount</field>
+            <field name="view_mode">tree,form</field>
+            <!--            <field name="context">{'search_default_group_default_code_id':True}</field>-->
+        </record>
+    </data>
+</odoo>

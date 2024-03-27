@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_debt_review_inherit_walkin" model="ir.ui.view">
+            <field name="name">crm_debt_review_inherit_walkin</field>
+            <field name="model">crm.debt.review</field>
+            <field name="inherit_id" ref="crm_base.debt_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_id']" position="before">
+                    <field name="walkin_id" attrs="{'readonly': [('stage', '!=', 'offer')]}" options="{'no_open':True,'no_create':True}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

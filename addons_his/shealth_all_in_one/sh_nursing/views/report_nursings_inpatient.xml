@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    IN PHIẾU LƯU BỆNH NHÂN - TỜ ĐIỀU TRỊ-->
+<template id="report_sh_medical_nursings_inpatient_document">
+    <t t-call="web.external_layout">
+        <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].patient.partner_id.lang})"/>
+        <t t-set="o" t-value="o.with_user(1)"/>
+        <div class="page" style="font-family:Times New Roman;font-size:20px;">
+            <div class="oe_structure"/>
+            <div class="row mt32 mb32">
+                <div class="col-4" style="font-size:17px;">
+                    <div class="m-0" t-field="o.institution.name" style="text-transform: uppercase;font-weight:bold;"/>
+                    <div><span class="m-0" t-field="o.institution.street"/>,
+                        <span class="m-0" t-field="o.institution.street2"/>,
+                        <span class="m-0" t-field="o.institution.city"/>
+                    </div>
+                    <div class="m-0" t-if="o.ward.name"><span t-field="o.ward.name"/></div>
+                </div>
+                <div class="col-4 text-center">
+                    <div style="font-size: 29px;"><b>PHIẾU THEO DÕI BỆNH NHÂN LƯU</b></div>
+                    <t t-set="num_roundings" t-value="0"></t>
+                    <t t-set="total_nursings" t-value="o.get_total_nursing_day()"/>
+                    <div>Số ngày chăm sóc: <strong t-esc="total_nursings"/> ngày</div>
+                </div>
+                <div class="col-4 text-center">
+                    <div><strong style="font-size:16px;margin-left:35px;">Số vào viện: <span t-field="o.name"/></strong></div>
+                    <div><strong style="font-size:16px;margin-left:28px;">Mã BN: <span t-field="o.patient.code_customer"/></strong></div>
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.code_customer, 230, 30)"/>
+                </div>
+            </div>
+
+                <t t-if="o.patient">
+                  <div class="col-12">
+                    <span>Họ tên người bệnh:</span>
+                    <b style="text-transform: uppercase;" class="mr-5" t-field="o.patient.name"/>
+                    <span>Tuổi:</span>
+                    <strong class="mr-5" t-field="o.patient.age"/>
+                    <span>Giới tính:</span>
+                    <strong t-field="o.patient.gender"/>
+                  </div>
+                  <div class="col-12">
+                      <span>Ngày vào viện:</span>
+                      <strong t-field="o.walkin.date" class="mr-5"/>
+                      <span>Ngày vào khoa:</span>
+                      <strong t-field="o.admission_date"/>
+                  </div>
+                  <div class="col-12">
+                      <span>Số giường:</span>
+                      <strong t-field="o.bed" class="mr-5"/>
+                      <span>Buồng:</span>
+                      <strong t-field="o.room"/>
+                  </div>
+                  <div class="col-12">
+                      <span>Chẩn đoán:</span>
+                      <strong t-esc="'; '.join(o.services.mapped('name'))"/>
+                  </div>
+                </t>
+
+            <table class="table border border-dark text-center">
+                <thead style="display: table-header-group;">
+                    <tr>
+                        <th colspan="2" class="border border-dark align-middle"><strong>Thời gian</strong></th>
+                        <th colspan="3" class="border border-dark align-middle"><strong>Tờ điều trị</strong></th>
+                    </tr>
+                    <tr>
+                        <th class="border border-dark align-middle"><strong>Ngày</strong></th>
+                        <th class="border border-dark align-middle"><strong>Giờ,Phút</strong></th>
+                        <th class="border border-dark align-middle"><strong>Diễn biến bệnh</strong></th>
+                        <th width="50%" class="border border-dark align-middle"><strong>Y lệnh</strong></th>
+                        <th class="border border-dark align-middle"><strong>Bác sĩ chỉ định</strong></th>
+                    </tr>
+                </thead>
+<!--                <tbody>-->
+                    <t t-if="o.roundings">
+                        <t t-foreach="o.roundings" t-as="line">
+                            <tr t-if="line">
+                                <td class="border border-dark align-middle">
+                                    <strong t-esc="line.evaluation_start_date.strftime('%d/%m/%Y')"/>
+                                </td>
+                                <td class="border border-dark align-middle">
+                                    <span t-esc="line.evaluation_start_date.strftime('%H:%M')"/>
+                                </td>
+                                <td class="border border-dark align-middle text-left"><span t-field="line.round_summary"/></td>
+                                <t t-set="line_medicines" t-value="line.medicaments.filtered(lambda m: m.medicament_type == 'Medicine')"/>
+                                <td class="border border-dark align-middle text-left">
+                                    <t t-set="i" t-value="0"/>
+                                    <t t-foreach="line_medicines" t-as="m_line">
+                                        <t t-set="i" t-value="i + 1"/>
+                                        <t t-esc="i"/>. <strong class="m-0" t-field="m_line.medicine.name"/> x <strong class="m-0" t-field="m_line.qty"/> <strong class="m-0" t-field="m_line.uom_id.name"/><br/> - Cách dùng: <span class="m-0" t-field="m_line.indications.name"/><br/> - Liều dùng: <span class="m-0" t-field="m_line.dosage"/><br/>
+                                    </t>
+                                </td>
+                                <td class="border border-dark align-middle"><span t-field="line.doctor.name"/></td>
+                            </tr>
+                        </t>
+                    </t>
+<!--                </tbody>-->
+            </table>
+            <div class="oe_structure"/>
+        </div>
+   </t>
+</template>
+
+<template id="report_sh_medical_nursings_inpatient">
+    <t t-call="web.html_container">
+        <t t-if="docs">
+            <t t-call="shealth_all_in_one.report_sh_medical_nursings_inpatient_document" t-lang="docs[0].patient.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+    <!--    IN PHIẾU LƯU BỆNH NHÂN - PHIẾU CHĂM SÓC -->
+<template id="report_sh_medical_nursings_inpatient_chamsoc_document">
+    <t t-call="web.external_layout">
+        <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].patient.partner_id.lang})"/>
+        <t t-set="o" t-value="o.with_user(1)"/>
+        <div class="page" style="font-family:Times New Roman;font-size:20px;">
+            <div class="oe_structure"/>
+            <div class="row mt32 mb32">
+                <div class="col-4" style="font-size:17px;">
+                    <div class="m-0" t-field="o.institution.name" style="text-transform: uppercase;font-weight:bold;"/>
+                    <div><span class="m-0" t-field="o.institution.street"/>,
+                        <span class="m-0" t-field="o.institution.street2"/>,
+                        <span class="m-0" t-field="o.institution.city"/>
+                    </div>
+                    <div class="m-0" t-if="o.ward.name"><span t-field="o.ward.name"/></div>
+                </div>
+                <div class="col-4 text-center">
+                    <div style="font-size: 29px;"><b>PHIẾU THEO DÕI BỆNH NHÂN LƯU</b></div>
+                    <t t-set="num_roundings" t-value="0"></t>
+                    <t t-set="total_nursings" t-value="o.get_total_nursing_day()"/>
+                    <div>Số ngày chăm sóc: <strong t-esc="total_nursings"/> ngày</div>
+                </div>
+                <div class="col-4 text-center">
+                    <div><strong style="font-size:16px;margin-left:35px;">Số vào viện: <span t-field="o.name"/></strong></div>
+                    <div><strong style="font-size:16px;margin-left:28px;">Mã BN: <span t-field="o.patient.code_customer"/></strong></div>
+                    <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.code_customer, 230, 30)"/>
+                </div>
+            </div>
+
+                <t t-if="o.patient">
+                  <div class="col-12">
+                    <span>Họ tên người bệnh:</span>
+                    <b style="text-transform: uppercase;" class="mr-5" t-field="o.patient.name"/>
+                    <span>Tuổi:</span>
+                    <strong class="mr-5" t-field="o.patient.age"/>
+                    <span>Giới tính:</span>
+                    <strong t-field="o.patient.gender"/>
+                  </div>
+                  <div class="col-12">
+                      <span>Ngày vào viện:</span>
+                      <strong t-field="o.walkin.date" class="mr-5"/>
+                      <span>Ngày vào khoa:</span>
+                      <strong t-field="o.admission_date"/>
+                  </div>
+                  <div class="col-12">
+                      <span>Số giường:</span>
+                      <strong t-field="o.bed" class="mr-2"/>
+                      <span>Buồng:</span>
+                      <strong t-field="o.room" class="mr-3"/>
+                  </div>
+                  <div class="col-12">
+                      <span>Chẩn đoán:</span>
+                      <strong t-esc="'; '.join(o.services.mapped('name'))"/>
+                  </div>
+                </t>
+
+            <table class="table border border-dark text-center">
+                <tr>
+                    <th rowspan="2" class="border border-dark align-middle"><strong>Ngày</strong></th>
+                    <th rowspan="2" class="border border-dark align-middle"><strong>Giờ,Phút</strong></th>
+                    <th colspan="3" class="border border-dark align-middle"><strong>Phiếu chăm sóc</strong></th>
+                </tr>
+                <tr>
+                    <th class="border border-dark align-middle"><strong>Theo dõi diễn biến bệnh lý</strong></th>
+                    <th class="border border-dark align-middle"><strong>Thực hiện y lệnh chăm sóc</strong></th>
+                    <th class="border border-dark align-middle"><strong>Điều dưỡng chăm sóc</strong></th>
+                </tr>
+                <t t-if="o.roundings">
+                    <t t-foreach="o.roundings" t-as="line">
+                        <tr t-if="line">
+                            <td class="border border-dark align-middle">
+                                <div>
+                                    <strong t-esc="line.evaluation_start_date.strftime('%d/%m/%Y')"/>
+                                </div>
+                            </td>
+                            <td class="border border-dark align-middle">
+                                <div>
+                                    <span t-esc="line.evaluation_start_date.strftime('%H:%M')"/>
+                                </div>
+                            </td>
+                            <td class="border border-dark align-middle text-left"><span t-field="line.follow_round_summary"/></td>
+                            <td class="border border-dark align-middle text-left"><span t-field="line.execute"/></td>
+                            <td class="border border-dark align-middle"><span t-field="line.physician.name"/></td>
+                        </tr>
+                    </t>
+                </t>
+            </table>
+            <div class="oe_structure"/>
+        </div>
+   </t>
+</template>
+
+<template id="report_sh_medical_nursings_inpatient_chamsoc">
+    <t t-call="web.html_container">
+        <t t-if="docs">
+            <t t-call="shealth_all_in_one.report_sh_medical_nursings_inpatient_chamsoc_document" t-lang="docs[0].patient.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+
+</odoo>

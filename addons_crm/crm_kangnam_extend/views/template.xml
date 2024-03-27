@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="Button Highest" inherit_id="web.assets_backend">
+            <xpath expr=".">
+                <link rel="stylesheet" type="text/css" href="/crm_kangnam_extend/static/src/css/button_highest.css"/>
+                <script type="text/javascript" src="/crm_kangnam_extend/static/src/js/widget_datetime.js"></script>
+            </xpath>
+        </template>
+    </data>
+</odoo>

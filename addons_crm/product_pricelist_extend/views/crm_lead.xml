@@ -1,0 +1,388 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_booking_pricelist_new" model="ir.ui.view">
+            <field name="name">crm.booking.pricelist.new</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_kangnam_extend.crm_kangnam_crm_lead_view_form_extend"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='service']" position="replace">
+                    <group string="Dịch vụ" name="service">
+                        <field name="product_id"
+                               options="{'no_open':True,'no_create':True}"
+                               required="True" groups="base.group_erp_manager" readonly="True" invisible="True"
+                               force_save="True"/>
+                        <field name="odontology" groups="base.group_erp_manager"
+                               attrs="{'invisible':[('parent.type_brand','!=', 'hospital')]}"/>
+                        <field name="type_brand" invisible="1"/>
+                        <field name="institution" invisible="True"/>
+                        <field name="institution_shared"
+                               attrs="{'invisible': [('type_brand', '!=', 'hospital')]}"
+                               widget="many2many_tags"/>
+                        <field name="service_id"
+                               attrs="{'required': [('type_brand', '=', 'hospital')],'readonly':['|',('prg_ids','!=', []), ('stage','not in',['new', 'chotuvan'])]}"
+                               domain="[('institution', 'in', institution_shared)]"
+                               options="{'no_open':True,'no_create':True}"/>
+                        <field name="teeth_ids"
+                               attrs="{'invisible':[('odontology','=', False)],'readonly':['|',('prg_ids','!=', []), ('stage','not in',['new', 'chotuvan'])]}"
+                               widget="many2many_tags"/>
+                        <field name="exam_room_ids"
+                               attrs="{'invisible': [('type_brand', '!=', 'hospital')]}"
+                               widget="many2many_tags" groups="base.group_erp_manager"/>
+                        <field name="allow_adjust_unit_price" invisible="1"/>
+                        <field name="is_input_num" readonly="True" invisible="True"/>
+                        <field name="uom_price" string="Đơn vị xử lý(cm2/vùng/răng)"
+                               attrs="{'invisible':[('type_brand','=','academy')],'readonly':['|',('prg_ids','!=', []), ('stage','not in',['new', 'chotuvan'])]}"
+                               required="True" force_save="True"/>
+                        <field name="product_ctg_id"
+                               options="{'no_open':True,'no_create':True}"
+                               invisible="True"/>
+                        <field name="quantity" string="Số lượng (lần/buổi)" required="True"
+                               attrs="{'readonly':['|',('prg_ids','!=', []), ('stage','not in',['new', 'chotuvan'])]}"/>
+                        <field name="is_treatment"
+                               attrs="{'invisible': ['|',('type_brand', '!=', 'hospital'),('quantity','!=',1)]}"/>
+                        <field name="unit_price" required="True" readonly="False"
+                               attrs="{'readonly':[('allow_adjust_unit_price','=', False)]}"
+                               force_save="True"/>
+                        <field name="price_list_id" invisible="1"/>
+                        <field name="is_price_min_max" invisible="1"/>
+                        <field name="price_min" readonly="True" force_save="True" string="Giá tối thiểu"
+                               attrs="{'invisible':[('is_price_min_max','=', False)]}"/>
+                        <label for="discount_mkt" string="Giảm giá MKT"
+                               style="font-size:14px; font-weight: bold !important;"/>
+                        <div>
+                            <field name="discount_mkt" readonly="True" force_save="True"/>
+                            <span>(</span>
+                            <field name="discount_mkt_percent" readonly="1"/>
+                            <span>%)</span>
+                        </div>
+                        <label for="discount_percent" string="Giảm giá %" class="ml-4"/>
+                        <div>
+                            <field name="discount_percent" readonly="True" force_save="True" string="Giảm giá %"/>
+                        </div>
+                        <label for="discount_cash" string="Giảm giá TM" class="ml-4"/>
+                        <div>
+                            <field name="discount_cash" readonly="True" force_save="True" string="Giảm giá TM"/>
+                        </div>
+                        <label for="other_discount" string="Giảm khác" class="ml-4"/>
+                        <div>
+                            <field name="other_discount" readonly="True" force_save="True" string="Giảm khác"/>
+                        </div>
+                        <label for="sale_to" string="Giảm còn" class="ml-4"/>
+                        <div>
+                            <field name="sale_to" readonly="True" force_save="True" string="Giảm còn"/>
+                        </div>
+                        <label for="discount_cs" string="Giảm giá cơ sở"
+                               style="font-size:14px; font-weight: bold !important;"/>
+                        <br/>
+                        <label for="discount_cs_percent" string="Giảm giá %" class="ml-4"/>
+                        <div>
+                            <field name="discount_cs_percent" string="Giảm giá %"
+                                   attrs="{'readonly':['|', ('stage','not in', ('chotuvan', 'new')), ('is_price_min_max','=',False)]}"/>
+                        </div>
+                        <label for="discount_cs_amount" string="Giảm giá TM" class="ml-4"/>
+                        <div>
+                            <field name="discount_cs_amount" string="Giảm giá TM"
+                                   attrs="{'readonly':['|', ('stage','not in', ('chotuvan', 'new')), ('is_price_min_max','=',False)]}"/>
+                        </div>
+                        <label for="total_discount_review" string="Giảm giá sâu" class="ml-4"/>
+                        <div>
+                            <field name="total_discount_review" readonly="True"/>
+                        </div>
+                        <field name="total_before_discount" string="Tổng tiền trước giảm"/>
+                        <label for="total_discount" string="Tổng tiền đã giảm"/>
+                        <div>
+                            <field name="total_discount" string="Tổng tiền đã giảm" readonly="1"/>
+                            <span>(</span>
+                            <field name="percent_total_discount" string="Tổng tiền đã giảm" readonly="1"/>
+                            <span>%)</span>
+                        </div>
+                        <field name="total" string="Tổng tiền phải thu"
+                               class="red_color_bold"/>
+                        <!--                                                    <field name="voucher_id" invisible="True"/>-->
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='discount_percent']" position="replace">
+                    <field name="discount_mkt" optional="hide" width="10%" string="Giảm giá"/>
+                    <field name="discount_percent" optional="show" width="10%" string="Giảm giá %"/>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='discount_cash']" position="replace">
+                    <field name="discount_cash" optional="show" width="10%" string="Giảm giá tiền mặt"/>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='total_before_discount']" position="before">
+                    <field name="discount_cs_percent" optional="show" width="10%" string="Giảm giá cơ sở %"/>
+                    <field name="discount_cs_amount" optional="show" width="10%" string="Giảm giá cơ sở tiền mặt"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="crm_kangnam_lead_view_form_discount_cs" model="ir.ui.view">
+            <field name="name">crm.kangnam.lead.view.form.discount.cs</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_kangnam_extend.crm_kangnam_lead_view_form_extend"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='discount_percent']" position="replace">
+                    <field name="discount_percent" optional="hide" width="10%" string="Giảm giá %"/>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='discount_cash']" position="replace">
+                    <field name="discount_cash" optional="hide" width="10%" string="Giảm giá tiền mặt"/>
+                    <field name="discount_cs_percent" optional="show" width="10%" string="Giảm giá cơ sở %"/>
+                    <field name="discount_cs_amount" optional="show" width="10%" string="Giảm giá cơ sở tiền mặt"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='discount_cash']" position="replace">
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='discount_percent']" position="replace">
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='unit_price']" position="after">
+                    <field name="is_price_min_max" invisible="1"/>
+                    <field name="price_min" readonly="True" force_save="True" string="Giá tối thiểu"
+                           attrs="{'invisible':[('is_price_min_max','=', False)]}"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='sale_to']" position="replace">
+                    <label for="discount_mkt" string="Giảm giá MKT"
+                           style="font-size:14px; font-weight: bold !important;"/>
+                    <div>
+                        <field name="discount_mkt" readonly="True" force_save="True"/>
+                        <span>(</span>
+                        <field name="discount_mkt_percent" readonly="1"/>
+                        <span>%)</span>
+                    </div>
+                    <label for="discount_percent" string="Giảm giá %" class="ml-4"/>
+                    <div>
+                        <field name="discount_percent" readonly="True" force_save="True" string="Giảm giá %"/>
+                    </div>
+                    <label for="discount_cash" string="Giảm giá TM" class="ml-4"/>
+                    <div>
+                        <field name="discount_cash" readonly="True" force_save="True" string="Giảm giá TM"/>
+                    </div>
+                    <label for="other_discount" string="Giảm khác" class="ml-4"/>
+                    <div>
+                        <field name="other_discount" readonly="True" force_save="True" string="Giảm khác"/>
+                    </div>
+                    <label for="sale_to" string="Giảm còn" class="ml-4"/>
+                    <div>
+                        <field name="sale_to" readonly="True" force_save="True" string="Giảm còn"/>
+                    </div>
+                    <label for="discount_cs" string="Giảm giá cơ sở"
+                           style="font-size:14px; font-weight: bold !important;"/>
+                    <br/>
+                    <label for="discount_cs_percent" string="Giảm giá %" class="ml-4"/>
+                    <div>
+                        <field name="discount_cs_percent" string="Giảm giá %"
+                               attrs="{'readonly':['|', ('stage','not in', ('chotuvan', 'new')), ('is_price_min_max','=',False)]}"/>
+                    </div>
+                    <label for="discount_cs_amount" string="Giảm giá TM" class="ml-4"/>
+                    <div>
+                        <field name="discount_cs_amount" string="Giảm giá TM"
+                               attrs="{'readonly':['|', ('stage','not in', ('chotuvan', 'new')), ('is_price_min_max','=',False)]}"/>
+                    </div>
+                    <label for="total_discount_review" string="Giảm giá sâu" class="ml-4"/>
+                    <div>
+                        <field name="total_discount_review" readonly="True"/>
+                    </div>
+                    <field name="other_discount" readonly="True" force_save="True"
+                           string="Giảm khác"/>
+                    <field name="total_before_discount" string="Tổng tiền trước giảm"/>
+                    <label for="total_discount" string="Tổng tiền đã giảm"/>
+                    <div>
+                        <field name="total_discount" string="Tổng tiền đã giảm" readonly="1"/>
+                        <span>(</span>
+                        <field name="percent_total_discount" string="Tổng tiền đã giảm" readonly="1"/>
+                        <span>%)</span>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+        <record id="crm_lead_form_booking_pricelist_new" model="ir.ui.view">
+            <field name="name">crm.lead.form.booking.pricelist.new</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='service']" position="replace">
+                    <group string="Dịch vụ" name="service">
+                        <field name="product_id"
+                               options="{'no_open':True,'no_create':True}"
+                               required="True" groups="base.group_erp_manager" readonly="True" invisible="True"
+                               force_save="True"/>
+                        <field name="odontology" groups="base.group_erp_manager"
+                               attrs="{'invisible':[('parent.type_brand','!=', 'hospital')]}"/>
+                        <field name="type_brand" invisible="1"/>
+                        <field name="institution" invisible="True"/>
+                        <field name="institution_shared"
+                               attrs="{'invisible': [('type_brand', '!=', 'hospital')]}"
+                               widget="many2many_tags"/>
+                        <field name="service_id"
+                               attrs="{'required': [('type_brand', '=', 'hospital')],'readonly':['|',('prg_ids','!=', []), ('stage','not in',['new', 'chotuvan'])]}"
+                               domain="[('institution', 'in', institution_shared)]"
+                               options="{'no_open':True,'no_create':True}"/>
+                        <field name="teeth_ids"
+                               attrs="{'invisible':[('odontology','=', False)],'readonly':['|',('prg_ids','!=', []), ('stage','not in',['new', 'chotuvan'])]}"
+                               widget="many2many_tags"/>
+                        <field name="exam_room_ids"
+                               attrs="{'invisible': [('type_brand', '!=', 'hospital')]}"
+                               widget="many2many_tags" groups="base.group_erp_manager"/>
+                        <field name="allow_adjust_unit_price" invisible="1"/>
+                        <field name="is_input_num" readonly="True" invisible="True"/>
+                        <field name="uom_price" string="Đơn vị xử lý(cm2/vùng/răng)"
+                               attrs="{'invisible':[('type_brand','=','academy')],'readonly':['|',('prg_ids','!=', []), ('stage','not in',['new', 'chotuvan'])]}"
+                               required="True" force_save="True"/>
+                        <field name="product_ctg_id"
+                               options="{'no_open':True,'no_create':True}"
+                               invisible="True"/>
+                        <field name="quantity" string="Số lượng (lần/buổi)" required="True"
+                               attrs="{'readonly':['|',('prg_ids','!=', []), ('stage','not in',['new', 'chotuvan'])]}"/>
+                        <field name="is_treatment"
+                               attrs="{'invisible': ['|',('type_brand', '!=', 'hospital'),('quantity','!=',1)]}"/>
+                        <field name="unit_price" required="True" readonly="False"
+                               attrs="{'readonly':[('allow_adjust_unit_price','=', False)]}"
+                               force_save="True"/>
+                        <field name="price_list_id" invisible="1"/>
+                        <field name="is_price_min_max" invisible="1"/>
+                        <field name="price_min" readonly="True" force_save="True" string="Giá tối thiểu"
+                               attrs="{'invisible':[('is_price_min_max','=', False)]}"/>
+                        <label for="discount_mkt" string="Giảm giá MKT"
+                               style="font-size:14px; font-weight: bold !important;"/>
+                        <div>
+                            <field name="discount_mkt" readonly="True" force_save="True"/>
+                            <span>(</span>
+                            <field name="discount_mkt_percent" readonly="1"/>
+                            <span>%)</span>
+                        </div>
+                        <label for="discount_percent" string="Giảm giá %" class="ml-4"/>
+                        <div>
+                            <field name="discount_percent" readonly="True" force_save="True" string="Giảm giá %"/>
+                        </div>
+                        <label for="discount_cash" string="Giảm giá TM" class="ml-4"/>
+                        <div>
+                            <field name="discount_cash" readonly="True" force_save="True" string="Giảm giá TM"/>
+                        </div>
+                        <label for="other_discount" string="Giảm khác" class="ml-4"/>
+                        <div>
+                            <field name="other_discount" readonly="True" force_save="True" string="Giảm khác"/>
+                        </div>
+                        <label for="sale_to" string="Giảm còn" class="ml-4"/>
+                        <div>
+                            <field name="sale_to" readonly="True" force_save="True" string="Giảm còn"/>
+                        </div>
+                        <label for="discount_cs" string="Giảm giá cơ sở"
+                               style="font-size:14px; font-weight: bold !important;"/>
+                        <br/>
+                        <label for="discount_cs_percent" string="Giảm giá %" class="ml-4"/>
+                        <div>
+                            <field name="discount_cs_percent" string="Giảm giá %"
+                                   attrs="{'readonly':[('stage','not in', ('chotuvan', 'new'))]}"/>
+                        </div>
+                        <label for="discount_cs_amount" string="Giảm giá TM" class="ml-4"/>
+                        <div>
+                            <field name="discount_cs_amount" string="Giảm giá TM"
+                                   attrs="{'readonly':[('stage','not in', ('chotuvan', 'new'))]}"/>
+                        </div>
+                        <label for="total_discount_review" string="Giảm giá sâu" class="ml-4"/>
+                        <div>
+                            <field name="total_discount_review" readonly="True"/>
+                        </div>
+                        <field name="total_before_discount" string="Tổng tiền trước giảm"/>
+                        <label for="total_discount" string="Tổng tiền đã giảm"/>
+                        <div>
+                            <field name="total_discount" string="Tổng tiền đã giảm" readonly="1"/>
+                            <span>(</span>
+                            <field name="percent_total_discount" string="Tổng tiền đã giảm" readonly="1"/>
+                            <span>%)</span>
+                        </div>
+                        <field name="total" string="Tổng tiền phải thu"
+                               class="red_color_bold"/>
+                        <!--                                                    <field name="voucher_id" invisible="True"/>-->
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='discount_percent']" position="replace">
+                    <field name="discount_mkt" optional="hide" width="10%" string="Giảm giá"/>
+                    <field name="discount_percent" optional="show" width="10%" string="Giảm giá %"/>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='discount_cash']" position="replace">
+                    <field name="discount_cash" optional="hide" width="10%" string="Giảm giá tiền mặt"/>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='total_before_discount']" position="before">
+                    <field name="discount_cs_percent" optional="show" width="10%" string="Giảm giá cơ sở %"/>
+                    <field name="discount_cs_amount" optional="show" width="10%" string="Giảm giá cơ sở tiền mặt"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="crm_lead_view_form_discount_cs" model="ir.ui.view">
+            <field name="name">crm.lead.view.form.discount_cs</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='discount_percent']" position="replace">
+                    <field name="discount_mkt" optional="hide" width="10%" string="Giảm giá"/>
+                    <field name="discount_percent" optional="show" width="10%" string="Giảm giá %"/>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='discount_cash']" position="replace">
+                    <field name="discount_cash" optional="hide" width="10%" string="Giảm giá tiền mặt"/>
+                    <field name="discount_cs_percent" optional="show" width="10%" string="Giảm giá cơ sở %"/>
+                    <field name="discount_cs_amount" optional="show" width="10%" string="Giảm giá cơ sở tiền mặt"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='discount_cash']" position="replace">
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='discount_percent']" position="replace">
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='unit_price']" position="after">
+                    <field name="is_price_min_max" invisible="1"/>
+                    <field name="price_min" readonly="True" force_save="True" string="Giá tối thiểu"
+                           attrs="{'invisible':[('is_price_min_max','=', False)]}"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='sale_to']" position="replace">
+                    <label for="discount_mkt" string="Giảm giá MKT"
+                           style="font-size:14px; font-weight: bold !important;"/>
+                    <div>
+                        <field name="discount_mkt" readonly="True" force_save="True"/>
+                        <span>(</span>
+                        <field name="discount_mkt_percent" readonly="1"/>
+                        <span>%)</span>
+                    </div>
+                    <label for="discount_percent" string="Giảm giá %" class="ml-4"/>
+                    <div>
+                        <field name="discount_percent" readonly="True" force_save="True" string="Giảm giá %"/>
+                    </div>
+                    <label for="discount_cash" string="Giảm giá TM" class="ml-4"/>
+                    <div>
+                        <field name="discount_cash" readonly="True" force_save="True" string="Giảm giá TM"/>
+                    </div>
+                    <label for="other_discount" string="Giảm khác" class="ml-4"/>
+                    <div>
+                        <field name="other_discount" readonly="True" force_save="True" string="Giảm khác"/>
+                    </div>
+                    <label for="sale_to" string="Giảm còn" class="ml-4"/>
+                    <div>
+                        <field name="sale_to" readonly="True" force_save="True" string="Giảm còn"/>
+                    </div>
+                    <label for="discount_cs" string="Giảm giá cơ sở"
+                           style="font-size:14px; font-weight: bold !important;"/>
+                    <br/>
+                    <label for="discount_cs_percent" string="Giảm giá %" class="ml-4"/>
+                    <div>
+                        <field name="discount_cs_percent" string="Giảm giá %"
+                               attrs="{'readonly':['|', ('stage','not in', ('chotuvan', 'new')), ('is_price_min_max','=',False)]}"/>
+                    </div>
+                    <label for="discount_cs_amount" string="Giảm giá TM" class="ml-4"/>
+                    <div>
+                        <field name="discount_cs_amount" string="Giảm giá TM"
+                               attrs="{'readonly':['|', ('stage','not in', ('chotuvan', 'new')), ('is_price_min_max','=',False)]}"/>
+                    </div>
+                    <label for="total_discount_review" string="Giảm giá sâu" class="ml-4"/>
+                    <div>
+                        <field name="total_discount_review" readonly="True"/>
+                    </div>
+                    <field name="other_discount" readonly="True" force_save="True"
+                           string="Giảm khác"/>
+                    <field name="total_before_discount" string="Tổng tiền trước giảm"/>
+                    <label for="total_discount" string="Tổng tiền đã giảm"/>
+                    <div>
+                        <field name="total_discount" string="Tổng tiền đã giảm" readonly="1"/>
+                        <span>(</span>
+                        <field name="percent_total_discount" string="Tổng tiền đã giảm" readonly="1"/>
+                        <span>%)</span>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

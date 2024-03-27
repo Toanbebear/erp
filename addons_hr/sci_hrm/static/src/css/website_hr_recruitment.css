@@ -1,0 +1,252 @@
+/* view list job recruitment */
+/* Màn hình laptop hoặc desktop lớn*/
+@media (min-width: 1200px){
+.o_search{
+	height: 130px;
+	background-color: #007ac1;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+    align-items: center;
+}
+.o_search .o_name_search{
+	width: 270px;
+	height: 50px;
+}
+
+.o_search .o_industry_search{
+	width: 270px;
+	height: 50px;
+}
+
+.o_search .o_location_search{
+	width: 270px;
+	height: 50px;
+}
+
+.o_search .o_button_search{
+	width: 170px;
+	height: 50px;
+}
+.o_item_01{
+background-color: red;
+margin: 0 10px;
+}
+.o_item_02{
+background-color: green;
+margin: 0 10px;
+}
+.o_item_03{
+background-color: blue;
+margin: 0 10px;
+}
+.o_item_04{
+background-color: yellow;
+margin: 0 10px;
+}
+.list_jobs .box{
+width: 360px;
+height: 240px;
+border: 1px solid #d3d3d3;
+background-color: #f8f8f8;
+padding: 15px;
+}
+}
+/* Màn hình máy tính bảng lớn hoặc máy tính màng hình trung bình */
+@media (min-width: 992px) and (max-width: 1199px){
+.o_search{
+	height: 130px;
+	background-color: #007ac1;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+    align-items: center;
+}
+
+.o_search .o_name_search{
+	width: 200px;
+	height: 50px;
+}
+
+.o_search .o_industry_search{
+	width: 200px;
+	height: 50px;
+}
+
+.o_search .o_location_search{
+	width: 200px;
+	height: 50px;
+}
+
+.o_search .o_button_search{
+	width: 200px;
+	height: 50px;
+}
+.list_jobs .box{
+width: 310px;
+height: 260px;
+border: 1px solid #d3d3d3;
+background-color: #f8f8f8;
+padding: 15px;
+margin:auto;
+}
+}
+/* Màn hình máy tính bảng nhỏ hoặc máy tính màng hình nhỏ */
+@media (min-width: 768px) and (max-width: 991px) {
+.o_search{
+	height: 130px;
+	background-color: #007ac1;
+	text-align: center;
+	display: flex;
+	justify-content: center;
+    align-items: center;
+}
+
+.o_search .o_name_search{
+	width: 150px;
+	height: 50px;
+}
+
+.o_search .o_industry_search{
+	width: 150px;
+	height: 50px;
+}
+
+.o_search .o_location_search{
+	width: 150px;
+	height: 50px;
+}
+
+.o_search .o_button_search{
+	width: 150px;
+	height: 50px;
+}
+.list_jobs .box{
+/* width: 360px; */
+/* height: 240px; */
+height:auto;
+border: 1px solid #d3d3d3;
+background-color: #f8f8f8;
+padding: 15px;
+margin:5px;
+}
+}
+/* Màn hình máy tính bảng rất nhỏ hoặc điện thoại di động */
+@media (max-width: 767px) {
+.o_search{
+	height: auto;
+	background-color: #007ac1;
+	text-align: center;
+	display: flex;
+	justify-content:center;
+    align-items: center;
+}
+
+.o_search .o_name_search{
+	width: 250px;
+	height: 50px;
+}
+
+.o_search .o_industry_search{
+	width: 250px;
+	height: 50px;
+}
+
+.o_search .o_location_search{
+	width: 250px;
+	height: 50px;
+}
+
+.o_search .o_button_search{
+	width: 250px;
+	height: 50px;
+}
+.list_jobs .box{
+width: 350px;
+height: 240px;
+border: 1px solid #d3d3d3;
+background-color: #f8f8f8;
+padding: 15px;
+margin:auto;
+}
+}
+/* Điện thoại di động hoặc màng hình cực nhỏ */
+@media (max-width: 480px) {
+.o_search{
+	height: auto;
+	background-color: #007ac1;
+	text-align: center;
+	display: flex;
+	justify-content:center;
+    align-items: center;
+}
+
+.o_search .o_name_search{
+	width: 250px;
+	height: 50px;
+}
+
+.o_search .o_industry_search{
+	width: 250px;
+	height: 50px;
+}
+
+.o_search .o_location_search{
+	width: 250px;
+	height: 50px;
+}
+
+.o_search .o_button_search{
+	width: 250px;
+	height: 50px;
+}
+.list_jobs .box{
+width: 350px;
+height: 240px;
+border: 1px solid #d3d3d3;
+background-color: #f8f8f8;
+padding: 15px;
+margin:auto;
+}
+}
+
+.list_jobs .title{
+    width: 100%;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+
+/* view job detail */
+.left-col{
+     border: 1px solid #e3dfdf;
+     width: 100%;
+     padding: 25px 30px;
+ }
+.right-col{
+     width: 100%;
+     padding:0px 15px 15px 15px;
+}
+.hr-logo{
+      width: 100px;
+      height: 100px;
+}
+.right-col .box{
+      max-width: 290px;
+      height:auto;
+      border-bottom: 1px solid #d0d3d6
+}
+.card-img{
+      padding-top:5px;
+}
+.card-img img{
+      max-height:100px;
+      overflow:hidden;
+}
+.o_website_form_required .col-form-label:after, .o_website_form_required_custom .col-form-label:after {
+    color: red;
+}
+
+
+

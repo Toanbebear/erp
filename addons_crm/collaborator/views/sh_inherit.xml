@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="collaborator_view_form_service_inherit">
+            <field name="name">CRM HIS 13: Dịch vụ</field>
+            <field name="model">sh.medical.health.center.service</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_service_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='anesthetist_type']" position="after">
+                    <field name="has_created_record" invisible="True"/>
+                    <field name="allow_ctv" required="True" attrs="{'readonly': [('has_created_record', '=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

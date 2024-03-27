@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+       <record id="view_form_crm_sale_inherit_payment" model="ir.ui.view">
+           <field name="name">view_account_payment_inherit_form</field>
+           <field name="model">account.payment</field>
+           <field name="inherit_id" ref="crm_sale_payment.view_form_crm_sale_payment_detail"/>
+           <field name="arch" type="xml">
+               <xpath expr="//field[@name='service_ids']/tree/field[@name='total_before_discount']" position="before">
+                    <field name="allocation_rate" force_save="True" optional="hide"/>
+                   <field name="allocation_amount" readonly="True" optional="hide"/>
+               </xpath>
+           </field>
+       </record>
+    </data>
+</odoo>

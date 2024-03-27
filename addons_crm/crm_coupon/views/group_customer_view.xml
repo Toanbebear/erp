@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="group_customer_form_view">
+            <field name="name">Nhóm khách hàng</field>
+            <field name="model">crm.group.customer</field>
+            <field name="arch" type="xml">
+                <form string='Nhóm khách hàng'>
+                    <group>
+                        <field name="code"/>
+                        <field name="coupon_id" options="{'no_open':True,'no_create':True,'no_delete':True}" domain="[('coupon_type', '=', 5)]"/>
+                        <field name="coupon_detail_id" options="{'no_open':True,'no_create':True,'no_delete':True}" domain="[('discount_program', '=', coupon_id)]"/>
+                    </group>
+                    <group>
+                        <field name="partner_ids" options="{'no_open':True,'no_create':True,'no_delete':True}" widget="many2many_tags"/>
+<!--                        <field name="booking_id"/>-->
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="group_customer_tree_view">
+            <field name="name">Nhóm khách hàng</field>
+            <field name="model">crm.group.customer</field>
+            <field name="arch" type="xml">
+                <tree string='Danh sách nhóm khách hàng' create="false">
+                    <field name="coupon_id" options="{'no_open':True,'no_create':True}"
+                           domain="[('coupon_type', '=', 5), ('stage_prg', '=', 'active'), ('campaign_id.campaign_status', '=', '2')]"/>
+                    <field name="coupon_detail_id"
+                           options="{'no_open':True,'no_create':True}"
+                           domain="[('discount_program', '=', coupon_id), ('discount_program_stage', '=', 'active')]"/>
+                    <field name="partner_ids" widget="many2many_tags" options="{'no_open':True,'no_create':True}"/>
+                    <field name="code"/>
+                    <field name="booking_ids" widget="many2many_tags"/>
+                    <field name="create_date"/>
+                    <field name="status" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_group_customer" model="ir.actions.act_window">
+            <field name="name">Danh sách nhóm khách hàng</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.group.customer</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_group_customer"
+                  name="Danh sách nhóm khách hàng"
+                  parent="crm_base.menu_crm_discount"
+                  action="action_group_customer"
+                  sequence="10"/>
+    </data>
+</odoo>
+                

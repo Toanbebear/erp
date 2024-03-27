@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+       <record id="transfer_payment_form_view" model="ir.ui.view">
+            <field name="name">transfer_payment_form</field>
+            <field name="model">crm.transfer.payment</field>
+            <field name="arch" type="xml">
+                <form string="Form phiếu điều chuyển">
+                    <header>
+                        <button name="action_confirm" string="Xác nhận" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('draft',))]}"/>
+                        <button name="reload" string="Tải lại" type="object" attrs="{'invisible': [('state', 'not in', ('draft',))]}"/>
+                        <button name="calculate_remaining_amount" string="Cập nhật số tiền đã thu" type="object"/>
+<!--                        <button name="action_draft" string="Đưa về dự thảo" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'in', ('draft',))]}"/>-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Title"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="current_date" invisible="1"/>
+                                <field name="payment_date" options="{'datepicker': {'warn_future': true}}"/>
+<!--                                <field name="payment_date" options="{'datepicker': {'warn_future': true, 'minDate': 'current_date'}}"/>-->
+                                <field name="crm_id" required="True" options="{'no_open':False,'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft'),('crm_id','!=',False)]}" force_save="True"/>
+                                <field name="communication"/>
+                            </group>
+                            <group>
+                                <field name="partner_id" options="{'no_open':False,'no_create':True}"/>
+                                <field name="company_id"/>
+                                <field name="brand_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Chi tiết điều chuyển" name="transfer_payment_line">
+                                <field name="is_share_booking" invisible="1"/>
+                                <field name="transfer_payment_line_ids" mode="tree"
+                                       context="{'default_parent_id':active_id}">
+                                    <tree default_order='from_crm_line_id desc,from_crm_line_product_id' editable="bottom">
+                                        <field name="is_block_company" invisible="1"/>
+                                        <field name="domain_company" invisible="1"/>
+                                        <field name="crm_transfer_payment_id" invisible="1"/>
+                                        <field name="state" invisible="1"/>
+                                        <field name="domain_to_crm_line_ids" invisible="1"/>
+                                        <field name="domain_to_crm_line_product_ids" invisible="1"/>
+                                        <field name="from_crm_line_id" domain="[('id','in',domain_to_crm_line_ids)]" options="{'no_create':True, 'no_open':True}" optional="show" force_save="True" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="stage_line_service" optional="show" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="from_crm_line_product_id" domain="[('id','in',domain_to_crm_line_product_ids)]" options="{'no_create':True, 'no_open':True}" optional="show"  force_save="True" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="stage_line_product" optional="show" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <!--                                        <field name="from_company_id" attrs="{'column_invisible': [('parent.is_share_booking', '!=', True)], 'readonly':[('is_block_company','=', True)]}"-->
+                                        <field name="from_department" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="from_company_id" domain="[('id','in', domain_company)]" attrs="{'readonly':['|', ('parent.is_share_booking','=', False), ('state','!=','draft')]}"
+                                               options="{'no_create':True, 'no_open':True}" optional="show" force_save="True"/>
+                                        <field name="total_received" readonly="1" optional="show" force_save="True" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="remaining_amount" readonly="1" optional="show" force_save="True" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="to_crm_line_id" domain="[('id','in',domain_to_crm_line_ids)]" options="{'no_create':True, 'no_open':True}" optional="show" force_save="True" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="to_crm_line_product_id" domain="[('id','in',domain_to_crm_line_product_ids)]" options="{'no_create':True, 'no_open':True}" optional="show" force_save="True" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="to_department" optional="show" force_save="True" attrs="{'readonly': [('to_crm_line_product_id','=', False)]}"/>
+<!--                                        <field name="to_company_id" domain="[('id','in', [-1])]" attrs="{'column_invisible': [('parent.is_share_booking', '!=', True)]}"-->
+                                        <field name="to_company_id" domain="[('id','in', domain_company)]"
+                                               options="{'no_create':True, 'no_open':True}" optional="show" force_save="True" attrs="{'readonly': [('state','!=','draft')]}"/>
+                                        <field name="transfer_amount" attrs="{'readonly': [('state','!=','draft')]}"/>
+<!--                                        <button name="post" string="Xác nhận" type="object"-->
+<!--                                                class="btn-danger" optional="show"-->
+<!--                                                confirm="Bạn có chắc ghi nhận phiếu thanh toán này"-->
+<!--                                                attrs="{'invisible':['|', ('payment_list_state','=', 'draft'), ('state', '!=', 'draft')]}"/>-->
+                                        <field name="crm_transfer_payment_id" invisible="1"/>
+                                        <button name="calculate_remaining_amount" string="calculate_remaining_amount" class="oe_highlight" type="object" invisible="1"/>
+
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <group name="note_group" col="6">
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="amount_subtotal"/>
+                                </div>
+                                <field name="amount_subtotal" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <div class="oe_right oe_inline o_td_label">
+                            <label for="user"/>
+                            <field name="user" readonly="True"/>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="transfer_payment_tree_view" model="ir.ui.view">
+            <field name="name">transfer_payment_list_tree</field>
+            <field name="model">crm.transfer.payment</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách phiếu điều chuyển" default_order="write_date desc">
+                    <field name="name"/>
+                    <field name="crm_id"/>
+                    <field name="amount_subtotal"/>
+                    <field name="communication"/>
+                    <field name="write_date" string="Ngày tạo"/>
+                    <field name="write_uid" string="Tạo bởi"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="transfer_payment_search_view" model="ir.ui.view">
+            <field name="name">phiếu điều chuyển search</field>
+            <field name="model">crm.transfer.payment</field>
+            <field name="arch" type="xml">
+                <search string="Taskbars ">
+                    <field name="name"/>
+                    <field name="crm_id"/>
+                    <field name="partner_id"/>
+                    <group expand="1" string="Group By">
+                        <filter string="Công ty" name="company" context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="transfer_payment_act_window" model="ir.actions.act_window">
+            <field name="name">Phiếu điều chuyển</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.transfer.payment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Phiếu điều chuyển"
+                  id="crm_transfer_payment_menu"
+                  parent="crm_base.crm_menu_payment"
+                  sequence="4"
+                  action="transfer_payment_act_window"/>
+    </data>
+</odoo>

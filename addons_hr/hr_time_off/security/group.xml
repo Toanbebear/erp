@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_attendance_employee_rule" model="ir.rule">
+        <field name="name">Attendance employee rule</field>
+        <field name="model_id" ref="model_hr_attendance"/>
+        <field name="global" eval="True"/>
+         <field name="groups" eval="[(4, ref('hr_attendance.group_hr_attendance_user'))]"/>
+        <field name="domain_force">[('employee_id.user_id','=',user.id)]</field>
+    </record>
+</odoo>

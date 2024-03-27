@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_view_res_partner_add_type_data_partner" model="ir.ui.view">
+            <field name="name">inherit_view_res_partner_add_type_data_partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <group>
+                        <field name="type_data_partner" readonly="True" force_save="True"/>
+                        <field name="return_custom"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

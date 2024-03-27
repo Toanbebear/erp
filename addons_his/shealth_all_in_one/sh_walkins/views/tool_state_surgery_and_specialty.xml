@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="action_done_surgery" model="ir.actions.server">
+            <field name="name">CHỈ CHUYỂN TRẠNG THÁI PHIẾU PTTT (ADMIN)</field>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="model_sh_medical_surgery"/>
+            <field name="binding_model_id" ref="model_sh_medical_surgery"/>
+            <field name="binding_view_types">list</field>
+            <field name="code">
+                records.write({'state': 'Done'})
+            </field>
+            <field name="groups_id" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+
+        <record id="action_done_specialty" model="ir.actions.server">
+            <field name="name">CHỈ CHUYỂN TRẠNG THÁI PHIẾU CHUYÊN KHOA (ADMIN)</field>
+            <field name="type">ir.actions.server</field>
+            <field name="state">code</field>
+            <field name="model_id" ref="model_sh_medical_specialty"/>
+            <field name="binding_model_id" ref="model_sh_medical_specialty"/>
+            <field name="binding_view_types">list</field>
+            <field name="code">
+                records.write({'state': 'Done'})
+            </field>
+            <field name="groups_id" eval="[(4, ref('base.group_system'))]"/>
+        </record>
+    </data>
+</odoo>

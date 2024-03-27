@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_form">
+            <field name="name">Báo cáo Doanh thu thực hiện Dịch vụ bảo hành</field>
+            <field name="model">kpi.service.insurance.perform.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo doanh thu thực hiện dịch vụ bảo hành">
+                    <group>
+                        <field name="start_date" required="True"/>
+                        <field name="end_date" required="True"/>
+                        <field name="type" required="True"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}" required="True"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_service_insurance_perform_report" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_act">
+            <field name="name">Báo cáo Doanh thu thực hiện Dịch vụ bảo hành</field>
+            <field name="res_model">kpi.service.insurance.perform.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_menu"
+                  name="B.II.2 Báo cáo Doanh thu thực hiện Dịch vụ bảo hành"
+                  parent="report_sale.menu_report_brand_donga_thuc_hien_dich_vu_doanh_thu_doanh_so_kpi"
+                  sequence="2"
+                  action="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_act"
+        />
+
+        <record id="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_attachment" model="ir.attachment">
+            <field name="name">Báo cáo Doanh thu thực hiện Dịch vụ bảo hành</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh.xlsx"/>
+            <field name="store_fname">bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh.xls</field>
+        </record>
+    </data>
+</odoo>

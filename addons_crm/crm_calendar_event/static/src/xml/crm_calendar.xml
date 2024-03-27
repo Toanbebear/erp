@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template>
+
+    <t t-name="CalendarView.event.popover1">
+        <div class="o_cw_body">
+            <ul class="list-group list-group-flush">
+                <li t-if="!widget.hideDate and widget.eventDate.date" class="list-group-item">
+                    <i class="fa fa-fw fa-calendar-o"/>
+                    <b class="text-capitalize" t-esc="widget.eventDate.date"/>
+                    <small t-if="widget.eventDate.duration">
+                        <b t-esc="_.str.sprintf('(%s)', widget.eventDate.duration)"/>
+                    </small>
+                </li>
+                <li t-if="!widget.hideTime and widget.eventTime.time" class="list-group-item">
+                    <i class="fa fa-fw fa-clock-o"/>
+                    <b t-esc="widget.eventTime.time"/>
+                    <small t-if="widget.eventTime.duration">
+                        <b t-esc="_.str.sprintf('(%s)', widget.eventTime.duration)"/>
+                    </small>
+                </li>
+            </ul>
+            <ul class="list-group list-group-flush o_cw_popover_fields_secondary"/>
+            <div class="card-footer border-top">
+                <a href="#" class="btn btn-primary o_cw_popover_edit">Edit</a>
+<!--                <a href="#" class="btn btn-primary o_cw_popover_edit2">Đi đến Booking</a>-->
+                <a href="#" class="btn btn-primary o_cw_popover_edit3">Hủy lịch</a>
+            </div>
+        </div>
+    </t>
+
+
+
+    <t t-name="Calendar.attendee.status.popover1" t-extend="CalendarView.event.popover1">
+        <t t-jquery=".o_cw_popover_delete" t-operation="after">
+            <div t-if="widget.showStatusDropdown" class="btn-group o-calendar-attendee-status ml-2">
+                <a href="#" class="btn btn-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                   aria-expanded="false">
+                    <i t-attf-class="fa fa-circle o-calendar-attendee-status-icon #{widget.selectedStatusInfo.color}"/>
+                    <span class="o-calendar-attendee-status-text" t-esc="widget.selectedStatusInfo.text"></span>
+                </a>
+                <div class="dropdown-menu overflow-hidden">
+                    <a class="dropdown-item" href="#" data-action="accepted">
+                        <i class="fa fa-circle text-success"/>
+                        Accept
+                    </a>
+                    <a class="dropdown-item" href="#" data-action="declined">
+                        <i class="fa fa-circle text-danger"/>
+                        Decline
+                    </a>
+                    <a class="dropdown-item" href="#" data-action="tentative">
+                        <i class="fa fa-circle text-muted"/>
+                        Uncertain
+                    </a>
+                </div>
+            </div>
+        </t>
+    </t>
+
+</template>

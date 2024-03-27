@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bao_cao_so_luong_khach_hang_form">
+            <field name="name">Báo cáo số lượng KH</field>
+            <field name="model">report.count.customer</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo dịch vụ thành công">
+                    <group>
+                        <field name="start_date" required="True" string="Từ ngày làm dịch vụ"/>
+                        <field name="end_date" required="True" string="Đến ngày làm dịch vụ"/>
+                        <field name="company_id" required="True" string="Chi nhánh"/>
+                    </group>
+                    <footer>
+                        <button name="create_report" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_so_luong_khach_hang_act">
+            <field name="name">Báo cáo số lượng KH</field>
+            <field name="res_model">report.count.customer</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_so_luong_khach_hang_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_so_luong_khach_hang_menu"
+                  name="A.I.6 Báo cáo số lượng KH"
+                  parent="report_sale.menu_report_brand_sale_marketing_and_accounting_marketing_dong_a"
+                  sequence="6"
+                  action="bao_cao_so_luong_khach_hang_act"
+        />
+
+        <record id="bao_cao_so_luong_khach_hang_attachment" model="ir.attachment">
+            <field name="name">Báo cáo số lượng KH</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_so_luong_khach_hang.xlsx"/>
+            <field name="store_fname">bao_cao_so_luong_khach_hang.xls</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_view_lead_add_customer_classification" model="ir.ui.view">
+            <field name="name">inherit_view_lead_add_customer_classification</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.form_crm_lead"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet/div/h1" position="after">
+                    <div class="oe_left">
+<!--                        <label for="customer_classification" string="Phân loại:"/>-->
+<!--                        <h2>-->
+<!--                            <field name="customer_classification"-->
+<!--                                   options="{'classes': {'1': 'success', '2': 'info', '3': 'warning', '4': 'danger'}}"/>-->
+<!--                        </h2>-->
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

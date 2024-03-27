@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Hợp đồng CTV-->
+        <record id="view_form_collaborators_contract" model="ir.ui.view">
+            <field name="name">Hợp đồng cộng tác viên</field>
+            <field name="model">collaborators.contract</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                        <button name="set_to_new" type="object" string="Được sử dụng" class="btn-info"
+                                confirm="Bạn có chắc muốn sử dụng?"
+                                attrs="{'invisible':[('stage','!=','draft')]}" groups="crm_collaborators.group_collaborators_system"/>
+                        <button name="set_to_draft" type="object" string="Mở lại" class="btn-info"
+                                  attrs="{'invisible':[('stage','!=','new')]}" groups="crm_collaborators.group_collaborators_manager"
+                                  confirm="Bạn có chắc muốn mở lại hợp đồng?"/>
+                        <button name="reopen_contract" type="object" string="Cập nhật" class="btn-info"
+                                  attrs="{'invisible':[('stage','!=','open')]}" groups="crm_collaborators.group_collaborators_system"/>
+                        <button name="set_to_cancel" type="object" string="Hủy" class="btn-danger" title="Hủy loại hợp đồng"
+                                  attrs="{'invisible':[('stage','!=','new')]}" groups="crm_collaborators.group_collaborators_system"/>
+                          <field name="stage" widget="statusbar" statusbar_visible="draft,new"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title" style="width:40%">
+<!--                            <label for="default_code" string="Tên" style="width:50%"/>-->
+                            <h1>
+                                <field name="default_code" placeholder="Describe the lead..." force_save="True"
+                                       style="width:100%" readonly="True" required="True"/>
+                            </h1>
+                        </div>
+                        <group  string="Thông tin">
+                            <group>
+                                <field name="default_code"  readonly="True"/>
+                                <field name="company_id"  readonly="True"/>
+                                <field name="brand_id" options="{'no_create': True, 'no_open': True}" readonly="True"/>
+                                 <field name="category_source_id"  options="{'no_create': True, 'no_open': True}" required="True"
+                                       readonly="True"/>
+                                <field name="source_id" options="{'no_create': True, 'no_open': True}"
+                                       readonly="True"/>
+                                <field name="collaborators_id"  readonly="True" options="{'no_create': True}"/>
+                                <field name="pass_port" readonly="True"/>
+                                <field name="email" readonly="True"/>
+                                <field name="phone"  readonly="True"/>
+                                <field name="mobile"  readonly="True"/>
+                            </group>
+                            <group>
+                                <field name="crm_line_ids" required="True" domain="[('brand_id','=',brand_id), ('state', '=', 'new')]" attrs="{'readonly':[('stage','in', ('new','cancel'))]}" options="{'no_create':True}"/>
+                                <field name="start_date" required="True" attrs="{'readonly':[('stage','not in',('draft','open'))]}"/>
+                                <field name="end_date" required="True" attrs="{'readonly':[('stage','not in',('draft','open'))]}"/>
+                                <field name="documents" filename="document_name" attrs="{'readonly':[('stage','not in',('draft','open'))]}"/>
+                                <field name="document_name" invisible="True"/>
+                            </group>
+                           <group string="Thông tin hủy hợp đồng"
+                                   attrs="{'invisible':[('stage','!=','cancel')]}">
+                                <field name="reason_line_cancel" string="Lý do hủy dịch vụ"
+                                       attrs="{'invisible':[('reason_line_cancel','=',False)]}" readonly="True"/>
+                                <field name="note" optional="hide" string="Ghi chú"
+                                       attrs="{'invisible':[('reason_line_cancel','=',False)]}" readonly="True"/>
+                                <field name="cancel_user" options="{'no_open':True,'no_create':True}" readonly="True"
+                                       attrs="{'invisible':[('cancel_user','=',False)]}"/>
+                                <field name="cancel_date" readonly="True"
+                                       attrs="{'invisible':[('cancel_date','=',False)]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Ghi chú  ">
+                                <group>
+                                    <field name="description" string="Ghi chú" attrs="{'readonly':[('stage','not in',('draft','open'))]}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                    <div class="crm_lead_box_change_infor">
+                        <div class="col-lg-12">
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm tạo:
+                                <strong>
+                                    <field name="create_date" readonly="True" force_save="True"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Tạo bởi:
+                                <strong>
+                                    <field name="create_uid" readonly="True" force_save="True"
+                                           options="{'no_open':True,}"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm cập nhật:
+                                <strong>
+                                    <field name="write_date"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Cập nhật bởi:
+                                <strong>
+                                    <field name="write_uid"/>
+                                </strong>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_collaborators_contract" model="ir.ui.view">
+            <field name="name">Hợp đồng cộng tác viên</field>
+            <field name="model">collaborators.contract</field>
+            <field name="arch" type="xml">
+                <tree  decoration-info="stage=='cancel'"
+                       decoration-success="stage=='new'"
+                       decoration-danger="stage=='done'"
+                       decoration-warning="stage=='open'"
+                       create="false"
+                       default_order="create_date desc" >
+                    <field name="default_code"/>
+                    <field name="company_id"/>
+                    <field name="brand_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="source_id"/>
+                    <field name="collaborators_id"/>
+                    <field name="stage"/>
+                    <field name="create_uid" string="Người tạo"/>
+                    <field name="create_date" string="Ngày tạo"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="collaborators_contract_search" model="ir.ui.view">
+            <field name="name">collaborators - Search</field>
+            <field name="model">collaborators.contract</field>
+            <field name="arch" type="xml">
+                <search string="Stage Search">
+                    <field name="default_code" string="Mã hợp đồng"/>
+                    <field name="collaborators_id" string="Tên cộng tác viên"/>
+                     <group>
+                        <filter string="Tên cộng tác viên" name="group_collaborators" context="{'group_by': 'collaborators_id'}"/>
+                        <filter string="Công ty" name="group_company_id" context="{'group_by': 'company_id'}"/>
+                        <filter string="Trạng Thái" name="group_stage" context="{'group_by': 'stage'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_open_view_collaborators_contract" model="ir.actions.act_window">
+            <field name="name">Hợp đồng cộng tác viên</field>
+            <field name="res_model">collaborators.contract</field>
+            <field name="context">{'search_default_group_collaborators':True, 'search_default_group_company_id':True}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="collaborators_contract_search"/>
+        </record>
+
+
+    </data>
+</odoo>

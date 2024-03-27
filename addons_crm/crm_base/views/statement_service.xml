@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+<!--        <record id="statement_service_form" model="ir.ui.view">-->
+<!--            <field name="name">Form crm line readonly</field>-->
+<!--            <field name="model">crm.line</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form create="false" edit="false" delete="false" duplicate="false">-->
+<!--                    <sheet>-->
+<!--                        <group>-->
+<!--                            <field name="crm_id" options="{'no_open':True,'no_create':True}" string="Booking" readonly="1"/>-->
+<!--                            <field name="product_id" options="{'no_open':True,'no_create':True}" readonly="1"/>-->
+<!--                            <field name="total" readonly="1"/>-->
+<!--                            <field name="source_extend_id" options="{'no_open':True,'no_create':True}"/>-->
+<!--                            <field name="consultants_1" options="{'no_open':True,'no_create':True}"/>-->
+<!--                            <field name="consulting_role_1"/>-->
+<!--                            <field name="consultants_2" options="{'no_open':True,'no_create':True}"/>-->
+<!--                            <field name="consulting_role_2"/>-->
+<!--                            <field name="company_id" options="{'no_open':True,'no_create':True}" readonly="1"/>-->
+<!--                            <field name="company_shared" widget="many2many_tags" readonly="1"/>-->
+<!--                            <field name="stage" readonly="1"/>-->
+<!--                        </group>-->
+<!--                    </sheet>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="tree_statement_service" model="ir.ui.view">
+            <field name="name">Lịch trình thanh toán</field>
+            <field name="model">statement.service</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false" duplicate="false">
+                    <field name="date"/>
+                    <field name="booking_id"/>
+                    <field name="partner_id"/>
+                    <field name="phone" widget="phone"/>
+                    <field name="product_ids" widget="many2many_tags"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="amount"/>
+                    <field name="note"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="statement_service_filter" model="ir.ui.view">
+            <field name="name">Tìm kiếm lịch trình thanh toán</field>
+            <field name="model">statement.service</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="booking_id" filter_domain="[('booking_id','ilike',self)]" string="Booking"/>
+                    <field name="partner_id" filter_domain="[('partner_id','ilike',self)]" string="Khách hàng"/>
+                    <field name="phone" filter_domain="[('phone','ilike',self)]" string="Số điện thoại"/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter name="group_company_id" string="Chi nhánh" context="{'group_by':'company_id'}"/>
+                        <filter name="group_partner_id" string="Khách hàng" context="{'group_by':'partner_id'}"/>
+                        <filter name="group_booking_id" string="Booking"
+                                context="{'group_by':'booking_id'}"/>
+                        <filter name="group_scheduled_date" string="Ngày thanh toán"
+                                context="{'group_by':'scheduled_date:month'}"/>
+                        <!--                    <filter name="group_payment_type" string="Loại thanh toán" context="{'group_by':'payment_type'}"/>-->
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="open_statement_service" model="ir.actions.act_window">
+            <field name="name">Lịch trình thanh toán</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">statement.service</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+# -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+
+from .bao_cao_tong_quan_thuong_hieu import bao_cao_tong_quan_thuong_hieu
+from .bao_cao_doanh_so_theo_nguon import bao_cao_doanh_so_theo_nguon
+from .bao_cao_doanh_so_thuong_hieu_theo_ngay import bao_cao_doanh_so_thuong_hieu_theo_ngay
+from .bao_cao_thong_ke_tuong_tac_theo_nhom_dich_vu import bao_cao_thong_ke_tuong_tac_theo_nhom_dich_vu
+from .bao_thong_ke_tuong_tac_mot_dich_vu_theo_ngay import bao_cao_thong_ke_tuong_tac_mot_dich_vu_theo_ngay
+# from .xuat_lead_bk import xuat_lead_bk
+from .bao_cao_lead_booking import bao_cao_lead_booking
+from .bao_cao_giam_gia_sau import bao_cao_giam_gia_sau
+from .bao_cao_doanh_so_ngay import daily_sales_report
+from .bao_cao_doanh_so_ngay_v2 import report_erp_sale_daily
+from .bao_cao_tnkh import report_tnkh
+from .bao_cao_doanh_thu_ban_san_pham import bao_cao_doanh_thu_ban_san_pham
+from .bao_cao_loc_khach_hang import bao_cao_loc_khach_hang
+from .bao_cao_the_thanh_vien import report_loyalty_card
+from .xuat_du_lieu_khach_hang_ma_hoa import xuat_du_lieu_khach_hang_ma_hoa
+
+

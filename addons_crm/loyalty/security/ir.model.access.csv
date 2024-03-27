@@ -1,0 +1,22 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+user_read_rank_loyalty,User read rank loyalty,model_crm_loyalty_rank,user_loyalty,1,0,0,0
+user_read_line_reward,User read line reward,model_crm_loyalty_line_reward,user_loyalty,1,1,1,0
+user_3_perm_loyalty,User 3 perm loyalty,model_crm_loyalty_card,user_loyalty,1,1,1,0
+user_3_perm_history_rank,User 3 perm history rank,model_crm_loyalty_history_rank,user_loyalty,1,1,1,0
+user_3_perm_loyalty_card,User 3 perm crm loyalty code card,model_crm_loyalty_code_card,user_loyalty,1,1,1,0
+user_3_qr_action_loyalty_card,User 3 perm qr action loyalty card,model_qr_action_loyalty_card,user_loyalty,1,1,1,0
+user_3_perm_scan_loyalty_card,User 3 perm scan loyalty card,model_scan_loyalty_card,user_loyalty,1,1,1,0
+user_3_perm_crm_loyalty_date,User 3 perm loyalty date,model_crm_loyalty_date,user_loyalty,1,1,1,0
+user_3_perm_crm_loyalty_bonus_date,User 3 perm loyalty bonus date,model_crm_loyalty_reward_date_special,user_loyalty,1,1,1,0
+
+system_all_perm_rank_loyalty,System rank loyalty,model_crm_loyalty_rank,sys_loyalty,1,1,1,1
+sys_all_perm_reward,sys all perm line reward,model_crm_loyalty_line_reward,sys_loyalty,1,1,1,1
+sys_all_perm_loyalty,sys all perm loyalty,model_crm_loyalty_card,sys_loyalty,1,1,1,1
+
+
+
+
+
+
+
+

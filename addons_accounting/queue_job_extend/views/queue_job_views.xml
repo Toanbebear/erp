@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="view_queue_job_tree_inherit" model="ir.ui.view">
+        <field name="name">queue.job.tree.inherit</field>
+        <field name="model">queue.job</field>
+        <field name="inherit_id" ref="queue_job.view_queue_job_tree"/>
+        <field name="priority" eval="20"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree
+                    create="false"
+                    delete="false"
+                    decoration-danger="state == 'failed'"
+                    decoration-muted="state == 'done'"
+                >
+                    <field name="name" />
+                    <field name="model_name" />
+                    <field name="state" />
+                    <field name="date_created" />
+                    <field name="date_done" />
+                    <field name="uuid" />
+                    <field name="channel" />
+                    <field name="company_id" groups="base.group_multi_company" />
+                </tree>
+            </xpath>
+        </field>
+    </record>
+</odoo>

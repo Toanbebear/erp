@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_country_search" model="ir.ui.view">
+            <field name="name">res.country.search</field>
+            <field name="model">res.country</field>
+            <field name="arch" type="xml">
+                <search string="Country">
+                    <field name="name"/>
+                    <filter name="active" string="Active" domain="[('active','=',True)]" help="Show active countries"/>
+                    <filter name="inactive" string="Inactive" domain="[('active','=',False)]" help="Show inactive countries"/>
+                </search>
+            </field>
+        </record>
+        <record id="res_country_tree_inherit" model="ir.ui.view">
+            <field name="name">res.country.tree.inherit</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="sequence" widget="handle"/>
+                    <field name="id" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="res_country_form_inherit" model="ir.ui.view">
+            <field name="name">res.country.form.inherit</field>
+            <field name="model">res.country</field>
+            <field name="inherit_id" ref="base.view_country_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="sequence"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

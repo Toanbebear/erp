@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_css">
+        <style>
+            @font-face {
+                font-family: 'Times New Roman';
+                src: local('Times New Roman'), local('Times New Roman'), url(/print_partner_code/static/src/font/font-times-new-roman.ttf) format('opentype');
+            }
+            @page {
+
+                margin: 0; padding:0;
+                size: portrait;
+                font-family:Times New Roman;
+
+            }
+            .body{ margin:0;padding:0;font-family:Times New Roman;}
+            .container{ margin:0;padding:0}
+            .page {
+                display:block;
+                margin-left: 25mm;
+                width: 155mm;
+                height: 165mm;
+                font-family: 'Times New Roman';
+                src: local('Times New Roman'), local('Times New Roman'), url(/print_partner_code/static/src/font/font-times-new-roman.ttf) format('opentype');
+            }
+            .box {
+            float: left;
+            width: 50%;
+            height: 25mm;
+            margin-bottom: 3mm;
+            }
+            .box .box-nm{
+            margin-bottom: 0mm;
+            }
+            .box .name{
+            font-size: 12pt;
+            }
+            .box .code{
+            font-size: 10pt;
+            }
+            .box-left {
+            text-align:left;
+            float:left;
+            width:70%;
+            }
+            .box-right{
+            float: right;
+            width:30%;
+            }
+            .box-right img {
+            height:15mm;
+            box-sizing: border-box;
+            }
+
+        </style>
+    </template>
+
+    <template id="label_165x155">
+        <t t-set="index" t-value="0"></t>
+        <t t-foreach="doc.partner_ids" t-as="partner_id">
+            <t t-if="index in [3,4,5,6,7,8,9,10]">
+                <div class="box box-nm">
+                    <div class="name">
+                        <t t-if="len(partner_id.name) &lt; 20" t-esc="'Họ tên:'"></t>
+                        <t t-esc="partner_id.name.title()"/>
+                    </div>
+                    <div>
+                        <div class="box-left">
+                            <div class="code">Mã KH:
+                                <t t-esc="partner_id.code_customer"/>
+                            </div>
+                            <div class="code">Năm sinh:
+                                <t t-if="partner_id.birth_date">
+                                    <t t-esc="partner_id.birth_date.strftime('%d-%m-%Y')"/>
+                                </t>
+                                <t t-else="">
+                                    <span class="mr-5" style="width:20mm"></span>
+                                </t>
+                            </div>
+                            <div class="code">Giới tính:
+                                <t t-if="partner_id.gender == 'male' ">
+                                    <span class="ml-5">Nam</span>
+                                </t>
+                                <t t-elif="partner_id.gender == 'female' ">
+                                    <span class="ml-5">Nữ</span>
+                                </t>
+                                <t t-elif="partner_id.gender == 'transguy' ">
+                                    <span class="ml-5">Transguy</span>
+                                </t>
+                                <t t-elif="partner_id.gender == 'transgirl' ">
+                                    <span class="ml-5">Transgirl</span>
+                                </t>
+                                <t t-else="">
+                                    <span class="ml-5"></span>
+                                </t>
+                            </div>
+
+                        </div>
+                        <div class="box-right">
+<!--                            <img t-attf-src="data:image/png;base64, #{partner_id.qr_id}"/>-->
+                            <img t-attf-src="data:image/png;base64, #{partner_id.qr_customer_code}"/>
+
+<!--                            <img t-attf-src="#{qr_url}/qr-partner/#{partner_id.code_customer}"/>-->
+                        </div>
+                        <div class="clear-box"/>
+                    </div>
+                </div>
+            </t>
+            <t t-else="">
+                <div class="box">
+                    <div class="name">
+                        <t t-if="len(partner_id.name) &lt; 23" t-esc="'Họ tên:'"></t>
+                        <t t-esc="partner_id.name.title()"/>
+                    </div>
+                    <div>
+                        <div class="box-left">
+                            <div class="code">Mã KH:
+                                <t t-esc="partner_id.code_customer"/>
+                            </div>
+                            <div class="code">Năm sinh:
+                                <t t-if="partner_id.birth_date">
+                                    <t t-esc="partner_id.birth_date.strftime('%d-%m-%Y')"/>
+                                </t>
+                                <t t-else="">
+                                    <span class="mr-5" style="width:20mm"/>
+                                </t>
+
+                            </div>
+                            <div class="code">Giới tính:
+                                <t t-if="partner_id.gender == 'male' ">
+                                    <span class="ml-5">Nam</span>
+                                </t>
+                                <t t-elif="partner_id.gender == 'female' ">
+                                    <span class="ml-5">Nữ</span>
+                                </t>
+                                <t t-elif="partner_id.gender == 'transguy' ">
+                                    <span class="ml-5">Transguy</span>
+                                </t>
+                                <t t-elif="partner_id.gender == 'transgirl' ">
+                                    <span class="ml-5">Transgirl</span>
+                                </t>
+                                <t t-else="">
+                                    <span class="ml-5"></span>
+                                </t>
+                            </div>
+                        </div>
+                        <div class="box-right">
+<!--                            <img t-attf-src="data:image/png;base64, #{partner_id.qr_id}"/>-->
+                            <img t-attf-src="data:image/png;base64, #{partner_id.qr_customer_code}"/>
+<!--                            <img t-attf-src="#{qr_url}/qr-partner/#{partner_id.code_customer}"/>-->
+                        </div>
+                        <div class="clear-box"/>
+                    </div>
+                </div>
+            </t>
+            <t t-set="index" t-value="index + 1"></t>
+        </t>
+
+    </template>
+
+    <template id="report_product_label_165x155_template">
+        <t t-call="web.html_container">
+            <t t-set="count" t-value="0"/>
+            <t t-call="print_partner_code.report_css"/>
+
+            <div class="page" style="font-family:Times New Roman;">
+                <t t-foreach="docs" t-as="doc">
+                    <t t-call="print_partner_code.label_165x155"/>
+                </t>
+            </div>
+        </t>
+    </template>
+</odoo>

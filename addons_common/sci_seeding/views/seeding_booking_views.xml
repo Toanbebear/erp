@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="seeding_booking_tree_view" model="ir.ui.view">
+            <field name="name">seeding_booking_tree_view</field>
+            <field name="model">seeding.booking</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách người dùng">
+                    <field name="crm_id"/>
+                    <field name="seeding_user_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="seeding_booking_form_view" model="ir.ui.view">
+            <field name="name">seeding_booking_tree_view</field>
+            <field name="model">seeding.booking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="crm_id"/>
+                            <field name="seeding_user_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

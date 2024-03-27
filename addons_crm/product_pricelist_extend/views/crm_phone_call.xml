@@ -1,0 +1,18 @@
+<odoo>
+    <data>
+        <record id="view_form_phone_call_discount_cs" model="ir.ui.view">
+            <field name="name">view.form.phone.call.discount.cs</field>
+            <field name="model">crm.phone.call</field>
+            <field name="inherit_id" ref="crm_base.view_form_phone_call"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='discount_cash']" position="after">
+                    <field name="discount_cs_percent" readonly="True"/>
+                    <field name="discount_cs_amount" readonly="True"/>
+                </xpath>
+<!--                <xpath expr="//field[@name='other_discount']" position="after">-->
+<!--                    <field name="total_discount_review" readonly="True"/>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+    </data>
+</odoo>

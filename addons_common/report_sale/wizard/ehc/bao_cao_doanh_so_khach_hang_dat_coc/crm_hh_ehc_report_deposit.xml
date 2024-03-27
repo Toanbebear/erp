@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="report_ehc_doanh_so_kh_dat_coc_form">
+            <field name="name">Báo cáo Phone call chăm sóc khách hàng</field>
+            <field name="model">crm.hh.ehc.report.deposit</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo doanh số khách hàng đặt cọc">
+                    <group>
+                        <field name="start_date" required="True" string="Ngày bắt đầu"/>
+                        <field name="end_date" required="True" string="Ngày kết thúc"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_bao_cao_doanh_so_khach_hang_dat_coc" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_ehc_doanh_so_kh_dat_coc_act">
+            <field name="name">Doanh số khách hàng đặt cọc</field>
+            <field name="res_model">crm.hh.ehc.report.deposit</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_ehc_doanh_so_kh_dat_coc_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="report_ehc_doanh_so_kh_dat_coc_menu"
+                  name="Báo cáo doanh số khách hàng đặt cọc"
+                  parent="report_sale.menu_report_ehc"
+                  sequence="1"
+                  action="report_ehc_doanh_so_kh_dat_coc_act"
+        />
+
+        <record id="report_ehc_doanh_so_kh_dat_coc_attachment" model="ir.attachment">
+            <field name="name">Báo cáo doanh số khách hàng đặt cọc</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/ehc/bao_cao_doanh_so_khach_hang_dat_coc.xlsx"/>
+            <field name="store_fname">bao_cao_doanh_so_khach_hang_dat_coc.xlsx.xls</field>
+        </record>
+
+    </data>
+</odoo>

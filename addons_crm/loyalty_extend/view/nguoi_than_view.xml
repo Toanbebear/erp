@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="history_relative_reward_form" model="ir.ui.view">
+            <field name="name">Lịch sử sử dụng Quà tặng người thân</field>
+            <field name="model">history.relative.reward</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="loyalty"/>
+                            <field name="booking"/>
+                            <field name="partner"/>
+                            <field name="line"/>
+                            <field name="line_product"/>
+                            <field name="product"/>
+                            <field name="currency_id"/>
+                            <field name="total"/>
+                            <field name="total_received"/>
+                            <field name="total_remaining"/>
+                            <field name="total_used"/>
+                            <field name="stage"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="history_relative_reward_tree">
+            <field name="name">Lịch sử sử dụng Quà tặng người thân</field>
+            <field name="model">history.relative.reward</field>
+            <field name="arch" type="xml">
+                <tree decoration-muted="is_active==False" decoration-success="stage=='done'" decoration-danger="stage=='cancel'" decoration-info="stage=='upcoming'" default_order="create_date desc">
+                    <field name="booking"/>
+                    <field name="partner" string="Người sử dụng"/>
+                    <field name="create_date" string="Ngày sử dụng"/>
+                    <field name="product"/>
+                    <field name="total"/>
+                    <field name="total_used"/>
+                    <field name="is_active" invisible="1"/>
+                    <field name="stage" string="Trạng thái"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_history_relative_reward" model="ir.actions.act_window">
+            <field name="name">Lịch sử sử dụng Quà tặng</field>
+            <field name="res_model">history.relative.reward</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+        <menuitem
+                id="history_loyalty_menu"
+                name="Lịch sử"
+                parent="loyalty.loyalty_menu_root"
+                groups="loyalty.sys_loyalty"
+                sequence="7"/>
+        <menuitem
+                id="history_relative_reward_menu"
+                name="Lịch sử người thân"
+                action="action_history_relative_reward"
+                parent="history_loyalty_menu"
+                sequence="1"/>
+    </data>
+</odoo>

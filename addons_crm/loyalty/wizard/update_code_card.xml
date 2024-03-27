@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="update_code_card_form" model="ir.ui.view">
+        <field name="name">Cập nhật mã thẻ</field>
+        <field name="model">update.code.card</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="loyalty_id" readonly="True" force_save="True"/>
+                        <field name="name" required="True"/>
+                    </group>
+                    <footer class="text-center">
+                        <button type="object" string="Xác nhận" name="update_code_card" class="oe_highlight"/>
+                        <button special="cancel" class="oe_highlight" string="Hủy"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+    </data>
+</odoo>

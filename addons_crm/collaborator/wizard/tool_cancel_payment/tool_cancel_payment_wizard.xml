@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="collaborator_cancel_payment_wizard">
+            <field name="name">Hủy phiếu chi CTV</field>
+            <field name="model">collaborator.cancel.payment.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Hủy phiếu chi ">
+                    <group string="Thông tin">
+                        <group >
+                            <field name="collaborator_payment" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="collaborator_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="contract_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="company_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="company_payment" readonly="True" options="{'no_create': True, 'no_open': True}" attrs="{'invisible':[('company_payment','=', True )]}"/>
+                            <field name="brand_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="currency_id" invisible="True"/>
+                            <field name="amount" readonly="True" />
+                        </group>
+                        <group>
+                            <field name="collaborator_payment_date"  readonly="True" />
+                            <field name="collaborator_user" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="note" required="True" />
+                        </group>
+                        <footer>
+                            <button name="confirm" type="object" string="Xác nhận" class="oe_highlight"/>
+                            <button string="Hủy" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

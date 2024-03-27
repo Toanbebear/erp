@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_pain_points_and_desires,access_pain_points_and_desires,model_pain_point_and_desires,,1,1,1,0
+access_hobbies_interests,access_hobbies_interests,model_hobbies_interest,,1,1,1,0
+access_customer_persona,access_customer_persona,model_customer_persona,,1,1,1,0

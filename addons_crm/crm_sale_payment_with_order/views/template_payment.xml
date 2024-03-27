@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <template id="report_payment_document_multi">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-set="lang" t-value="docs[0].partner_id.lang"/>
+                    <t t-set="o" t-value="docs[0].with_context(lang=lang)"/>
+                    <t t-set="total" t-value="sum(docs.mapped('amount_vnd'))"/>
+                    <t t-set="vnd_currency" t-value="request.env.ref('base.VND')"/>
+                    <t t-set="danh_sach_phieu" t-value="', '.join(docs.mapped('name'))"/>
+                    <t t-if="o.payment_type == 'inbound'">
+                        <t t-set="noi_dung" t-value="'Thu tiền : '"/>
+                    </t>
+                    <t t-else="">
+                        <t t-set="noi_dung" t-value="'Hoàn tiền : '"/>
+                    </t>
+                    <t t-set="tong_tien_phai_thu" t-value="0"/>
+                    <t t-set="line_service" t-value="[]"/>
+                    <t t-set="line_product" t-value="[]"/>
+                    <t t-set="tien_mat" t-value="0"/>
+                    <t t-set="chuyen_khoan" t-value="0"/>
+                    <t t-set="pos" t-value="0"/>
+                    <t t-set="vdt" t-value="0"/>
+                    <t t-set="debits" t-value="[1]"/>
+                    <t t-set="tai_khoan_no" t-value="'Nợ'"/>
+                    <t t-set="tai_khoan_co" t-value="'Có'"/>
+                    <t t-foreach="docs" t-as="payment">
+                        <t t-if="payment.payment_method == 'tm'">
+                            <t t-set="tien_mat" t-value="tien_mat + payment.amount_vnd"/>
+                        </t>
+                        <t t-elif="payment.payment_method == 'pos'">
+                            <t t-set="pos" t-value="pos + payment.amount_vnd"/>
+                        </t>
+                        <t t-elif="payment.payment_method == 'vdt'">
+                            <t t-set="vdt" t-value="vdt + payment.amount_vnd"/>
+                        </t>
+                        <t t-elif="payment.payment_method == 'ck'">
+                            <t t-set="chuyen_khoan" t-value="chuyen_khoan + payment.amount_vnd"/>
+                        </t>
+                        <t t-foreach="payment.service_ids" t-as="line">
+                            <t t-if="line.prepayment_amount != 0">
+                                <t t-set="noi_dung" t-value="noi_dung + line.crm_line_id.product_id.name + ','"/>
+                                <t t-if="line.crm_line_id.id not in line_service">
+                                    <t t-set="tong_tien_phai_thu" t-value="tong_tien_phai_thu + line.total"/>
+                                    <t t-set="line_service" t-value="line_service + [line.crm_line_id.id]"/>
+                                </t>
+                            </t>
+                        </t>
+                        <t t-foreach="payment.product_ids" t-as="line">
+                            <t t-if="line.prepayment_amount != 0">
+                                <t t-set="noi_dung" t-value="noi_dung + line.crm_line_product_id.product_id.name + ', '"/>
+                                <t t-if="line.crm_line_product_id.id not in line_product">
+                                    <t t-set="tong_tien_phai_thu" t-value="tong_tien_phai_thu + line.total"/>
+                                    <t t-set="line_product" t-value="line_product + [line.crm_line_product_id.id]"/>
+                                </t>
+                            </t>
+                        </t>
+                    </t>
+
+                    <!--                    <t t-set="debits" t-value="list(doc.get_account()['debit'] for doc in docs)"/>-->
+                    <t t-set="debits" t-value="set((doc.get_account()['debit'][0]) for doc in docs)"/>
+                    <!--                    <t t-esc="debits"/>-->
+                    <t t-set="credit" t-value="set((doc.get_account()['credit'][0]) for doc in docs)"/>
+
+                    <div class="page" style="font-family:Times New Roman;font-size:23px;">
+                        <div class="oe_structure"/>
+                        <t t-if="'draft' in docs.mapped('state') or 'cancelled' in docs.mapped('state')">
+                            <h2>Phiếu ở trạng thái nháp không thể in.</h2>
+                        </t>
+                        <t t-elif="len(docs.mapped('partner_id')) > 1">
+                            <h2>Các phiếu không cùng khách hàng.</h2>
+                        </t>
+                        <t t-elif="len(docs.mapped('crm_id')) > 1">
+                            <h2>Các phiếu không cùng booking.</h2>
+                        </t>
+                        <t t-elif="len(set(docs.mapped('payment_type'))) > 1">
+                            <h2>Các phiếu không cùng loại thu chi.</h2>
+                        </t>
+                        <t t-elif="len(set(docs.mapped('payment_date'))) > 1">
+                            <h2>Các phiếu không cùng ngày.</h2>
+                        </t>
+                        <t t-else="">
+                            <div class="row" style="padding-top:32px !important;">
+                                <div class="col-8">
+                                    <!--                                <div class="m-0" t-field="o.walkin.institution.company_name" style="text-transform: uppercase;font-family:Times New Roman - Bold;font-weight:bolder;"/>-->
+                                    <!--                                    <strong>Đơn vị:</strong>-->
+                                    <t t-if="o.company_id.id == 12">
+                                        <span style="text-transform: uppercase;font-family:Times New Roman - Bold;font-weight:bolder;">
+                                            CÔNG TY TNHH BVTM KANGNAM
+                                        </span>
+                                    </t>
+                                    <t t-else="">
+                                        <span class="m-0" t-field="o.company_id.name"
+                                          style="text-transform: uppercase;font-family:Times New Roman - Bold;font-weight:bolder;"/>
+                                    </t>
+                                    <br/>
+                                    <!--                                    <strong>Địa chỉ:</strong>-->
+                                    <span style="font-size:20px;"><span class="m-0" t-field="o.company_id.street"/>,
+                                        <span class="m-0" t-field="o.company_id.street2"/>,
+                                        <span class="m-0" t-field="o.company_id.city"/>
+                                    </span>
+                                    <div class="m-0" t-if="o.company_id.phone">Hotline:
+                                        <span t-field="o.company_id.phone"/>
+                                    </div>
+                                </div>
+                                <div class="col-4 text-center" style="font-size:18px;">
+                                    <div style="font-family:Times New Roman - Bold;font-weight:bolder;">Mẫu số 01 - TT
+                                    </div>
+                                    <div>
+                                        <i>(Ban hành theo thông tư số 200/2014/TT-BTC<br/>Ngày 22/12/2014 của Bộ tài
+                                            chính)
+                                        </i>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pt-2 pb-2">
+                                <div class="row">
+                                    <div class="col-4">
+                                    </div>
+                                    <div class="col-4 text-center"
+                                         style="font-family:Times New Roman;font-weight:bolder;">
+                                        <t t-if="o.payment_type == 'inbound'">
+                                            <div style="font-size: 37px;">PHIẾU THU</div>
+                                            <t t-if="len(docs)==1">
+                                                <span t-esc="danh_sach_phieu"/>
+                                            </t>
+                                            <t t-else=""/>
+                                        </t>
+                                        <t t-elif="o.payment_type == 'outbound'">
+                                            <div style="font-size: 37px;">PHIẾU CHI</div>
+                                            <t t-if="len(docs)==1">
+                                                <span t-esc="danh_sach_phieu"/>
+                                            </t>
+                                            <t t-else=""/>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="font-size: 37px;">PHIẾU CHUYỂN TIỀN</div>
+                                        </t>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <div style="font-size: 20px;">
+                                            Nợ:
+                                            <t t-esc="', '.join(debits)"/>
+                                            <br/>
+                                            Có:
+                                            <t t-esc="', '.join(credit)"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-8">
+                                    <t t-if="o.payment_type == 'inbound'">
+                                        <div>
+                                            <span>Họ tên người nộp tiền:</span>
+                                            <b>
+                                                <t t-if="o.walkin">
+                                                    <span t-field="o.walkin.patient.name"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <span t-field="o.partner_id.name"/>
+                                                </t>
+                                            </b>
+                                        </div>
+                                    </t>
+                                    <t t-if="o.payment_type == 'outbound'">
+                                        <div>
+                                            <span>Họ tên người nhận tiền:</span>
+                                            <t t-if="o.walkin">
+                                                <span t-field="o.walkin.patient.name"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-field="o.partner_id.name"/>
+                                            </t>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-4">
+                                </div>
+                            </div>
+                            <div>
+                                <span>Địa chỉ:</span>
+                                <t t-if="o.patient">
+                                    <t t-if="o.patient.street">
+                                        <span t-field="o.patient.street"/>,
+                                    </t>
+                                    <span t-field="o.patient.state_id"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-if="o.partner_id.street">
+                                        <span t-field="o.partner_id.street"/>,
+                                    </t>
+                                    <span t-field="o.partner_id.state_id"/>
+                                </t>
+                            </div>
+
+                            <div t-if="o.crm_id">
+                                <t>
+                                    <span>Booking:</span>
+                                </t>
+                                <span t-field="o.crm_id"/>
+                            </div>
+
+                            <div>
+                                <t t-if="len(docs)!=1">
+                                    <t t-if="o.payment_type=='inbound'">
+                                        <span>Phiếu thu:</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span>Phiếu chi/hoàn:</span>
+                                    </t>
+                                    <span t-esc="danh_sach_phieu"/>
+                                </t>
+                                <t t-else=""/>
+                            </div>
+
+                            <div t-if="noi_dung">
+                                <t>
+                                    <span>Nội dung:</span>
+                                </t>
+                                <i t-esc="noi_dung"/>
+                            </div>
+                            <div t-if="o.payment_type=='outbound'">
+                                <t>
+                                    <span>Ghi chú:</span>
+                                </t>
+                                <i t-esc="', '.join(docs.mapped('communication'))"/>
+                            </div>
+
+                            <div t-if="tong_tien_phai_thu and o.payment_type=='inbound'">
+                                <t>
+                                    <span>Tổng tiền phải thu:</span>
+                                </t>
+                                <i t-esc="tong_tien_phai_thu"
+                                   t-options='{"widget": "monetary", "display_currency": vnd_currency}'/>
+                            </div>
+                            <div class="row">
+                                <t t-if="tien_mat and chuyen_khoan">
+                                    <div class="col-6"
+                                         style="display:flex">
+                                        <div t-if="total"
+                                             style="margin: auto 0;">
+                                            <t t-if="o.payment_type=='inbound'">
+                                                <span>Tổng tiền khách trả:</span>
+                                            </t>
+                                            <t t-else="">
+                                                <span>Tổng tiền hoàn lại:</span>
+                                            </t>
+                                            <b>
+                                                <i t-esc="total"
+                                                   t-options='{"widget": "monetary", "display_currency": vnd_currency}'/>
+                                            </b>
+                                        </div>
+
+                                    </div>
+                                </t>
+                                <t t-else="">
+                                    <div class="col-6">
+                                        <div t-if="total">
+                                            <t>
+                                                <span>Tổng tiền khách trả:</span>
+                                            </t>
+                                            <b>
+                                                <i t-esc="total"
+                                                   t-options='{"widget": "monetary", "display_currency": vnd_currency}'/>
+                                            </b>
+                                        </div>
+                                    </div>
+                                </t>
+
+                                <div class="col-6">
+                                    <div t-if="tien_mat">
+                                        <t>
+                                            <span>Tiền mặt:</span>
+                                        </t>
+<!--                                        t-value="'{0:,.2f}'.format(tien_mat)"-->
+                                        <i t-esc="tien_mat"
+                                           t-options='{"widget": "monetary", "display_currency": vnd_currency}'/>
+                                    </div>
+                                    <div t-if="chuyen_khoan">
+                                        <t>
+                                            <span>Chuyển khoản:</span>
+                                        </t>
+                                        <i t-esc="chuyen_khoan"
+                                           t-options='{"widget": "monetary", "display_currency": vnd_currency}'/>
+                                    </div>
+                                    <div t-if="pos">
+                                        <t>
+                                            <span>Quẹt thẻ POS:</span>
+                                        </t>
+                                        <i t-esc="pos"
+                                           t-options='{"widget": "monetary", "display_currency": vnd_currency}'/>
+                                    </div>
+                                    <div t-if="vdt">
+                                        <t>
+                                            <span>Ví điện tử:</span>
+                                        </t>
+                                        <i t-esc="vdt"
+                                           t-options='{"widget": "monetary", "display_currency": vnd_currency}'/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                <t t-if="o.payment_type=='inbound'">
+                                    Đã thanh toán đủ số tiền (Viết bằng chữ):
+                                </t>
+                                <t t-else="">
+                                    Đã nhận đủ số tiền (Viết bằng chữ):
+                                </t>
+                                <span t-esc="docs.total_amount_to_words(lang)"/>
+                                đồng chẵn.
+                            </div>
+                            <div style="page-break-inside: avoid">
+                                <div class="row">
+                                    <div class="col-8"/>
+                                    <div class="col-4 text-center">
+                                        <div t-if="o.payment_date">
+                                            <div style="font-size:22px">
+                                                <b>
+                                                    <i t-esc="o.payment_date.strftime('Ngày %d tháng %m năm %Y')"/>
+                                                </b>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row text-center">
+                                    <div class="text-center col-3">
+                                        <div>
+                                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;">Giám
+                                                đốc
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <i>(Ký, họ tên, đóng dấu)</i>
+                                        </div>
+                                    </div>
+                                    <div class="text-center col-2">
+                                        <div>
+                                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;">Kế toán
+                                                trưởng
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <i>(Ký, họ tên)</i>
+                                        </div>
+                                    </div>
+                                    <div class="text-center col-2">
+                                        <div>
+                                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;">Thủ
+                                                quỹ
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <i>(Ký, họ tên)</i>
+                                        </div>
+                                    </div>
+                                    <div class="text-center col-2">
+                                        <div>
+                                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;">Người
+                                                lập phiếu
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <i>(Ký, họ tên)</i>
+                                        </div>
+                                    </div>
+                                    <div class="text-center col-3">
+                                        <div>
+                                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;">
+                                                <t t-if="o.payment_type == 'outbound'">Người nhận tiền</t>
+                                                <t t-else="">Người nộp tiền</t>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <i>(Ký, họ tên)</i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <br/>
+                                <br/>
+                                <br/>
+                                <div style="font-size:16px">
+                                    <i>
+                                        <t t-if="o.brand_id.code == 'PR'">
+                                            <b>Lưu ý:</b>
+                                            <br/>
+                                            <span class="mt-1">
+                                                - Phí đặt cọc sẽ không được hoàn lại mà chỉ được quy đổi thành dịch vụ khác hoặc tặng cho người thân/bạn bè sử dụng trong vòng 30 ngày.
+                                            </span>
+                                        </t>
+								        <t t-else="">
+                                            <b>Lưu ý:</b>Khách hàng đặt cọc nhưng không tiếp tục sử dụng dịch vụ
+                                            <br/>
+                                            <span class="mt-1">
+                                                - Dịch vụ điều trị thẩm mỹ da: thu phí 300.000đ/1 dịch vụ đăng ký - Dịch vụ
+                                                Đại phẫu tại Bệnh viện: 3.000.000đ + 2.000.000đ (nếu đã khám sức khỏe)
+                                            </span>
+                                            <br/>
+                                            <span class="mt-1">
+                                                - Dịch vụ phẫu thuật Tiểu phẫu dưới 15 triệu đồng: 500.000đ/1 dịch vụ đăng
+                                                ký - Dịch vụ Tiểu phẫu từ 15 triệu đồng: 1.000.000đ/1 dịch vụ đăng ký
+                                            </span>
+                                        </t>
+                                    </i>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <record id="account.action_report_payment_receipt" model="ir.actions.report">
+            <field name="paperformat_id" ref="crm_sale_payment_with_order.sh_paperformat_payment"/>
+            <field name="report_name">crm_sale_payment_with_order.report_payment_document_multi</field>
+            <field name="report_file">crm_sale_payment_with_order.report_payment_document_multi</field>
+        </record>
+    </data>
+</odoo>

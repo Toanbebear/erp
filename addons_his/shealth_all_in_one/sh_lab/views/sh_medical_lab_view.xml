@@ -1,0 +1,543 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Imaging Test Types group Management -->
+        <record model="ir.ui.view" id="sh_medical_lab_group_types_form">
+            <field name="name">Nhóm Xét nghiệm</field>
+            <field name="model">sh.medical.lab.group.type</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Nhóm Xét nghiệm">
+                    <sheet>
+                        <group>
+                            <field name="name" string="Tên"/>
+                            <field name="info" string="Mô tả"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_lab_group_type_tree">
+            <field name="name">Nhóm Xét nghiệm</field>
+            <field name="model">sh.medical.lab.group.type</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Nhóm Xét nghiệm' editable="bottom">
+                    <field name="name" string="Tên"/>
+                    <field name="info" string="Mô tả"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sh_medical_lab_group_type_action_tree" model="ir.actions.act_window">
+            <field name="name">Nhóm Xét nghiệm</field>
+            <field name="res_model">sh.medical.lab.group.type</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new lab group type.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="sh_medical_lab_group_type_action_tree" id="sh_medical_lab_group_type_conf_list"
+                  parent="sh_medical_conf_laboratory" sequence="11"/>
+
+        <!-- Lab Units Management -->
+
+        <record id="view_sh_medical_lab_units_filter" model="ir.ui.view">
+            <field name="name">Lab Units</field>
+            <field name="model">sh.medical.lab.units</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Units">
+                    <separator orientation="vertical"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_lab_units_tree">
+            <field name="name">Lab Units</field>
+            <field name="model">sh.medical.lab.units</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Lab Units' editable="bottom">
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sh_medical_lab_units_action_tree" model="ir.actions.act_window">
+            <field name="name">Lab Units</field>
+            <field name="res_model">sh.medical.lab.units</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new lab test units.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="sh_medical_lab_units_action_tree" id="sh_medical_lab_units_conf_list"
+                  parent="sh_medical_conf_laboratory" sequence="1"/>
+
+
+        <!-- Lab Test Types Management -->
+
+        <record id="view_sh_medical_lab_test_types_filter" model="ir.ui.view">
+            <field name="name">Lab Test Types</field>
+            <field name="model">sh.medical.labtest.types</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Test Types">
+                    <separator orientation="vertical"/>
+                    <field name="name"/>
+                    <field name="default_code"/>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_lab_test_types_tree">
+            <field name="name">Lab Test Types</field>
+            <field name="model">sh.medical.labtest.types</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Lab Test Types'>
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="list_price"/>
+                    <field name="currency_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_lab_test_types_form">
+            <field name="name">Lab Test Types</field>
+            <field name="model">sh.medical.labtest.types</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Lab Test Types" duplicate="false">
+                    <sheet>
+                        <label class="oe_edit_only" for="name"/>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group>
+                            <group>
+                                <field name="default_code" required="1"
+                                       groups="shealth_all_in_one.group_sh_medical_manager"/>
+                                <field name="group_type" string="Nhóm"/>
+                                <field name="has_child"/>
+                                <field name="normal_range" attrs="{'invisible':[('has_child','=',True)]}"/>
+                            </group>
+                            <group groups="shealth_all_in_one.group_sh_medical_manager">
+                                <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}"
+                                       groups="shealth_all_in_one.group_sh_medical_manager"/>
+                                <field name="currency_id" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Lab Test Cases" attrs="{'invisible':[('has_child','=',False)]}">
+                                <group>
+                                    <field name="lab_criteria" nolabel="1">
+                                        <tree string="Lab Test Cases" editable="bottom">
+                                            <field name="sequence" required="1"/>
+                                            <field name="code_labtest_criteria"/>
+                                            <field name="name"/>
+                                            <field name="normal_range"/>
+                                            <field name="units"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Extra Info">
+                                <group>
+                                    <field name="info" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Materials Information" invisible="1">
+                                <field name="material_ids" nolable="1">
+                                    <tree editable="bottom">
+                                        <field name="sequence"/>
+                                        <field name="product_id" required="1"/>
+                                        <field name="quantity" required="1"/>
+                                        <field name="uom_id" required="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sh_medical_lab_test_types_action_tree" model="ir.actions.act_window">
+            <field name="name">Lab Test Types</field>
+            <field name="res_model">sh.medical.labtest.types</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new lab test types.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="sh_medical_lab_test_types_action_tree" id="sh_medical_lab_test_types_conf_list"
+                  parent="sh_medical_conf_laboratory" sequence="2"/>
+
+        <!-- Lab Tests -->
+
+        <record id="view_sh_medical_lab_test_filter" model="ir.ui.view">
+            <field name="name">Lab Tests</field>
+            <field name="model">sh.medical.lab.test</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Tests">
+                    <separator orientation="vertical"/>
+                    <field name="name" select="1"/>
+                    <field name="results" select="1"/>
+                    <field name="diagnosis" select="1"/>
+                    <field name="doctor_note" select="1"/>
+                    <newline/>
+                    <filter string="Not completed" name="filter_not_completed" domain="[('state','!=','Completed')]"
+                            context="{}"/>
+                    <!--                        <filter string="My institution" name="filter_my_institution" domain="[('institution.user_access','in', [uid])]" context="{}"/>-->
+                    <!--                        <filter string="My institution and Not Completed" name="filter_not_completed_and_my_institution" domain="[('state','!=','Completed'),('institution.user_access','in', [uid])]" context="{}"/>-->
+                    <filter string="Ngày yêu cầu" name="date_requested" date="date_requested"/>
+                    <filter string="Ngày phân tích" name="date_analysis" date="date_analysis"/>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter string="Ngày thực hiện" name="group_date_analysis" domain="[]"
+                                context="{'group_by':'date_analysis:day'}"/>
+                        <filter string="Patient" name="group_patient" domain="[]" context="{'group_by':'patient'}"/>
+                        <filter string="Walkin" name="group_walkin" domain="[]" context="{'group_by':'walkin'}"/>
+                        <filter string="Pathologist" name="group_pathologist" domain="[]"
+                                context="{'group_by':'pathologist'}"/>
+                        <filter string="Test Type" name="group_test_types" domain="[]"
+                                context="{'group_by':'test_type'}"/>
+                        <filter string="State" name="group_state" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_lab_test_tree">
+            <field name="name">Lab Tests</field>
+            <field name="model">sh.medical.lab.test</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree default_order="date_analysis desc" class="sh_has_icon" string='Lab Tests' create="false"
+                      decoration-info="state=='Draft'" decoration-success="state=='Completed'"
+                      decoration-danger="state=='Test In Progress'">
+                    <field name="name" invisible="1"/>
+                    <field name="walkin" invisible="1"/>
+                    <field name="patient" class="text-uppercase"/>
+                    <field name="perform_room"/>
+                    <field name="test_type"/>
+                    <!--                        <button attrs="{'invisible': [('state','in',['Completed'])]}" name="view_detail_labtest" type="object" icon="fa-pencil-square-o" title="Chi tiết"/>-->
+                    <field name="institution" invisible="1"/>
+                    <field name="pathologist"/>
+                    <field name="requestor"/>
+                    <field name="date_requested"/>
+                    <field name="date_analysis" invisible="1"/>
+                    <field name="date_done"/>
+                    <field name="doctor_note" optional="hide"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_lab_test_form">
+            <field name="name">Lab Tests</field>
+            <field name="model">sh.medical.lab.test</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Lab Tests" create="false" duplicate="false" edit_expr="state not in ['Completed']"
+                      delete_expr="state not in ['Completed']">
+                    <header>
+                        <button confirm="Are you sure you want to start the test?" name="set_to_test_inprogress"
+                                states="Draft" string="Start Test" type="object" class="oe_highlight"
+                                groups="shealth_all_in_one.group_sh_medical_physician_subclinical_labtest,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Are you sure you want to complete the test?" name="set_to_test_complete"
+                                states="Test In Progress" string="Complete Test" type="object" class="oe_highlight"
+                                groups="shealth_all_in_one.group_sh_medical_physician_subclinical_labtest,shealth_all_in_one.group_sh_medical_manager"/>
+                        <!--                            <button confirm="Are you sure you want to cancelled the test?" name="set_to_test_cancelled" states="Draft" string="Cancelled Test" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+                        <button confirm="Are you sure you want to draft the test (Only Admin)?" name="set_to_test_draft"
+                                states="Test In Progress" string="Draft Test (Admin)" type="object" class="btn-warning"
+                                groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Are you sure you want to set in progress this test (Only Admin)?"
+                                name="set_to_test_inprogress"
+                                attrs="{'invisible':['|', ('check_current_company', '!=', True), ('state', 'not in', ('Completed'))]}"
+                                string="Set In progress Test (Admin)" type="object" class="btn-warning"
+                                groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <!--                            <button confirm="Are you sure you want to create the invoice?" name="action_lab_invoice_create" states="Completed" string="Create Lab Test Invoice" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>-->
+                        <button name="print_patient_labtest" states="Completed" string="Print Lab Test" type="object"
+                                class="btn-info"
+                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical_labtest,shealth_all_in_one.group_sh_medical_manager"/>
+                        <field name="check_current_company" invisible="1"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Test In Progress,Completed"
+                               statusbar_colors='{"Draft":"blue","Test In Progress":"red","Completed":"green"}'/>
+                    </header>
+                    <sheet>
+                        <div class="oe_left" style="width: 500px;">
+                            <div class="oe_title" style="width: 390px;">
+                                <label class="oe_edit_only" for="name"/>
+                                <h1>
+                                    <field name="name" class="oe_inline"/>
+                                </h1>
+                            </div>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="institution" required="1" options="{'no_create': True,'no_open': True}"
+                                       attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                <field name="test_type" options="{'no_create': True}"
+                                       attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                <field name="group_type" string="Nhóm"/>
+                                <field name="abnormal" readonly="1" force_save="1"/>
+                            </group>
+                            <group>
+                                <field name="department" required="1" options="{'no_create': True,'no_open': True}"
+                                       force_save="1" attrs="{'readonly':[('state','in',['Completed'])]}"/>
+                                <field name="perform_room" required="1" options="{'no_create': True,'no_open': True}"
+                                       attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                <field name="supply_domain" invisible="1"/>
+                                <field name="normal_range" attrs="{'invisible':[('has_child','=',True)]}" readonly="1"
+                                       force_save="1"/>
+                                <field name="has_child" invisible="1" force_save="1"/>
+                                <field name="doctor_note"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="patient" class="text-uppercase" options="{'no_create': True}"
+                                       attrs="{'readonly':['|',('state','in',['Completed']),('patient','!=',False)]}"
+                                       force_save="1"/>
+                                <field name="requestor" options="{'no_create': True,'no_open': True}"
+                                       attrs="{'readonly':['|',('state','in',['Completed'])]}" force_save="1"/>
+                                <field name="date_requested"/>
+                            </group>
+                            <group>
+                                <field name="pathologist" options="{'no_create': True,'no_open': True}"
+                                       domain="[('department','in',department)]"/>
+                                <field name="date_analysis"/>
+                                <field name="date_done"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Lab Test Cases" attrs="{'invisible':[('has_child','=',False)]}">
+                                <group>
+                                    <field name="lab_test_criteria" nolabel="1"
+                                           attrs="{'readonly':[('state','in',['Draft','Completed'])]}">
+                                        <tree string="Lab Test Cases" editable="bottom" create="false"
+                                              decoration-danger="abnormal==True" delete="false">
+                                            <field name="sequence" invisible="1"/>
+                                            <field name="name" readonly="1" force_save="1"
+                                                   options="{'no_create': True}"/>
+                                            <field name="result"/>
+                                            <field name="lab_test_criteria_id" force_save="1" invisible="1"/>
+                                            <field name="normal_range" force_save="1"/>
+                                            <field name="abnormal"/>
+                                            <field name="units" force_save="1"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Test Results"
+                                  attrs="{'invisible':['|',('state','=','Draft'),('has_child','=',True)]}">
+                                <group>
+                                    <field name="results"
+                                           attrs="{'required':[('state','=','Test In Progress'),('has_child','=',False)]}"/>
+                                </group>
+                                <group invisible="1">
+                                    <field name="diagnosis"/>
+                                </group>
+                            </page>
+                            <page string="Materials Information">
+                                <field name="lab_test_material_ids" nolable="1" force_save="1"
+                                       attrs="{'readonly':[('state','in',['Draft','Completed'])]}">
+                                    <tree editable="bottom" decoration-danger="quantity > qty_avail"
+                                          decoration-warning="quantity > init_quantity">
+                                        <field name="sequence" invisible="1"/>
+                                        <field name="product_id" domain="[('id', 'in', parent.supply_domain)]"
+                                               required="1" force_save="1" attrs="{'readonly': [('is_init','=',True)]}"
+                                               options="{'no_create': True,'no_open': True}"/>
+                                        <field name="init_quantity" force_save="1"/>
+                                        <field name="is_init" invisible="1" force_save="1"/>
+                                        <field name="quantity" required="1" force_save="1"/>
+                                        <field name="qty_avail" required="1" force_save="1" optional="hide"/>
+                                        <field name="uom_id" readonly="1" force_save="1" required="1"
+                                               options="{'no_create':True,'no_open': True}"/>
+                                        <field name="location_id" optional="hide" readonly="1" force_save="1"/>
+                                        <field name="is_warning_location" invisible="1"/>
+                                        <field name="notes" optional="show"
+                                               attrs="{'required':[('is_diff_bom', '=', True)]}"/>
+                                        <field name="is_diff_bom" invisible="1"/>
+                                        <button readonly="True" icon="fa-warning text-warning"
+                                                title="Tủ trực không đủ số lượng"
+                                                attrs="{'invisible': [('is_warning_location', '=', False)]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_labtest_kanban_view">
+            <field name="name">Lab Tests</field>
+            <field name="model">sh.medical.lab.test</field>
+            <field name="arch" type="xml">
+                <kanban default_group_by="state" class="oe_notes" create="false" quick_create="false"
+                        group_create="false">
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="sh_medical_vignette oe_semantic_html_override">
+                                <div class="sh_medical_details">
+                                    <h4>
+                                        <a type="open">
+                                            <field name="patient" class="text-uppercase"/>
+                                        </a>
+                                    </h4>
+                                    <ul>
+                                        <li t-if="record.walkin.raw_value">
+                                            <b>Walkin:</b>
+                                            <i>
+                                                <field name="walkin"/>
+                                            </i>
+                                        </li>
+                                        <li t-if="record.institution.raw_value">
+                                            <b>Institution:</b>
+                                            <i>
+                                                <field name="institution"/>
+                                            </i>
+                                        </li>
+                                        <li t-if="record.test_type.raw_value">
+                                            <b>Test type:</b>
+                                            <i>
+                                                <field name="test_type"/>
+                                            </i>
+                                        </li>
+                                        <li t-if="record.name.raw_value">
+                                            <b>Lab Test #:</b>
+                                            <i>
+                                                <field name="name"/>
+                                            </i>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="sh_medical_lab_test_action_tree" model="ir.actions.act_window">
+            <field name="name">Lab Tests</field>
+            <field name="res_model">sh.medical.lab.test</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_group_date_analysis': True,'search_default_group_patient':
+                True,'search_default_group_walkin': True}
+            </field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new lab tests.
+                </p>
+            </field>
+        </record>
+
+        <record id="action_labtest_department_view" model="ir.actions.act_window">
+            <field name="name">Lab Tests</field>
+            <field name="res_model">sh.medical.lab.test</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[]</field>
+            <!--                    <field name="domain">[('department','=',active_id)]</field>-->
+            <field name="context">{'search_default_group_patient': True,'search_default_group_walkin': True,
+                'search_default_filter_not_completed_and_my_institution':True,
+                'default_department': active_id}
+            </field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new patient for walkins.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="sh_medical_lab_test_action_tree" id="sh_medical_lab_test_conf_list"
+                  parent="sh_medical_lab_and_img_menu" sequence="1"/>
+        <record id="sh_medical_lab_test_conf_list" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-flask</field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_lab_bom_form">
+            <field name="name">BOM xét nghiệm</field>
+            <field name="model">sh.medical.lab.bom</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="standard_cost"/>
+                            <field name="supply_domain" invisible="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Cấu hình BOM">
+                                <field name="lab_bom_lines" nolabel="1">
+                                    <tree editable="bottom">
+                                        <field name="supply_id" domain="[('id', 'not in', parent.supply_domain)]"/>
+                                        <field name="quantity"/>
+                                        <field name="uom_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_lab_bom_tree">
+            <field name="name">BOM xét nghiệm</field>
+            <field name="model">sh.medical.lab.bom</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Labtests BOM'>
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sh_medical_lab_bom_action" model="ir.actions.act_window">
+            <field name="name">BOM xét nghiệm</field>
+            <field name="res_model">sh.medical.lab.bom</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem action="sh_medical_lab_bom_action" id="sh_medical_lab_bom_menu" parent="sh_medical_hospital_menu"
+                  sequence="6"/>
+
+    </data>
+</odoo>

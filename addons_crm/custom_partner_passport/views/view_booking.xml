@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+<!--        <record id="inherit_view_booking_add_customer_classification" model="ir.ui.view">-->
+<!--            <field name="name">inherit_view_booking_add_customer_classification</field>-->
+<!--            <field name="model">crm.lead</field>-->
+<!--            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//sheet/div[2]" position="after">-->
+<!--                    <label for="customer_classification" string="Phân loại:"/>-->
+<!--                    <h2>-->
+<!--                        <field name="customer_classification" widget="label_selection"-->
+<!--                               options="{'classes': {'1': 'success', '2': 'info', '3': 'warning', '4': 'danger'}}"/>-->
+<!--                    </h2>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="inherit_tree_view_booking_add_customer_classification" model="ir.ui.view">-->
+<!--            <field name="name">inherit_tree_view_booking_add_customer_classification</field>-->
+<!--            <field name="model">crm.lead</field>-->
+<!--            <field name="inherit_id" ref="crm_base.crm_lead_view_tree_booking"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='name']" position="before">-->
+<!--                    <field name="customer_classification" widget="label_selection" optional="show" string="Phân loại"-->
+<!--                           options="{'classes': {'1': 'success', '2': 'info', '3': 'warning', '4': 'danger'}}"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='stage_id']" position="after">-->
+<!--                    <field name="effect" widget="label_selection" optional="show" string="Hiệu lực"-->
+<!--                           options="{'classes': {'effect': 'success', 'expire': 'danger'}}"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="crm_base_view_crm_booking_filter" model="ir.ui.view">-->
+<!--            <field name="name">crm.lead.search.BK</field>-->
+<!--            <field name="model">crm.lead</field>-->
+<!--            <field name="inherit_id" ref="crm_base.crm_base_view_crm_booking_filter"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//search/group/filter[7]" position="after">-->
+<!--                    <filter string="Trạng thái hiệu lực" name="effect" context="{'group_by':'effect'}"/>-->
+<!--                    <filter string="Phân loại" name="customer_classification" context="{'group_by':'customer_classification'}"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

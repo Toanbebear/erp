@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+"access_res_brand_group_erp_manager","res_brand group_erp_manager","model_res_brand","base.group_erp_manager",1,1,1,1
+"access_res_brand_group_user","res_brand group_user","model_res_brand",,1,0,0,0

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+
+    <record model="ir.actions.act_window" id="tas_giay_bao_co_act">
+      <field name="name">Giấy báo có</field>
+      <field name="res_model">account.move</field>
+      <field name="domain">[('tas_type','=','credit')]</field>
+      <field name="context">{'default_tas_type': 'credit'}</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="oe_view_nocontent_create">Tạo Giấy báo có
+        </p>
+      </field>
+      <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('tas_payment.view_phieu_thu_chi')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('account.view_move_form')})]"/>
+    </record>
+
+  </data>
+</odoo>

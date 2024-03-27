@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="collaborator_collaborator_transaction_cancel_wizard">
+            <field name="name">Hủy tiền giao dịch</field>
+            <field name="model">collaborator.transaction.cancel.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Hủy tiền cộng tác viên">
+                    <group string="Thông tin">
+                        <group >
+                            <field name="booking_id" readonly="True" force_save="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="walkin_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="sale_order" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="company_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="collaborator_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="contract_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                        </group>
+                        <group>
+                            <field name="transaction_id"  readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="service_date" readonly="True"/>
+                            <field name="service_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="amount_total" readonly="True"/>
+                            <field name="amount_used" readonly="True"/>
+                            <field name="currency_id" readonly="True" invisible="True"/>
+                            <field name="note" required="True" />
+                        </group>
+                        <footer>
+                            <button name="cancel" type="object" string="Hủy" class="oe_highlight"/>
+                            <button string="Hủy" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

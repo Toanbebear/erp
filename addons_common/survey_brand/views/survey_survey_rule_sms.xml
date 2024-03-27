@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="survey_survey_rule_sms_form" model="ir.ui.view">
+        <field name="name">survey.survey.rule.sms.form</field>
+        <field name="model">survey.survey.rule.sms</field>
+        <field name="arch" type="xml">
+            <form string="Cấu hình tin nhắn tự động">
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                        <group name="survey_auto_sms" string="Hệ thống khảo sát người dùng">
+                            <field name="name" required="True"/>
+                            <field name="survey_type" required="True"/>
+                        </group>
+                        <group name="survey_rule_sms" string="Tiêu chí SMS tự động">
+                            <field name="stage_id" widget="many2many_tags" attrs="{'invisible': [('survey_type', '!=', 'bk')]}"/>
+                            <field name="state_pk" attrs="{'invisible': [('survey_type', '!=', 'pk')]}"/>
+                            <field name="state_tk" attrs="{'invisible': [('survey_type', '!=', 'tk')]}"/>
+                            <field name="survey_time_id" widget="many2one" required="True"/>
+                            <field name="sent_time" widget="float_time" required="True"/>
+                            <field name="after_date_out" required="True"/>
+                        </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="survey_survey_rule_sms_tree" model="ir.ui.view">
+        <field name="name">survey.survey.rule.sms.tree</field>
+        <field name="model">survey.survey.rule.sms</field>
+        <field name="arch" type="xml">
+            <tree string="SMS">
+                <field name="name"/>
+                <field name="survey_type"/>
+                <field name="survey_time_id"/>
+                <field name="sent_time" widget="float_time"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_survey_survey_rule_sms" model="ir.actions.act_window">
+        <field name="name">Cấu hình SMS tự động</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.survey.rule.sms</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+<!--    <menuitem id="survey_survey_rule_sms_menu"-->
+<!--              name="Cấu hình SMS tự động"-->
+<!--              parent="survey_base.config_menu"-->
+<!--              sequence="11"-->
+<!--              action="action_survey_survey_rule_sms"/>-->
+</odoo>

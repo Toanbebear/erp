@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="employee_quit_form_view" model="ir.ui.view">
+            <field name="name">employee.quit.form.view</field>
+            <field name="model">employee.quit</field>
+            <field name="arch" type="xml">
+                <form string="Danh sách nhân viên nghỉ việc">
+                    <sheet>
+                        <group>
+                            <field name="import_data" required="True"/>
+                        </group>
+                        <div><i>Email nhân viên nhập chuyền vào phải đúng định dạng. Các email cách nhau bằng một dấu cách. <br/>Ví dụ: abc@scigroup.com.vn abc@dongabeauty.vn</i></div>
+                        <group>
+                            <field name="employee_ids" widget="many2many_tags" required="True"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="disable" string="Lưu trữ" type="object" class="btn-primary" confirm="Bạn có chắc chắn muốn lưu trữ những nhân viên này???"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_employee_quit" model="ir.actions.act_window">
+            <field name="name">Nhân viên nghỉ việc</field>
+            <field name="res_model">employee.quit</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="employee_quit_menu"
+                  action="action_employee_quit"
+                  groups="hr.group_hr_manager"
+                  name="Nhân viên nghỉ việc"
+                  parent="hr.menu_human_resources_configuration"
+                  sequence="100"/>
+    </data>
+</odoo>

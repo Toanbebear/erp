@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="check_partner_view_form" model="ir.ui.view">
+            <field name="name">check.partner.view.form</field>
+            <field name="model">check.partner.qualify</field>
+            <field name="arch" type="xml">
+                <form string="CHECK PARTNER">
+                    <group string="Information">
+                        <field name="name" readonly="True" force_save="True"/>
+                        <field name="phone" readonly="True" force_save="True" widget="phone"/>
+                        <field name="lead_id" readonly="True" force_save="True" options="{'no_open':True}"/>
+                        <field name="type" invisible="True"/>
+                        <field name="company_id" readonly="True" force_save="True"/>
+                        <field name="partner_id" readonly="True" force_save="True"
+                               attrs="{'invisible': [('partner_id', '=', False)]}"/>
+<!--                        <field name="code_booking" required="True" options="{'no_open':True}"/>-->
+                        <field name="booking_date" required="True" options="{'no_open':True}"/>
+                    </group>
+                    <footer class="text-center">
+                        <button name="qualify" type="object" string="Qualify" class="btn-info"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

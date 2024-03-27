@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="survey_base.survey_rule" model="ir.rule">
+        <field name="name">Survey rule</field>
+        <field name="model_id" ref="model_survey_survey"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">[(1,'=',1)]</field>
+        <field name="perm_read" eval="1"/>
+        <field name="perm_write" eval="1"/>
+        <field name="perm_create" eval="1"/>
+        <field name="perm_unlink" eval="1"/>
+    </record>
+
+    <record id="base.group_user" model="res.groups">
+        <field name="implied_ids" eval="[(4, ref('survey.group_survey_user'))]"/>
+    </record>
+</odoo>

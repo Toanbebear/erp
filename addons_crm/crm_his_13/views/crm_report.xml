@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+                string="BẢNG KÊ CHI PHÍ"
+                id="action_report_statement"
+                model="crm.lead"
+                report_type="qweb-pdf"
+                name="crm_his_13.report_statement"
+                file="crm_his_13.report_statement"
+                paperformat="crm_his_13.crm_paperformat_statement_service"
+                menu="True"
+        />
+
+    </data>
+</odoo>

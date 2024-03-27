@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+
+        <record id="view_department_filter_inherit" model="ir.ui.view">
+            <field name="name">hr.department.search</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='manager_id']" position="after">
+                    <field name="parent_id" />
+                    <field name="address_location" />
+                    <field name="sector_id" />
+                    <searchpanel>
+                        <field name="company_id" groups="base.group_multi_company" icon="fa-building"/>
+                    </searchpanel>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_department_view_inherit" model="ir.ui.view">
+            <field name="name">hr.department.inherit</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="sector_id"/>
+                    <field name="address_location"/>
+                </xpath>
+                <xpath expr="//field[@name='manager_id']" position="after">
+                    <field name="root_code"/>
+                </xpath>
+               <xpath expr="//group" position="after">
+                   <notebook>
+                        <page name="child" string="Phòng/Ban cấp dưới">
+                            <field name="child_ids" context="{'form_view_ref':'hr.view_department_form', 'default_parent_id': active_id}"/>
+                        </page>
+                        <page name="emp" string="Nhân viên">
+                            <field name="member_ids"/>
+                        </page>
+                   </notebook>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_department_tree_inherit" model="ir.ui.view">
+            <field name="name">hr.department.tree.inherit</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='parent_id']" position="after">
+                    <field name="employee_count" string="Nhân viên"/>
+                    <field name="child_department_count" string="Phòng/Ban cấp dưới"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="act_department_from_department" model="ir.actions.act_window">
+            <field name="name">Child Departments</field>
+            <field name="res_model">hr.department</field>
+            <field name="view_mode">kanban,form,tree</field>
+            <field name="search_view_id" ref="view_department_filter_inherit"/>
+            <field name="context">{
+                "search_default_parent_id": active_id
+                }
+            </field>
+            <field name="help" type="html">
+              <p class="oe_view_nocontent_create">
+                Click to add a new department.
+              </p>
+            </field>
+        </record>
+
+        <record id="hr.act_employee_from_department" model="ir.actions.act_window">
+            <field name="name">Employees</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="hr.view_employee_filter"/>
+            <field name="domain">[('department_id', 'child_of', [active_id])]</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                Add a new employee
+              </p>
+            </field>
+        </record>
+
+        <record id="hr_department_view_kanban_inherited" model="ir.ui.view" >
+            <field name="name">hr.department.kanban.inherited</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.hr_department_view_kanban"/>
+            <field name="arch" type="xml">
+                <kanban position="replace">
+                    <kanban class="oe_background_grey o_kanban_dashboard o_hr_kanban" quick_create="false" create="false">
+                        <field name="name"/>
+                        <field name="company_id"/>
+                        <field name="manager_id"/>
+                        <field name="color"/>
+                        <templates>
+                            <t t-name="kanban-box">
+                                <div t-attf-class="#{kanban_color(record.color.raw_value)}">
+                                    <div t-attf-class="o_kanban_card_header">
+                                        <div class="o_kanban_card_header_title">
+                                            <div class="o_primary"><field name="name"/></div>
+                                            <div class="o_secondary"><field name="company_id" groups="base.group_multi_company"/></div>
+                                        </div>
+                                        <div class="o_kanban_manage_button_section">
+                                            <a class="o_kanban_manage_toggle_button" href="#"><i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/></a>
+                                        </div>
+                                    </div>
+                                    <div class="container o_kanban_card_content">
+                                        <div class="row">
+                                            <div class="col-12 mb-2 o_kanban_primary_left">
+                                                <a name="action_get_manager_view" type="object">
+                                                    <span title='Manager'><i class='fa fa-user' role="img" aria-label="Manager" style="font-size:20px"/>
+                                                        <t t-esc="record.manager_id.value"/>
+                                                    </span>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 mb-2 o_kanban_primary_left">
+                                                 <button type="action" name="%(hr.act_employee_from_department)d" class="btn oe_stat_button" title="Nhân viên">
+                                                    <div name="employee_count" class="o_field_widget o_stat_info o_readonly_modifier title_kanban" style="font-size:36px">
+                                                        <field name="employee_count" widget="statinfo" string=" "/>
+                                                    </div><i class="fa fa-fw o_button_icon fa-users" style="font-size:36px"></i>
+                                                 </button>
+                                            </div>
+                                            <div class="col-6 o_kanban_primary_right">
+                                                 <button type="action" name="%(act_department_from_department)d" class="btn oe_stat_button" title="Phòng/Ban cấp dưới">
+                                                    <div name="child_department_count" class="o_field_widget o_stat_info o_readonly_modifier title_kanban" style="font-size:36px">
+                                                        <field name="child_department_count" widget="statinfo" string=" "/>
+                                                    </div>
+                                                     <i class="fa fa-fw o_button_icon fa-sitemap" style="font-size:36px"></i>
+                                                 </button>
+                                            </div>
+                                        </div>
+                                    </div><div class="container o_kanban_card_manage_pane dropdown-menu" role="menu">
+
+                                        <div t-if="widget.editable" class="o_kanban_card_manage_settings row">
+                                            <div role="menuitem" aria-haspopup="true" class="col-8">
+                                                <ul class="oe_kanban_colorpicker" data-field="color" role="menu"/>
+                                            </div>
+                                            <div class="col-4 text-right">
+                                                <a role="menuitem" type="edit">Sửa</a>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+
+                </kanban>
+            </field>
+        </record>
+
+         <record id="hr.open_module_tree_department" model="ir.actions.act_window">
+             <field name="view_id" ref="sci_hrms.view_department_tree_inherit"/>
+            <field name="domain">[('parent_id', '=', False)]</field>
+        </record>
+
+        <!-- hr_department_sector Action -->
+        <record id="hr_department_sector_action" model="ir.actions.act_window">
+            <field name="name">Khối</field>
+            <field name="res_model">hr.department.sector</field>
+        </record>
+
+        <menuitem id="hr.menu_hr_department_tree" action="hr.open_module_tree_department"
+                parent="hr.menu_hr_root"
+                sequence="5"
+                groups="hr.group_hr_user"/>
+
+        <menuitem
+                id="menu_hr_department_sector"
+                name="Khối"
+                parent="hr.menu_human_resources_configuration"
+                action="hr_department_sector_action"
+                sequence="5"/>
+    </data>
+</odoo>

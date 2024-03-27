@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_rule_voucher_program" model="ir.rule">
+            <field name="name">voucher program fl brand</field>
+            <field ref="model_crm_voucher_program" name="model_id"/>
+            <field name="domain_force">[('brand_id.company_ids', 'in', company_ids)]</field>
+        </record>
+    </data>
+</odoo>

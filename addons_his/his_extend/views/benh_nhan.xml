@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="sh_medical_patient_tree_view_extend">
+            <field name="name">Patient List</field>
+            <field name="model">sh.medical.patient</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Patient Information' decoration-muted="deceased==True" create="false" export_xlsx="0">
+                    <field name="code_customer"/>
+                    <field name="name"/>
+                    <field name="gender"/>
+                    <field name="birth_date"/>
+                    <field name="age"/>
+                    <field name="street"/>
+                    <field name="phone" widget="phone_tree" groups="shealth_all_in_one.group_sh_medical_receptionist"/>
+                    <field name="state_id" string="Thành Phố"/>
+                    <field name="doctor" invisible="1"/>
+                    <field name="deceased" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_patient_form_view_extend">
+            <field name="name">Patient</field>
+            <field name="model">sh.medical.patient</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Patient" duplicate="false" create="false">
+                    <sheet>
+                        <div>
+                            <field name="image_1920" widget='image' class="oe_left oe_avatar mr-2"
+                                   options='{"preview_image": "image_512", "size": [90, 90]}'/>
+                            <div class="oe_title">
+                                <label for="name" string="Full Name" class="oe_edit_only"/>
+                                <h1>
+                                    <field name="name" required="1" widget="copy_char"/>
+                                </h1>
+                            </div>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="partner_id" readonly="1" force_save="1" icon="fa fa-user"/>
+                                <field name="code_customer" readonly="1" string="Mã bệnh nhân" widget="copy_char" icon="fa fa-info-circle"/>
+                                <field name="birth_date" required="1" string="Ngày sinh" icon="fa fa-calendar"/>
+                                <field name="marital_status" invisible="1" string="Giới tính" icon="fa fa-info-circle"/>
+                            </group>
+                            <group>
+                                <field name="gender" required="1" icon="fa fa-info-circle"/>
+                                <field name="age" attrs="{'invisible': [('code_customer','=',False)]}" icon="fa fa-info-circle"/>
+                                <field name="blood_type" icon="fa fa-info-circle"/>
+                                <field name="rh" icon="fa fa-info-circle"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Cá nhân" name="personal" icon="fa fa-info">
+                                <group>
+                                    <group>
+                                        <field name="career" icon="fa fa-info-circle"/>
+                                        <field name="ethnic_group" attrs="{'readonly': [('foreign','!=',False)]}" icon="fa fa-info-circle"
+                                               options="{'no_create': True,'no_open': True}"/>
+                                        <field name="foreign" attrs="{'readonly': [('ethnic_group','!=',False)]}" icon="fa fa-info-circle"
+                                               options="{'no_create': True,'no_open': True}"/>
+                                        <label for="street" string="Address" icon="fa fa-info-circle"
+                                               attrs="{'readonly': [('code_customer','=',False)]}"/>
+                                        <div class="o_address_format">
+                                            <field name="street" placeholder="Street..." class="o_address_street"
+                                                   required="1"/>
+                                            <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                                   invisible="1"/>
+                                            <field name="city" placeholder="City" class="o_address_city" invisible="1"/>
+                                            <field name="state_id" class="o_address_state" placeholder="Thành phố"
+                                                   options='{"no_open": True, "no_create": True}' required="1"/>
+                                            <field name="zip" placeholder="ZIP" class="o_address_zip" invisible="1"/>
+                                            <field name="country_id" placeholder="Country" class="o_address_country"
+                                                   options='{"no_open": True, "no_create": True}' required="1"
+                                                   invisible="1"/>
+                                        </div>
+                                        <field name="pass_port" string="CMND/Hộ chiếu" icon="fa fa-info-circle"/>
+                                    </group>
+                                    <group>
+                                        <field name="function" string="Profession" placeholder="e.g. Sales Director" icon="fa fa-info-circle"
+                                               required="1"/>
+                                        <field name="phone" widget="phone" readonly="1" force_save="1" icon="fa fa-phone-square"
+                                               groups="shealth_all_in_one.group_sh_medical_receptionist"
+                                               placeholder="e.g. +32.81.81.37.00"/>
+                                        <field name="email" widget="email" icon="fa fa-envelope-o"/>
+                                    </group>
+                                </group>
+                                <group string="Người thân">
+                                    <field name="family" nolabel="1" required="1">
+                                        <tree string="Family" editable="bottom" nolabel="1">
+                                            <field name="type_relation"/>
+                                            <field name="name"/>
+                                            <field name="age" invisible="1"/>
+                                            <field name="address"/>
+                                            <field name="phone"/>
+                                            <field name="deceased" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="deceased" invisible="1"/>
+                                        <field name="cod" attrs="{'invisible':[('deceased','=',False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="dod"
+                                               attrs="{'invisible':[('deceased','=',False)],'required':[('deceased','=',True)]}"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group string="Critical Information">
+                                        <field name="critical_info" nolabel="1"/>
+                                    </group>
+                                    <group string="Extra Information">
+                                        <field name="general_info" nolabel="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Đơn thuốc" name="prescriptions" icon="fa fa-list"
+                                  groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager">
+                                <field name="prescription_ids">
+                                    <tree string="Prescriptions" create="false" edit="false" delete="false">
+                                        <field name="date"/>
+                                        <field name="date_out" optional="hide"/>
+                                        <field name="services" optional="hide" widget="many2many_tags"/>
+                                        <field name="name"/>
+                                        <field name="doctor"/>
+                                        <field name="walkin"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sh_medical_patient_action_extend" model="ir.actions.act_window">
+            <field name="name">Bệnh nhân</field>
+            <field name="res_model">sh.medical.patient</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('walkin.institution.his_company', 'in', allowed_company_ids)]</field>
+            <field name="context">{}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('his_extend.sh_medical_patient_tree_view_extend')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('his_extend.sh_medical_patient_form_view_extend')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new patient.
+                </p>
+                <p>
+                    With shealth patient screen, you can easily find all the information you need for each patients;
+                    personal information, medical history, vaccination history, etc.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

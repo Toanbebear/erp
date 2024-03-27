@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_brand_form_inherit" model="ir.ui.view">
+        <field name="name">res.brand.form.inherit</field>
+        <field name="model">res.brand</field>
+        <field name="inherit_id" ref="sci_brand.view_form_brand" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="background" string="Apps Dashboard">
+                    <group name="dashboard_settings">
+                        <field name="dashboard_background" widget="image" class="oe_avatar"/>
+                        <field name="icon" widget="image" class="oe_avatar"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_ir_config_parameter_inherit" model="ir.ui.view">
+        <field name="model">ir.config_parameter</field>
+        <field name="inherit_id" ref="base.view_ir_config_list"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='value']" position="replace">
+                <field name="value" class="text_limit_in_tree_view"></field>
+            </xpath>
+        </field>
+    </record>
+</odoo>

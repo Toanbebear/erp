@@ -1,0 +1,28 @@
+{
+    'name': 'Bán sản phẩm tại Booking',
+    'version': '1.0',
+    'category': 'Sales/CRM',
+    'author': 'Nguyễn Ngọc Hải',
+    'sequence': '10',
+    'summary': '',
+    'depends': [
+        'crm_base', 'shealth_all_in_one',
+    ],
+    'data': [
+        'views/view_booking.xml',
+        'views/sale_order.xml',
+        'views/crm_discount_review.xml',
+        'views/account_payment.xml',
+        'views/crm_line_product.xml',
+        'security/ir.model.access.csv',
+        'wizard/view_crm_create_so.xml',
+        'wizard/discount_review.xml',
+        'wizard/crm_line_product_cancel.xml',
+        # 'wizard/apply_discount_program.xml',
+        'wizard/create_multi_line_product.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'qweb': [],
+}

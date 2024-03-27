@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_crm_loyalty_rank_add_gift_zns">
+            <field name="name">view_form_crm_loyalty_rank_add_gift_zns</field>
+            <field name="model">crm.loyalty.rank</field>
+            <field name="inherit_id" ref="loyalty.form_rank_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='validity_card']" position="after">
+                    <field name="gift_zns"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

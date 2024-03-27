@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sales_source_locked_wizard" model="ir.ui.view">
+            <field name="name">sales.source.locked.form</field>
+            <field name="model">sales.by.source.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Khóa sổ">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="start_date"/>
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="company_ids" string="Công ty cần khóa sổ" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Khóa sổ" name="request_locked" type="object"
+                                class="btn btn-danger js_publish_btn"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="sales_source_locked_wizard_action" model="ir.actions.act_window">
+            <field name="name">Khóa sổ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.by.source.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sales_source_locked_wizard"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="sales_source_unlocked_wizard" model="ir.ui.view">
+            <field name="name">sales.source.locked.form</field>
+            <field name="model">sales.by.source.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Mở Khóa sổ">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="start_date"/>
+                            </group>
+                            <group>
+                                <field name="end_date"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="company_ids" string="Công ty cần mở mở sổ" widget="many2many_tags"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Mở khóa sổ" name="request_unlocked" type="object"
+                                class="btn btn-danger js_publish_btn"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="sales_source_unlocked_wizard_action" model="ir.actions.act_window">
+            <field name="name">Mở khóa sổ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.by.source.wizard</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="sales_source_unlocked_wizard"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

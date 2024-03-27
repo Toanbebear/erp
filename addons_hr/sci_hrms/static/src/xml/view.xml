@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="template" xml:space="preserve">
+    <t t-extend="ListView.buttons">
+        <t t-jquery="button.o_list_export_xlsx" t-operation="replace">
+            <button type="button" class="btn btn-primary btn-secondary o_list_export_xlsx"
+                    title="Export All">
+                <i class="fa fa-download" title="Xuất tất cả dữ liệu"></i>
+                 <span class="d-none d-sm-inline">Xuất dữ liệu</span>
+            </button>
+        </t>
+    </t>
+    <t t-extend="ImportView">
+        <t t-jquery=".o_nocontent_help" t-operation="replace">
+            <div class="o_nocontent_help">
+                <p class="o_view_nocontent_smiling_face">
+                    Select a CSV or Excel file to import.
+                </p>
+                <div t-foreach="widget.importTemplates" t-as="template">
+                    <a t-att-href="template.template" aria-label="Download" title="Download">
+                        <i class="fa fa-download"/> <span><t t-esc="template.label"/></span>
+                    </a>
+                </div>
+            </div>
+        </t>
+
+    </t>
+</template>

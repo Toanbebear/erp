@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="history_discount_view_form" model="ir.ui.view">
+            <field name="name">History discount</field>
+            <field name="model">history.discount</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="type"/>
+                            <field name="discount_cash" attrs="{'invisible': [('type', '!=', 'cash')]}"/>
+                            <field name="discount_percent" attrs="{'invisible': [('type', '!=', 'percent')]}"/>
+                            <field name="crm_id"/>
+                            <field name="order_id"/>
+                            <field name="crm_line_id"/>
+                            <field name="sale_order_line_id"/>
+                            <field name="amount_discount"/>
+                            <field name="discount_review_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="history_discount_view_tree" model="ir.ui.view">
+            <field name="name">History discount</field>
+            <field name="model">history.discount</field>
+            <field name="arch" type="xml">
+                <tree duplicate="false" create="false">
+                    <field name="type"/>
+                    <field name="discount_cash"/>
+                    <field name="discount_percent"/>
+                    <field name="crm_id"/>
+                    <field name="order_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--        <record id="open_history_discount" model="ir.actions.act_window">-->
+        <!--            <field name="name">History discount</field>-->
+        <!--            <field name="view_mode">tree,form</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">history.discount</field>-->
+        <!--            <field name="domain">[]</field>-->
+        <!--        </record>-->
+
+        <!--        <menuitem id="menu_crm_history_discount"-->
+        <!--                  name="History discount"-->
+        <!--                  parent="crm.menu_crm_config_lead"-->
+        <!--                  sequence="2"-->
+        <!--                  action="open_history_discount"-->
+        <!--                  groups="base.group_system"/>-->
+
+        <record id="crm_line_discount_history_view_tree" model="ir.ui.view">
+            <field name="name">Lịch sử giảm giá</field>
+            <field name="model">crm.line.discount.history</field>
+            <field name="arch" type="xml">
+                <tree duplicate="false" create="false">
+                    <field name="booking_id"/>
+                    <field name="crm_line"/>
+                    <field name="discount_program"/>
+                    <field name="type"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_crm_line_discount_history" model="ir.actions.act_window">
+            <field name="name">Lịch sử giảm giá</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.line.discount.history</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <menuitem id="menu_crm_line_discount_history"
+                  name="Lịch sử giảm giá"
+                  parent="crm.menu_crm_config_lead"
+                  sequence="3"
+                  action="open_crm_line_discount_history"
+                  groups="base.group_system"/>
+
+    </data>
+</odoo>

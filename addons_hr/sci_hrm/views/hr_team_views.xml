@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Team Tree View -->
+        <record model="ir.ui.view" id="hr_team_tree">
+            <field name="name">hr.team.tree</field>
+            <field name="model">hr.team</field>
+            <field name="arch" type="xml">
+                <tree string="Group">
+                    <field name="active" invisible="1"/>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="department_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Team Form View -->
+        <record model="ir.ui.view" id="hr_team_form">
+            <field name="name">hr.team.form</field>
+            <field name="model">hr.team</field>
+            <field name="arch" type="xml">
+                <form string="Group">
+                    <group>
+                        <field name="active" invisible="1"/>
+                        <field name="name"/>
+                        <field name="department_id"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="sci_hrm_hr_team_search" model="ir.ui.view">
+            <field name="name">Search team</field>
+            <field name="model">hr.team</field>
+            <field name="arch" type="xml">
+                <search string="Search Team">
+                    <field name="name" string="Nhóm" filter_domain="[('name','ilike',self)]"/>
+<!--                    <filter string="Tên" name="name_1"-->
+<!--                        help="Parameters that are used by all resources."-->
+<!--                        domain="['|',('name','=','Quản lý'),('name','=','Đối ngoại')]"/>-->
+<!--                    <group expand="0" string="Group By" colspan="4">-->
+<!--                        <filter string="Bộ phận" name="test" domain="[]" context="{'group_by':'name'}"/>-->
+<!--                    </group>-->
+               </search>
+            </field>
+        </record>
+
+        <!-- Team Action -->
+        <record id="sci_hrm_hr_team_action" model="ir.actions.act_window">
+            <field name="name">Nhóm</field>
+            <field name="res_model">hr.team</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="sci_hrm_hr_team_search"/>
+            <field name="context">{'search_default_name_1': 1}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_team_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('hr_team_form')})]"/>
+        </record>
+    </data>
+</odoo>

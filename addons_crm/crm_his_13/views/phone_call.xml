@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_phone_call_his">
+            <field name="name">Phone call</field>
+            <field name="model">crm.phone.call</field>
+            <field name="inherit_id" ref="crm_base.view_form_phone_call"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_id']" position="after">
+                    <field name="medical_id" options="{'no_create':True}"/>
+                    <field name="service_id" widget="many2many_tags" options="{'no_open':True,'no_create':True}"/>
+                    <field name="care_type"/>
+                    <field name="type_pc"/>
+                </xpath>
+                <xpath expr="//field[@name='booking_date']" position="after">
+                    <field name="physician" options="{'no_open':True,'no_create':True}"/>
+                </xpath>
+                <xpath expr="//page[1]" position="after">
+                    <page name="Disease" attrs="{'invisible':[('type_brand','!=','hospital')]}" string="Bệnh án">
+                        <group>
+                            <field name="desc_doctor"/>
+                            <field name="date_warranty"/>
+                            <field name="date_re_exam"/>
+                            <field name="date"/>
+                            <field name="date_out_location" readonly="True" force_save="True"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_tree_phone_call_his">
+            <field name="name">Phone call</field>
+            <field name="model">crm.phone.call</field>
+            <field name="inherit_id" ref="crm_base.tree_view_phone_call"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_id']" position="after">
+                    <field name="service_id" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

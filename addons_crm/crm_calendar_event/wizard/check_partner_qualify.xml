@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_form_qualify_calendar_event" model="ir.ui.view">
+            <field name="name">inherit_form_qualify_calendar_event</field>
+            <field name="model">check.partner.qualify</field>
+            <field name="inherit_id" ref="crm_base.check_partner_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="physician" options="{'no_open':True,'no_create':True}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

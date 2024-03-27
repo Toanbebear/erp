@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_config_settings_esms_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.website.crm</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="website.res_config_settings_view_form" />
+        <field name="arch" type="xml">
+            <div id="webmaster_settings" position="after">
+                <h2>Thông tin ESMS API</h2>
+                <div class="row mt16 o_settings_container">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <label for="esms_url" />
+                        <div class="text-muted">
+                            <field name="esms_url" />
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label for="esms_brand_name" />
+                            <div class="text-muted">
+                                <field name="esms_brand_name" />
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <label for="esms_api_key" />
+                        <div class="text-muted">
+                            <field name="esms_api_key" />
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_right_pane">
+                            <label for="esms_secret_key" />
+                            <div class="text-muted">
+                                <field name="esms_secret_key" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_consultation_ticket_for_receptionist,receptionist 3 perm rd,model_consultation_ticket,crm_base.receptionist_crm,1,1,1,0
+access_consultation_ticket_for_all_user,all 1 perm rd,model_consultation_ticket,,1,0,0,0
+access_consultation_detail_ticket,consultation detail ticket 3 perm rd,model_consultation_detail_ticket,crm_base.receptionist_crm,1,1,1,1

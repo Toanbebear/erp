@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_currency_rate_tree_inherit" model="ir.ui.view">
+            <field name="name">res.currency.rate.tree</field>
+            <field name="model">res.currency.rate</field>
+            <field name="inherit_id" ref="base.view_currency_rate_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="currency_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_open_res_currency_rate" model="ir.actions.act_window">
+            <field name="name">Tỉ giá tiền tệ</field>
+            <field name="res_model">res.currency.rate</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="account.action_account_payments" model="ir.actions.act_window">
+            <field name="context">{
+                'default_payment_type': 'inbound',
+                'default_partner_type': 'customer',
+                'search_default_inbound_filter': 1,
+                'res_partner_search_mode': 'customer',
+                'currency_rate_date': True
+            }</field>
+        </record>
+
+        <menuitem id="menu_action_currency_rate" action="action_open_res_currency_rate" name="Tỉ giá tiền tệ"
+                  parent="account.account_account_menu" sequence="10"/>
+    </data>
+</odoo>

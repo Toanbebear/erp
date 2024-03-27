@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_brand" model="ir.ui.view">
+            <field name="name">Form brand</field>
+            <field name="model">crm.brand</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="type" required="True"/>
+                            <field name="company_ids" widget="many2many_tags"/>
+                            <field name="code" required="True"/>
+                            <field name="phone"/>
+                            <field name="image"/>
+                            <field name="id_brand_insight"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_brand" model="ir.ui.view">
+            <field name="name">Brand</field>
+            <field name="model">crm.brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_open_view_brand" model="ir.actions.act_window">
+            <field name="name">Brand</field>
+            <field name="res_model">crm.brand</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="crm_menu_brand"
+                  name="Brand"
+                  parent="crm.crm_menu_root"
+                  sequence="8"
+                  groups="crm_base.branch_management,crm_base.manager_customer_service"
+        />
+
+        <menuitem id="crm_menu_brand_2"
+                  name="Brand"
+                  parent="crm_menu_brand"
+                  action="action_open_view_brand"
+                  sequence="1"/>
+
+        <record id="view_brand_filter" model="ir.ui.view">
+            <field name="name">crm.team.brand.search</field>
+            <field name="model">crm.team.brand</field>
+            <field name="arch" type="xml">
+                <search string="Brand">
+                    <field name="name" string="Tên team"/>
+                    <separator/>
+                    <filter string="Lưu trữ" name="inactive" domain="[('active', '=', False)]"/>
+                </search>
+             </field>
+        </record>
+
+        <record id="view_form_team_brand" model="ir.ui.view">
+            <field name="name">Form team brand</field>
+            <field name="model">crm.team.brand</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="active"/>
+                            <field name="name" required="True"/>
+                            <field name="brand_id" required="True" options='{"no_open": True, "no_create": True}'/>
+                            <field name="company_ids" widget="many2many_tags"
+                                   options='{"no_open": True, "no_create": True}'/>
+                            <field name="user_ids" widget="many2many_tags" required="True"
+                                   options='{"no_open": True, "no_create": True}'/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_team_brand" model="ir.ui.view">
+            <field name="name">Team brand</field>
+            <field name="model">crm.team.brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="company_ids" widget="many2many_tags"/>
+                    <field name="user_ids"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_open_view_team_brand" model="ir.actions.act_window">
+            <field name="name">Team brand</field>
+            <field name="res_model">crm.team.brand</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="crm_menu_team_brand"
+                  name="Team brand"
+                  parent="crm_menu_brand"
+                  action="action_open_view_team_brand"
+                  sequence="2"/>
+
+    </data>
+</odoo>

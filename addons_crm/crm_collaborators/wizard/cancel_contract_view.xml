@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_cancel_products_discount">
+            <field name="name">Cancel products discount</field>
+            <field name="model">cancel.products.discount</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="contract_id" readonly="True" />
+                            <field name="reason_line_cancel" required="True"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <footer >
+                        <button name="cancel_products_discount" type="object" string="Hủy" class="btn-danger"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_form_cancel_collaborators_contract">
+            <field name="name">Cancel collaborators contract</field>
+            <field name="model">cancel.collaborators.contract</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="crm_line_id" readonly="True"/>
+                            <field name="reason_line_cancel" required="True"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <footer class="text-center">
+                        <button name="cancel_contract" type="object" string="Hủy Hợp đồng" class="btn-danger"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+<!--        Hủy CTV-->
+        <record model="ir.ui.view" id="view_form_cancel_collaborators">
+            <field name="name">Cancel collaborators</field>
+            <field name="model">cancel.collaborators</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="crm_collaborators" readonly="True"/>
+                            <field name="reason_line_cancel" required="True"/>
+                            <field name="note" required="True" />
+                        </group>
+                    </group>
+                    <footer class="text-center">
+                        <button name="cancel_contract" type="object" string="Hủy" class="btn-danger"/>
+                        <button string="Cancel" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

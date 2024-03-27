@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+loyalty_relatives_id,loyalty_relatives_name,model_loyalty_relatives,loyalty.sys_loyalty,1,1,1,0
+voucher_loyalty_id,voucher_loyalty_name,model_voucher_loyalty,loyalty.sys_loyalty,1,1,1,1
+sys_all_perm_loyalty_relative,sys all perm loyalty relative,model_history_relative_reward,,1,1,1,1
+
+
+
+
+
+
+
+

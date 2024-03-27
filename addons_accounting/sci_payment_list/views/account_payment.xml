@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="payment_list_account_payment_form_inherit" model="ir.ui.view">
+            <field name="name">Thêm payment list</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="priority" eval="17"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="payment_list_state" invisible="True"/>
+                    <field name="payment_list_id" string="Bảng kê thu tiền số" attrs="{'invisible': [('payment_list_state', 'not in', ('waiting','done'))]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

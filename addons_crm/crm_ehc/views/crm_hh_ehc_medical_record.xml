@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_medical_record_act" model="ir.actions.act_window">
+			<field name="name">Bệnh án</field>
+			<field name="view_mode">tree,form</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.hh.ehc.medical.record</field>
+			<field name="domain">[]</field>
+		</record>
+		
+		<menuitem id="menu_medical_record_ehc"
+				  name="Bệnh án"
+				  parent="crm_ehc.crm_hh_ehc_root_menu"
+				  action="crm_ehc.crm_hh_ehc_medical_record_act"
+		/>
+		
+		<record id="crm_hh_ehc_medical_record_tree" model="ir.ui.view">
+			<field name="name">Medical Record EHC tree</field>
+			<field name="model">crm.hh.ehc.medical.record</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="booking_id"/>
+					<field name="status"/>
+					<field name="reception_date"/>
+					<field name="in_date"/>
+					<field name="out_date"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_medical_record_form" model="ir.ui.view">
+			<field name="name">Medical Record EHC form</field>
+			<field name="model">crm.hh.ehc.medical.record</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<group>
+								<field name="patient_id"/>
+								<field name="type_patient"/>
+								<field name="booking_id"/>
+								<field name="patient_birth_date"/>
+								<field name="patient_address"/>
+								<field name="patient_code"/>
+								<field name="amount_paid"/>
+								<field name="amount_due"/>
+								<field name="amount_discount"/>
+							</group>
+							<group>
+								<field name="status"/>
+								<field name="is_insurance"/>
+								<field name="reception_date"/>
+								<field name="in_date"/>
+								<field name="out_date"/>
+								<field name="appointment_date"/>
+								<!--                            <field name="date_cut"/>-->
+							</group>
+						</group>
+						<notebook>
+							<page string="Bệnh án theo phòng">
+								<field name="crm_hh_ehc_medical_record_line_ids">
+									<tree>
+										<field name="room_id"/>
+									</tree>
+									<form>
+										<group>
+											<field name="room_id"/>
+											<field name="screening_information"/>
+											<field name="reason_for_examination"/>
+											<field name="pathological_process"/>
+											<field name="personal_history"/>
+											<field name="diagnose"/>
+										</group>
+										<group>
+											<field name="processing_time"/>
+											<field name="treatment_form"/>
+											<field name="desc_doctor"/>
+											<field name="result"/>
+										</group>
+									</form>
+								</field>
+							</page>
+						</notebook>
+					</sheet>
+				</form>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_medical_record_search" model="ir.ui.view">
+			<field name="name">Search bệnh án EHC</field>
+			<field name="model">crm.hh.ehc.medical.record</field>
+			<field name="arch" type="xml">
+				<search string="state Search">
+					<field name="booking_id" string="Booking"/>
+					<field name="patient_code" string="Mã bệnh nhân"/>
+				</search>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_crm_view_inherit_medical_record" model="ir.ui.view">
+			<field name="name">crm_hh_ehc_crm_view_inherit_medical_record</field>
+			<field name="model">crm.lead</field>
+			<field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+			<field name="arch" type="xml">
+				<xpath expr="//page[@name='ehc_tab']//field[@name='statement_payment_ehc_ids']" position="before">
+					<field name="crm_hh_ehc_medical_record_ids" options='{"no_create": True}'>
+						<tree>
+							<field name="patient_code"/>
+							<field name="type_patient"/>
+						</tree>
+					</field>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

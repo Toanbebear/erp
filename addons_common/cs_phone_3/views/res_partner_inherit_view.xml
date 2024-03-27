@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_form_res_partner_cs_inherit_add_phone_3" model="ir.ui.view">
+            <field name="name">view_form_res_partner_cs_inherit_add_phone_3</field>
+            <field name="model">res.partner</field>
+            <field name="priority" eval="100"/>
+            <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mobile']" position="after">
+                    <field name="phone_no_3" widget="phone"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

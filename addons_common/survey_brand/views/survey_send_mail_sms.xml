@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="survey_send_mail_sms_form" model="ir.ui.view">
+        <field name="name">survey.send.mail.sms.form</field>
+        <field name="model">survey.send.mail.sms</field>
+        <field name="arch" type="xml">
+            <form string="Cấu hình gửi Mail/SMS cho quản lý">
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                        <group name="survey_auto_sms" string="Hệ thống khảo sát người dùng">
+                            <field name="employee_id" required="True"/>
+                            <field name="phone" required="True"/>
+                            <field name="company_ids" required="True" widget="many2many_tags" options="{'no_create_edit': True}"/>
+                        </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="survey_send_mail_sms_tree" model="ir.ui.view">
+        <field name="name">survey.send.mail.sms.tree</field>
+        <field name="model">survey.send.mail.sms</field>
+        <field name="arch" type="xml">
+            <tree string="Cấu hình gửi Mail/SMS cho quản lý">
+                <field name="employee_id"/>
+                <field name="company_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_survey_send_mail_sms" model="ir.actions.act_window">
+        <field name="name">Cấu hình gửi Mail/SMS cho quản lý</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.send.mail.sms</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="survey_send_mail_sms_menu"
+              name="Cấu hình gửi Mail/SMS cho quản lý"
+              parent="survey_base.config_menu"
+              sequence="11"
+              action="action_survey_send_mail_sms"/>
+</odoo>

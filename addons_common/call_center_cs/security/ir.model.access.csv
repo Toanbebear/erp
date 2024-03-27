@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_api_access_token_cs,access_api_access_token_cs,model_api_access_token_cs,,1,1,1,1
+brand_ip_phone_id,brand_ip_phone_name,model_brand_ip_phone,base.group_erp_manager,1,1,1,1
+brand_ip_phone_user_id,brand_ip_phone_user_name,model_brand_ip_phone,,1,0,0,0

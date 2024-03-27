@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_change_phone">
+            <field name="name">CRM Change phone</field>
+            <field name="model">crm.change.phone</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="crm_id" invisible="1"/>
+                            <field name="phone"/>
+                            <field name="phone_new"/>
+                            <field name="mobile"/>
+                            <field name="mobile_new"/>
+                            <!--                            <field name="campaign_id" options="{'no_open':True,'no_create':True}" required="True"/>-->
+                            <!--                            <field name="type_action" required="True"/>-->
+                            <!--                            <field name="type_coupon" options="{'no_open':True,'no_create':True}"-->
+                            <!--                                   required="True"/>-->
+                            <!--                            <field name="coupon_id" options="{'no_open':True,'no_create':True}"-->
+                            <!--                                   required="True" />-->
+                            <!--                            <field name="description" attrs="{'invisible': [('type_action', '=', 'apply')]}"/>-->
+                            <!--                            <field name="crm_id" invisible="True"/>-->
+                            <!--                            <field name="partner_id" invisible="True"/>-->
+                            <!--                            <field name="note"/>-->
+                        </group>
+                        <!--                        <group>-->
+                        <!--                            <field name="line_ids" attrs="{'invisible': [('type_action', '!=', 'apply')], 'required': [('type_action', '=', 'apply')]}" widget="many2many_tags" string="Danh sách dịch vụ áp dụng">-->
+                        <!--&lt;!&ndash;                                <tree create="false" editable="top" options="{'no_open':True,'no_create':True}">&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                    <field name="product_id" readonly='True'/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                    <field name="quantity" readonly='True'/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                    <field name="unit_price" readonly='True'/>&ndash;&gt;-->
+                        <!--&lt;!&ndash;                                </tree>&ndash;&gt;-->
+
+                        <!--                            </field>-->
+                        <!--                            <field name="apply_combo" attrs="{'invisible': ['|',('type_action', '!=', 'apply'), ('type_coupon', '=', '1')]}">-->
+                        <!--                                <tree create="false" editable="top" options="{'no_open':True,'no_create':True}">-->
+                        <!--                                    <field name="phone"/>-->
+                        <!--                                    <field name="mobile"/>-->
+                        <!--                                </tree>-->
+                        <!--                            </field>-->
+                        <!--                        </group>-->
+
+
+                        <footer class="text-center">
+                            <button name="change_phone_lead" type="object" string="Đổi số điện thoại" class="btn-info"/>
+                            <button special="cancel" string="Cancel" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="crm_lead_change_phone_action" model="ir.actions.act_window">
+            <field name="name">Change phone</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.change.phone</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_change_phone"/>
+            <field name="target">new</field>
+        </record>
+        <!--        <record id="view_apply_coupon_finish" model="ir.ui.view">-->
+        <!--            <field name="name">Apply success</field>-->
+        <!--            <field name="model">crm.apply.coupon</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form>-->
+        <!--                    <field name="notify" readonly="True"/>-->
+        <!--                    <footer class="text-center">-->
+        <!--                        <button string="Ok" class="oe_highlight" special="cancel"/>-->
+        <!--                    </footer>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record id="action_view_apply_coupon_success_wizard" model="ir.actions.act_window">-->
+        <!--            <field name="name">Apply success</field>-->
+        <!--            <field name="res_model">crm.apply.coupon</field>-->
+        <!--            <field name="view_mode">form</field>-->
+        <!--            <field name="view_id" ref="view_apply_coupon_finish"/>-->
+        <!--            <field name="target">new</field>-->
+        <!--        </record>-->
+
+    </data>
+</odoo>

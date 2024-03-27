@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_group_customer,access_group_customer,model_crm_group_customer,base.group_user,1,1,1,1
+access_crm_coupon_bill,access_crm_coupon_bill,model_crm_coupon_bill,base.group_user,1,1,1,1
+access_sh_medical_ceiling_discount,access_sh_medical_ceiling_discount,model_sh_medical_ceiling_discount,base.group_user,1,1,1,1

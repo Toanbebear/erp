@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_form_crm_rule_debt">
+            <field name="name">crm rule debt</field>
+            <field name="model">crm.rule.debt</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="True"/>
+                                <field name="user_id" widget="many2many_tags"/>
+                                <field name="max_level" required="True"/>
+                                <field name="ceiling_price" placeholder="if the value is 0 it will be applied to the prices of all products"/>
+                                <field name="currency_id" options="{'no_open':True,'no_create':True}" readonly="True"/>
+                            </group>
+                            <group>
+                                <field name="foreign_affair"/>
+                                <field name="major"/>
+                                <field name="minor"/>
+                                <field name="spa"/>
+                                <field name="laser"/>
+                                <field name="dentistry"/>
+                                <field name="product"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_tree_crm_rule_debt">
+            <field name="name">crm rule debt</field>
+            <field name="model">crm.rule.debt</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="max_level"/>
+                    <field name="user_id" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_crm_rule_debt" model="ir.actions.act_window">
+            <field name="name">Rule debt</field>
+            <field name="res_model">crm.rule.debt</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="menu_rule_debt"
+                  name="Rule debt"
+                  action="action_crm_rule_debt"
+                  parent="crm.menu_crm_config_lead"
+                  sequence="17"/>
+
+    </data>
+</odoo>

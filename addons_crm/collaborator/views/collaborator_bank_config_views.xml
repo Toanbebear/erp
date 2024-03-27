@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="collaborator_bank_config_view_form" model="ir.ui.view">
+            <field name="name">Ngân hàng</field>
+            <field name="model">collaborator.bank.config</field>
+            <field name="arch" type="xml">
+                <form duplicate="false">
+                    <header>
+                    </header>
+                    <field name="logo" widget="image" class="oe_avatar"/>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <group string="Thông tin">
+                            <group>
+                                <field name="code"/>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="collaborator_bank_config_view_tree" model="ir.ui.view">
+            <field name="name">Ngân hàng</field>
+            <field name="model">collaborator.bank.config</field>
+            <field name="arch" type="xml">
+                <tree >
+                    <field name="sequence" widget="handle"/>
+                    <field name="logo" widget="image" class="oe_avatar" options='{"size": [70, 100]}'/>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="active" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="collaborator_bank_config_view_search" model="ir.ui.view">
+            <field name="name">collaborator.bank.config.view.search</field>
+            <field name="model">collaborator.bank.config</field>
+            <field name="arch" type="xml">
+                <search string="state Search">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <group>
+<!--                        <filter string="Trạng Thái" name="group_state" context="{'group_by': 'state'}"/>-->
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="collaborator_bank_config_action" model="ir.actions.act_window">
+            <field name="name">Ngân hàng</field>
+            <field name="res_model">collaborator.bank.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

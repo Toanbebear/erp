@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_form_brand_custom_field_inherit" model="ir.ui.view">
+            <field name="name">res.brand.form.cs.inherit</field>
+            <field name="model">res.brand</field>
+            <field name="inherit_id" ref="call_center_cs.view_form_brand_cs_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='cs']" position="after">
+                    <notebook>
+                        <page string="Custom filed">
+                            <field name="custom_field_cs"/>
+                        </page>
+                        <page string="Config phonecall">
+                            <field name="config_phone_cs"/>
+                        </page>
+                    </notebook>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

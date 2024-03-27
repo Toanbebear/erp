@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="crm_menu_collaborators"
+                  name="Cộng tác viên HH"
+                  parent="crm.crm_menu_root"
+                  sequence="8"/>
+        <record id="crm_menu_collaborators" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-users</field>
+        </record>
+
+            <menuitem id="menu_collaborators"
+                      name="Cộng tác viên HH"
+                      parent="crm_collaborators.crm_menu_collaborators"
+                      action="action_open_view_collaborators"
+                      sequence="1"/>
+
+<!--            <menuitem id="menu_collaborators_contract"-->
+<!--                      name="Hợp đồng"-->
+<!--                      parent="crm_collaborators.crm_menu_collaborators"-->
+<!--                      action="action_open_view_collaborators_contract"-->
+<!--                      sequence="2"/>-->
+
+<!--            <menuitem id="menu_products_discount"-->
+<!--                      name="Loại hợp đồng"-->
+<!--                      parent="crm_collaborators.crm_menu_collaborators"-->
+<!--                      action="action_open_view_collaborators_products_discount"-->
+<!--                      groups="crm_collaborators.group_collaborators_manager"-->
+<!--                      sequence="3"/>-->
+<!--        <menuitem   id="menu_report_source_ctv_erp"-->
+<!--                    name="Báo cáo chi tiết doanh số"-->
+<!--                    action="action_collaborator_report_act"-->
+<!--                    sequence="18"-->
+<!--                    groups="crm_collaborators.group_collaborators_system"-->
+<!--                    parent="report_sale.menu_kpi_erp_report"/>-->
+
+<!--        <menuitem   id="menu_collaborator_payment_report"-->
+<!--                    name="Báo cáo thanh toán hoa hồng"-->
+<!--                    action="action_collaborator_payment_report_act"-->
+<!--                    sequence="5"-->
+<!--                    groups="crm_collaborators.group_collaborators_system"-->
+<!--                    parent="crm_collaborators.crm_menu_collaborators"/>-->
+
+<!--        <menuitem   id="menu_report_ctv_erp"-->
+<!--                    name="Báo cáo chi tiết doanh số"-->
+<!--                    action="action_collaborator_report_act"-->
+<!--                    sequence="4"-->
+<!--                    groups="crm_collaborators.group_collaborators_system"-->
+<!--                    parent="crm_collaborators.crm_menu_collaborators"-->
+<!--        />-->
+
+<!--            <menuitem id="menu_log_transaction_so"-->
+<!--                      name="Lịch sử"-->
+<!--                      parent="crm_collaborators.crm_menu_collaborators"-->
+<!--                      action="action_open_view_log_transaction_so"-->
+<!--                      groups="crm_collaborators.group_collaborators_manager"-->
+<!--                      sequence="4"/>-->
+
+<!--            <menuitem action="action_open_view_account_payment_ctv"-->
+<!--                  name="Thanh toán CTV"-->
+<!--                  id="menu_action_account_payments_ctv"-->
+<!--                  parent="account.menu_finance_receivables"-->
+<!--                  groups="crm_collaborators.group_collaborators_system"-->
+<!--                  sequence="17"/>-->
+    </data>
+</odoo>

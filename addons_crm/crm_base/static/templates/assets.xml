@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" name="web_backend_edit_style" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/crm_base/static/css/edit_style.css"/>
+            <script type="text/javascript" src="/crm_base/static/js/widget.js"></script>
+        </xpath>
+    </template>
+</odoo>

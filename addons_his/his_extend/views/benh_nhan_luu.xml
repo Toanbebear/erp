@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="sh_medical_inpatient_tree_view_extend">
+            <field name="name">Inpatient Admission</field>
+            <field name="model">sh.medical.inpatient</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree class="sh_has_icon" string='Inpatient Admission' create="false"
+                      decoration-muted="state=='Cancelled'" decoration-danger="state=='Hospitalized'"
+                      decoration-success="state=='Discharged'" decoration-info="state=='Draft'"
+                      default_order="admission_date desc">
+                    <field name="name"/>
+                    <field name="patient" class="text-uppercase"/>
+                    <field name="admission_type" invisible="1"/>
+                    <field name="ward"/>
+                    <field name="bed"/>
+                    <field name="admission_date"/>
+                    <field name="discharge_date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_inpatient_form_view_extend">
+            <field name="name">Inpatient Admission</field>
+            <field name="model">sh.medical.inpatient</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Inpatient Admission" create="0">
+                    <header>
+                        <button confirm="Bạn có chắc chắn muốn nhận bệnh nhân?" name="set_to_hospitalized"
+                                title="Xác nhận phiếu lưu bệnh nhân"
+                                states="Draft" string="Xác nhận ngay" type="object"
+                                class="btn-warning fa fa-step-forward"
+                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+                        <button confirm="Bạn có chắc muốn xác nhận kết thúc chăm sóc đối với bệnh nhân này?" name="set_to_discharged"
+                                title="Kết thúc phiếu lưu bệnh nhân"
+                                states="Hospitalized" string="Xác nhận kết thúc chăm sóc" type="object"
+                                class="btn-warning fa fa-step-forward"
+                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+                        <button confirm="Bạn có chắc muốn hủy ghi nhận này?" name="set_to_cancelled"
+                                title="Hủy phiếu lưu bệnh nhân"
+                                states="Hospitalized" string="Hủy phiếu" type="object"
+                                class="btn-warning fa fa-step-forward"
+                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+                        <button confirm="Bạn có chắc muốn đặt lại phiếu này về trạng thái nháp?" name="set_to_draft"
+                                states="Cancelled" string="Đặt là Nháp" type="object"
+                                class="btn-warning fa fa-step-forward"
+                                groups="shealth_all_in_one.group_sh_medical_manager"
+                                title="Chuyển phiếu về trạng thái 'Nháp'"/>
+                        <button confirm="Bạn có chắc muốn đặt lại phiếu về trang thái Xác nhận?"
+                                title="Chuyển phiếu về trạng thái 'Xác nhận'"
+                                name="set_to_hospitalized" states="Discharged" string="Đặt lại là Xác nhận"
+                                class="btn-warning fa fa-step-forward"
+                                type="object" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_visible="Draft,Hospitalized,Discharged,Cancelled"
+                               statusbar_colors='{"Hospitalized":"red","Draft":"blue","Invoiced":"Cancelled","Discharged":"red"}'/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="CHỈ ĐỊNH THÊM" text="CHỈ ĐỊNH THÊM" bg_color="bg-warning"
+                                attrs="{'invisible': [('is_new_request', '=', False)]}"/>
+                        <div class="row">
+                            <div class="oe_title col-2">
+                                <label for="name" string="Mã phiếu:"/>
+                                <h2>
+                                    <field name="name" class="oe_inline" widget="copy_char"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-3">
+                                <label for="partner_id" string="Tên khách hàng:"/>
+                                <h2>
+                                    <field name="partner_id"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-2">
+                                <label for="dob" string="Ngày sinh:"/>
+                                <h2>
+                                    <field name="dob" force_save="1" readonly="1"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-4">
+                                <label for="address" string="Địa chỉ:"/>
+                                <h2>
+                                    <field name="address" style="white-space: unset;overflow:unset"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page string="Thông tin chung" name="information" icon="fa fa-info">
+                                <group>
+                                    <group>
+                                        <field name="evaluation" class="text-uppercase" force_save="1" readonly="1"
+                                               icon="fa fa-link"
+                                               attrs="{'invisible': [('evaluation','=',False)]}"/>
+                                        <field name="patient" class="text-uppercase" force_save="1" readonly="1"
+                                               icon="fa fa-user"/>
+                                        <field name="institution" options="{'no_create': True,'no_open':True}"
+                                               icon="fa fa-building"
+                                               force_save="1"
+                                               required="1"/>
+                                        <field name="ward" options="{'no_create': True,'no_open':True}" force_save="1"
+                                               icon="fa fa-building-o"
+                                               required="1"/>
+                                        <field name="bed" domain="[('state','=','Free')]" required="1"
+                                               icon="fa fa-info-circle"
+                                               options="{'no_create': True,'no_open':True}"/>
+                                        <field name="admission_date" icon="fa fa-calendar"
+                                               attrs="{'readonly': [('state','in',['Discharged','Cancelled'])]}"
+                                               force_save="1"/>
+                                        <field name="discharge_date" icon="fa fa-calendar"
+                                               attrs="{'readonly': [('state','in',['Discharged','Cancelled'])]}"
+                                               force_save="1"/>
+                                        <field name="is_new_request"/>
+                                    </group>
+                                    <group>
+                                        <field name="admission_type" readonly="1" force_save="1"
+                                               icon="fa fa-info-circle"/>
+                                        <field name="admission_reason_walkin" string="Lý do nhập viện"
+                                               icon="fa fa-info-circle"/>
+                                        <field name="services" widget="many2many_tags" force_save="1"
+                                               icon="fa fa-list-ul"/>
+                                        <field name="attending_physician" options="{'no_create': True,'no_open':True}"
+                                               attrs="{'readonly': [('state','in',['Discharged','Cancelled'])]}"
+                                               force_save="1" icon="fa fa-user"/>
+                                        <field name="operating_physician" options="{'no_create': True,'no_open':True}"
+                                               attrs="{'readonly': [('state','in',['Discharged','Cancelled'])]}"
+                                               icon="fa fa-user"
+                                               force_save="1"/>
+                                        <field name="admission_date" icon="fa fa-calendar"
+                                               attrs="{'readonly': [('state','in',['Discharged','Cancelled'])]}"
+                                               force_save="1"/>
+                                        <field name="discharge_date" icon="fa fa-calendar"
+                                               attrs="{'readonly': [('state','in',['Discharged','Cancelled'])]}"
+                                               force_save="1"/>
+                                    </group>
+
+                                </group>
+                            </page>
+                            <page string="Chi tiết chăm sóc" icon="fa fa-list" name="care_details">
+                                <group>
+                                    <field name="discharge_plan"
+                                           attrs="{'readonly': [('state','in',['Discharged','Cancelled'])]}"
+                                           force_save="1"/>
+                                </group>
+                                <group>
+                                    <field name="nursing_plan" string="Chế độ dinh dưỡng"
+                                           attrs="{'readonly': [('state','in',['Discharged','Cancelled'])]}"
+                                           force_save="1"/>
+                                </group>
+                            </page>
+                            <page string="Thông tin thêm" name="extra_info" icon="fa fa-info">
+                                <group string="Thông tin thêm">
+                                    <field name="info" nolabel="1"
+                                           attrs="{'readonly': [('state','in',['Discharged','Cancelled'])]}"
+                                           force_save="1"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sh_medical_inpatient_action_extend" model="ir.actions.act_window">
+            <field name="name">Bệnh nhân lưu</field>
+            <field name="res_model">sh.medical.inpatient</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('his_extend.sh_medical_inpatient_tree_view_extend')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('his_extend.sh_medical_inpatient_form_view_extend')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to admit new patient.
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

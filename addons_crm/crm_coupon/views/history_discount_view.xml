@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_crm_line_discount_history_view_tree" model="ir.ui.view">
+            <field name="name">inherit_crm_line_discount_history_view_tree</field>
+            <field name="model">crm.line.discount.history</field>
+            <field name="inherit_id" ref="crm_base.crm_line_discount_history_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='discount_program']" position="after">
+                    <field name="crm_line_product"/>
+                    <field name="discount_program_list" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

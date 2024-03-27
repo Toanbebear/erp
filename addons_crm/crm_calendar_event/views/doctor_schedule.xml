@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_doctor_schedule_tree">
+            <field name="name">Lịch nghỉ bác sĩ</field>
+            <field name="model">doctor.schedule</field>
+            <field name="arch" type="xml">
+                <tree editable="bottom">
+                    <field name="company" required="1" options="{'no_open':True,'no_create':True}"/>
+                    <field name="physician" required="1" options="{'no_open':True,'no_create':True}"/>
+                    <field name="start_datetime" required="1"/>
+                    <field name="end_datetime" required="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_doctor_schedule_calendar" model="ir.ui.view">
+            <field name="name">Lịch nghỉ bác sĩ</field>
+            <field name="model">doctor.schedule</field>
+            <field name="arch" type="xml">
+                <calendar string="Lịch nghỉ" date_start="start_datetime" date_stop="end_datetime" color="physician">
+                    <field name="start_datetime" widget="calendar_event"/>
+                    <field name="end_datetime" widget="calendar_event"/>
+                    <field name="physician"/>
+                    <field name="company"/>
+                </calendar>
+            </field>
+        </record>
+
+
+        <record id="open_doctor_schedule" model="ir.actions.act_window">
+            <field name="name">Lịch nghỉ bác sĩ</field>
+            <field name="res_model">doctor.schedule</field>
+            <field name="view_mode">tree,form,calendar</field>
+        </record>
+
+        <menuitem action="open_doctor_schedule" id="menu_doctor_schedule" sequence="2" parent="crm_menu_calendar"/>
+
+        <record id="rule_doctor_schedule" model="ir.rule">
+            <field name="name">doctor schedule fl company</field>
+            <field ref="model_doctor_schedule" name="model_id"/>
+            <field name="domain_force">[('company', 'in', company_ids)]</field>
+        </record>
+    </data>
+</odoo>

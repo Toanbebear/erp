@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="debt_view_form" model="ir.ui.view">
+            <field name="name">Debt review</field>
+            <field name="model">crm.debt.review</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="set_approve" string="Approve" class="btn-info" type="object"
+                                groups="crm_base.branch_management" attrs="{'invisible': [('stage', '!=', 'offer')]}"/>
+                        <button name="set_refuse" string="Refuse" class="btn-danger" type="object"
+                                attrs="{'invisible': [('stage', '=', 'refuse')]}"/>
+                        <field name="stage" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="company_id" attrs="{'readonly': [('stage', '!=', 'offer')]}" readonly="True"
+                                   force_save="True"/>
+                            <field name="partner_id" attrs="{'readonly': [('stage', '!=', 'offer')]}" required="True"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="booking_id" attrs="{'readonly': [('stage', '!=', 'offer')]}" required="True"
+                                   options="{'no_create': True}"/>
+                            <field name="order_id" options="{'no_create':True}" required="True"
+                                   attrs="{'readonly': [('stage', '!=', 'offer')]}"/>
+                            <field name="currency_id" attrs="{'readonly': [('stage', '!=', 'offer')]}"
+                                   options="{'no_open':True,'no_create':True}" readonly="True"/>
+                            <field name="amount_total" options="{'no_open':True,'no_create':True}"
+                                   string="Tổng tiền ban đầu" invisible="False"/>
+                            <field name="amount_owed" required="True" attrs="{'readonly': [('stage', '!=', 'offer')]}"
+                                   options="{'no_open':True,'no_create':True}" widget="monetary_format"/>
+                            <field name="name" required="True" attrs="{'readonly': [('stage', '!=', 'offer')]}"/>
+                            <field name="color" invisible="True"/>
+                            <field name="create_uid" string="Người tạo" readonly="True"/>
+                            <field name="user_approve" string="Người duyệt" readonly="True"/>
+                            <field name="date_approve" readonly="True"/>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="debt_view_tree" model="ir.ui.view">
+            <field name="name">Debt view</field>
+            <field name="model">crm.debt.review</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc" decoration-muted="paid ==True">
+                    <field name="partner_id"/>
+                    <field name="booking_id"/>
+                    <field name="order_id"/>
+                    <field name="amount_total"/>
+                    <field name="amount_owed"/>
+                    <field name="name"/>
+                    <field name="stage"/>
+                    <field name="name"/>
+                    <field name="paid"/>
+                    <field name="create_uid" string="Người tạo"/>
+                    <field name="user_approve" string="Người duyệt"/>
+                    <field name="date_approve"/>
+                    <button name="action_paid" class="btn-primary" type="object" title="ĐÃ TRẢ"
+                            attrs="{'invisible': [('paid','=',True)]}" string="ĐÃ TRẢ"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_debt_review_search">
+            <field name="name">Tìm kiếm khoản nợ</field>
+            <field name="model">crm.debt.review</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm khoản nợ">
+                    <separator orientation="vertical"/>
+                    <field name="partner_id" string="Khách hàng" select="1"/>
+                    <field name="booking_id" string="Booking" select="1"/>
+                    <field name="order_id" string="Đơn hàng" select="1"/>
+                    <!--                <filter string="Thanh toán Nháp" name="state_draft" domain="[('state', '=', 'draft')]"/>-->
+                    <!--                <filter string="Thanh toán Đã vào sổ" name="state_posted" domain="[('state', '=', 'posted')]"/>-->
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter name="group_partner_id" string="Khách hàng" context="{'group_by':'partner_id'}"/>
+                        <filter name="group_booking_id" string="Booking"
+                                context="{'group_by':'booking_id'}"/>
+                        <!--                    <filter name="group_payment_type" string="Loại thanh toán" context="{'group_by':'payment_type'}"/>-->
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="debt_review_action" model="ir.actions.act_window">
+            <field name="name">Debt review</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.debt.review</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <!--        <menuitem id="menu_crm_debt_review"-->
+        <!--                  name="Debt review"-->
+        <!--                  parent="crm.crm_menu_root"-->
+        <!--                  sequence="14"-->
+        <!--                  action="debt_review_action"-->
+        <!--                  groups="crm_base.receptionist_crm"-->
+        <!--        />-->
+
+    </data>
+</odoo>

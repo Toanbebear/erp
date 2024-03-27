@@ -1,0 +1,28 @@
+<odoo>
+    <data>
+        <record id="inherit_view_form_phone_call_advise" model="ir.ui.view">
+            <field name="name">inherit_view_form_phone_call_advise</field>
+            <field name="model">crm.phone.call</field>
+            <field name="inherit_id" ref="crm_base.view_form_phone_call"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_line_id']" position="before">
+                    <group>
+                        <field name="advise_line_id" string="Dịch vụ tiềm năng" readonly='1' attrs="{'invisible':[('advise_line_id','=', False)]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+<!--        kế thừa view tree thêm trường bsi thực hiện-->
+        <record model="ir.ui.view" id="view_tree_phone_call_his_doctor">
+            <field name="name">Phone call</field>
+            <field name="model">crm.phone.call</field>
+            <field name="inherit_id" ref="crm_base.tree_view_phone_call"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="doctor" readonly="True"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

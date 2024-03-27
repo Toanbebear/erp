@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <menuitem id="danh_sach_khao_sat_sau_phau_thuat"
+                  name="Báo cáo khảo sát sau phẫu thuật"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="action_sh_walkin_report_evaluation_act"
+                  sequence="13"
+                  groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_stock_user"/>
+    </data>
+</odoo>

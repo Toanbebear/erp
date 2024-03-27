@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="xuat_booking_bk_attachment" model="ir.attachment">
+            <field name="name">Export Booking</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_report/static/xls/xuat_du_lieu_booking.xlsx"/>
+            <field name="store_fname">xuat_du_lieu_booking_bk.xls</field>
+        </record>
+
+        <record id="xuat_lead_bk_attachment" model="ir.attachment">
+            <field name="name">Export Lead</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_report/static/xls/xuat_du_lieu_lead.xlsx"/>
+            <field name="store_fname">xuat_du_lieu_lead_bk.xls</field>
+        </record>
+
+        <record model="ir.ui.view" id="xuat_lead_bk_form">
+            <field name="name">report.export.booking</field>
+            <field name="model">report.export.booking</field>
+            <field name="arch" type="xml">
+                <form string="Xuất Lead/ Booking">
+                    <group>
+                        <field name="start_date" required="True" string="Ngày bắt đầu"/>
+                        <field name="end_date" required="True" string="Ngày kết thúc"/>
+                        <field name="type_crm" required="True" string="Loại bàn ghi"/>
+                        <field name="type_date_search" attrs="{'invisible': [('type_crm','=', 'lead')], 'required' : [('type_crm', '=', 'opportunity')]}" string="Loại ngày search"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}" widget="many2many_tags" required="True" string="Công ty"/>
+<!--                        <field name="product_category" options="{'no_create': True, 'no_open': True}" required="False" string="Nhóm dịch vụ"/>-->
+                    </group>
+                    <footer>
+                        <button name="create_report_export_bk" type="object" string="Xuất dữ liệu"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="xuat_lead_bk_act">
+            <field name="name">Xuất Lead/ Booking theo ngày</field>
+            <field name="res_model">report.export.booking</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="xuat_lead_bk_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="xuat_lead_bk_menu"
+                  name="Xuất danh sách Lead/ Booking theo ngày"
+                  parent="crm_report.menu_crm_report"
+                  groups="crm_base.quality_control"
+                  action="xuat_lead_bk_act"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <menuitem id="menu_kpi_erp_report"
+                  name="Báo cáo ERP"
+                  sequence="5"
+                  parent="ks_dashboard_ninja.board_menu_root"/>
+        
+		<menuitem id="menu_report_van_hanh"
+                  name="Vận hành"
+                  sequence="6"
+                  parent="ks_dashboard_ninja.board_menu_root"/>
+
+        <menuitem id="menu_report_brand_kangnam"
+                  name="Thương hiệu Kangnam"
+                  sequence="6"
+                  parent="ks_dashboard_ninja.board_menu_root"
+                  groups="sci_hrms.group_user_receptionists,sci_hrms.group_user_branch_manager"/>
+
+            <menuitem id="menu_report_brand_kangnam_kinh_doanh"
+                      name="A. Báo cáo kinh doanh"
+                      sequence="1"
+                      parent="menu_report_brand_kangnam"/>
+
+                <menuitem id="menu_report_brand_kangnam_van_hanh_kinh_doanh"
+                          name="A.I. Báo cáo phân tích vận hành kinh doanh"
+                          sequence="1"
+                          parent="menu_report_brand_kangnam_kinh_doanh"/>
+
+                <menuitem id="menu_report_brand_kangnam_doanh_thu_doanh_so_kpi"
+                          name="A.II. Báo cáo doanh thu/Doanh số KPI"
+                          sequence="2"
+                          parent="menu_report_brand_kangnam_kinh_doanh"/>
+
+                <menuitem id="menu_report_brand_kangnam_tai_chinh_ke_toan"
+                          name="A.III. Báo cáo tài chính kế toán"
+                          sequence="3"
+                          parent="menu_report_brand_kangnam_kinh_doanh"/>
+
+            <menuitem id="menu_report_brand_kangnam_thuc_hien_dich_vu"
+                      name="B. Báo cáo thực hiện dịch vụ"
+                      sequence="2"
+                      parent="menu_report_brand_kangnam"/>
+
+                <menuitem id="menu_report_brand_kangnam_thuc_hien_dich_vu_van_hanh_kinh_doanh"
+                          name="B.I. Báo cáo phân tích vận hành kinh doanh"
+                          sequence="1"
+                          parent="menu_report_brand_kangnam_thuc_hien_dich_vu"/>
+
+                <menuitem id="menu_report_brand_kangnam_thuc_hien_dich_vu_doanh_thu_doanh_so_kpi"
+                          name="B.II. Báo cáo doanh thu/Doanh số KPI"
+                          sequence="2"
+                          parent="menu_report_brand_kangnam_thuc_hien_dich_vu"/>
+
+                <menuitem id="menu_report_brand_kangnam_van_hanh"
+                          name="C. Báo cáo vận hành"
+                          sequence="3"
+                          parent="menu_report_brand_kangnam"/>
+
+                <menuitem id="menu_report_brand_kangnam_van_hanh_cham_soc_khach_hang"
+                          name="C.I. Báo cáo chăm sóc khách hàng"
+                          sequence="1"
+                          parent="menu_report_brand_kangnam_van_hanh"/>
+
+                <menuitem id="menu_report_brand_kangnam_van_hanh_khac"
+                          name="C.II. Báo cáo khác"
+                          sequence="1"
+                          parent="menu_report_brand_kangnam_van_hanh"/>
+
+        <menuitem id="menu_report_brand_donga"
+                  name="Thương hiệu Đông Á"
+                  sequence="7"
+                  parent="ks_dashboard_ninja.board_menu_root"
+                  groups="sci_hrms.group_user_receptionists,sci_hrms.group_user_branch_manager"/>
+
+            <menuitem id="menu_report_brand_donga_kinh_doanh"
+                      name="A. Báo cáo kinh doanh"
+                      sequence="1"
+                      parent="menu_report_brand_donga"/>
+
+                <menuitem id="menu_report_brand_donga_kinh_doanh_van_hanh_kinh_doanh"
+                          name="A.I. Báo cáo phân tích vận hành kinh doanh"
+                          sequence="1"
+                          parent="menu_report_brand_donga_kinh_doanh"/>
+
+                <menuitem id="menu_report_brand_donga_kinh_doanh_thu_doanh_so_kpi"
+                          name="A.II. Báo cáo Doanh thu/Doanh số KPI"
+                          sequence="2"
+                          parent="menu_report_brand_donga_kinh_doanh"/>
+
+                <menuitem id="menu_report_brand_donga_kinh_doanh_tai_chinh_ke_toan"
+                          name="A.III. Báo cáo Tài chính Kế Toán"
+                          sequence="2"
+                          parent="menu_report_brand_donga_kinh_doanh"/>
+
+                <menuitem id="menu_report_brand_donga_thuc_hien_dich_vu"
+                          name="B. Báo cáo thực hiện dịch vụ"
+                          sequence="2"
+                          parent="menu_report_brand_donga"/>
+
+                <menuitem id="menu_report_brand_donga_thuc_hien_dich_vu_van_hanh_kinh_doanh"
+                          name="B.I. Báo cáo phân tích vận hành kinh doanh"
+                          sequence="1"
+                          parent="menu_report_brand_donga_thuc_hien_dich_vu"/>
+
+                <menuitem id="menu_report_brand_donga_thuc_hien_dich_vu_doanh_thu_doanh_so_kpi"
+                          name="B.II. Báo cáo doanh thu/Doanh số KPI"
+                          sequence="2"
+                          parent="menu_report_brand_donga_thuc_hien_dich_vu"/>
+
+            <menuitem id="menu_report_brand_donga_van_hanh"
+                      name="C. Báo cáo vận hành"
+                      sequence="3"
+                      parent="menu_report_brand_donga"/>
+
+                <menuitem id="menu_report_brand_donga_van_hanh_cham_soc_khach_hang"
+                          name="C.I. Báo cáo chăm sóc khách hàng"
+                          sequence="1"
+                          parent="menu_report_brand_donga_van_hanh"/>
+
+                <menuitem id="menu_report_brand_donga_van_hanh_khac"
+                          name="C.II. Báo cáo khác"
+                          sequence="2"
+                          parent="menu_report_brand_donga_van_hanh"/>
+
+        <menuitem id="menu_report_brand_paris"
+                  name="Thương hiệu Paris"
+                  sequence="8"
+                  parent="ks_dashboard_ninja.board_menu_root"
+                  groups="sci_hrms.group_user_receptionists,sci_hrms.group_user_branch_manager"/>
+
+            <menuitem id="menu_report_brand_paris_kinh_doanh"
+                      name="A. Báo cáo kinh doanh"
+                      sequence="1"
+                      parent="menu_report_brand_paris"/>
+
+                <menuitem id="menu_report_brand_paris_kinh_doanh_phan_tich_van_hanh_kinh_doanh"
+                          name="A.I. Báo cáo phân tích vận hành kinh doanh"
+                          sequence="1"
+                          parent="menu_report_brand_paris_kinh_doanh"/>
+
+                <menuitem id="menu_report_brand_paris_kinh_doanh_doanh_thu_doanh_so_kpi"
+                          name="A.II. Báo cáo Doanh thu/Doanh số KPI"
+                          sequence="2"
+                          parent="menu_report_brand_paris_kinh_doanh"/>
+
+                <menuitem id="menu_report_brand_paris_kinh_doanh_doanh_tai_chinh_ke_toan"
+                          name="A.III. Báo cáo Tài chính Kế toán"
+                          sequence="3"
+                          parent="menu_report_brand_paris_kinh_doanh"/>
+
+                <menuitem id="menu_report_brand_paris_thuc_hien_dich_vu"
+                      name="B. Báo cáo thực hiện dịch vụ"
+                      sequence="2"
+                      parent="menu_report_brand_paris"/>
+
+                <menuitem id="menu_report_brand_paris_thuc_hien_dich_vu_van_hanh_kinh_doanh"
+                          name="B.I. Báo cáo phân tích vận hành kinh doanh"
+                          sequence="1"
+                          parent="menu_report_brand_paris_thuc_hien_dich_vu"/>
+
+                <menuitem id="menu_report_brand_paris_thuc_hien_dich_vu_doanh_thu_doanh_so_kpi"
+                          name="B.II. Báo cáo Doanh thu/Doanh số KPI"
+                          sequence="2"
+                          parent="menu_report_brand_paris_thuc_hien_dich_vu"/>
+
+            <menuitem id="menu_report_brand_paris_van_hanh"
+                      name="C. Báo cáo vận hành"
+                      sequence="3"
+                      parent="menu_report_brand_paris"/>
+
+                <menuitem id="menu_report_brand_paris_van_hanh_cham_soc_khach_hang"
+                          name="C.I. Báo cáo phân tích vận hành kinh"
+                          sequence="1"
+                          parent="menu_report_brand_paris_van_hanh"/>
+
+                <menuitem id="menu_report_brand_paris_van_hanh_khac"
+                          name="C.II. Báo cáo khác"
+                          sequence="2"
+                          parent="menu_report_brand_paris_van_hanh"/>
+
+        <menuitem id="menu_report_brand_sale_marketing_and_accounting"
+                  name="Khối Sale - Marketing/Kế toán"
+                  sequence="9"
+                  parent="ks_dashboard_ninja.board_menu_root"
+                  groups="sci_hrms.group_user_receptionists,sci_hrms.group_user_branch_manager"/>
+
+            <menuitem id="menu_report_brand_sale_marketing_and_accounting_marketing"
+                      name="A. Bộ phận Sale - Marketing"
+                      sequence="1"
+                      parent="menu_report_brand_sale_marketing_and_accounting"/>
+
+                <menuitem id="menu_report_brand_sale_marketing_and_accounting_marketing_dong_a"
+                          name="A.I. Thương hiệu Đông Á"
+                          sequence="1"
+                          parent="menu_report_brand_sale_marketing_and_accounting_marketing"/>
+
+                <menuitem id="menu_report_brand_sale_marketing_and_accounting_marketing_kangnam_paris_hong_ha"
+                          name="A.II. Thương hiệu Kangnam/Paris/Hồng Hà"
+                          sequence="2"
+                          parent="menu_report_brand_sale_marketing_and_accounting_marketing"/>
+
+                <menuitem id="menu_report_brand_sale_marketing_and_accounting_ke_toan"
+                      name="B. Bộ phận kế toán"
+                      sequence="2"
+                      parent="menu_report_brand_sale_marketing_and_accounting"/>
+
+        <menuitem id="menu_kpi_sale_erp_report"
+                  name="Báo cáo bán sản phẩm/ dịch vụ"
+                  parent="report_sale.menu_kpi_erp_report"
+                  sequence="1"
+                  groups="sci_hrms.group_user_receptionists,sci_hrms.group_user_branch_manager"/>
+
+
+        <menuitem id="menu_kpi_sale_erp_report_kangnam"
+                  name="Báo cáo bán sản phẩm/ dịch vụ - Kangnam"
+                  parent="report_sale.menu_kpi_sale_erp_report"
+                  sequence="100"
+                  groups="sci_hrms.group_user_receptionists,sci_hrms.group_user_branch_manager"
+        />
+
+        <menuitem id="menu_kpi_perform_erp_report"
+                  name="Báo cáo thực hiện  dịch vụ"
+                  parent="report_sale.menu_kpi_erp_report"
+                  sequence="3"
+                  groups="sci_hrms.group_user_doctor,sci_hrms.group_user_branch_manager"
+        />
+            <menuitem id="menu_kpi_perform_kangnam_erp_report"
+                  name="Báo cáo thực hiện  dịch vụ - Kangnam"
+                  parent="report_sale.menu_kpi_perform_erp_report"
+                  groups="sci_hrms.group_user_doctor,sci_hrms.group_user_branch_manager"
+            />
+
+        <menuitem id="menu_report_sale_marketing_da"
+                  name="Báo cáo phòng Marketing Đông Á"
+                  parent="report_sale.menu_kpi_erp_report"
+                  sequence="4"
+                  groups="sci_hrms.group_user_mkt,sci_hrms.group_user_branch_manager"
+        />
+
+        <menuitem id="menu_report_sale_marketing"
+                  name="Báo cáo phòng Marketing KangNam/Paris/Hồng Hà"
+                  parent="report_sale.menu_kpi_erp_report"
+                  sequence="5"
+                  groups="sci_hrms.group_user_mkt,sci_hrms.group_user_branch_manager"
+        />
+
+        <menuitem id="menu_report_cancel"
+                  name="Báo cáo hoàn\hủy"
+                  parent="report_sale.menu_kpi_erp_report"
+                  sequence="6"
+                  groups="sci_hrms.group_user_mkt,sci_hrms.group_user_branch_manager"
+        />
+
+        <menuitem id="menu_report_ehc"
+                  name="EHC"
+                  sequence="11"
+                  parent="ks_dashboard_ninja.board_menu_root"
+                  groups="report_sale.security_ehc_report"
+        />
+    </data>
+</odoo>

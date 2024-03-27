@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_add_service_guarantee_extend" model="ir.ui.view">
+            <field name="name">view.form.add.service.guarantee.extend</field>
+            <field name="model">add.service.guarantee</field>
+            <field name="inherit_id" ref="crm_his_13.view_form_add_service_guarantee"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="action_add_service_guarantee" type="object" string="Xác nhận" class="btn-primary btn-lg fa fa-check"/>
+                        <button string="Hủy thao tác" class="btn-secondary btn-lg fa fa-times" special="cancel"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

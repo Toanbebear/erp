@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="wizard_create_payment_schedule" model="ir.ui.view">
+            <field name="name">Tạo lịch trình thanh toán</field>
+            <field name="model">payment.schedule</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="booking" readonly="True" required="True"/>
+                            <field name="service" required="True" options="{'no_create':True,'no_open':True}" string="Dịch vụ" readonly="False"/>
+                            <field name="currency_id" invisible="1"/>
+                            <field name="amount" force_save="True" readonly="True"/>
+                            <field name="total_received" force_save="True" readonly="True"/>
+                            <field name="number" required="True" readonly="False"/>
+                        </group>
+                        <footer class="text-center">
+                            <button name="confirm" string="XÁC NHẬN" type="object" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

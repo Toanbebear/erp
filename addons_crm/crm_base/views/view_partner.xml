@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_partner_crm_form" model="ir.ui.view">
+        <field name="name">view_partner_crm_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='gender']" position="after">
+                <field name="customer_rank" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_crm_form_inherit" model="ir.ui.view">
+        <field name="name">view_partner_crm_form</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='crm_ids']/tree/field[@name='partner_id']" position="after">
+                <field name="stage_id"/>
+                <field name="amount_total"/>
+                <field name="amount_paid" string="Tiền khách trả"/>
+                <field name="amount_used" string="Tiền đã sử dụng"/>
+                <field name="amount_remain" string="Tiền còn lại"/>
+                <field name="create_on"/>
+            </xpath>
+            <xpath expr="//field[@name='payment_ids']/tree/field[@name='state']" position="after">
+                <field name="create_date"/>
+            </xpath>
+            <xpath expr="//page[@name='page_sale_orders']/field[@name='sale_order_ids']/tree/field[@name='name']" position="after">
+                <field name="booking_id"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_partner_crm_tree_inherit" model="ir.ui.view">
+        <field name="name">view_partner_crm_tree_inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='is_company']" position="after">
+                <field name="customer_rank" invisible="1"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="action_partner" model="ir.actions.act_window">
+        <field name="name">Khách hàng</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="search_view_id" ref="base.view_res_partner_filter"/>
+        <field name="context">{'default_is_company': True, 'default_customer_rank ': 1}</field>
+        <field name="domain">[('customer_rank ', '>', 0)]</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Không tìm thấy dữ liệu khách hàng!!!
+            </p>
+        </field>
+    </record>
+</odoo>

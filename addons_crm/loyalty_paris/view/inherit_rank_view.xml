@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_inherit_loyalty_form" model="ir.ui.view">
+            <field name="model">crm.loyalty.rank</field>
+            <field name="inherit_id" ref="loyalty.form_rank_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='page_reward_id']" position="replace">
+                    <page string="Cấu hình Voucher">
+                         <field name="voucher_loyalty_ids" context="{'default_rank': active_id}">
+                            <tree>
+                                <field name="name"/>
+                                <field name="product_ids" widget="many2many_tags"/>
+                                <field name="number"/>
+                                <field name="stage"/>
+                                <button name="button_cancel" class="btn-danger" string="Hủy" type="object" attrs="{'invisible': [('stage', '=', 'not_allow')]}"/>
+                            </tree>
+
+                             <form>
+                                 <group>
+                                     <field name="name"/>
+                                     <field name="type"/>
+                                     <field name="method"/>
+                                     <field name="percent" attrs="{'invisible': [('method', '!=', 'discount')]}"/>
+                                     <field name="product_ids" widget="many2many_tags" options="{'no_create_edit': True, 'no_open+': True}"/>
+                                     <field name="number"/>
+                                     <field name="is_birth_day"/>
+                                 </group>
+                             </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

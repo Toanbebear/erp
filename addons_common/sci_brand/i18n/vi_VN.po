@@ -1,0 +1,164 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sci_brand
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-05-23 07:05+0000\n"
+"PO-Revision-Date: 2021-05-23 07:05+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: sci_brand
+#: model_terms:ir.ui.view,arch_db:sci_brand.view_res_brand_kanban
+msgid "<strong>Phone:</strong>"
+msgstr "<strong>Hotline</strong>"
+
+#. module: sci_brand
+#: model_terms:ir.ui.view,arch_db:sci_brand.view_res_brand_kanban
+msgid "<strong>Phone</strong>"
+msgstr "<strong>Hotline</strong>"
+
+#. module: sci_brand
+#: model:ir.model.fields.selection,name:sci_brand.selection__res_brand__type__academy
+msgid "Academy"
+msgstr "Học viện"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__company_ids
+msgid "Branch"
+msgstr "Chi nhánh"
+
+#. module: sci_brand
+#: model:ir.model,name:sci_brand.model_res_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_company__brand_id
+msgid "Brand"
+msgstr "Thương hiệu"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__logo
+msgid "Brand Logo"
+msgstr "Logo thương hiệu"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__name
+msgid "Brand Name"
+msgstr "Tên thương hiệu"
+
+#. module: sci_brand
+#: model:ir.actions.act_window,name:sci_brand.action_open_view_brand
+#: model:ir.actions.act_window,name:sci_brand.action_res_brand_form
+#: model:ir.model.fields,field_description:sci_brand.field_res_company__brand_ids
+#: model:ir.ui.menu,name:sci_brand.menu_action_res_brand_form
+msgid "Brands"
+msgstr "Các thương hiệu"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__code
+msgid "Code"
+msgstr "Mã"
+
+#. module: sci_brand
+#: model:ir.model,name:sci_brand.model_res_company
+msgid "Companies"
+msgstr "Công ty"
+
+#. module: sci_brand
+#: model_terms:ir.actions.act_window,help:sci_brand.action_res_brand_form
+msgid "Create a new brand"
+msgstr ""
+
+#. module: sci_brand
+#: model_terms:ir.actions.act_window,help:sci_brand.action_res_brand_form
+msgid "Create and manage the brands that will be managed from here."
+msgstr ""
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__create_uid
+msgid "Created by"
+msgstr "Được tạo bởi"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__create_date
+msgid "Created on"
+msgstr "Thời điểm tạo"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__display_name
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#. module: sci_brand
+#: code:addons/sci_brand/models/res_brand.py:0
+#, python-format
+msgid ""
+"Duplicating a company is not allowed. Please create a new company instead."
+msgstr ""
+"Không được phép sao chép công ty. Thay vì vậy vui lòng tạo một công ty mới."
+
+#. module: sci_brand
+#: model:ir.model.fields.selection,name:sci_brand.selection__res_brand__type__hospital
+msgid "Hospital"
+msgstr "Bệnh viện"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__id
+msgid "ID"
+msgstr ""
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand____last_update
+msgid "Last Modified on"
+msgstr "Sửa lần cuối"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__write_uid
+msgid "Last Updated by"
+msgstr "Cập nhật gần đây bởi"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__write_date
+msgid "Last Updated on"
+msgstr "Cập nhật gần đây vào"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__partner_id
+msgid "Partner"
+msgstr "Đối tác"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__phone
+msgid "Phone"
+msgstr "Hotline"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__sequence
+msgid "Sequence"
+msgstr "Trình tự"
+
+#. module: sci_brand
+#: model:ir.model.constraint,message:sci_brand.constraint_res_brand_name_uniq
+msgid "The brand name must be unique!"
+msgstr "Tên thương hiệu là duy nhất"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__type
+msgid "Type"
+msgstr "Kiểu"
+
+#. module: sci_brand
+#: model:ir.model.fields,help:sci_brand.field_res_brand__sequence
+msgid "Used to order brand in the brand switcher"
+msgstr ""
+"Sử dụng để sắp xếp thứ tự hiển thị của các thương hiệu"
+
+#. module: sci_brand
+#: model:ir.model.fields,field_description:sci_brand.field_res_brand__website
+msgid "Website Link"
+msgstr "Website của thương hiệu"

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+<!-- 		<record id="cron_job_get_service_ehc" model="ir.cron"> -->
+<!-- 			<field name="name">App member DA: cron_send_reminders_to_customers</field> -->
+<!-- 			<field name="model_id" ref="model_crm_lead"/> -->
+<!-- 			<field name="state">code</field> -->
+<!-- 			<field name="code">model.app_member_da_cron_send_reminders_to_customers()</field> -->
+<!-- 			<field name="nextcall" -->
+<!-- 				   eval="(DateTime.now().replace(hour=9, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/> -->
+<!-- 			<field name='interval_number'>1</field> -->
+<!-- 			<field name='interval_type'>days</field> -->
+<!-- 			<field name="numbercall">-1</field> -->
+<!-- 		</record> -->
+	
+	</data>
+</odoo>

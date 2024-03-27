@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sci_hrm_hr_department_view_tree" model="ir.ui.view">
+            <field name="name">sci.hrm.hr.department.view.tree</field>
+            <field name="model">hr.department</field>
+            <field eval="100" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Phòng ban">
+                    <field name="sequence" widget="handle"/>
+                    <field name="display_name"/>
+                    <field name="parent_id" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                    <field name="manager_id" optional="hide"/>
+                    <field name="id" optional="hide"/>
+                    <field name="create_uid" invisible="1"/>
+                    <field name="create_date" invisible="1"/>
+                    <field name="parent_id" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Inherit Form View to Modify it -->
+        <record id="sci_department_form_inherit" model="ir.ui.view">
+            <field name="name">sci.hrm.hr.department.view.inherit</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="sci_hrms.view_department_view_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='emp']" position="after">
+                    <page name="team_ids" string="Nhóm">
+                        <field name="team_ids"/>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sci_hrm_hr_department_search_inherit" model="ir.ui.view">
+            <field name="name">department search</field>
+            <field name="model">hr.department</field>
+            <field name="inherit_id" ref="hr.view_department_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="root_code" string="Mã phòng ban"/>
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="string">Tên phòng ban</attribute>
+                    <attribute name="filter_domain">['|',('root_code','ilike',self),('name','ilike',self)]</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_department_filter" model="ir.ui.view">
+            <field name="name">sci_hrm.hr.department.search</field>
+            <field name="model">hr.department</field>
+            <field name="arch" type="xml">
+                <search string="Departments">
+                    <field name="name" string="Tên phòng ban" filter_domain="['|',('root_code','ilike',self),('name','ilike',self)]"/>
+                    <field name="manager_id"/>
+                    <field name="parent_id"/>
+                    <field name="address_location"/>
+                    <field name="sector_id"/>
+                    <filter string="Unread Messages" name="message_needaction"
+                            domain="[('message_needaction','=',True)]"/>
+                    <separator/>
+                    <filter string="Archived" name="inactive" domain="[('active','=',False)]"/>
+
+                    <searchpanel class="mw320">
+                        <field name="company_id" groups="base.group_multi_company" icon="fa-building"/>
+                    </searchpanel>
+                </search>
+            </field>
+        </record>
+
+        <record id="sci_hrm_hr_department_action" model="ir.actions.act_window">
+            <field name="name">Phòng ban</field>
+            <field name="res_model">hr.department</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <!--            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>-->
+            <field name="context">{}</field>
+            <field name="view_id" ref="sci_hrm_hr_department_view_tree"/>
+            <field name="search_view_id" ref="view_department_filter"/>
+        </record>
+    </data>
+</odoo>
+
+

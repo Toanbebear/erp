@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Cron job -->
+        <record id="cron_job_case_cs" model="ir.cron">
+            <field name="name">Get Case caresoft</field>
+            <field name="model_id" ref="model_crm_case"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_case_cs()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    </data>
+</odoo>

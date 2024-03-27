@@ -1,0 +1,624 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="template_service_information_sheet">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].patient.partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:18px;">
+
+                    <div class="oe_structure"/>
+                    <div class="row mt32 mb32">
+                        <div class="col-5">
+                            <t t-if="o.institution.his_company.id == 12">
+                                <img
+                                 src="/shealth_all_in_one/static/img/logo_kn_218.png"
+                                 width="100"
+                                 border="1"/>
+                            </t>
+                            <t t-else="">
+                                <img t-if="o.company_id.favicon"
+                                 t-att-src="image_data_uri(o.institution.his_company.favicon)" width="60%" border="0"/><br/>
+                            </t>
+<!--                            <span t-field="o.institution.name" style="font-size:10px;"/>-->
+                        </div>
+                        <div class="col-7" style="font-size:16px;">
+                            <div>
+                                <t t-if="o.institution.his_company.id == 12">
+                                    <span>CÔNG TY TNHH BVTM KANGNAM</span>
+                                </t>
+                                <t t-else="">
+                                    <span t-field="o.institution.company_name"/>
+                                </t>
+                            </div>
+                            <div>
+                                <strong>Địa chỉ:</strong>
+                                <span class="m-0" t-field="o.institution.street"/>,
+                                <span class="m-0" t-field="o.institution.street2"/>,
+                                <span class="m-0" t-field="o.institution.city"/>
+                            </div>
+                            <div>
+                                <strong>HOTLINE:</strong>
+                                <span t-field="o.institution.phone"/>
+
+                            </div>
+                            <div>
+                                <strong>WEBSITE:</strong>
+                                <span t-field="o.institution.website"/>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="text-center" style="font-family:Times New Roman;font-weight:bolder;">
+                        <div style="font-size: 25px;">PHIẾU THÔNG TIN DỊCH VỤ PHẪU THUẬT</div>
+                    </div>
+                    <!--                    <div class="text-center">-->
+                    <!--                        <span>Mã Booking:</span>-->
+                    <!--                        <b>-->
+                    <!--                            <i t-field="o.booking_id.name"/>-->
+                    <!--                        </b>-->
+                    <!--                    </div>-->
+                    <br/>
+                    <div class="row col-12">
+                        <div class="col-6">Họ và tên:
+                            <strong>
+                                <span t-field="o.patient.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-6">Mã Booking:
+                            <b>
+                                <i t-field="o.booking_id.name"/>
+                            </b>
+                        </div>
+                    </div>
+                    <div class="row col-12">
+                        <div class="col-7">
+                            Ngày/tháng/năm sinh - Tuổi:
+                            <t t-if="o.patient.partner_id.birth_date">
+                                <strong>
+                                    <span t-field="o.patient.partner_id.birth_date"/>
+                                </strong>
+                            </t>
+                            <t t-elif="o.patient.partner_id.year_of_birth">
+                                <strong>
+                                    <span t-field="o.patient.partner_id.year_of_birth"/>
+                                </strong>
+                            </t>
+                            <t t-else="">
+                            </t>
+                            <t t-if="o.patient.partner_id.birth_date">
+                                <strong>
+                                    -
+                                    <span t-field="o.patient.age"/>
+                                </strong>
+                            </t>
+                        </div>
+                        <div class="col-5">Nghề nghiệp:
+                            <t t-if="o.booking_id.career">
+                                <strong>
+                                    <span t-field="o.booking_id.career"/>
+                                </strong>
+                            </t>
+                            <t t-else="">
+                                Chưa có thông tin
+                            </t>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-12">
+                        Địa chỉ :
+                        <t t-if="o.patient.partner_id.pass_port_address">
+                            <strong>
+                                <span t-field="o.patient.partner_id.pass_port_address"/>
+                            </strong>
+                        </t>
+                        <t t-else="">
+                            <strong>
+                                <span t-field="o.patient.partner_id.street"/>,
+                                <span t-field="o.patient.partner_id.district_id.name"/>,
+                                <span t-field="o.patient.partner_id.state_id.name"/>,
+                                <span t-field="o.patient.partner_id.country_id.name"/>
+                            </strong>
+                        </t>
+                    </div>
+                    <table class="table border border-dark text-center" style="font-size: 16px;">
+                        <tr>
+                            <th class="border border-dark align-middle">
+                                <strong>STT</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Dịch vụ tư vấn</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Đơn vị xử lý</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Tư vấn viên</strong>
+                            </th>
+                        </tr>
+                        <br/>
+                        <t t-if="o.sale_order_id.order_line">
+                            <t t-set="i" t-value="0"/>
+                            <t t-foreach="o.sale_order_id.order_line" t-as="line">
+                                <t t-set="i" t-value="i + 1"/>
+                                <tr t-if="line">
+                                    <td style="text-align:center;" class="border border-dark align-middle">
+                                        <span t-esc="i"/>
+                                    </td>
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <span t-field="line.product_id.name"/>
+                                        <br/>
+
+                                    </td>
+                                    <td style="text-align:center;" class="border border-dark align-middle">
+                                        <span t-field="line.uom_price"/>
+                                    </td>
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        -
+                                        <span style="font-size: 12px" t-field="line.crm_line_id.consultants_1.name"/>
+                                        <t t-if="line.crm_line_id.consultants_2">
+                                            <br/>
+                                            -
+                                            <span style="font-size: 12px"
+                                                  t-field="line.crm_line_id.consultants_2.name"/>
+                                        </t>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </table>
+
+                    <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                        <div>
+                            <t t-esc="'Ghi chú:' + '.'*400"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*400"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*400"/>
+                        </div>
+                        <div>
+                            <t t-esc="'Bác sĩ tư vấn:' + '.'*400"/>
+                        </div>
+                        <!--                        <div>-->
+                        <!--                            <t t-esc="'.'*400"/>-->
+                        <!--                        </div>-->
+                        <!--                        <div>-->
+                        <!--                            <t t-esc="'.'*400"/>-->
+                        <!--                        </div>-->
+                        <!--                        <div>-->
+                        <!--                            <t t-esc="'.'*400"/>-->
+                        <!--                        </div>-->
+                        <!--                        <div>-->
+                        <!--                            <t t-esc="'.'*400"/>-->
+                        <!--                        </div>-->
+                        <!--                        <div>-->
+                        <!--                            <t t-esc="'Số thứ tự dịch vụ sửa lại:' + '.'*400"/>-->
+                        <!--                        </div>-->
+                        <!--                        <div>-->
+                        <!--                            <t t-esc="'Số thứ tự dịch vụ tham gia:' + '.'*400"/>-->
+                        <!--                        </div>-->
+                    </div>
+                    <br/>
+                    <table class="table border border-dark" width="100%" style="font-size: 14px;">
+                        <tr>
+                            <th colspan="6" class="border border-dark">Ekip PT:
+                            </th>
+                        </tr>
+                        <tr>
+                            <th colspan="6" class="border border-dark">Ekip Gây mê:
+                            </th>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">Phòng mổ</td>
+                            <td class="border border-dark align-middle">.................................</td>
+                            <td class="border border-dark align-middle">Bàn mổ</td>
+                            <td class="border border-dark align-middle">.................................</td>
+                            <td class="border border-dark align-middle">Sữa tươi</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">Thơi gian bắt đầu</td>
+                            <td class="border border-dark align-middle">.................................</td>
+                            <td class="border border-dark align-middle">Thời gian kết thúc</td>
+                            <td class="border border-dark align-middle">.................................</td>
+                            <td class="border border-dark align-middle">Nước suối</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border border-dark align-middle">Bánh</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+                            <td colspan="2" class="border border-dark align-middle">Sữa đậu nành</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="height:80px" class="border border-dark text-left">Ghi chú Phòng Phẫu
+                                thuật:
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="6" style="height:20px" class="border border-dark text-center">Khách hàng đủ
+                                điều kiện phẫu thuật
+                            </td>
+                        </tr>
+                    </table>
+
+
+                    <div class="row">
+                        <div class="col-6 text-center">
+                            <strong>Khách hàng đồng ý ký tên</strong>
+                            <div>
+                                <i>(Ký, ghi rõ họ tên)</i>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center">
+                            <strong>Ngày ..... tháng ..... năm .........</strong>
+                            <br/>
+                            <!--                            Nhân viên: ..........................................-->
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+
+            <!--            <t t-call="web.external_layout">-->
+            <!--                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].patient.partner_id.lang})"/>-->
+            <!--                <t t-set="o" t-value="o.with_user(1)"/>-->
+            <!--                <div class="page" style="font-family:Times New Roman;font-size:18px;">-->
+
+            <!--                    <div class="oe_structure"/>-->
+            <!--                    <div class="text-center" style="font-family:Times New Roman;font-weight:bolder;">-->
+            <!--                        <div style="font-size: 25px;">CHECK LIST DÀNH CHO KHÁCH HÀNG PHẪU THUẬT TIỂU PHẪU</div>-->
+            <!--                    </div>-->
+            <!--                    <br/>-->
+            <!--                    <div class="row col-12">-->
+            <!--                        <div class="col-6">Họ và tên:-->
+            <!--                            <strong>-->
+            <!--                                <span t-field="o.patient.name"/>-->
+            <!--                            </strong>-->
+            <!--                        </div>-->
+            <!--                        <div class="col-6">Mã Booking:-->
+            <!--                            <i>-->
+            <!--                                <strong>-->
+            <!--                                    <span t-field="o.booking_id.name"/>-->
+            <!--                                </strong>-->
+            <!--                            </i>-->
+            <!--                        </div>-->
+            <!--                    </div>-->
+            <!--                    <style>-->
+            <!--                        .container {-->
+            <!--                        display: flex;-->
+            <!--                        justify-content: space-between;-->
+            <!--                        max-width:100%-->
+            <!--                        }-->
+
+            <!--                        .table {-->
+            <!--                        border-collapse: collapse;-->
+            <!--                        width: 50%;-->
+            <!--                        }-->
+
+            <!--                        .table td, .table th {-->
+            <!--                        border: 1px solid black;-->
+            <!--                        padding: 8px;-->
+            <!--                        }-->
+
+            <!--                        .table th {-->
+            <!--                        background-color: #f2f2f2;-->
+            <!--                        }-->
+            <!--                        .table td {-->
+            <!--                        padding: 8px;-->
+            <!--                        }-->
+            <!--                        .indent-1-7{padding-left: 0.5em }-->
+
+            <!--                    </style>-->
+            <!--                    <div class=" row" style="font-size: 14px;">-->
+
+            <!--                        <div class="col-6 ">-->
+            <!--                            <table class="table " style="width:100%">-->
+            <!--                                <tr>-->
+            <!--                                    <th class="border border-dark align-middle">STT</th>-->
+            <!--                                    <th class="border border-dark align-middle">NỘI DUNG CÔNG VIỆC</th>-->
+            <!--                                    <th class="border border-dark align-middle">NGƯỜI THỰC HIỆN</th>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td colspan="3"><b>I. Cận lâm sàng</b></td>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">1</td>-->
+            <!--                                    <td class="border border-dark align-middle">Xét nghiệm</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">2</td>-->
+            <!--                                    <td class="border border-dark align-middle">Điện tim</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">3</td>-->
+            <!--                                    <td class="border border-dark align-middle">Siêu âm</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td colspan="3"><b>II. Thăm khám và tư vấn trước PT</b></td>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center" rowspan="3">1</td>-->
+            <!--                                    <td class="border border-dark align-middle">Bác sĩ PT tư vấn trước mổ</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle">Chỉ định lấy sụn tai: 1 thùy; 2 thùy-->
+            <!--                                    </td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle">Chỉ định lấy mỡ: ........ml sau ly tâm-->
+            <!--                                    </td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center" rowspan="3">2</td>-->
+            <!--                                    <td class="border border-dark align-middle">Bác sĩ gây mê khám sức khỏe</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle">Mạch: ............ HA: ...........</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle">Cân nặng: ............ Chiều cao:-->
+            <!--                                        ...........-->
+            <!--                                    </td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td colspan="3"><b>III. Chuẩn bị trước PT</b><i>(ĐD đón tiếp)</i></td>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">1</td>-->
+            <!--                                    <td class="border border-dark align-middle">Thay trang phục (theo DV)</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">2</td>-->
+            <!--                                    <td class="border border-dark align-middle">Hướng dẫn ký HSBA</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">3</td>-->
+            <!--                                    <td class="border border-dark align-middle">Vệ sinh vùng PT (vùng mặt)</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">4</td>-->
+            <!--                                    <td class="border border-dark align-middle">Chụp ảnh trước PT(theo DV)</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">5</td>-->
+            <!--                                    <td class="border border-dark align-middle">Đặt kim luồn</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">6</td>-->
+            <!--                                    <td class="border border-dark align-middle">Gửi ảnh trước mổ lên nhóm BSPT chính-->
+            <!--                                    </td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">7</td>-->
+            <!--                                    <td class="border border-dark align-middle">In phiếu thuốc/vật tư (kẹp HSBA)</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td colspan="3"><b>IV. Chuẩn bị trong phòng PT</b><i>(ĐD phụ mổ)</i></td>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">1</td>-->
+            <!--                                    <td class="border border-dark align-middle">Chuẩn bị bàn tuýp PT (theo dịch vụ)</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">2</td>-->
+            <!--                                    <td class="border border-dark align-middle">Vệ sinh sạch vùng PT</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">3</td>-->
+            <!--                                    <td class="border border-dark align-middle" style="padding: 3px; font-size:12px">Báo chụp ảnh sau pt (kết quả và da-->
+            <!--                                        thừa)-->
+            <!--                                    </td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">4</td>-->
+            <!--                                    <td class="border border-dark align-middle" style="padding: 3px; font-size:12px">Thu dọn dụng cụ xử lý và đóng gói theo-->
+            <!--                                        QT-->
+            <!--                                    </td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                                <tr>-->
+            <!--                                    <td class="border border-dark align-middle text-center">5</td>-->
+            <!--                                    <td class="border border-dark align-middle">Nhập hoàn thiện dữ liệu ERP</td>-->
+            <!--                                    <td class="border border-dark align-middle"/>-->
+            <!--                                </tr>-->
+            <!--                            </table>-->
+            <!--                        </div>-->
+            <!--                        <div class="col-6 ">-->
+            <!--                            <table class="table" style="width:100%">-->
+            <!--                                <thead>-->
+            <!--                                    <tr>-->
+            <!--                                        <th class="border border-dark align-middle">STT</th>-->
+            <!--                                        <th class="border border-dark align-middle">NỘI DUNG CÔNG VIỆC</th>-->
+            <!--                                        <th class="border border-dark align-middle">NGƯỜI THỰC HIỆN</th>-->
+            <!--                                    </tr>-->
+            <!--                                </thead>-->
+            <!--                                <tbody>-->
+            <!--                                    <tr>-->
+            <!--                                        <td colspan="3"><b>V. Chuẩn bị trong phòng PT</b><i>(KTV gây mê)</i></td>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td colspan="3"><b>* Phương tiện cấp cứu</b></td>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">1</td>-->
+            <!--                                        <td class="border border-dark align-middle">Mornitoring</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">2</td>-->
+            <!--                                        <td class="border border-dark align-middle">Nguồn oxy (nguồn, dây,cục làm ẩm)-->
+            <!--                                        </td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">3</td>-->
+            <!--                                        <td class="border border-dark align-middle">Phương tiện cấp cứu (bóng Ambu, mask-->
+            <!--                                            thở, bộ đặt NKQ, canuyn-->
+            <!--                                        </td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td colspan="3"><b>* Thuốc thường quy</b></td>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">1</td>-->
+            <!--                                        <td class="border border-dark align-middle">Thuốc tê 1%</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">2</td>-->
+            <!--                                        <td class="border border-dark align-middle">Thuốc thường quy theo dịch vụ</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td colspan="3"><b>* Chỉ định thuốc của bác sĩ gây mê</b></td>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">1</td>-->
+            <!--                                        <td class="border border-dark align-middle">Midadanium 5mg/ml</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">2</td>-->
+            <!--                                        <td class="border border-dark align-middle">Fentanyl 0.1 mg/ 2ml</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">3</td>-->
+            <!--                                        <td class="border border-dark align-middle">Sufentanil 50mcg/ ml</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">4</td>-->
+            <!--                                        <td class="border border-dark align-middle">Dolcontral 100mg/10ml</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">5</td>-->
+            <!--                                        <td class="border border-dark align-middle">Propofol 1% 200mg/ 10 ml</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">6</td>-->
+            <!--                                        <td class="border border-dark align-middle">Ketamin 500mg/10ml</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td colspan="3"><b>* Chup ảnh thiết kế + da thừa, kết quả gửi lên nhóm</b></td>-->
+            <!--                                    </tr>-->
+
+            <!--                                    <tr>-->
+            <!--                                        <td colspan="3"><b>V. Chăm sóc sau PT</b><i>(ĐD chăm sóc)</i></td>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">1</td>-->
+            <!--                                        <td class="border border-dark align-middle">Đón tiếp KH + nhận HSBA</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">2</td>-->
+            <!--                                        <td class="border border-dark align-middle">Chụp ảnh sau PT (theo dv)</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">3</td>-->
+            <!--                                        <td class="border border-dark align-middle">Gửi ảnh lên nhóm BSPT chính</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">4</td>-->
+            <!--                                        <td class="border border-dark align-middle">Chườm mát cho KH 20 phút</td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">5</td>-->
+            <!--                                        <td class="border border-dark align-middle">Vệ sinh vùng pt; băng vết thương-->
+            <!--                                        </td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">6</td>-->
+            <!--                                        <td class="border border-dark align-middle">Hướng dẫn thuốc + chăm sóc + tái-->
+            <!--                                            khám-->
+            <!--                                        </td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                    <tr>-->
+            <!--                                        <td class="border border-dark align-middle text-center">7</td>-->
+            <!--                                        <td class="border border-dark align-middle">Thay đồ và bàn giao KH cho lễ tân-->
+            <!--                                            tầng-->
+            <!--                                            1-->
+            <!--                                        </td>-->
+            <!--                                        <td class="border border-dark align-middle"/>-->
+            <!--                                    </tr>-->
+            <!--                                </tbody>-->
+            <!--                            </table>-->
+            <!--                        </div>-->
+
+
+            <!--                    </div>-->
+
+            <!--                </div>-->
+
+            <!--                <div class="oe_structure"/>-->
+            <!--            </t>-->
+        </template>
+
+        <template id="service_information_sheet">
+            <t t-call="web.html_container">
+                <t t-if="docs">
+                    <t t-call="shealth_all_in_one.template_service_information_sheet"
+                       t-lang="docs[0].patient.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+                string="PHIẾU THÔNG TIN DỊCH VỤ PHẪU THUẬT"
+                id="action_service_info_sheet"
+                model="sh.medical.appointment.register.walkin"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.service_information_sheet"
+                file="shealth_all_in_one.service_information_sheet"
+                paperformat="shealth_all_in_one.sh_paperformat_medicine_public"
+                menu="True"
+        />
+    </data>
+</odoo>

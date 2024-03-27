@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_form_brand_inherit" model="ir.ui.view">
+            <field name="name">View Form Brand Inherit</field>
+            <field name="model">crm.brand</field>
+            <field name="inherit_id" ref="crm_base.view_form_brand"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="survey_id"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

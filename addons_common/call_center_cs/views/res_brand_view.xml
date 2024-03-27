@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_form_brand_cs_inherit" model="ir.ui.view">
+            <field name="name">res.brand.form.inherit</field>
+            <field name="model">res.brand</field>
+            <field name="inherit_id" ref="sci_brand.view_form_brand"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Casesoft" name="casesoft">
+                        <group name="cs">
+                            <group>
+                                <field name="cs_url"/>
+                            </group>
+                            <group>
+                                <field name="cs_access_token"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_tree_brand_inherit" model="ir.ui.view">
+            <field name="name">res.brand.tree.inherit</field>
+            <field name="model">res.brand</field>
+            <field name="inherit_id" ref="sci_brand.view_tree_brand"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='website']" position="after">
+                    <field name="cs_url"/>
+                    <field name="cs_access_token"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

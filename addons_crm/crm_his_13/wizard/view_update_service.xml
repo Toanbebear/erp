@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_update_service_walkin">
+            <field name="name">Update service walkin</field>
+            <field name="model">update.service.walkin</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="walkin_id" options="{'no_open':True,'no_create':True}" readonly="True"/>
+                            <field name="booking_id" options="{'no_open':True,'no_create':True}" readonly="True"/>
+                        </group>
+                        <group>
+                            <field name="crm_line_ids">
+                                <tree>
+                                    <field name="price_list_id"/>
+                                    <field name="currency_id" />
+                                    <field name="service_id"/>
+                                    <field name="quantity"/>
+                                    <field name="unit_price" readonly="True" force_save="True"/>
+                                    <field name="discount_percent"/>
+                                    <field name="discount_cash"/>
+                                    <field name="total"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+
+
+</odoo>

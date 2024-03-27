@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="collaborator_category" model="ir.module.category">
+            <field name="name">Cộng tác viên</field>
+            <field name="description">Cộng tác viên</field>
+            <field name="sequence">20</field>
+        </record>
+
+        <record id="collaborator_sale_marketing" model="res.groups">
+            <field name="name">Sale/Marketing</field>
+            <field name="category_id" ref="collaborator_category"/>
+        </record>
+
+        <record id="collaborator_group_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="collaborator_category"/>
+        </record>
+
+        <record id="collaborator_group_payment" model="res.groups">
+            <field name="name">Thu ngân </field>
+            <field name="category_id" ref="collaborator_category" />
+<!--            <field name="implied_ids" eval="[(4, ref('collaborator.collaborator_group_user'))]"/>-->
+        </record>
+
+        <!--        kế thừa thu ngân his-->
+        <record id="shealth_all_in_one.group_sh_medical_accountant_real" model="res.groups">
+            <field name="name">Thu ngân chi nhánh</field>
+            <field name="category_id" ref="shealth_all_in_one.module_sh_medical_category"/>
+            <field name="implied_ids" eval="[(4, ref('account.group_account_invoice')),(4, ref('collaborator.collaborator_group_payment'))]"/>
+        </record>
+
+        <record id="collaborator_group_department" model="res.groups">
+            <field name="name">Trưởng bộ phận</field>
+            <field name="category_id" ref="collaborator_category"/>
+            <field name="implied_ids" eval="[(4, ref('collaborator.collaborator_group_user'))]"/>
+        </record>
+
+        <record id="collaborator_group_manager" model="res.groups">
+            <field name="name">Giám đốc chi nhánh</field>
+            <field name="category_id" ref="collaborator_category"/>
+            <field name="implied_ids" eval="[(4, ref('collaborator.collaborator_group_user')),(4, ref('collaborator.collaborator_group_department'))]"/>
+        </record>
+
+        <record id="collaborator_group_manager_branch" model="res.groups">
+            <field name="name">Quản trị thương hiệu</field>
+            <field name="category_id" ref="collaborator_category"/>
+            <field name="implied_ids" eval="[(4, ref('collaborator.collaborator_group_user')),(4, ref('collaborator.collaborator_group_manager'))]"/>
+        </record>
+
+        <record id="collaborator_group_manager_admin" model="res.groups">
+            <field name="name">Quản lý hệ thống(Admin)</field>
+            <field name="category_id" ref="collaborator_category"/>
+            <field name="implied_ids" eval="[(4, ref('collaborator.collaborator_group_user')),(4, ref('collaborator.collaborator_group_payment')),(4, ref('collaborator.collaborator_group_manager')),(4, ref('collaborator.collaborator_group_manager_branch'))]"/>
+        </record>
+
+
+           <!--Quyền xem hợp đồng theo từng cty-->
+         <record id="rule_collaborator_contract" model="ir.rule">
+            <field name="name">Quyền xem hợp đồng</field>
+            <field ref="model_collaborator_contract" name="model_id"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!--Quyền xem loại hợp đồng theo từng cty-->
+        <record id="rule_collaborator_contract_type" model="ir.rule">
+            <field name="name">Quyền xem loại hợp đồng</field>
+            <field ref="model_collaborator_contract_type" name="model_id"/>
+            <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!--        Quyền xem phiếu thanh toán-->
+        <record id="rule_collaborator_payment" model="ir.rule">
+            <field name="name">Quyền xem phiếu thanh toán</field>
+            <field ref="model_collaborator_payment" name="model_id"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+<!--        Quyền xem lịch sử cộng tiền-->
+        <record id="rule_collaborator_transaction" model="ir.rule">
+            <field name="name">Quyền xem giao dịch cộng tiền</field>
+            <field ref="model_collaborator_transaction" name="model_id"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!--        Quyền xem chi tiết lịch sử cộng tiền-->
+        <record id="rule_collaborator_account" model="ir.rule">
+            <field name="name">Quyền xem tiền ctv</field>
+            <field ref="model_collaborator_account" name="model_id"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!-- Xem dòng giao dịch theo chi nhánh-->
+        <record id="rule_collaborator_transaction_line" model="ir.rule">
+            <field name="name">Xem dòng giao dịch theo chi nhánh</field>
+            <field ref="model_collaborator_transaction" name="model_id"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+
+
+    </data>
+</odoo>

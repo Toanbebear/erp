@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_service_act" model="ir.actions.act_window">
+			<field name="name">Dịch vụ</field>
+			<field name="view_mode">tree,form</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.hh.ehc.service</field>
+			<field name="domain">[]</field>
+		</record>
+		
+		<menuitem id="menu_service_ehc"
+				  name="Dịch vụ"
+				  parent="crm_ehc.crm_hh_ehc_root_menu"
+				  action="crm_ehc.crm_hh_ehc_service_act"
+		/>
+		
+		<record id="crm_hh_ehc_service_tree" model="ir.ui.view">
+			<field name="name">service EHC tree</field>
+			<field name="model">crm.hh.ehc.service</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="service_code_ehc"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_service_form" model="ir.ui.view">
+			<field name="name">service EHC form</field>
+			<field name="model">crm.hh.ehc.service</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<field name="name"/>
+						<field name="service_code_ehc"/>
+						<field name="service_id_ehc" invisible="1"/>
+						<field name="service_room_ids" widget="many2many_tags"/>
+						<field name="list_price"/>
+						<field name="service_price_bhyt"/>
+						<field name="service_code_bhyt"/>
+						<field name="stage"/>
+						<field name="service_type_code"/>
+						<field name="service_unit"/>
+						<field name="service_type" invisible="1"/>
+						<field name="sync"/>
+						<field name="vs_hm"/>
+						<field name="pttm"/>
+						<field name="da_khoa"/>
+					</group>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_tas_cost_driver_form" model="ir.ui.view">
+      <field name="name">Cost Driver</field>
+      <field name="model">tas.cost.driver</field>
+      <field name="arch" type="xml">
+        <form>
+          <sheet>
+            <group>
+              <group>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="uom_id"/>
+                <field name="plan_cost_per_unit" readonly="1"/>
+              </group>
+              <group>
+                <field name="work_center_id" />
+                <field name="computation" />
+                <field name="compute_actual_count_base_on_working_hour" />
+                <field name="analytic_account_id" />
+                <field name="sci_company_id" />
+              </group>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_tas_cost_driver_tree" model="ir.ui.view">
+      <field name="name">Cost Driver</field>
+      <field name="model">tas.cost.driver</field>
+      <field name="arch" type="xml">
+        <tree string="Cost Driver" default_order="id desc">
+            <field name="name"/>
+            <field name="code"/>
+            <field name="uom_id" />
+            <field name="computation" />
+            <field name="work_center_id" />
+            <field name="sci_company_id" />
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_tas_cost_driver" model="ir.actions.act_window">
+      <field name="name">Cost driver</field>
+      <field name="res_model">tas.cost.driver</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Create new Record
+        </p>
+      </field>
+    </record>
+    <menuitem id="menu_tas_cost_driver" action="action_tas_cost_driver" name="Cost driver" parent="shealth_all_in_one.sh_medical_conf_menu" sequence="100"/>
+  </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+<!--        <record id="return_custom_view_partner" model="ir.ui.view">-->
+<!--            <field name="name">return_custom_view_partner</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="customer_persona_extend.partner_extend"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='acc_zalo']" position="after">-->
+<!--                    <field name="return_custom"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

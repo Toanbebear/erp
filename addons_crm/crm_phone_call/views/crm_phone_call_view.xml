@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    view_form_crm_partner-->
+    <record id="inherit_view_phone_call_filter" model="ir.ui.view">
+        <field name="name">Phone Call Filter new</field>
+        <field name="model">crm.phone.call</field>
+        <field name="inherit_id" ref="crm_base.crm_base_view_phone_call_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='state_draft']" position="before">
+                <filter string="Ngày hẹn lịch: Ngày mai" name="booking_date_tomorrow" domain="[('booking_date', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(days=1), datetime.time(0,0,0))),('booking_date', '&lt;=', datetime.datetime.combine(context_today() + relativedelta(days=1), datetime.time(23,59,59)))]"/>
+                <filter string="Ngày hẹn lịch: Hôm nay" name="booking_date_now"
+                        domain="[('booking_date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),('booking_date', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                <filter string="Ngày hẹn lịch: Hôm qua" name="booking_date_last" domain="[('booking_date', '&gt;=', datetime.datetime.combine(context_today() - relativedelta(days=1), datetime.time(0,0,0))),('booking_date', '&lt;=', datetime.datetime.combine(context_today() - relativedelta(days=1), datetime.time(23,59,59)))]"/>
+                <separator/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

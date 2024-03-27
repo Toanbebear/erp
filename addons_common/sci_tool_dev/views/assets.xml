@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="SCI DEV" inherit_id="web.assets_backend">
+            <xpath expr=".">
+                <link rel="stylesheet" href="/sci_tool_dev/static/src/scss/style.scss"/>
+            </xpath>
+        </template>
+
+        <template id="webclient_bootstrap"
+                  inherit_id="web.webclient_bootstrap"
+                  name="ERP Dev">
+            <xpath expr="//t[@t-set='body_classname']" position="attributes">
+                <attribute name="t-value" add="+ ' o_test_environment'" separator=" " />
+            </xpath>
+        </template>
+
+        <template id="web_test" name="Test" inherit_id="web.layout">
+            <xpath expr="//html/head/title" position="replace">
+                <title>TEST</title>
+            </xpath>
+            <xpath expr="//body" position="inside">
+                <div class="box_test">
+                    <div class="ribbon ribbon-top-right"><span>TEST</span></div>
+                </div>
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

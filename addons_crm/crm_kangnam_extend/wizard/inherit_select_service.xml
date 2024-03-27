@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="select_service_extend_view" model="ir.ui.view">
+            <field name="name">select.service.extend.view</field>
+            <field name="model">crm.select.service</field>
+            <field name="inherit_id" ref="crm_base.view_form_crm_select_service"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="create_quotation" type="object" string="Tạo phiếu khám" class="btn-primary btn-lg fa fa-check"/>
+                        <button string="Hủy thao tác" class="btn-secondary btn-lg fa fa-times" special="cancel"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

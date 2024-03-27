@@ -1,0 +1,68 @@
+.da .title{
+    flex:1;
+}
+.da .logo{
+    width: 289px;
+    height: 78px;
+    margin-left: 15px;
+    background: url('../img/logo_da.png');
+}
+.da h1{
+    color: #005B59;
+    font-weight:bold;
+    font-size: 28pt;
+}
+
+.da .content{
+    margin-top: 20px;
+}
+
+.da .content .info{
+    margin-top: 10px;
+}
+
+.da h2{
+    color: #005B59;
+    font-weight:bold;
+    font-size: 16pt;
+}
+
+.da ul.list-info{
+    list-style-type: none;
+    padding-left: 25px;
+}
+
+.da ul.contact{
+    list-style-type: decimal;
+}
+
+.da ul li label{
+    font-weight:normal;
+}
+
+.da ul li .number_id{
+    margin-right: 20px;
+}
+
+.da .footer{
+    margin-bottom:20px;
+}
+
+.da textarea{
+    padding:3px 5px;
+}
+.da .add-service i,
+.da .add-service span{
+    color: #ffffff;
+}
+
+.da .btn-success {
+    background-color: #005B59;
+    border-color: #005B59;
+}
+
+.da .btn-submit{
+    color: #ffffff;
+    background-color: #005B59;
+    border-color: #005B59;
+}

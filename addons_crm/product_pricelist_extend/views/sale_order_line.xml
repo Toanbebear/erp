@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_sale_order_discount_cs">
+            <field name="name">Sale order </field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sale_to']" position="after">
+                    <field name="discount_cs_percent" readonly="True"/>
+                    <field name="discount_cs_amount" readonly="True"/>
+                    <field name="other_discount" readonly="True"/>
+                    <field name="total_discount_review" readonly="True"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,220 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* crm_coupon
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-10-29 16:53+0000\n"
+"PO-Revision-Date: 2021-10-29 16:53+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail__apply_coupon_id
+msgid "Apply Coupon"
+msgstr "Áp dụng Coupon"
+
+#. module: crm_coupon
+#: model:ir.actions.act_window,name:crm_coupon.action_view_apply_coupon_success_wizard
+msgid "Apply success"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__crm_id
+msgid "Booking/lead"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__campaign_id
+msgid "Campaign"
+msgstr "Chiến dịch"
+
+#. module: crm_coupon
+#: model_terms:ir.ui.view,arch_db:crm_coupon.view_apply_coupon
+msgid "Cancel"
+msgstr "Hủy"
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__apply_combo
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail__index
+msgid "Combo"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail__combo_note
+msgid "Combo describe"
+msgstr "Mô tả Combo"
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__coupon_id
+msgid "Coupon"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields.selection,name:crm_coupon.selection__crm_apply_coupon__type_coupon__3
+msgid "Coupon cho combo dịch vụ"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields.selection,name:crm_coupon.selection__crm_apply_coupon__type_coupon__6
+msgid "Coupon cho hạng thẻ"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields.selection,name:crm_coupon.selection__crm_apply_coupon__type_coupon__7
+msgid "Coupon cho khách hàng mới/cũ"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields.selection,name:crm_coupon.selection__crm_apply_coupon__type_coupon__4
+msgid "Coupon cho liệu trình"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields.selection,name:crm_coupon.selection__crm_apply_coupon__type_coupon__5
+msgid "Coupon cho nhóm khách hàng"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields.selection,name:crm_coupon.selection__crm_apply_coupon__type_coupon__2
+msgid "Coupon áp dụng cho đơn hàng"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields.selection,name:crm_coupon.selection__crm_apply_coupon__type_coupon__1
+msgid "Coupon đơn lẻ"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__create_uid
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail__create_uid
+msgid "Created by"
+msgstr "Người tạo"
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__create_date
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail__create_date
+msgid "Created on"
+msgstr "Thời gian tạo"
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__display_name
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail__display_name
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__description
+msgid "Giải thích"
+msgstr ""
+
+#. module: crm_coupon
+#: model_terms:ir.ui.view,arch_db:crm_coupon.view_apply_coupon
+msgid "Hoàn lại"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields.selection,name:crm_coupon.selection__crm_apply_coupon__type_action__reverse_part
+msgid "Hoàn lại một phần"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields.selection,name:crm_coupon.selection__crm_apply_coupon__type_action__reverse_full
+msgid "Hoàn lại tất cả"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__type_action
+msgid "Hành động thực hiện"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__id
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail__id
+msgid "ID"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model,name:crm_coupon.model_crm_apply_coupon
+msgid "Inherit Apply Coupon Type 3"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon____last_update
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__write_uid
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__write_date
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__type_coupon
+msgid "Loại Coupon"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__name
+msgid "Name"
+msgstr "Tên"
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__notify
+msgid "Notify"
+msgstr ""
+
+#. module: crm_coupon
+#: model_terms:ir.ui.view,arch_db:crm_coupon.view_apply_coupon_finish
+msgid "Ok"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__partner_id
+msgid "Partner"
+msgstr "Khách hàng"
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon_detail__check
+msgid "Select"
+msgstr "Chọn Combo"
+
+#. module: crm_coupon
+#: model:ir.model.fields,field_description:crm_coupon.field_crm_apply_coupon__line_ids
+msgid "Service"
+msgstr "Dịch vụ"
+
+#. module: crm_coupon
+#: model_terms:ir.ui.view,arch_db:crm_coupon.view_apply_coupon
+msgid "Set discount"
+msgstr "Áp dụng"
+
+#. module: crm_coupon
+#: model:ir.model,name:crm_coupon.model_crm_apply_coupon_detail
+msgid "crm.apply.coupon.detail"
+msgstr ""
+
+#. module: crm_coupon
+#: model:ir.model.fields.selection,name:crm_coupon.selection__crm_apply_coupon__type_action__apply
+msgid "Áp dụng Coupon"
+msgstr ""
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.check_partner_view_form
+#: model_terms:ir.ui.view,arch_db:crm_base.form_crm_lead
+msgid "Qualify"
+msgstr "Đặt lịch"

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="crm_voucher_inherit_booking">
+            <field name="name">CRM Voucher kế thừa view Booking</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='number_used']" position="after">
+                    <field name="prg_voucher_ids" widget="many2many_tags" invisible="1"/>
+                    <field name="voucher_id" widget="many2many_tags" invisible="1"/>
+                </xpath>
+                <xpath expr="//group[@name='general_info']/field[@name='prg_ids']" position="after">
+                    <field name="prg_voucher_ids" widget="many2many_tags"
+                           readonly="True" attrs="{'invisible':[('prg_voucher_ids', '=',[])]}"
+                           force_save="True"
+                           options="{'no_open':True,'no_create':True}" optional="hide"/>
+                    <field name="voucher_id" attrs="{'invisible':[('voucher_id', '=',[])]}" widget="many2many_tags" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_voucher_inherit_line">
+            <field name="name">CRM Voucher kế thừa view Dòng dịch vụ</field>
+            <field name="model">crm.line</field>
+            <field name="inherit_id" ref="crm_base.form_crm_line"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='prg_ids']" position="after">
+                    <field name="prg_voucher_ids" widget="many2many_tags"/>
+                    <field name="voucher_id" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_voucher_inherit_line_product">
+            <field name="name">CRM Voucher kế thừa view Dòng sản phẩm</field>
+            <field name="model">crm.line.product</field>
+            <field name="inherit_id" ref="crm_booking_order.form_crm_line_product"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_discount_review']" position="after">
+                    <field name="prg_voucher_ids" widget="many2many_tags"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_voucher_inherit_booking_product">
+            <field name="name">CRM Voucher kế thừa view tab bán sản phẩm</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_booking_order.view_booking_create_sale_order"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='source_extend_id']" position="after">
+                    <field name="prg_voucher_ids" widget="many2many_tags" options="{'no_open':True,'no_create':True}" readonly="True"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

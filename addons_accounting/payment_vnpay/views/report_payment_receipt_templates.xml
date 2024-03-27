@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="report_payment_vnpay_document">
+             <div class="container-fluid" style="font-size: 12px;word-wrap: break-word;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;">
+                 <div class="row">
+                      <h3 style="text-align: center"><strong>Thanh toán qua ứng dụng Mobile Banking</strong></h3>
+                      <div class="text-center" style="text-align: center"><i>Quét mã VNPAY QR</i></div>
+                 </div>
+                  <div class="row">
+                    <div class="col-md-12" style="text-align: center">
+                        <img t-attf-src="data:image/png;base64, #{o.qr_code_image}" style="width:30%;"/>
+                        <h1><strong t-field="o.amount"></strong></h1>
+                    </div>
+                  </div>
+                 <div class="row text-center">
+                     <h4>Các bước thanh toán VNPAY-QR Code</h4>
+                        <ul style="font-size: 12px;word-wrap: break-word;overflow: hidden;white-space: nowrap;">
+                            <li><strong>Bước 1</strong>: Đăng nhập ứng dụng Mobile Banking của một trong các ngân hàng
+                                <br/>có hợp tính năng QR Pay như BIDV, VietinBank, Agribank, Vietcombank, ABBANK, SCB, IVB, NCB, SHB, Maritime Bank…</li>
+                            <li><strong>Bước 2</strong>: Bạn chọn tính năng QR Pay để thanh toán bằng mã QR (QR Code)</li>
+                            <li><strong>Bước 3</strong>: Quét mã VNPAY-QR phía trên.</li>
+                        </ul>
+                 </div>
+            </div>
+        </template>
+
+        <template id="report_payment_vnpay">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-set="lang" t-value="o.partner_id.lang"/>
+                    <t t-call="payment_vnpay.report_payment_vnpay_document" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+            id="action_report_payment_vnpay"
+            model="account.payment"
+            string="In mã thanh toán VNPAY-QR"
+            report_type="qweb-pdf"
+            name="payment_vnpay.report_payment_vnpay"
+            file="payment_vnpay.report_payment_vnpay"
+            paperformat="payment_vnpay.paperformat_payment_vnpayqr"
+        />
+    </data>
+</odoo>

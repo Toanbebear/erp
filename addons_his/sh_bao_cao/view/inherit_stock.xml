@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem id="menu_xnt_sci_report"
+                  name="Báo cáo XNT SCI"
+                  parent="stock.menu_warehouse_report"
+                  action="bao_cao_xnt_sci_act"
+                  sequence="150"/>
+        <menuitem id="menu_xnt_report"
+                  name="Báo cáo XNT"
+                  parent="stock.menu_warehouse_report"
+                  action="bao_cao_xnt_act"
+                  sequence="160"/>
+    </data>
+</odoo>

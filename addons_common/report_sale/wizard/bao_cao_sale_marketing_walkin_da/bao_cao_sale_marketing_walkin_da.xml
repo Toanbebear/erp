@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bao_cao_sale_walkin_form">
+            <field name="name">Báo cáo Dịch vụ thành công</field>
+            <field name="model">sale.marketing.walkin</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo dịch vụ thành công">
+                    <group>
+                        <field name="start_date" required="True" string="Ngày làm dịch vụ: Từ"/>
+                        <field name="end_date" required="True" string="Ngày làm dịch vụ: Đến"/>
+                        <field name="company_ids" required="True" string="Chi nhánh" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="create_report" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_sale_walkin_act">
+            <field name="name">Báo cáo Dịch vụ thành công</field>
+            <field name="res_model">sale.marketing.walkin</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_sale_walkin_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_sale_walkin_menu"
+                  name="A.I.5 Báo cáo Dịch vụ thành công"
+                  parent="report_sale.menu_report_brand_sale_marketing_and_accounting_marketing_dong_a"
+                  sequence="5"
+                  action="bao_cao_sale_walkin_act"
+        />
+
+        <record id="bao_cao_sale_walkin_attachment" model="ir.attachment">
+            <field name="name">Báo cáo Dịch vụ thành công</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_sale_dich_vu_thanh_cong.xlsx"/>
+            <field name="store_fname">bao_cao_sale_dich_vu_thanh_cong.xls</field>
+        </record>
+
+    </data>
+</odoo>

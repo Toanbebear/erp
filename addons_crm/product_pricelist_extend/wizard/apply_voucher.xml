@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_apply_discount_extend" model="ir.ui.view">
+            <field name="name">view.apply.discount.extend</field>
+            <field name="model">crm.apply.voucher</field>
+            <field name="inherit_id" ref="crm_voucher.view_apply_discount"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="replace">
+                    <form>
+                        <sheet>
+                            <group class="mw200">
+                                <field name="crm_id" invisible="True"/>
+                                <field name="brand_id" invisible="True"/>
+                                <field name="is_cancel" widget="boolean_toggle"/>
+                                <field name="voucher_program_line_ids" attrs="{'invisible': [('is_cancel', '=', False)],'required': [('is_cancel', '=', True)]}"  options="{'no_open':True,'no_create':True}"/>
+                                <field name="is_code_voucher" attrs="{'invisible': [('is_cancel', '=', True)]}"/>
+                                <field name="name"
+                                       attrs="{'invisible': ['|', ('is_code_voucher', '=', False), ('is_cancel', '=', True)],'required': [('is_code_voucher', '=', True), ('is_cancel', '=', False)]}"/>
+                                <field name="voucher_program_id"
+                                       attrs="{'invisible': [('is_cancel', '=', True)], 'required': [('is_code_voucher', '=', False), ('is_cancel', '=', False)],'readonly': [('is_code_voucher', '=', True)]}"
+                                       options="{'no_open':True,'no_create':True}" force_save="1"/>
+                                <field name="partner_id" invisible="True"/>
+                                <field name="voucher_prg_type" invisible="True"/>
+                                <field name="apply_for" invisible="True"/>
+                                <field name="apply_for_cancel" invisible="True"/>
+                                <field name="voucher_id_cancel" attrs="{'invisible': [('is_cancel', '=', False)],'required': [('voucher_program_line_ids', '!=', False)]}"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="line_ids" widget="many2many_tags"
+                                       options="{'no_open':True,'no_create':True}"
+                                       attrs="{'invisible':['|', ('apply_for','!=','service'), ('is_cancel', '=', True)],'required': [('is_cancel', '=', False), ('apply_for','=','service')]}"/>
+                                <field name="line_product_ids" widget="many2many_tags"
+                                       options="{'no_open':True,'no_create':True}"
+                                       attrs="{'invisible':['|', ('apply_for','!=','product'), ('is_cancel', '=', True)],'required': [('is_cancel', '=', False), ('apply_for','=','product')]}"/>
+                            </group>
+                            <footer class="text-center">
+                                <button name="check_code_voucher" type="object" string="Áp dụng voucher"
+                                        class="btn-primary btn-lg fa fa-check"
+                                        attrs="{'invisible': ['|', ('is_code_voucher', '=', False), ('is_cancel', '=', True)],'required': [('is_code_voucher', '=', True), ('is_cancel', '=', False)]}"/>
+                                <button name="apply_voucher_program" type="object" string="Check voucher"
+                                        class="btn-primary btn-lg fa fa-check"
+                                        attrs="{'invisible': ['|', ('is_code_voucher', '=', True), ('is_cancel', '=', True)],'required': [('is_code_voucher', '=', False), ('is_cancel', '=', False)]}"/>
+                                <button name="cancel_voucher" string="Bỏ Voucher" type="object" class="btn-primary btn-lg fa fa-check" attrs="{'invisible': [('is_cancel', '=', False)]}"/>
+                                <button string="Cancel" class="btn-secondary btn-lg fa fa-times" special="cancel"/>
+                            </footer>
+                        </sheet>
+                    </form>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

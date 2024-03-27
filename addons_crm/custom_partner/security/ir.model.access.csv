@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_contacts_create_relation_partner,name_contacts_relation_partner,model_relation_partner,,1,1,1,1
+access_contacts_type_relative,name_contacts_type_relative,model_type_relative,,1,1,1,1
+access_contacts_partner_wallet,name_contacts_partner_wallet,model_partner_wallet,,1,1,1,1
+access_res_company_script_sms,name_company_script_sms,model_script_sms,base.group_user,1,1,1,1

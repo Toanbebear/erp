@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_update_note_complaint">
+            <field name="name">Cập nhật tóm tắt tái khám</field>
+            <field name="model">update.note.complaint</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="evaluation" required="True" readonly="True" force_save="True" options="{'no_open':True,'no_create':True}"/>
+                            <field name="user_update" required="True" readonly="True" force_save="True"/>
+                            <field name="datetime_update" required="True" readonly="True" force_save="True"/>
+                            <field name="name" required="True"/>
+                        </group>
+                        <footer class="text-center">
+                            <button name="update_note_complaint" type="object" string="Cập nhật" class="btn-info"/>
+                            <button string="Hủy" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

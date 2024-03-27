@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_employee_new_wizard" model="ir.ui.view">
+        <field name="name">Nhân sự mới</field>
+        <field name="model">sci.hr.employee.new</field>
+        <field name="arch" type="xml">
+            <form string="Choose your date">
+                <group>
+                    <group>
+                        <field name="date_range" widget="radio"/>
+                        <field name="start_date" attrs="{'invisible': [('date_range', '!=', 'specific')], 'required': [('date_range', '=', 'specific')]}"/>
+                        <field name="end_date" attrs="{'invisible': [('date_range', '!=', 'specific')], 'required': [('date_range', '=', 'specific')]}"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="open_report" string="Báo cáo nhân sự mới" type="object" class="btn-primary"/>
+                    <button string="Hủy" class="btn-secondary" special="cancel" />
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_employee_new_wizard" model="ir.actions.act_window">
+        <field name="name">Nhân sự mới </field>
+        <field name="res_model">sci.hr.employee.new</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_employee_new_wizard"/>
+        <field name="target">new</field>
+        <field name="context">{'default_date_range': 'last_month', 'active_test': False}</field>
+    </record>
+
+    <record id="view_employee_new_tree" model="ir.ui.view">
+        <field name="name">hr.employee.new.tree</field>
+        <field name="model">hr.employee</field>
+        <field name="priority" eval="66"/>
+        <field name="arch" type="xml">
+            <tree string="Danh sách nhân sự mới" create="0">
+                <field name="department_id"/>
+                <field name="group_job"/>
+                <field name="name"/>
+                <field name="job_id"/>
+                <field name="hr_user_id"/>
+                <field name="hr_part"/>
+                <field name="work_email"/>
+                <field name="joining_date"/>
+                <field name="resign_date" string="Ngày nghỉ"/>
+                <field name="hr_point_kpi"/>
+                <field name="hr_point_kpi_final"/>
+                <field name="reason_resign"/>
+                <field name="employee_status"/>
+                <field name="employee_doc" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_employee_new_filter" model="ir.ui.view">
+        <field name="name">hr.employee.new.search</field>
+        <field name="model">hr.employee</field>
+        <field name="priority">32</field>
+        <field name="arch" type="xml">
+            <search>
+                <group expand="1" string="Group By">
+                    <filter name="group_hr_user_id" string="Người phụ trách" context="{'group_by':'hr_user_id'}" groups="hr.group_hr_user"/>
+                    <filter name="area" string="Khu vực" context="{'group_by':'area'}"/>
+                    <filter name="group_manager" string="Quản lý" domain="[]" context="{'group_by':'parent_id'}"/>
+                    <filter name="group_department" string="Phòng/Ban" domain="[]" context="{'group_by':'department_id'}"/>
+                    <filter name="group_job" string="Chức vụ" domain="[]" context="{'group_by':'job_id'}"/>
+                    <separator/>
+                    <filter string="Ngày vào làm" name="joining_date" context="{'group_by':'joining_date:week'}" help="Ngày gia nhập"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <menuitem name="Danh sách nhân sự mới" id="report_hr_employee_new" parent="hr_recruitment.report_hr_recruitment"
+         action="action_employee_new_wizard" groups="hr_recruitment.group_hr_recruitment_manager" sequence="16" />
+</odoo>

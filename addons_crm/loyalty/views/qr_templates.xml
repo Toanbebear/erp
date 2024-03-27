@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="assets_backend" name="pos_validation_qr assets"
+              inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/loyalty/static/src/js/action_qr_form.js"/>
+            <script type="text/javascript"
+                    src="/loyalty/static/src/js/action_qr_widget.js"/>
+            <link rel="stylesheet" type="text/scss" href="/loyalty/static/src/scss/qr_loyalty_card.scss"/>
+        </xpath>
+    </template>
+</odoo>

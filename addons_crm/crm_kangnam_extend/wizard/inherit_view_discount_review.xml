@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_discount_review_extend" model="ir.ui.view">
+            <field name="name">view.discount.review.extend</field>
+            <field name="model">discount.review</field>
+            <field name="inherit_id" ref="crm_base.view_discount_review"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="offer" type="object" string="Gửi yêu cầu" class="btn-primary btn-lg fa fa-check"/>
+                        <button string="Hủy thao tác" special="cancel" class="btn-secondary btn-lg fa fa-times"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+         <record id="disciplinary_search_view" model="ir.ui.view">
+            <field name="name">hr disciplinary search view</field>
+            <field name="model">disciplinary.action</field>
+            <field name="arch" type="xml">
+                <search string="Search information">
+                    <field name="employee_name"/>
+                    <field name="department_name"/>
+                    <field name="joined_date"/>
+                    <field name="discipline_reason"/>
+                    <filter string="Dự thảo" name="draft" domain="[('state','=','draft')]"/>
+                    <filter string="Giả trình" name="explain" domain="[('state','=','explain')]"/>
+                    <filter string="Xác nhận" name="action" domain="[('state','=','action')]"/>
+                    <filter string="Hủy" name="cancel" domain="[('state','=','cancel')]"/>
+                    <separator/>
+                    <group expand="1" string="Group By">
+                        <filter string="Trạng thái" name="state" context="{'group_by': 'state'}"/>
+                        <filter string="Phòng ban" name="department_name" context="{'group_by':'department_name'}"/>
+                        <filter string="Ngày vào làm" name="joined_date" context="{'group_by': 'joined_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="employee_disciplinary_tree" model="ir.ui.view">
+            <field name="name">disciplinary.action.tree</field>
+            <field name="model">disciplinary.action</field>
+            <field name="arch" type="xml">
+                <tree string="Disciplinary Action">
+                    <field name="name"/>
+                    <field name="employee_name" groups="hr.group_hr_manager"/>
+                    <field name="discipline_reason"/>
+                    <field name="note"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="employee_disciplinary_form" model="ir.ui.view">
+            <field name="name">disciplinary.action.form</field>
+            <field name="model">disciplinary.action</field>
+            <field name="arch" type="xml">
+                <form string="Disciplinary Action">
+                    <header>
+                        <button name="assign_function" type="object" string="Giải thích" class="oe_highlight"
+                                states="draft"/>
+                        <button name="action_function" type="object" string="Xác nhận" states="explain,draft"
+                                class="oe_highlight" groups="hr.group_hr_manager"/>
+                        <button name="cancel_function" type="object" string="Hủy" states="draft,explain"
+                                groups="hr.group_hr_manager"/>
+                        <button name="set_to_function" type="object" string="Chuyển về dự thảo" states="cancel"
+                                groups="hr.group_hr_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,explain,action"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="company_id" domain="[('id', 'in', allowed_company_ids)]" options="{'no_create':True}"/>
+                                <field name="employee_name" required="True" options="{'no_create':True}"/>
+                                <field name="name" readonly="1"/>
+                                <field name="department_name" required="True"
+                                       attrs="{'readonly': [('state','=','action')]}" groups="hr.group_hr_manager"
+                                       options="{'no_create':True}"/>
+                                <field name="job"/>
+                                <field name="joined_date"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="Disciplinary Information"
+                                  string="Thông tin kỷ luật">
+                                <group colspan="4">
+                                    <group>
+                                        <field name="discipline_reason" required="True"/>
+                                    </group>
+                                    <group>
+                                        <field name="explanation"
+                                               attrs="{'invisible' :[('state','=','draft')],'readonly': [('state','=','action')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="attachment_ids" widget="many2many_binary" class="oe_inline"
+                                               attrs="{'invisible' :[('state','=','draft')],'readonly': [('state','=','action')]}"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <field name="note" attrs="{'readonly': [('state','=','action')]}"/>
+                                </group>
+                            </page>
+                            <page name="action_information" string="Thông tin hành động">
+                                <group>
+                                    <field name="warning" string="Mức cảnh báo"/>
+                                    <field name="warning_letter"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_disciplinary_action" model="ir.actions.act_window">
+            <field name="name">Kỷ luật</field>
+            <field name="res_model">disciplinary.action</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','in',('draft','explain','action','cancel'))]</field>
+             <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click tạo mới
+                </p>
+            </field>
+        </record>
+
+        <record id="disciplinary_action_details" model="ir.actions.act_window">
+            <field name="name">Kỷ luật</field>
+            <field name="res_model">disciplinary.action</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','=','action'),('employee_name.id', '=', active_id)]</field>
+        </record>
+
+        <record id="disciplinary_action_details_view" model="ir.actions.act_window">
+            <field name="name">Disciplinary Action Details</field>
+            <field name="res_model">disciplinary.action</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state','!=','draft')]</field>
+        </record>
+
+
+        <record id="employee_form_inherit_disciplinary" model="ir.ui.view">
+            <field name="name">inherit.employee.form.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <!--Add Discipline button in the Employee Form-->
+                <xpath expr="//div[@name='button_box']" position="inside">
+                    <button name="%(disciplinary_action_details)d"
+                            class="oe_stat_button"
+                            icon="fa-info-circle"
+                            type="action"
+                    >
+                        <field string="Kỷ luật" name="discipline_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+
+        <menuitem id="disciplinary_action_create" action="action_disciplinary_action" groups="hr.group_hr_manager"
+                  name="Kỷ luật" parent="hr.menu_hr_root"
+                  sequence="23"/>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="create_negative_so_extend_view" model="ir.ui.view">
+            <field name="name">create.negative.so.extend.view</field>
+            <field name="model">create.negative.so</field>
+            <field name="inherit_id" ref="crm_tool.view_create_negative_so"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="confirm" type="object" string="Xác nhận" class="btn-primary btn-lg fa fa-check" attrs="{'invisible':[('type','!=','service')]}"/>
+                        <button name="confirm_prd" type="object" string="Xác nhận" class="btn-primary btn-lg fa fa-check" attrs="{'invisible':[('type','!=','product')]}"/>
+                        <button string="Hủy thao tác" class="btn-secondary btn-lg fa fa-times" special="cancel"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

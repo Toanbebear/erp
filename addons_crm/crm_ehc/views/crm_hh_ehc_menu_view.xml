@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <menuitem id="crm_hh_ehc_root_menu"
+                  name="CRM EHC"
+                  parent="crm.crm_menu_config"
+				  groups="crm_ehc.group_crm_ehc_manager"
+        />
+        
+        <menuitem id="root_menu_crm_ehc"
+                  name="Thông tin EHC"
+                  parent="crm.crm_menu_root"
+                  groups="crm_ehc.group_crm_ehc_user"/>
+		<record id="root_menu_crm_ehc" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-h-square</field>
+        </record>
+        
+        		<menuitem id="menu_payment_ehc_user"
+				  name="Phiếu thu"
+				  parent="crm_ehc.root_menu_crm_ehc"
+				  action="crm_ehc.crm_hh_ehc_payment_act"
+		        />
+        
+                <menuitem id="menu_medical_record_ehc_user"
+                          name="Bệnh án"
+                          parent="crm_ehc.root_menu_crm_ehc"
+                          action="crm_ehc.crm_hh_ehc_medical_record_act"
+                />
+    
+    </data>
+</odoo>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record model="ir.actions.act_window" id="seeding_user_act">
+			<field name="name">Tài khoản Seeding</field>
+			<field name="res_model">seeding.user</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		<record model="ir.actions.act_window" id="seeding_booking_act">
+			<field name="name">seeding_booking_act</field>
+			<field name="res_model">seeding.booking</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="view_mode">tree,form</field>
+		</record>
+		
+		
+		<menuitem id="seeding_root_menu"
+				  name="SCI Seeding"
+				  parent="crm.crm_menu_config"
+		/>
+			<menuitem id="seeding_user_submenu"
+                  name="Danh sách người dùng"
+                  parent="sci_seeding.seeding_root_menu"
+                  action="sci_seeding.seeding_user_act"
+                  sequence="0"
+        		/>
+		
+			<menuitem id="seeding_booking_submenu"
+                  name="Danh sách Booking Seeding"
+                  parent="sci_seeding.seeding_root_menu"
+                  action="sci_seeding.seeding_booking_act"
+                  sequence="0"
+        		/>
+	
+	</data>
+</odoo>

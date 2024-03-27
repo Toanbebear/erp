@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_partner_view_form_inherit_qr_code" model="ir.ui.view">
+            <field name="name">res_partner_view_form_inherit_qr_code</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="crm_base.view_partner_crm_form_inherit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <div class="oe_right" style="padding-top:0px; padding-right:70px">
+                        <field name="qr_id" widget="image" style="width:160px; height:160px;"/>
+                        <h4>
+                             <field name="code_customer" class="oe_center" readonly="True"/>
+                         <br></br>
+                             <field name="name" class="oe_center" readonly="True"/>
+                        </h4>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

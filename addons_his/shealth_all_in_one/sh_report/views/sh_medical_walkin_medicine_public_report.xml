@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="report_medicine_public_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].patient.partner_id.lang})"/>
+            <t t-set="o" t-value="o.with_user(1)"/>
+            <div class="page" style="font-family:Times New Roman;font-size:20px;">
+
+                <div class="oe_structure"/>
+                <div class="row mt32 mb32">
+                    <div class="col-4" style="font-size:17px;">
+                        <div class="m-0" t-field="o.institution.name" style="text-transform: uppercase;font-weight:bold;"/>
+                        <div class="m-0" style="font-size: 14px;">Khoa: <span t-field="o.department.name"/></div>
+                    </div>
+                    <div class="col-4 text-center">
+                        <div style="font-size: 27px;"><b>PHIẾU CÔNG KHAI</b></div>
+                        <div style="font-size: 27px;"><b>THUỐC - VTHH</b></div>
+                    </div>
+                    <div class="col-4 text-left">
+                        <strong style="font-size:16px;margin-left:35px;">Mã BN: <span t-field="o.patient.code_customer"/></strong>
+                        <div style="font-size:16px;margin-left:35px;">Mã: <span t-field="o.booking_id.name"/></div>
+                        <div style="font-size:16px;margin-left:35px;">Số vào viện: </div>
+                        <!--                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.code_customer, 230, 30)"/>-->
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row p-1" style="height: 25pt">
+                    <div class="mr-2 flex-grow-2" style="min-width:350px">
+                        <span>- Họ tên người bệnh:</span>
+                        <t t-if="o.patient">
+                            <b style="text-transform: uppercase;" class="mr-5" t-field="o.patient.name"/>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                    <div class="mr-2 flex-grow-2" style="width:250px">
+                        <span>Tuổi:</span>
+                        <t t-if="o.patient and o.patient.birth_date">
+                            <span class="mr-5" t-field="o.patient.age"/>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5"/>
+                        </t>
+                    </div>
+                    <div class="mr-2 flex-grow-0">
+                        <span>Giới tính:</span>
+                        <t t-if="o.patient">
+                            <span t-field="o.patient.gender"/>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row p-1" style="height: 25pt">
+                    <div class="mr-2 flex-grow-2" style="min-width:350px">
+                        <span>- Số giường:</span>
+                        <t t-esc="None"/>
+                    </div>
+                    <div class="mr-2 flex-grow-2" style="min-width:250px">
+                        <span>Buồng:</span>
+                        <t t-esc="None"/>
+                    </div>
+                    <div class="mr-2 flex-grow-0">
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row p-1">
+                    <div class="mr-2 flex-grow-0" style="min-width:350px">
+                        <span>- Tên dịch vụ phẫu thuật:</span>
+                        <t t-if="o.services">
+                            <t t-set="list_service" t-value="[service.name for service in o.services]"/>
+                            <t t-if="len(list_service) > 0">
+                                <t t-set="type_value" t-value="'; '.join([s for s in list_service])"/>
+                            </t>
+                            <t t-esc="type_value"/>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row p-1" style="height: 25pt">
+                    <div class="mr-2 flex-grow-2" style="min-width:350px">
+                        <span>- Phẫu thuật viên chính: </span>
+                        <t t-if="o.surgery_team">
+                            <t t-set="teams" t-value="[line.team_member.name for line in o.surgery_team if line.role.name == 'BS mổ chính']"/>
+                            <t t-if="len(teams) > 0">
+                                <t t-set="teams" t-value="'; '.join([e for e in teams])"/>
+                                <b style="text-transform: uppercase;" class="mr-5" t-esc="teams"/>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                    <div class="mr-2 flex-grow-2" style="min-width:250px">
+                        <span>Phẫu thuật viên phụ: </span>
+                        <t t-if="o.surgery_team">
+                            <t t-set="teams" t-value="o.surgery_team"/>
+                            <t t-foreach="teams" t-as="member">
+                                <t t-if="member.role.name == 'BS mổ phụ'">
+                                    <b style="text-transform: uppercase;" class="mr-5" t-esc="member.team_member.name"/>
+                                </t>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                    <div class="mr-2 flex-grow-0">
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row p-1" style="height: 25pt">
+                    <div class="mr-2 flex-grow-2" style="min-width:350px">
+                        <span>- BS GMHS: </span>
+                        <t t-if="o.surgery_team">
+                            <t t-set="teams" t-value="o.surgery_team"/>
+                            <t t-foreach="teams" t-as="member">
+                                <t t-if="member.role.name == 'Bác sĩ gây mê'">
+                                    <b style="text-transform: uppercase;" class="mr-5" t-esc="member.team_member.name"/>
+                                </t>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                    <div class="mr-2 flex-grow-2" style="min-width:250px">
+                        <span>KTV GMHS: </span>
+                        <t t-if="o.surgery_team">
+                            <t t-set="teams" t-value="o.surgery_team"/>
+                            <t t-foreach="teams" t-as="member">
+                                <t t-if="member.role.name == 'Kỹ thuật viên gây mê'">
+                                    <b style="text-transform: uppercase;" class="mr-5" t-esc="member.team_member.name"/>
+                                </t>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                    <div class="mr-2 flex-grow-0">
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row p-1" style="height: 25pt">
+                    <div class="mr-2 flex-grow-2" style="min-width:350px">
+                        <span>- Phương pháp vô cảm: </span>
+                        <t t-if="o.anesthetist_type">
+                            <b style="text-transform: uppercase;" class="mr-5" t-esc="o.anesthetist_type_value"/>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row p-1" style="height: 25pt">
+                    <div class="mr-2 flex-grow-2" style="min-width:350px">
+                        <span>- Ngày phẫu thuật: </span>
+                        <t t-if="o.surgery_date">
+                            <t style="text-transform: uppercase;" class="mr-5" t-esc="context_timestamp(o.surgery_date).strftime('%d/%m/%Y')"/>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                    <div class="mr-2 flex-grow-2" style="min-width:250px">
+                        <span>Giờ bắt đầu: </span>
+                        <t t-if="o.surgery_date">
+                            <!--                            <t style="text-transform: uppercase;" class="mr-5" t-esc="o.surgery_date.strftime('%H:%M')"/>-->
+                            <t style="text-transform: uppercase;" class="mr-5" t-esc="None"/>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                    <div class="mr-2 flex-grow-0">
+                        <span>Giờ kết thúc: </span>
+                        <t t-if="o.surgery_end_date">
+                            <!--                            <t style="text-transform: uppercase;" class="mr-5" t-esc="o.surgery_end_date.strftime('%H:%M')"/>-->
+                            <t style="text-transform: uppercase;" class="mr-5" t-esc="None"/>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                </div>
+
+                <div class="d-flex flex-row p-1" style="height: 25pt">
+                    <div class="mr-2 flex-grow-2" style="min-width:350px">
+                        <span>- Phòng mổ: </span>
+                        <t t-if="o.operating_room">
+                            <b style="text-transform: uppercase;font-size:15px;" class="mr-5" t-field="o.operating_room.name"/>
+                        </t>
+                        <t t-else="">
+                            <span class="mr-5" t-esc="None"/>
+                        </t>
+                    </div>
+                    <div class="mr-2 flex-grow-2" style="min-width:250px">
+                        <span>Giường mổ: </span>
+                        <t t-esc="'.'*20"/>
+                    </div>
+                    <div class="mr-2 flex-grow-0">
+                    </div>
+                </div>
+
+                <table class="table table-sm border border-dark text-center">
+                    <tr>
+                        <th class="border border-dark align-middle"><strong>STT</strong></th>
+                        <th class="border border-dark align-middle"><strong>Mã Code</strong></th>
+                        <th class="border border-dark align-middle" style="width:35%"><strong>Tên thuốc - VTHH</strong></th>
+                        <th class="border border-dark align-middle"><strong>ĐVT</strong></th>
+                        <th class="border border-dark align-middle"><strong>Số lượng</strong></th>
+                        <th class="border border-dark align-middle"><strong>Ghi chú</strong></th>
+                    </tr>
+
+                    <t t-set="total_price" t-value="0"/>
+                    <t t-set="total_discount" t-value="0"/>
+
+                    <t t-if="o.supplies">
+                        <t t-set="i" t-value="0"/>
+                        <t t-foreach="o.supplies" t-as="line">
+                            <t t-set="i" t-value="i + 1"/>
+                            <tr t-if="line">
+                                <td style="text-align:center;" class="border border-dark align-middle"><span t-esc="i"/></td>
+                                <td style="text-align:left;" class="border border-dark align-middle"><span t-field="line.supply.default_code"/></td>
+                                <td style="text-align:left; width:35%" class="border border-dark align-middle"><span t-field="line.supply.name"/></td>
+                                <td style="text-align:center;" class="border border-dark align-middle"><span t-field="line.uom_id.name"/></td>
+                                <td style="text-align:center;" class="border border-dark align-middle"><span t-esc="'%.0f'% line.qty_used"/></td>
+                                <td style="text-align:left;" class="border border-dark align-middle"><span t-field="line.notes"/></td>
+                            </tr>
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach="range(1, 11)" t-as="i">
+                            <tr>
+                                <td style="text-align:center;" class="border border-dark align-middle"><span t-esc="i"/></td>
+                                <td style="text-align:left;" class="border border-dark align-middle"><span t-esc="None"/></td>
+                                <td style="text-align:left;" class="border border-dark align-middle"><span t-esc="None"/></td>
+                                <td style="text-align:center;" class="border border-dark align-middle"><span t-esc="None"/></td>
+                                <td style="text-align:center;" class="border border-dark align-middle"><span t-esc="None"/></td>
+                                <td style="text-align:left;" class="border border-dark align-middle"><span t-esc="None"/></td>
+                            </tr>
+                        </t>
+                    </t>
+                </table>
+
+                <div class="row">
+                    <div class="col-6 text-center">
+                        <strong style="font-size: 22px;">KTVGMHS</strong>
+                        <div><i>(Ký, ghi rõ họ tên)</i></div>
+                    </div>
+                    <div class="col-6 text-center">
+                        <strong style="font-size: 22px;">DỤNG CỤ VIÊN</strong>
+                        <div><i>(Ký, ghi rõ họ tên)</i></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="oe_structure"/>
+        </t>
+    </template>
+
+    <!--    PHIEU CHI DINH DICH VU - TAT CA 1 PHIEU-->
+    <template id="report_medicine_public">
+        <t t-call="web.html_container">
+            <t t-if="docs">
+                <t t-call="shealth_all_in_one.report_medicine_public_document" t-lang="docs[0].patient.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+    <data>
+        <!-- Phiếu Công Khai Thuốc - VTHH -->
+        <report
+                string="Phiếu công khai thuốc vật tư hàng hóa"
+                id="action_report_medicine_public"
+                model="sh.medical.surgery"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_medicine_public"
+                file="shealth_all_in_one.report_medicine_public"
+                paperformat="shealth_all_in_one.sh_paperformat_medicine_public"
+                menu="True"
+        />
+    </data>
+</odoo>

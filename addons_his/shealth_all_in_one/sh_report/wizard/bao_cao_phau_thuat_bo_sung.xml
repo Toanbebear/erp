@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="report_surgical_service_plus_attachment" model="ir.attachment">
+            <field name="name">Báo cáo phẫu thuật bổ sung</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/bao_cao_phau_thuat_bo_sung.xlsx"/>
+            <field name="store_fname">bao_cao_phau_thuat_bo_sung.xlsx</field>
+        </record>
+
+        <record model="ir.ui.view" id="report_surgical_service_plus_form">
+            <field name="name">report.surgical.service.plus.form</field>
+            <field name="model">report.surgical.service.plus</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo phẫu thuật">
+                    <group>
+                        <field name="start_date" required="1"/>
+                        <field name="end_date" required="1"/>
+                        <field name="company_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_danh_sach_dich_vu_phau_thuat" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_surgical_service_plus_act">
+            <field name="name">Báo cáo phẫu thuật bổ sung</field>
+            <field name="res_model">report.surgical.service.plus</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_surgical_service_plus_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="report_surgical_service_plus_menu"
+                  name="Báo cáo phẫu thuật"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="report_surgical_service_plus_act"
+                  sequence="11"
+                  groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_stock_user"/>
+
+    </data>
+</odoo>

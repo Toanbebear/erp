@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<template id="add_button_add_all_labtest" xml:space="preserve">
+     <t t-extend = "ListView.buttons">
+         <t t-jquery="button.o_list_export_xlsx" t-operation="after">
+             <button t-if="widget.modelName == 'sh.medical.lab.test'" class="btn btn-primary add_config_labtest" type="button">Thêm Xét nghiệm theo cấu hình</button>
+         </t>
+    </t>
+</template>

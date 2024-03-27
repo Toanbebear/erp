@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="debt_view_tree_inherit" model="ir.ui.view">
+            <field name="name">debt.view.tree.inherit</field>
+            <field name="model">crm.debt.review</field>
+            <field name="inherit_id" ref="crm_base.debt_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="replace">
+                    <tree default_order="create_date desc" decoration-muted="paid ==True">
+                        <field name="partner_id"/>
+                        <field name="booking_id"/>
+                        <field name="order_id"/>
+                        <field name="amount_total"/>
+                        <field name="amount_owed"/>
+                        <field name="name"/>
+                        <field name="stage"/>
+                        <field name="paid"/>
+                        <field name="create_uid" string="Người tạo"/>
+                        <field name="user_approve" string="Người duyệt"/>
+                        <field name="date_approve"/>
+                        <button name="paid_debt" class="btn-primary" type="object" title="ĐÃ TRẢ"
+                                attrs="{'invisible': [('paid','=',True)]}" string="ĐÃ TRẢ"/>
+                        <button name="roll_back" class="btn-warning" type="object" title="Đánh dấu lại là chưa trả"
+                                attrs="{'invisible': [('paid','!=',True)]}" string="CHƯA TRẢ"
+                                groups="base.group_erp_manager"/>
+                    </tree>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

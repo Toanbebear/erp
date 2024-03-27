@@ -1,0 +1,4 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_voip_phonecall_manager,voip_phonecall_manager,model_voip_phonecall,base.group_system,1,1,1,1
+access_voip_phonecall_user,voip_phonecall_user,model_voip_phonecall,base.group_user,1,1,1,0
+access_crm_phone_call_history,voip_crm_phone_call_history,model_crm_phone_call_history,base.group_user,1,1,1,0

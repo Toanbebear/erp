@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_sales_by_revenue_pivot">
+            <field name="name">Báo cáo doanh số theo nguồn bán</field>
+            <field name="model">sales.by.revenue.report</field>
+            <field name="arch" type="xml">
+                <pivot string="Báo cáo doanh số theo nguồn" disable_linking="True">
+                    <field name="brand_id" type="row"/>
+                    <field name="company_id" type="row"/>
+                    <field name="revenue_ids" type="row"/>
+                    <field name="date" interval="day" type="col"/>
+                    <field name="amount_revenue" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="sales_by_revenue_report_graph" model="ir.ui.view">
+            <field name="name">sales.by.revenue.report.graph</field>
+            <field name="model">sales.by.revenue.report</field>
+            <field name="arch" type="xml">
+                <graph string="Biểu đồ doanh số" type="line">
+                    <field name="date" type="row" interval="day"/>
+                    <field name="company_id" type="row"/>
+                    <field name="amount_revenue" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="sales_by_revenue_dashboard_view" model="ir.ui.view">
+            <field name="name">sales.by.service.dashboard.view</field>
+            <field name="model">sales.by.revenue.report</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <dashboard>
+                    <group>
+                        <group>
+                            <view type="graph" ref="sci_notebook_accounting.sales_by_revenue_report_graph"/>
+                        </group>
+                        <group>
+                            <widget name="pie_chart" title="Biểu đồ doanh số theo nguồn bán hàng" attrs="{'groupby': 'revenue_ids', 'measure': 'amount_revenue'}"/>
+                        </group>
+                    </group>
+                    <view type="pivot" ref="sci_notebook_accounting.view_sales_by_revenue_pivot"/>
+                </dashboard>
+            </field>
+        </record>
+
+        <record id="sales_by_revenue_pivot_act_window" model="ir.actions.act_window">
+            <field name="name">Báo cáo doanh số theo nguồn bán</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.by.revenue.report</field>
+            <field name="view_id" ref="sales_by_revenue_dashboard_view"/>
+            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+            <field name="view_mode">dashboard</field>
+        </record>
+
+    </data>
+</odoo>

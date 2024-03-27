@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_apply_coupon_new_extend" model="ir.ui.view">
+            <field name="name">view.apply.coupon.new.extend</field>
+            <field name="model">crm.apply.coupon</field>
+            <field name="inherit_id" ref="crm_coupon.view_apply_coupon_new"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="reverse_prg_ids" type="object" string="Hoàn lại" class="btn-primary btn-lg fa fa-check" attrs="{'invisible': [('type_action', '=', 'apply')]}"/>
+                        <button special="cancel" string="Hủy thao tác" class="btn-secondary btn-lg fa fa-times"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

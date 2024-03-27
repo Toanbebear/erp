@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="cost_item_group_config_tree_view" model="ir.ui.view">
+            <field name="name">Nhóm hạng mục chi phí</field>
+            <field name="model">cost.item.config</field>
+            <field name="arch" type="xml">
+                <tree string="Cấu hình nhóm hạng mục chi phí" editable="bottom" create="false" >
+                    <field name="code"/>
+                    <field name="source"/>
+                    <field name="name"/>
+                    <field name="cost"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="cost_item_group_config_act_window" model="ir.actions.act_window">
+            <field name="name">Nhóm hạng mục chi phí</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">cost.item.config</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new ModelTitle.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

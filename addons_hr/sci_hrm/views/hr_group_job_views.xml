@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Group job Tree View -->
+        <record model="ir.ui.view" id="hr_group_job_tree">
+            <field name="name">hr.group.job.current.emp.tree</field>
+            <field name="model">hr.group.job</field>
+            <field name="arch" type="xml">
+                <tree string="Group">
+                    <field name="active" invisible="1"/>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Group job Form View -->
+        <record model="ir.ui.view" id="hr_group_job_form">
+            <field name="name">hr.group.job.current.emp.form</field>
+            <field name="model">hr.group.job</field>
+            <field name="arch" type="xml">
+                <form string="Group">
+                    <group>
+                        <field name="active" invisible="1"/>
+                        <field name="name"/>
+                        <field name="code"/>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="sci_hrm_hr_group_job_search" model="ir.ui.view">
+            <field name="name">Search group job</field>
+            <field name="model">hr.group.job</field>
+            <field name="arch" type="xml">
+                <search string="Search Group Job">
+                    <field name="name" string="Bộ phận/ Mã bộ phận" filter_domain="['|',('name','ilike',self), ('code','ilike',self)]"/>
+                    <field name="code"/>
+                    <filter string="Tên" name="name_1"
+                        help="Parameters that are used by all resources."
+                        domain="['|',('name','=','Quản lý'),('name','=','Đối ngoại')]"/>
+                    <group expand="0" string="Group By" colspan="4">
+                        <filter string="Bộ phận" name="test" domain="[]" context="{'group_by':'name'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+        <!-- Group job Action -->
+        <record id="sci_hrm_hr_group_job_action" model="ir.actions.act_window">
+            <field name="name">Bộ phận</field>
+            <field name="res_model">hr.group.job</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="sci_hrm_hr_group_job_search"/>
+            <field name="context">{'search_default_name_1': 1}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('hr_group_job_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('hr_group_job_form')})]"/>
+        </record>
+    </data>
+</odoo>

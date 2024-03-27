@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+        <!-- domain -->
+        <record id="config_domain_app_member_da" model="ir.config_parameter">
+            <field name="key">config_domain_app_member_da</field>
+            <field name="value">http://api.benhvienthammydonga.vn</field>
+        </record>
+        <record id="config_domain_app_member_kn" model="ir.config_parameter">
+            <field name="key">config_domain_app_member_kn</field>
+            <field name="value">https://api.benhvienthammykangnam.vn</field>
+        </record>
+        <record id="config_domain_app_member_pr" model="ir.config_parameter">
+            <field name="key">config_domain_app_member_pr</field>
+            <field name="value">https://api.nhakhoaparis.vn</field>
+        </record>
+    </data>
+        <record id="config_token_app_member_da" model="ir.config_parameter">
+            <field name="key">config_token_app_member_da</field>
+            <field name="value">access_token_b5086206f58d75b44e8f2d5259ae1925fd5073cf</field>
+        </record>
+        <record id="config_token_app_member_kn" model="ir.config_parameter">
+            <field name="key">config_token_app_member_kn</field>
+            <field name="value">http://api.benhvienthammydonga.vn</field>
+        </record>
+        <record id="config_token_app_member_pr" model="ir.config_parameter">
+            <field name="key">config_token_app_member_pr</field>
+            <field name="value">http://api.benhvienthammydonga.vn</field>
+        </record>
+        <record id="sync_app_member_da" model="ir.config_parameter">
+            <field name="key">sync_app_member_da</field>
+            <field name="value">True</field>
+        </record>
+        <record id="sync_app_member_kn" model="ir.config_parameter">
+            <field name="key">sync_app_member_kn</field>
+            <field name="value">False</field>
+        </record>
+        <record id="sync_app_member_pr" model="ir.config_parameter">
+            <field name="key">sync_app_member_pr</field>
+            <field name="value">False</field>
+        </record>
+</odoo>

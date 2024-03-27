@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_loyalty_update_loyalty" model="ir.ui.view">
+            <field name="name">inherit_loyalty_update_loyalty</field>
+            <field name="model">crm.loyalty.card</field>
+            <field name="inherit_id" ref="loyalty.loyalty_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="update_loyalty" string="Cập nhật thẻ" class="btn-info" type="object"
+                            groups="crm_tool.group_tool_loyalty"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_crm']" position="attributes">
+                    <attribute name="groups">crm_tool.group_tool_loyalty</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

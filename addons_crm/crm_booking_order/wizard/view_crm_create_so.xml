@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_crm_create_sale_order">
+            <field name="name">TẠO BÁO GIÁ</field>
+            <field name="model">crm.create.sale.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="company_id" readonly="True" force_save="True" options="{'no_open':True,'no_create':True}"/>
+                            <field name="brand_id" readonly="True" force_save="True" invisible="True"/>
+                            <field name="booking_id" readonly="True" force_save="True"/>
+                            <field name="partner_id" readonly="True" force_save="True" options="{'no_open':True,'no_create':True}"/>
+<!--                            <field name="product_pricelist_id" readonly="True" force_save="True"/>-->
+                            <field name="product_pricelist_id" required="True" options="{'no_open':True,'no_create':True}"/>
+                            <field name="line_product_ids" widget="many2many_tags" required="True" options="{'no_open':True,'no_create':True}"/>
+                            <field name="sh_room_id" required="False" options="{'no_open':True,'no_create':True}"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="notification" readonly="True" force_save="True" string="Cảnh báo" style="color:Red;"/>
+                    </group>
+                    <footer class="text-center">
+                        <button name="create_so" type="object" string="Tạo đơn hàng nháp" class="btn-info"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+
+
+</odoo>

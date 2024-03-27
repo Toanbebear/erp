@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="nation_tree_inherit" model="ir.ui.view">
+            <field name="name">nation.tree.inherit</field>
+            <field name="model">nation</field>
+            <field name="inherit_id" ref="base_unit_vn.nation_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='code']" position="after">
+                    <field name="sequence" widget="handle"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

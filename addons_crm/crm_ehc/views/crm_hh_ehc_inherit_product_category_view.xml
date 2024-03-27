@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_product_category_view_inherit" model="ir.ui.view">
+			<field name="name">product.category.hh</field>
+			<field name="model">product.category</field>
+			<field name="inherit_id" ref="product.product_category_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//group/group[last()]" position="after">
+					<group string="Thông tin EHC">
+						<field name="type_ehc_id" invisible="1"/>
+						<field name="group_master_id" invisible="1"/>
+						<field name="stage"/>
+					</group>
+				</xpath>
+			</field>
+		</record>
+	
+	</data>
+</odoo>

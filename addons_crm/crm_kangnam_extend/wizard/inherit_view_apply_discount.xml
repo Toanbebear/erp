@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_apply_discount_extend" model="ir.ui.view">
+            <field name="name">view.apply.discount.extend</field>
+            <field name="model">crm.apply.voucher</field>
+            <field name="inherit_id" ref="crm_voucher.view_apply_discount"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="check_code_voucher" type="object" string="Áp dụng voucher" class="btn-primary btn-lg fa fa-check" attrs="{'invisible': [('is_code_voucher', '=', False)],'required': [('is_code_voucher', '=', True)]}"/>
+                        <button name="apply_voucher_program" type="object" string="Check voucher" class="btn-primary btn-lg fa fa-check" attrs="{'invisible': [('is_code_voucher', '=', True)],'required': [('is_code_voucher', '=', False)]}"/>
+                        <button string="Cancel" class="btn-secondary btn-lg fa fa-times" special="cancel"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

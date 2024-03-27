@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_crm_select_service">
+            <field name="name">Select service</field>
+            <field name="model">crm.select.service</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="booking_id" readonly="True" force_save="True" options="{'no_open':True}" string="Booking"/>
+                            <field name="partner_id" readonly="True" force_save="True" options="{'no_open':True}" string="Tên khách hàng"/>
+                            <field name="name" required="True" string="Lý do khám"/>
+                            <field name="company_ids" invisible="True"/>
+                            <field name="check_booking_date" invisible="True"/>
+                        </group>
+                    </group>
+                    <footer class="text-center">
+                        <button name="create_quotation" type="object" string="Tạo phiếu khám" class="btn-info"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

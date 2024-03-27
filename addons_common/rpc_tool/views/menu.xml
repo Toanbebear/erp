@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem
+                id="rpc_tool_menu_root"
+                name="Cập nhật dữ liệu"
+                web_icon="rpc_tool,static/description/icon.png"
+                action="rpc_tool.rpc_tool_act"
+                groups="base.group_erp_manager"
+                sequence="10"/>
+    </data>
+</odoo>

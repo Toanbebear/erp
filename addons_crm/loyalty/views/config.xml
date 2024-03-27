@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem
+                id="loyalty_menu_root"
+                name="Loyalty"
+                web_icon="loyalty,static/description/icon.jpg"
+                sequence="6"/>
+
+        <menuitem id="config_loyalty_menu_root"
+                  name="Cấu hình"
+                  parent="loyalty_menu_root"
+                  sequence="10"
+                  groups="base.group_no_one"
+        />
+
+    </data>
+</odoo>

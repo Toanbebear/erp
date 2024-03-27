@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sh_user_res_users_view_tree" model="ir.ui.view">
+            <field name="name">sh.user.res.users.tree</field>
+            <field name="model">res.users</field>
+            <field name="arch" type="xml">
+                <tree string="Users" default_order="create_date desc">
+                    <field name="id" optional="hide"/>
+                    <field name="name"/>
+                    <field name="login"/>
+                    <field name="login_date" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="lang" optional="hide"/>
+                    <field name="create_uid" optional="show"/>
+                    <field name="create_date" optional="show"/>
+                    <field name="write_uid" optional="hide"/>
+                    <field name="write_date" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="sh_user_act">
+            <field name="name">Người dùng</field>
+            <field name="res_model">res.users</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('sh_user.sh_user_res_users_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('base.view_users_form')}),
+                (0, 0, {'view_mode': 'kanban', 'view_id': ref('base.view_res_users_kanban')})]"/>
+        </record>
+
+        <menuitem
+                id="sh_user_menu"
+                name="Người dùng"
+                sequence="300"
+                groups="base.group_erp_manager"
+                web_icon="sh_user,static/description/icon.png"
+                action="sh_user_act"
+        />
+    </data>
+</odoo>

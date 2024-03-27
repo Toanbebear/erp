@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bao_cao_khach_hang_dac_biet_form">
+            <field name="name">Báo cáo KH chăm sóc đặc biệt</field>
+            <field name="model">special.treatment.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo khách hàng chăm sóc đặc biệt">
+                    <group>
+                        <field name="start_date" required="True" string="Ngày bắt đầu: Từ"/>
+                        <field name="end_date" required="True" string="Ngày bắt đầu: Đến"/>
+                        <field name="company_id" required="True" string="Chi nhánh" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="create_report" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_khach_hang_dac_biet_act">
+            <field name="name">Báo cáo KH chăm sóc đặc biệt</field>
+            <field name="res_model">special.treatment.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_khach_hang_dac_biet_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_khach_hang_dac_biet_menu"
+                  name="C.I.1 Báo cáo KH chăm sóc đặc biệt"
+                  parent="report_sale.menu_report_brand_kangnam_van_hanh_cham_soc_khach_hang"
+                  sequence="1"
+                  action="bao_cao_khach_hang_dac_biet_act"/>
+
+        <menuitem id="bao_cao_khach_hang_dac_biet_menu_paris"
+                  name="C.I.1 Báo cáo KH chăm sóc đặc biệt"
+                  parent="report_sale.menu_report_brand_paris_van_hanh_cham_soc_khach_hang"
+                  sequence="1"
+                  action="bao_cao_khach_hang_dac_biet_act"/>
+
+        <record id="bao_cao_khach_hang_dac_biet_attachment" model="ir.attachment">
+            <field name="name">Báo cáo KH chăm sóc đặc biệt</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_cham_soc_dac_biet.xlsx"/>
+            <field name="store_fname">bao_cao_khach_hang_dac_biet.xls</field>
+        </record>
+
+    </data>
+</odoo>

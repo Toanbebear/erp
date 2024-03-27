@@ -1,0 +1,276 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="phieu_xet_nghiem_filter" model="ir.ui.view">
+            <field name="name">Phiếu xét nghiệm</field>
+            <field name="model">sh.medical.lab.test</field>
+            <field name="type">search</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm phiếu xét nghiệm">
+                    <separator orientation="vertical"/>
+                    <field name="name" select="1"/>
+                    <field name="results" select="1"/>
+                    <field name="diagnosis" select="1"/>
+                    <field name="doctor_note" select="1"/>
+                    <newline/>
+                    <filter string="Not completed" name="filter_not_completed" domain="[('state','!=','Completed')]"
+                            context="{}"/>
+                    <!--                        <filter string="My institution" name="filter_my_institution" domain="[('institution.user_access','in', [uid])]" context="{}"/>-->
+                    <!--                        <filter string="My institution and Not Completed" name="filter_not_completed_and_my_institution" domain="[('state','!=','Completed'),('institution.user_access','in', [uid])]" context="{}"/>-->
+                    <filter string="Ngày yêu cầu" name="date_requested" date="date_requested"/>
+                    <filter string="Ngày phân tích" name="date_analysis" date="date_analysis"/>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter string="Ngày thực hiện" name="group_date_analysis" domain="[]"
+                                context="{'group_by':'date_analysis:day'}"/>
+                        <filter string="Patient" name="group_patient" domain="[]" context="{'group_by':'patient'}"/>
+                        <filter string="Walkin" name="group_walkin" domain="[]" context="{'group_by':'walkin'}"/>
+                        <filter string="Pathologist" name="group_pathologist" domain="[]"
+                                context="{'group_by':'pathologist'}"/>
+                        <filter string="Test Type" name="group_test_types" domain="[]"
+                                context="{'group_by':'test_type'}"/>
+                        <filter string="State" name="group_state" domain="[]" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="phieu_xet_nghiem_tree" model="ir.ui.view" >
+            <field name="name">Phiếu xét nghiệm</field>
+            <field name="model">sh.medical.lab.test</field>
+            <field name="type">tree</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false" string='Lab Tests' decoration-info="state=='Draft'"
+                      decoration-success="state=='Completed'"
+                      decoration-danger="state=='Test In Progress'"
+                      editable="bottom" class="tree_no_open">
+<!--                                        <field name="id" invisible="1"/>-->
+                    <field name="sequence" widget="handle"/>
+                    <field name="name" optional="hide"/>
+                    <field name="walkin" optional="hide" readonly="1" force_save="1"/>
+                    <field name="patient" options="{'no_create': True,'no_open': True}" class="text-uppercase" readonly="1" force_save="1"/>
+                    <field name="test_type" options="{'no_create': True,'no_open': True}"/>
+                    <field name="institution" options="{'no_create': True,'no_open': True}" required="1" domain="[('id', 'in', parent.allow_institutions)]" attrs="{'readonly': [('state','in',['Completed'])]}" force_save="1"/>
+                    <field name="department" options="{'no_create': True,'no_open': True}" required="1" attrs="{'readonly': [('state','in',['Completed'])]}" force_save="1"/>
+                    <field name="perform_room" options="{'no_create': True,'no_open': True}" required="1"/>
+                    <field name="pathologist" options="{'no_create': True,'no_open': True}"/>
+                    <field name="requestor" options="{'no_create': True,'no_open': True}" optional="hide"/>
+                    <field name="date_requested" required="1"/>
+                    <field name="date_done"/>
+                    <field name="doctor_note" optional="show"/>
+                    <field name="state"/>
+<!--                                        <field name="lab_test_material_ids" invisible="1"/>-->
+<!--                                        <field name="lab_test_criteria" invisible="1"/>-->
+                    <button name="view_detail_labtest" type="object" icon="fa-file-text-o" title="Chi tiết"/>
+                    <button confirm="Bạn có chắc chắn muốn xóa phiếu Xét nghiệm này?"
+                            attrs="{'invisible': ['|',('state','!=','Draft'),('id','=',False)]}" class="oe_edit_only"
+                            name="unlink" type="object" icon="fa-trash-o" title="Xóa"/>
+
+                </tree>
+            </field>
+        </record>
+
+        <record id="tao_phieu_xet_nghiem_tree" model="ir.ui.view" >
+            <field name="name">Phiếu xét nghiệm</field>
+            <field name="model">sh.medical.lab.test</field>
+            <field name="type">tree</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <tree string='Phiếu xét nghiệm'
+                      create="1"
+                      delete="false"
+                      class="tree_no_open"
+                      default_order="date_analysis desc"
+                      decoration-info="state=='Draft'"
+                      decoration-success="state=='Completed'"
+                      decoration-danger="state=='Test In Progress'">
+                    <field name="sequence" widget="handle"/>
+                    <field name="name" optional="hide"/>
+                    <field name="walkin" optional="hide"/>
+                    <field name="patient" options="{'no_create': True,'no_open': True}" class="text-uppercase"/>
+                    <field name="test_type" options="{'no_create': True,'no_open': True}"/>
+                    <field name="institution" options="{'no_create': True,'no_open': True}"
+                           domain="[('id', 'in', parent.allow_institutions)]"
+                           attrs="{'readonly': [('state','in',['Completed'])]}"/>
+                    <field name="department" options="{'no_create': True,'no_open': True}"
+                           attrs="{'readonly': [('state','in',['Completed'])]}"/>
+                    <field name="perform_room" options="{'no_create': True,'no_open': True}"/>
+                    <field name="pathologist" options="{'no_create': True,'no_open': True}"/>
+                    <field name="requestor" options="{'no_create': True,'no_open': True}" optional="hide"/>
+                    <field name="date_requested"/>
+                    <field name="date_done"/>
+                    <field name="doctor_note" optional="show"/>
+                    <field name="state"/>
+                    <button name="view_detail_labtest" type="object" icon="fa-file-text-o" title="Chi tiết"/>
+                    <button confirm="Bạn có chắc chắn muốn xóa phiếu Xét nghiệm này?"
+                            attrs="{'invisible': ['|',('state','!=','Draft'),('id','=',False)]}" class="oe_edit_only"
+                            name="unlink" type="object" icon="fa-trash-o" title="Xóa"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        <record id="phieu_xet_nghiem_form" model="ir.ui.view">-->
+<!--            <field name="name">Phiếu xét nghiệm</field>-->
+<!--            <field name="model">sh.medical.lab.test</field>-->
+<!--            <field name="type">form</field>-->
+<!--            <field name="priority">100</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <form string="Phiếu xét nghiệm" create="false" duplicate="false"-->
+<!--                      edit_expr="state not in ['Completed']"-->
+<!--                      delete_expr="state not in ['Completed']">-->
+<!--                    <header>-->
+<!--                        <button confirm="Are you sure you want to start the test?" name="set_to_test_inprogress"-->
+<!--                                states="Draft" string="Start Test" type="object" class="oe_highlight"-->
+<!--                                groups="shealth_all_in_one.group_sh_medical_physician_subclinical_labtest,shealth_all_in_one.group_sh_medical_manager"/>-->
+<!--                        <button confirm="Are you sure you want to complete the test?" name="set_to_test_complete"-->
+<!--                                states="Test In Progress" string="Complete Test" type="object" class="oe_highlight"-->
+<!--                                groups="shealth_all_in_one.group_sh_medical_physician_subclinical_labtest,shealth_all_in_one.group_sh_medical_manager"/>-->
+<!--                        &lt;!&ndash;                            <button confirm="Are you sure you want to cancelled the test?" name="set_to_test_cancelled" states="Draft" string="Cancelled Test" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>&ndash;&gt;-->
+<!--                        <button confirm="Are you sure you want to draft the test (Only Admin)?" name="set_to_test_draft"-->
+<!--                                states="Test In Progress" string="Draft Test (Admin)" type="object" class="btn-warning"-->
+<!--                                groups="shealth_all_in_one.group_sh_medical_manager"/>-->
+<!--                        <button confirm="Are you sure you want to set in progress this test (Only Admin)?"-->
+<!--                                name="set_to_test_inprogress"-->
+<!--                                attrs="{'invisible':['|', ('check_current_company', '!=', True), ('state', 'not in', ('Completed'))]}"-->
+<!--                                string="Set In progress Test (Admin)" type="object" class="btn-warning"-->
+<!--                                groups="shealth_all_in_one.group_sh_medical_manager"/>-->
+<!--                        &lt;!&ndash;                            <button confirm="Are you sure you want to create the invoice?" name="action_lab_invoice_create" states="Completed" string="Create Lab Test Invoice" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>&ndash;&gt;-->
+<!--                        <button name="print_patient_labtest" states="Completed" string="Print Lab Test" type="object"-->
+<!--                                class="btn-info"-->
+<!--                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical_labtest,shealth_all_in_one.group_sh_medical_manager"/>-->
+<!--                        <field name="check_current_company" invisible="1"/>-->
+<!--                        <field name="state" widget="statusbar" statusbar_visible="Draft,Test In Progress,Completed"-->
+<!--                               statusbar_colors='{"Draft":"blue","Test In Progress":"red","Completed":"green"}'/>-->
+<!--                    </header>-->
+<!--                    <sheet>-->
+<!--                        <div class="oe_left" style="width: 500px;">-->
+<!--                            <div class="oe_title" style="width: 390px;">-->
+<!--                                <label class="oe_edit_only" for="name"/>-->
+<!--                                <h1>-->
+<!--                                    <field name="name" class="oe_inline"/>-->
+<!--                                </h1>-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                        <group>-->
+<!--                            <group>-->
+<!--                                <field name="institution" required="1" options="{'no_create': True,'no_open': True}"-->
+<!--                                       attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>-->
+<!--                                <field name="test_type" options="{'no_create': True}"-->
+<!--                                       attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>-->
+<!--                                <field name="group_type" string="Nhóm"/>-->
+<!--                                <field name="abnormal" readonly="1" force_save="1"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="department" required="1" options="{'no_create': True,'no_open': True}"-->
+<!--                                       force_save="1" attrs="{'readonly':[('state','in',['Completed'])]}"/>-->
+<!--                                <field name="perform_room" required="1" options="{'no_create': True,'no_open': True}"-->
+<!--                                       attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>-->
+<!--                                <field name="supply_domain" invisible="1"/>-->
+<!--                                <field name="normal_range" attrs="{'invisible':[('has_child','=',True)]}" readonly="1"-->
+<!--                                       force_save="1"/>-->
+<!--                                <field name="has_child" invisible="1" force_save="1"/>-->
+<!--                                <field name="doctor_note"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                        <group>-->
+<!--                            <group>-->
+<!--                                <field name="patient" class="text-uppercase" options="{'no_create': True}"-->
+<!--                                       attrs="{'readonly':['|',('state','in',['Completed']),('patient','!=',False)]}"-->
+<!--                                       force_save="1"/>-->
+<!--                                <field name="requestor" options="{'no_create': True,'no_open': True}"-->
+<!--                                       attrs="{'readonly':['|',('state','in',['Completed'])]}" force_save="1"/>-->
+<!--                                <field name="date_requested"/>-->
+<!--                            </group>-->
+<!--                            <group>-->
+<!--                                <field name="pathologist" options="{'no_create': True,'no_open': True}"-->
+<!--                                       domain="[('department','in',department)]"/>-->
+<!--                                <field name="date_analysis"/>-->
+<!--                                <field name="date_done"/>-->
+<!--                            </group>-->
+<!--                        </group>-->
+<!--                        <notebook>-->
+<!--                            <page string="Lab Test Cases" attrs="{'invisible':[('has_child','=',False)]}">-->
+<!--                                <group>-->
+<!--                                    <field name="lab_test_criteria" nolabel="1"-->
+<!--                                           attrs="{'readonly':[('state','in',['Draft','Completed'])]}">-->
+<!--                                        <tree string="Lab Test Cases" editable="bottom" create="false"-->
+<!--                                              decoration-danger="abnormal==True" delete="false">-->
+<!--                                            <field name="sequence" invisible="1"/>-->
+<!--                                            <field name="name" readonly="1" force_save="1"-->
+<!--                                                   options="{'no_create': True}"/>-->
+<!--                                            <field name="result"/>-->
+<!--                                            <field name="lab_test_criteria_id" force_save="1" invisible="1"/>-->
+<!--                                            <field name="normal_range" force_save="1"/>-->
+<!--                                            <field name="abnormal"/>-->
+<!--                                            <field name="units" force_save="1"/>-->
+<!--                                        </tree>-->
+<!--                                    </field>-->
+<!--                                </group>-->
+<!--                            </page>-->
+<!--                            <page string="Test Results"-->
+<!--                                  attrs="{'invisible':['|',('state','=','Draft'),('has_child','=',True)]}">-->
+<!--                                <group>-->
+<!--                                    <field name="results"-->
+<!--                                           attrs="{'required':[('state','=','Test In Progress'),('has_child','=',False)]}"/>-->
+<!--                                </group>-->
+<!--                                <group invisible="1">-->
+<!--                                    <field name="diagnosis"/>-->
+<!--                                </group>-->
+<!--                            </page>-->
+<!--                            <page string="Materials Information">-->
+<!--                                <field name="lab_test_material_ids" nolable="1" force_save="1"-->
+<!--                                       attrs="{'readonly':[('state','in',['Draft','Completed'])]}">-->
+<!--                                    <tree editable="bottom" decoration-danger="quantity > qty_avail"-->
+<!--                                          decoration-warning="quantity > init_quantity">-->
+<!--                                        <field name="sequence" invisible="1"/>-->
+<!--                                        <field name="product_id" domain="[('id', 'in', parent.supply_domain)]"-->
+<!--                                               required="1" force_save="1" attrs="{'readonly': [('is_init','=',True)]}"-->
+<!--                                               options="{'no_create': True,'no_open': True}"/>-->
+<!--                                        <field name="init_quantity" force_save="1"/>-->
+<!--                                        <field name="is_init" invisible="1" force_save="1"/>-->
+<!--                                        <field name="quantity" required="1" force_save="1"/>-->
+<!--                                        <field name="qty_avail" required="1" force_save="1" optional="hide"/>-->
+<!--                                        <field name="uom_id" readonly="1" force_save="1" required="1"-->
+<!--                                               options="{'no_create':True,'no_open': True}"/>-->
+<!--                                        <field name="location_id" optional="hide" readonly="1" force_save="1"/>-->
+<!--                                        <field name="is_warning_location" invisible="1"/>-->
+<!--                                        <field name="notes" optional="show"-->
+<!--                                               attrs="{'required':[('is_diff_bom', '=', True)]}"/>-->
+<!--                                        <field name="is_diff_bom" invisible="1"/>-->
+<!--                                        <button readonly="True" icon="fa-warning text-warning"-->
+<!--                                                title="Tủ trực không đủ số lượng"-->
+<!--                                                attrs="{'invisible': [('is_warning_location', '=', False)]}"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </page>-->
+
+<!--                        </notebook>-->
+<!--                    </sheet>-->
+<!--                </form>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="phieu_xet_nghiem_action" model="ir.actions.act_window">
+            <field name="name">Phiếu xét nghiệm</field>
+            <field name="res_model">sh.medical.lab.test</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('phieu_xet_nghiem_tree')})]"/>
+<!--            <field name="view_ids"-->
+<!--                   eval="[(5, 0, 0),-->
+<!--                          (0, 0, {'view_mode': 'tree', 'view_id': ref('phieu_xet_nghiem_tree')}),-->
+<!--                          (0, 0, {'view_mode': 'form', 'view_id': ref('phieu_xet_nghiem_form')})]"/>-->
+            <field name="search_view_id" ref="phieu_xet_nghiem_filter"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Chưa có phiếu xét nghiệm
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

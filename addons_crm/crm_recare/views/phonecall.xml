@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="phonecall_inherit_recare" model="ir.ui.view">
+        <field name="name">PC tái chăm sóc</field>
+        <field name="model">crm.phone.call</field>
+        <field name="inherit_id" ref="crm_base.view_form_phone_call"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <field name="booking_recare" invisible="1"/>
+                <button name="create_booking" type="object" string="Tạo booking" class="btn-info"
+                        title="Booking sinh ra khi hoạt động tái khai thác thành công" attrs="{'invisible':['|',('type_crm_id', '!=',%(crm_recare.phone_call_out_sold)d),('booking_recare', '!=',False)]}"/>
+            </xpath>
+            <xpath expr="//notebook" position="inside">
+                <page name="recare" string="Tái khai thác" attrs="{'invisible':[('type_crm_id', 'not in',[%(crm_recare.phone_call_out_sold)d,%(crm_recare.phone_call_khach_khong_den)d])]}">
+                    <group>
+                        <field name="content_recare"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='call_date']" position="attributes">
+                <attribute name="readonly">False</attribute>
+                <attribute name="attrs">{'readonly':[('type_crm_id', 'not in',[%(crm_recare.phone_call_out_sold)d,%(crm_recare.phone_call_khach_khong_den)d])]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

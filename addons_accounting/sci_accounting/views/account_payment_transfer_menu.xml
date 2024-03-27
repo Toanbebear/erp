@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="act_account_payment_inbound_transfer_view" model="ir.actions.act_window">
+            <field name="name">Phiếu thu hộ tiền làm dịch vụ</field>
+            <field name="res_model">account.payment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="account_payment_search"/>
+            <field name="domain">[('state', '!=', 'cancelled'), ('is_payment_for_share', '=', True), ('is_child', '=', False), ('payment_type', '=', 'inbound')]</field>
+            <field name="context">{'search_default_group_payment_date': True,
+                                   'default_payment_type': 'inbound',
+                                   'default_payment_method': 'tm',
+                                   'default_state': 'draft'}</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('account_payment_transfer_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_account_payment_transfer_form')})]"/>
+        </record>
+
+        <record id="act_account_payment_outbound_transfer_view" model="ir.actions.act_window">
+            <field name="name">Phiếu thanh toán chi hộ</field>
+            <field name="res_model">account.payment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="account_payment_search"/>
+            <field name="domain">[('state', '!=', 'cancelled'), ('is_payment_for_share', '=', True), ('is_child', '=', False), ('payment_type', '=', 'outbound')]</field>
+            <field name="context">{'search_default_group_payment_date': True,
+                                   'default_payment_type': 'outbound',
+                                   'default_payment_method': 'tm',
+                                   'default_state': 'draft'}</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('account_payment_outbound_transfer_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('sci_accounting.view_account_payment_behalf_transfer_form')})]"/>
+        </record>
+
+        <menuitem id="account_root_payment_transfer_menu"
+                  name="Giao dịch nội bộ"
+                  parent="account.menu_finance"/>
+
+        <menuitem id="account_payment_inbound_transfer_menu"
+                  name="Lập phiếu thu hộ"
+                  parent="account_root_payment_transfer_menu"
+                  sequence="1"
+                  action="act_account_payment_inbound_transfer_view"/>
+
+        <menuitem id="account_root_create_payment_transfer_menu"
+                  name="Lập đề nghị thanh toán"
+                  sequence="2"
+                  parent="account_root_payment_transfer_menu"/>
+
+            <menuitem id="register_payment_behalf_menu"
+                      name="Công nợ"
+                      parent="account_root_create_payment_transfer_menu"
+                      sequence="1"
+                      action="sci_accounting.act_register_payment_behalf"/>
+            <menuitem id="register_payment_behalf_cost_menu"
+                      name="Chi phí"
+                      parent="account_root_create_payment_transfer_menu"
+                      sequence="2"
+                      action="sci_accounting.act_register_payment_cost_behalf"/>
+
+        <menuitem id="account_root_review_payment_transfer_menu"
+                  name="Duyệt thanh toán"
+                  sequence="3"
+                  parent="account_root_payment_transfer_menu"/>
+
+            <menuitem id="register_payment_censorship_behalf_menu"
+                      name="Công nợ"
+                      parent="account_root_review_payment_transfer_menu"
+                      sequence="1"
+                      action="sci_accounting.act_register_payment_censorship_behalf"/>
+            <menuitem id="register_payment_censorship_cost_behalf_menu"
+                      name="Chi phí"
+                      parent="account_root_review_payment_transfer_menu"
+                      sequence="2"
+                      action="sci_accounting.act_register_payment_cost_censorship_behalf"/>
+        <menuitem id="action_account_move_menu"
+                  name="Phiếu hạch toán"
+                  parent="account_root_payment_transfer_menu"
+                  sequence="4"
+                  action="sci_accounting_action_account_move_line"/>
+        <menuitem id="action_account_payment_transfer_menu"
+                  name="Phiếu thanh toán"
+                  parent="account_root_payment_transfer_menu"
+                  sequence="5"
+                  action="sci_accounting_action_account_payment_line"/>
+    </data>
+</odoo>

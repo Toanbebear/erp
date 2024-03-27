@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_cancel_crm_advise">
+            <field name="name">Cancel Line Service</field>
+            <field name="model">crm.advise.cancel</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="crm_line_id" readonly="True" invisible="1"/>
+                            <field name="advise_id" readonly="True"/>
+                            <field name="reason_line_cancel" required="True"/>
+                            <field name="is_potential" required="True" widget="selection_badge"/>
+                            <field name="name"/>
+                    </group>
+                    </group>
+                    <footer class="text-center">
+                        <button name="cancel_crm_advise" type="object" string="Hủy dịch vụ" class="btn-danger"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+
+
+</odoo>

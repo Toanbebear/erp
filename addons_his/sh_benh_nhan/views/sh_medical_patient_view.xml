@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--   [('walkin.institution.his_company', 'in', allowed_company_ids)]         -->
+        <record model="ir.actions.act_window" id="shealth_all_in_one.sh_medical_patient_action_tree">
+            <field name="res_model">sh.medical.patient</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[]</field>
+        </record>
+    </data>
+</odoo>

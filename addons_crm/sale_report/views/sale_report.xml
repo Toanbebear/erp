@@ -1,0 +1,410 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+<!--        TỔNG HỢP DOANH SỐ-->
+        <record id="sale_report_form" model="ir.ui.view">
+            <field name="name">Tổng hợp doanh số</field>
+            <field name="model">sales.report</field>
+            <field name="arch" type="xml">
+                <form edit_expr="state not in ['confirm']">
+                    <header>
+                        <button name="get_data" class="btn-info" string="Lấy doanh số ngày" type="object"
+                                attrs="{'invisible':[('state','not in',['draft','get_data'])]}"/>
+                        <button name="sent_data" class="btn-danger" string="Gửi báo cáo" type="object"
+                                attrs="{'invisible':[('state','!=','get_data')]}"/>
+                        <button name="get_data" class="btn-danger" string="Đặt là Lấy dữ liệu" type="object"
+                                groups="base.group_system" attrs="{'invisible':[('state','!=','confirm')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,get_data,confirm"/>
+                    </header>
+                    <sheet>
+                        <group name="general">
+                            <group name="1">
+                                <field name="ngay_bao_cao" required="True"
+                                       attrs="{'readonly':[('state','=','confirm')]}"/>
+                            </group>
+                            <group name="2">
+                                <field name="company_id" required="True" attrs="{'readonly':[('state','=','confirm')]}"
+                                       options="{'no_create': True,'no_open': True}"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="brand_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <div>
+                            <span>Báo cáo doanh số được xây dựng dựa trên các dòng phân bổ của <u>phiếu thu/hoàn KHÁCH HÀNG</u> theo các điều kiện sau:</span><br/>
+                            <span attrs="{'invisible':[('brand_id','!=', 1)]}">1. Doanh số không đến từ các nhóm nguồn : CBNV hoặc Đối ngoại hoặc thuê phòng mổ.</span><br/>
+                            <span attrs="{'invisible':[('brand_id','!=', 3)]}">1. Doanh số không đến từ các nhóm nguồn : CBNV hoặc Đối ngoại.</span><br/>
+                            <span>2. Đối với trường hợp <u>thu/hoàn hộ KHÁCH HÀNG</u>: Doanh số căn cứ vào cột chi nhánh ghi nhận doanh số trên từng dòng phân bổ.</span><br/>
+                        </div>
+                        <notebook>
+                            <page name="result" string="Kết quả">
+                                <div class="col-12" style="font-family:Times New Roman;font-size:20px;">
+                                    <b>
+                                        <i>I. Tổng quát</i>
+                                    </b>
+                                </div>
+                                <div style="width:100%">
+                                    <table class="table border border-dark">
+
+                                        <tr>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff; width:20%">Chỉ tiêu tháng
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:20%">Doanh số ngày
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:20%">Tổng doanh số tháng đến
+                                                hiện tại
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:20%">Tỉ lệ hoàn thành
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ds_chi_tieu" readonly="1"/>
+                                            </td>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ds_ngay" readonly="1"/>
+                                            </td>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ds_tich_luy" readonly="1"/>
+                                            </td>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ti_le_hoan_thanh" readonly="1"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-12" style="font-family:Times New Roman;font-size:20px;">
+                                    <b>
+                                        <i>II. Doanh số theo loại hàng bán</i>
+                                    </b>
+                                </div>
+                                <div style="width:100%">
+                                    <table class="table border border-dark">
+
+                                        <tr>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff; width:20%">Dịch vụ
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:20%">Sản phẩm
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ds_dich_vu" readonly="1"/>
+                                            </td>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ds_san_pham" readonly="1"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-12" style="font-family:Times New Roman;font-size:20px;">
+                                    <b>
+                                        <i>II. Doanh số theo phòng ban</i>
+                                    </b>
+                                </div>
+                                <div>
+                                    <table class="table border border-dark" width="100%">
+                                        <tr>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff; width:20%">Spa
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:20%">Laser
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:20%">Nha
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:20%">Phẫu thuật
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:20%">Khác
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ds_spa" readonly="0"/>
+                                            </td>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ds_laser" readonly="0"/>
+                                            </td>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ds_nha" readonly="0"/>
+                                            </td>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ds_pttm" readonly="0"/>
+                                            </td>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ds_khac" readonly="0"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                                <div class="col-12" style="font-family:Times New Roman;font-size:20px;">
+                                    <b>
+                                        <i>III. Doanh số theo hình thức thanh toán</i>
+                                    </b>
+                                </div>
+                                <div>
+                                    <table class="table border border-dark" width="100%">
+                                        <tr>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff; width:35%">Tiền mặt
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:35%">Chuyển khoản
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:30%">Quẹt thẻ
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="tm" readonly="1"/>
+                                            </td>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="ck" readonly="1"/>
+                                            </td>
+                                            <td class="border border-dark align-middle text-center">
+                                                <field name="qt" readonly="1"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </page>
+                            <page name="detail" string="Chi tiết doanh số">
+                                <field name="sale_report_details" readonly="True">
+                                    <tree>
+                                        <field name="partner_id" optional="hide"/>
+                                        <field name="booking_id" optional="hide"/>
+                                        <field name="payment_date" optional="show"/>
+                                        <field name="payment_type" optional="show"/>
+                                        <field name="account_payment_id" optional="hide"/>
+                                        <field name="payment_method" string="Hình thức thanh toán" optional="show"/>
+                                        <field name="crm_line_id" string="Dịch vụ" optional="show"/>
+                                        <field name="crm_line_product_id" string="Sản phẩm" optional="show"/>
+                                        <field name="department" optional="show"/>
+                                        <field name="amount_proceeds" optional="show" sum="Tổng"/>
+                                        <field name="company_id" optional="hide"/>
+                                        <field name="transaction_company_id" optional="hide"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_report_kanban">
+            <field name="name">Tổng hợp doanh số</field>
+            <field name="model">sales.report</field>
+            <field name="arch" type="xml">
+                <kanban class="o_kanban_mobile">
+                    <field name="id"/>
+                    <field name="ngay_bao_cao"/>
+                    <field name="company_id"/>
+                    <field name="currency_id"/>
+                    <field name="ds_san_pham"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click">
+                                <div class="oe_kanban_details">
+                                    <div class="container">
+                                        <h4 class="text-center">
+                                            <a type="open">
+                                                <field name="ngay_bao_cao"/>
+                                            </a>
+                                        </h4>
+                                        <ul class="text-center">
+                                            <li>Chi nhánh:
+                                                <i>
+                                                    <b><field name="company_id"/></b>
+                                                </i>
+                                            </li>
+                                        </ul>
+                                        <div class="row p-0">
+                                            <div class="col-6 p-0">
+                                                <div class="col-12 p-0" style="font-family:Times New Roman;font-size:13px;font-weight: bold;">
+                                                    <i>Tổng quát</i>
+                                                </div>
+                                                <div class="col-12 p-0" style="font-family:Times New Roman;font-size:20px;">
+                                                    <ul>
+                                                        <li>1. Chỉ tiêu:
+                                                            <i>
+                                                                <field name="ds_chi_tieu" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                        <li>2. DS ngày:
+                                                            <i>
+                                                                <field name="ds_ngay" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                        <li>3. Tổng tích lũy:
+                                                            <i>
+                                                                <field name="ds_tich_luy" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                        <li>4. Tỉ lệ hoàn thành:
+                                                            <i>
+                                                                <field name="ti_le_hoan_thanh" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 p-0">
+                                                <div class="col-12 p-0" style="font-family:Times New Roman;font-size:13px;font-weight: bold;">
+                                                    <i>Doanh số theo loại</i>
+                                                </div>
+                                                <div class="col-12 p-0" style="font-family:Times New Roman;font-size:20px;">
+                                                    <ul>
+                                                        <li>1. Sản phẩm:
+                                                            <i>
+                                                                <field name="ds_san_pham" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                        <li>2. Dịch vụ:
+                                                            <i>
+                                                                <field name="ds_dich_vu" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6 p-0">
+                                                <div class="col-12 p-0" style="font-family:Times New Roman;font-size:13px;font-weight: bold;">
+                                                    <i>Doanh số theo phòng ban</i>
+                                                </div>
+                                                <div class="col-12 p-0" style="font-family:Times New Roman;font-size:20px;">
+                                                    <ul>
+                                                        <li>1. Spa:
+                                                            <i>
+                                                                <field name="ds_spa" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                        <li>2. Laser:
+                                                            <i>
+                                                                <field name="ds_laser" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                        <li>3. Nha:
+                                                            <i>
+                                                                <field name="ds_nha" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                        <li>4. Phẫu thuật:
+                                                            <i>
+                                                                <field name="ds_pttm" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                        <li>5. Khác:
+                                                            <i>
+                                                                <field name="ds_khac" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-6 p-0">
+                                                <div class="col-12 p-0" style="font-family:Times New Roman;font-size:13px;font-weight: bold;">
+                                                    <i>Doanh số theo hình thức thanh toán</i>
+                                                </div>
+                                                <div class="col-12 p-0" style="font-family:Times New Roman;font-size:20px;">
+                                                    <ul>
+                                                        <li>1. Tiền mặt:
+                                                            <i>
+                                                                <field name="tm" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                        <li>2. Chuyển khoản:
+                                                            <i>
+                                                                <field name="ck" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                        <li>3. Quẹt thẻ:
+                                                            <i>
+                                                                <field name="qt" widget="monetary"
+                                                                       options="{'currency_field': 'currency_id'}"/>
+                                                            </i>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="sale_report_search_view" model="ir.ui.view">
+            <field name="name">Tìm kiếm</field>
+            <field name="model">sales.report</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Hôm nay" name="ngay_bao_cao_hom_nay" domain="[('ngay_bao_cao', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+<!--                        <filter name="not_cancel" string="Không bao gồm hủy"-->
+<!--                                domain="[('state', 'not in', ['cancel'])]"/>-->
+                        <filter name="group_ngay_ngay_bao_cao" string="Ngày báo cáo"
+                                context="{'group_by':'ngay_bao_cao:day'}"/>
+                        <filter name="group_chi_nhanh" string="Chi nhánh" context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sale_report_tree">
+            <field name="name">Tổng hợp doanh số</field>
+            <field name="model">sales.report</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state=='draft'" decoration-success="state=='confirm'"
+                      decoration-danger="state=='get_data'" default_order="ngay_bao_cao desc">
+                    <field name="ngay_bao_cao" width="25%"/>
+                    <field name="ds_ngay" width="25%"/>
+                    <field name="ds_chi_tieu" width="10%"/>
+                    <field name="ds_tich_luy" width="10%"/>
+                    <field name="ti_le_hoan_thanh" width="5%"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" width="35%"/>
+                    <field name="state" width="15%"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_sale_report" model="ir.actions.act_window">
+            <field name="name">Tổng hợp doanh số</field>
+            <field name="res_model">sales.report</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('state', 'not in', ['cancel'])]</field>
+<!--            <field name="context">{'search_default_group_ngay_ngay_bao_cao':1}</field>-->
+            <field name="context">{}</field>
+        </record>
+    </data>
+</odoo>

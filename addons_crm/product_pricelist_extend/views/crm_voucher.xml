@@ -1,0 +1,37 @@
+<odoo>
+    <data>
+        <record id="open_voucher_uid" model="ir.actions.act_window">
+            <field name="name">Voucher</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.voucher</field>
+            <field name="domain">[('create_uid','=',uid)]</field>
+        </record>
+        <menuitem id="crm_menu_leads_kn_extend"
+                  name="Voucher"
+                  parent="crm_kangnam_extend.crm_kangnam_menu_extend"
+                  action="product_pricelist_extend.open_voucher_uid"
+                  sequence="7"/>
+        <record id="voucher_new_tree" model="ir.ui.view">
+            <field name="name">voucher.new.tree</field>
+            <field name="model">crm.voucher</field>
+            <field name="inherit_id" ref="crm_voucher.voucher_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="create_uid" readonly="True" string="Người tạo VC"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="voucher_new_form" model="ir.ui.view">
+            <field name="name">voucher.new.form</field>
+            <field name="model">crm.voucher</field>
+            <field name="inherit_id" ref="crm_voucher.voucher_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="create_uid" readonly="True" string="Người tạo VC"/>
+                    <field name="partner_id" attrs="{'invisible':[('partner_id','=',False)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

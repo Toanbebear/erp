@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="collaborator_service_not_allow_config_view_form" model="ir.ui.view">
+            <field name="name">Danh sách dịch vụ không tính hoa hồng</field>
+            <field name="model">collaborator.service.not.allow.config</field>
+            <field name="arch" type="xml">
+                <form delete="false" duplicate="false">
+                    <sheet>
+                        <group>
+                            <field name="service_id" options="{'no_create': True, 'no_open': True}" required="True"/>
+                            <field name="brand_id" options="{'no_create': True, 'no_open': True}" required="True"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="collaborator_service_not_allow_config_view_tree" model="ir.ui.view">
+            <field name="name">Danh sách dịch vụ không tính hoa hồng</field>
+            <field name="model">collaborator.service.not.allow.config</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="service_id"/>
+                    <field name="brand_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="collaborator_service_not_allow_config_view_search" model="ir.ui.view">
+            <field name="name">collaborator_service_not_allow_config_view_search</field>
+            <field name="model">collaborator.service.not.allow.config</field>
+            <field name="arch" type="xml">
+                <search string="state Search">
+                    <field name="service_id"/>
+                    <field name="brand_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="collaborator_service_not_allow_config_action" model="ir.actions.act_window">
+            <field name="name">Danh sách dịch vụ không tính hoa hồng</field>
+            <field name="res_model">collaborator.service.not.allow.config</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

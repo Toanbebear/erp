@@ -1,0 +1,238 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="sales_by_source_form_view" model="ir.ui.view">
+            <field name="name">sales.by.source.form</field>
+            <field name="model">sales.by.source</field>
+            <field name="arch" type="xml">
+                <form string="Sale by source">
+                    <header>
+                        <button name="action_confirm"
+                                string="Chi nhánh xác nhận"
+                                class="oe_highlight"
+                                type="object"
+                                groups="shealth_all_in_one.group_sh_medical_accountant"
+                                attrs="{'invisible': [('state', 'not in', ('draft',))]}"/>
+                        <button name="accounting_action_confirm"
+                                string="Gửi số liệu"
+                                class="oe_highlight"
+                                type="object"
+                                groups="shealth_all_in_one.group_sh_medical_accountant"
+                                attrs="{'invisible': [('state', 'not in', ('wait',))]}"/>
+                        <button name="action_draft"
+                                string="Đưa về dự thảo"
+                                class="oe_highlight"
+                                type="object"
+                                groups="account.group_account_user"
+                                attrs="{'invisible': [('state', 'not in', ('wait',))]}"/>
+                        <button name="accounting_manager_return_action_wait"
+                                string="Quản lý từ chối"
+                                class="oe_highlight"
+                                type="object"
+                                groups="account.group_account_manager"
+                                attrs="{'invisible': [('state', 'not in', ('locked',))]}"/>
+                        <button name="action_cancel"
+                                states="wait"
+                                type="object"
+                                string="Cancel"
+                                groups="shealth_all_in_one.group_sh_medical_accountant"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,wait,posted,cancel" nolabel="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="date"/>
+                            <h1>
+                                <field name="date" placeholder="Title" readonly="1"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="user_id" string="Người báo cáo"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                        <group>
+                            <div>
+                                <button name="get_data_sale_data"
+                                        string="Tải dữ liệu doanh số theo nguồn"
+                                        class="oe_highlight"
+                                        type="object" invisible="1"/>
+                            </div>
+                        </group>
+                        <notebook>
+                            <page string="Báo cáo doanh số theo nguồn">
+                                <field name="sale_source_line_id">
+                                    <tree editable="bottom">
+                                        <field name="category_source" string="Nhóm nguồn" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="category_source_utm" string="Nguồn" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="text_category_source" string="Nhóm Nguồn" options="{'no_open':True,'no_create':True}" invisible="1"/>
+                                        <field name="text_category_source_utm" string="Nguồn" options="{'no_open':True,'no_create':True}" invisible="1"/>
+                                        <field name="amount_source" string="Số tiền" widget="monetary_format"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="note" string="Ghi chú"/>
+                                        <field name="is_refund" string="Là hoàn tiền"/>
+                                    </tree>
+                                </field>
+                                <group name="note_group" col="6">
+                                    <group colspan="4">
+                                    </group>
+                                    <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="amount_subtotal_source"/>
+                                        </div>
+                                        <field name="amount_subtotal_source"
+                                               nolabel="1"
+                                               class="oe_subtotal_footer_separator"
+                                               widget="monetary"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+
+                            <page string="Báo cáo doanh số theo nhóm dịch vụ">
+                                <field name="sale_service_line_id">
+                                    <tree editable="bottom">
+                                        <field name="service_catge" options="{'no_open':True,'no_create':True}" context="{'note_accounting': True}"/>
+                                        <field name="service_type" options="{'no_open':True,'no_create':True}" string="Loại dịch vụ (Phòng)"/>
+                                        <field name="amount_service" string="Số tiền" widget="monetary_format"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="note" string="Ghi chú"/>
+                                        <field name="is_refund" string="Là hoàn tiền"/>
+                                    </tree>
+                                </field>
+                                <group name="note_group" col="6">
+                                    <group colspan="4">
+                                    </group>
+                                    <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="amount_subtotal_service"/>
+                                        </div>
+                                        <field name="amount_subtotal_service"
+                                               nolabel="1"
+                                               class="oe_subtotal_footer_separator"
+                                               widget="monetary"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+
+                            <page string="Báo cáo doanh số theo nguồn bán">
+                                <field name="sale_revenue_line_id">
+                                    <tree editable="bottom">
+                                        <field name="revenue_ids" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="amount_revenue" string="Số tiền" widget="monetary_format"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="note" string="Ghi chú"/>
+                                    </tree>
+                                </field>
+                                <group name="note_group" col="6">
+                                    <group colspan="4">
+                                    </group>
+                                    <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="amount_subtotal_revenue"/>
+                                        </div>
+                                        <field name="amount_subtotal_revenue"
+                                               nolabel="1"
+                                               class="oe_subtotal_footer_separator"
+                                               widget="monetary"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+                            <page string="Báo cáo chi phí theo nhóm">
+                                <field name="sale_cost_line_id">
+                                    <tree editable="bottom">
+                                        <field name="cost_source_ids" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="cost_items_ids" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="amount_cost" string="Số tiền" widget="monetary_format"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="note" string="Ghi chú"/>
+                                    </tree>
+                                </field>
+                                <group name="note_group" col="6">
+                                    <group colspan="4">
+                                    </group>
+                                    <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                        <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                            <label for="amount_subtotal_cost"/>
+                                        </div>
+                                        <field name="amount_subtotal_cost"
+                                               nolabel="1"
+                                               class="oe_subtotal_footer_separator"
+                                               widget="monetary"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </group>
+                                    <div class="oe_clear"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="sales_by_source_tree_view" model="ir.ui.view">
+            <field name="name">sales.by.source.tree</field>
+            <field name="model">sales.by.source</field>
+            <field name="arch" type="xml">
+                <tree string="Sale by source" delete="false">
+                    <field name="date"/>
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="company_id"/>
+                    <field name="amount_subtotal_source"/>
+                    <field name="amount_subtotal_service"/>
+                    <field name="amount_subtotal_cost"/>
+                    <field name="amount_subtotal_revenue"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state" widget="label_selection" optional="show" string="Trạng thái"
+                           options="{'classes': {'posted': 'success', 'draft': 'info', 'wait': 'warning', 'cancel': 'danger'}}"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sales_by_source_search_view" model="ir.ui.view">
+            <field name="name">Search View</field>
+            <field name="model">sales.by.source</field>
+            <field name="arch" type="xml">
+                <search string="">
+                    <group expand="0" string="Nhóm theo chi nhánh">
+                        <filter string="Chi nhánh" name="group_company" domain="[]" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="sales_by_source_act_window" model="ir.actions.act_window">
+            <field name="name">Doanh số theo nguồn</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.by.source</field>
+            <field name="domain">[('type', '=', '01')]</field>
+            <field name="context">{'default_type': '01', 'search_default_group_company': True}</field>
+            <field name="search_view_id" ref="sales_by_source_search_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <record id="sales_by_source_by_type_act_window" model="ir.actions.act_window">
+            <field name="name">Doanh số kế hoạch</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.by.source</field>
+            <field name="domain">[('type', '=', '02')]</field>
+            <field name="context">{'default_type': '02', 'search_default_group_company': True}</field>
+            <field name="groups_id" eval="[(4, ref('group_note_accounting_admin'))]"/>
+            <field name="search_view_id" ref="sales_by_source_search_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

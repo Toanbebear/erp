@@ -1,0 +1,45 @@
+# -*- coding: utf-8 -*-
+# Part of Odoo. See LICENSE file for full copyright and licensing details.
+{
+    'name': 'View ERP Kangnam Extend',
+    'version': '1.0.0',
+    'summary': 'Chỉnh view cho Kangnam',
+    'author': '',
+    'category': 'CRM',
+    'description': ''' 
+    ''',
+    'depends': [
+        'crm_his_13',
+        'crm_booking_share',
+        'payment_schedule',
+        'crm_guarantee',
+        'web_one2many_kanban',
+        'res_company_nextcloud'
+    ],
+    'data': [
+        'data/ir_config_param.xml',
+        'views/crm_kangnam_res_partner.xml',
+        'views/crm_kangnam_lead_view.xml',
+        'views/crm_kangnam_bk_view.xml',
+        'views/crm_kangnam_menus.xml',
+        'views/template.xml',
+        'wizard/inherit_create_an_appointment.xml',
+        'wizard/inherit_form_request_deposit_wizard.xml',
+        'wizard/inherit_select_service.xml',
+        'wizard/inherit_view_apply_coupon_new.xml',
+        'wizard/inherit_view_apply_discount.xml',
+        'wizard/inherit_view_create_negative_so.xml',
+        'wizard/inherit_view_discount_review.xml',
+        'wizard/inherit_view_form_add_service_guarantee.xml',
+        'wizard/inherit_view_form_create_booking_guarantee.xml',
+        'wizard/inherit_view_form_update_line_consultants.xml',
+        'wizard/inherit_walkin_share_form.xml',
+        'wizard/inherit_his_83.xml',
+        'wizard/inherit_view_get_history_phone_call.xml',
+        'wizard/show_qr_booking.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'qweb': [],
+}

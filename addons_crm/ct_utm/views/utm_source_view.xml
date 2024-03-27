@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="utm_source_tree_inherit" model="ir.ui.view">
+            <field name="name">utm.source.tree.inherit</field>
+            <field name="model">utm.source</field>
+            <field name="inherit_id" ref="sci_hrms.hr_utm_source_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                        <field name="sequence" widget="handle"/>
+                        <field name="code"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                        <field name="brand_id" options="{'no_open':True,'no_create':True}"/>
+                        <field name="new_id_hh"/>
+                        <field name="new_id_kn"/>
+                        <field name="not_sale"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="utm_utm_source_form_inherit" model="ir.ui.view">
+            <field name="name">utm.source.form.inherit</field>
+            <field name="model">utm.source</field>
+            <field name="inherit_id" ref="utm.utm_source_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                        <field name="not_sale"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="utm_source_form_inherit" model="ir.ui.view">
+            <field name="name">utm.source.form.inherit</field>
+            <field name="model">utm.source</field>
+            <field name="inherit_id" ref="collaborator.utm_source_view_collaborator_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                        <field name="brand_id"/>
+                        <field name="new_id_hh"/>
+                        <field name="new_id_kn"/>
+                </xpath>
+            </field>
+        </record>
+<!--Hiện thị thương hiệu ra ngoài tree view nguồn ctv-->
+        <record id="utm_source_view_tree_inherit" model="ir.ui.view">
+            <field name="name">utm.source.view.tree</field>
+            <field name="model">utm.source</field>
+            <field name="inherit_id" ref="collaborator.utm_source_view_collaborator_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="after">
+                        <field name="brand_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

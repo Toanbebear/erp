@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_sale_order_collaborator">
+            <field name="name">View ctv</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+				<xpath expr="//button[@name='action_draft']" position="after">
+                    <button name="action_transaction_wizard" string="Cập nhật số tiền cộng tác viên" attrs="{'invisible': ['|', '|', '|',('check_transaction_collaborator', '=', True), ('state', 'not in', ['sale', 'done']), ('pricelist_type', '!=', 'service'), ('check_source_collaborator', '!=', True)]}" groups="base.group_system" type="object" class="btn-info"/>
+                </xpath>
+                <xpath expr="//field[@name='source_id']" position="after">
+                    <field name="check_transaction_collaborator" invisible="True" readonly="True"/>
+                    <field name="check_source_collaborator" invisible="True" readonly="True"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

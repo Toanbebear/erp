@@ -1,0 +1,32 @@
+.content {
+    width: 100%;
+    .list-patient {
+        height: 100vh;
+        max-height: 100vh;
+        background-color: white;
+        overflow: scroll;
+        table {
+            height: 80%;
+            overflow:scroll;
+
+        }
+    }
+    .wrap-scan_patient {
+        position:relative;
+        .scan_patient {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+
+
+}
+
+
+.box-right img {
+    width: 96px;
+}
+
+

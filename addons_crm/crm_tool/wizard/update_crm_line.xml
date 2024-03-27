@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_update_crm_line">
+            <field name="name">Cập nhật Line dịch vụ</field>
+            <field name="model">update.crm.line</field>
+            <field name="arch" type="xml">
+                <form>
+                    <div>
+                        <i>
+                            <strong>Lưu ý:</strong>
+                            <ul>
+                                <li>Tính năng này được triển khai khi muốn sửa giá của dịch vụ.</li>
+                                <li>Mọi thao tác chỉnh sửa giá sẽ được lưu lại để tiện kiểm tra sau này nếu cần.</li>
+                            </ul>
+                        </i>
+                    </div>
+                    <group>
+                        <field name="line" readonly="True" force_save="True"
+                               options="{'no_open':True,'no_create':True}"/>
+                        <field name="action" required="True"/>
+                        <field name="unit_price"
+                               attrs="{'required': [('action', '=', '1')], 'invisible': [('action', '!=', '1')]}"/>
+                    </group>
+                    <footer class="text-center">
+                        <button name="confirm" type="object" string="Cập nhập" class="btn-info"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+
+
+</odoo>

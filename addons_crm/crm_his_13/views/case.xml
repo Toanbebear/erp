@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="case_content_complain_inherit" model="ir.ui.view">
+            <field name="name">case_content_complain_inherit</field>
+            <field name="model">crm.content.complain</field>
+            <field name="inherit_id" ref="crm_base.crm_case_content_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_ids']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_ids']" position="after">
+                    <field name='complain_service_ids' mode="tree">
+                        <tree editable="bottom">
+                            <field name="product_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="employee_ids" widget="many2many_tags"
+                                   options="{'no_open':True,'no_create':True}"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="case_inherit" model="ir.ui.view">
+            <field name="name">case_inherit</field>
+            <field name="model">crm.case</field>
+            <field name="inherit_id" ref="crm_base.crm_case_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="replace">
+                    <kanban>
+                        <field name="crm_case" invisible="True"/>
+                        <field name="complain_group_id"/>
+                        <field name="complain_id"/>
+                        <field name="receive_source"/>
+                        <field name="complain_service_ids" widget="many2many_tags"/>
+                        <field name="department_ids" widget="many2many_tags"/>
+                        <field name="priority"/>
+                        <field name="desc" required="True"/>
+                        <field name="solution" required="True"/>
+                        <field name="stage" required="True"/>
+                        <field name="brand_sla" invisible="True"/>
+                        <field name="cskh_sla" invisible="True"/>
+                        <field name="branch_sla" invisible="True"/>
+                        <field name="note"/>
+                        <templates>
+                            <t t-name="kanban-box">
+                                <div class="oe_kanban_global_click o_kanban_full">
+                                    <div class="oe_kanban_details">
+                                        <div class="container">
+                                            <div class="row">
+                                                <div class="col-3">
+                                                    <div>
+                                                        <label>Nhóm khiếu nại:</label>
+                                                        <strong>
+                                                            <field name="complain_group_id"/>
+                                                        </strong>
+                                                    </div>
+                                                    <div>
+                                                        <label>Mã chi tiết:</label>
+                                                        <strong>
+                                                            <field name="complain_id"/>
+                                                        </strong>
+                                                    </div>
+
+                                                    <div>
+                                                        <!--    Trạng thái -->
+                                                        <label>Trạng thái:</label>
+                                                        <strong t-att-class="record.stage.raw_value == 'complete' ? 'text-success' : ''">
+                                                            <field name="stage"/>
+                                                        </strong>
+                                                    </div>
+
+                                                    <div>
+                                                        <label>Độ ưu tiên:</label>
+                                                        <strong>
+                                                            <field name="priority"/>
+                                                        </strong>
+                                                    </div>
+
+                                                    <div>
+                                                        <label>
+                                                            <strong>Sản phẩm/Dịch vụ:</strong>
+                                                        </label>
+                                                        <field name="complain_service_ids"
+                                                               widget="kanban.many2many_tags"/>
+                                                    </div>
+
+                                                    <div>
+                                                        <label>
+                                                            <strong>Phòng ban bị khiếu nại:</strong>
+                                                        </label>
+                                                        <field name="department_ids" widget="kanban.many2many_tags"/>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <label>
+                                                        <strong>Nội dung phản ánh:</strong>
+                                                    </label>
+                                                    <field name="desc" widget="html"/>
+                                                </div>
+
+                                                <div class="col-3">
+                                                    <div>
+                                                        <label>
+                                                            <strong>Giải pháp:</strong>
+                                                        </label>
+
+                                                        <field name="solution" widget="html"/>
+                                                    </div>
+                                                </div>
+                                                <div class="col-3">
+                                                    <div>
+                                                        <label>
+                                                            <strong>Nội dung:</strong>
+                                                        </label>
+                                                        <field name="note" widget="html"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                </xpath>
+                <xpath expr="//group/div/field[@name='crm_content_complain']/form/group/field[@name='product_ids']"
+                       position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//group/div/field[@name='crm_content_complain']/form/group/field[@name='product_ids']"
+                       position="after">
+                    <field name='complain_service_ids' mode="tree">
+                        <tree editable="bottom">
+                            <field name="product_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="employee_ids" widget="many2many_tags"
+                                   options="{'no_open':True,'no_create':True}"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

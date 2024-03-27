@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="loyalty_bonus_date" model="ir.cron">
+            <field name="name">Bonus date</field>
+            <field name="model_id" ref="loyalty.model_crm_loyalty_card"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_money_reward_loyalty()</field>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="loyalty_form" model="ir.ui.view">
+            <field name="name">Thẻ thành viên</field>
+            <field name="model">crm.loyalty.card</field>
+            <field name="arch" type="xml">
+                <form create="0" edit="0">
+                    <header>
+                        <button name="update_code_card" class="btn-danger" string="Cập nhật mã thẻ" type="object" attrs="{'invisible': [('name', '!=', False)]}"/>
+                        <field name="state" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <field name="image" widget="image" class="oe_avatar"/>
+                        <div name="title" class="oe_title">
+                            <label for="name" string="MÃ THẺ"/>
+                            <h2>
+                                <field name="name" placeholder="Mã thẻ" widget="copy_char"/>
+                            </h2>
+                            <label for="name" string="HẠNG THẺ"/>
+                            <h2>
+                                <field name="rank_id" placeholder="Hạng thẻ" readonly="True" force_save="True" options="{'no_open':True,'no_create':True}"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group string="Thông tin khách hàng">
+                                <field name="partner_id" options="{'no_create':True}"
+                                       required="True" readonly="True" force_save="True"/>
+                                <field name="birth_date"/>
+                                <field name="phone" widget="phone"/>
+                                <field name="code_customer"/>
+                                <field name="country_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="state_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="address_detail"/>
+                                <field name="qr" widget="image" style="width: 128px;"/>
+                            </group>
+                            <group string="Thông tin thẻ">
+                                <field name="amount" widget="monetary_format"/>
+                                <field name="amount_crm" readonly="True"/>
+                                <field name="bonus" string="Tổng tiền thưởng" readonly="True" force_save="True"/>
+                                <field name="loyalty_import"/>
+                                <field name="brand_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="company_id" required="True" options="{'no_open':True,'no_create':True}" readonly="True" force_save="True"/>
+                                <field name="source_id" required="True" options="{'no_open':True,'no_create':True}" readonly="True" force_save="True"/>
+                                <field name="date_interaction" required="True" readonly="True" force_save="True"/>
+                                <field name="validity_card"/>
+                                <field name="due_date"/>
+                                <field name="url" invisible="True"/>
+                                <field name="currency_id" invisible="True"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Quà tặng đi kèm hạng thẻ" name="gift_and_voucher">
+                                <field name="reward_ids">
+                                    <tree delete="false" create="false">
+                                        <field name="name"/>
+                                        <field name="type_reward"/>
+                                        <field name="product_ids" widget="many2many_tags"/>
+                                        <field name="quantity"/>
+                                        <field name="number_use"/>
+                                        <field name="date_use" optional="hide"/>
+                                        <field name="stage"/>
+                                        <button name="use_reward" type="object" string="Sử dụng" class="btn-info"
+                                                attrs="{'invisible':[('stage','!=','allow')]}"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group string="General information">
+                                                    <field name="name" readonly="True"/>
+                                                    <field name="type_reward" readonly="True"/>
+                                                    <field name="loyalty_id" invisible="True"/>
+                                                </group>
+                                                <group string="Reward information">
+                                                    <field name="product_ids"
+                                                           attrs="{'invisible':[('type_reward','!=','prd')]}"
+                                                           readonly="True"
+                                                           force_save="True"
+                                                    />
+                                                    <field name="quantity"
+                                                           attrs="{'invisible':[('type_reward','!=','prd')]}"
+                                                           readonly="True"
+                                                           force_save="True"
+                                                    />
+                                                    <field name="number_use"
+                                                           attrs="{'invisible':[('loyalty_id','=',False)]}"
+                                                           readonly="True"
+                                                           force_save="True"/>
+                                                    <field name="category_id"
+                                                           attrs="{'invisible':[('type_reward','!=','ctg')]}"
+                                                           readonly="True"
+                                                           force_save="True"/>
+                                                    <field name="discount_percent"
+                                                           attrs="{'invisible':[('type_reward','!=','ctg')]}"
+                                                           readonly="True"
+                                                           force_save="True"/>
+                                                </group>
+                                            </group>
+                                        </sheet>
+                                    </form>
+                                </field>
+                            </page>
+
+<!--                            <page string="Tiền thưởng thêm">-->
+<!--                                <field name="bonus_date_ids">-->
+<!--                                    <tree>-->
+<!--                                        <field name="name"/>-->
+<!--                                        <field name="brand_id"/>-->
+<!--                                        <field name="reward_origin"/>-->
+<!--                                        <field name="reward_used"/>-->
+<!--                                        <field name="reward_remain"/>-->
+<!--                                        <field name="stage"/>-->
+<!--                                    </tree>-->
+<!--                                </field>-->
+<!--                            </page>-->
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="loyalty_tree">
+            <field name="name">Thẻ thành viên</field>
+            <field name="model">crm.loyalty.card</field>
+            <field name="arch" type="xml">
+                <tree create="0" decoration-muted="state=='expire'">
+                    <field name="name" string="Mã thẻ"/>
+                    <field name="partner_id"/>
+                    <field name="code_customer"/>
+                    <field name="rank_id"/>
+                    <field name="brand_id"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="loyalty_search_view" model="ir.ui.view">
+            <field name="name">Loyalty search</field>
+            <field name="model">crm.loyalty.card</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm thẻ">
+                    <field name="name" string="Mã thẻ"/>
+                    <field name="partner_id" string="Khách hàng/Mã khách hàng/Điện thoại..."/>
+                    <separator/>
+                    <filter string="Đang hoạt động" name="domain_active" domain="[('state', '=', 'active')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_open_loyalty" model="ir.actions.act_window">
+            <field name="name">Thẻ thành viên</field>
+            <field name="res_model">crm.loyalty.card</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'search_default_domain_active': 1}</field>
+        </record>
+
+        <menuitem
+                id="loyalty_menu_card"
+                name="Thẻ thành viên"
+                action="action_open_loyalty"
+                parent="loyalty_menu_root"
+                sequence="0"/>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="form_request_deposit_wizard_extend" model="ir.ui.view">
+            <field name="name">form.request.deposit.wizard.extend</field>
+            <field name="model">crm.request.deposit</field>
+            <field name="inherit_id" ref="crm_base.form_request_deposit_wizard"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="convert_payment" string="Tạo phiếu" type="object" class="btn-info btn-lg fa fa-check"/>
+                        <button string="Hủy thao tác" class="btn-secondary btn-lg fa fa-times" special="cancel"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

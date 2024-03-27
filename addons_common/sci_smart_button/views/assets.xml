@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="assets_backend" name="smart button assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/sci_smart_button/static/src/css/smart_button.css"/>
+            <script type="text/javascript" src="/sci_smart_button/static/src/js/smart_button_view.js"></script>
+            <script type="text/javascript" src="/sci_smart_button/static/src/js/smart_button_form.js"></script>
+            <script type="text/javascript" src="/sci_smart_button/static/src/js/smart_button_tree.js"></script>
+            <script type="text/javascript" src="/sci_smart_button/static/src/js/smart_button_kanban.js"></script>
+            <script type="text/javascript" src="/sci_smart_button/static/src/js/smart_button_pivot.js"></script>
+            <script type="text/javascript" src="/sci_smart_button/static/src/js/smart_button_graph.js"></script>
+            <script type="text/javascript" src="/sci_smart_button/static/src/js/smart_button_activity.js"></script>
+            <script type="text/javascript" src="/sci_smart_button/static/src/js/smart_button_calendar.js"></script>
+        </xpath>
+    </template>
+</odoo>

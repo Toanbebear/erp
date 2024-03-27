@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_view_form_phone_call_calendar_event" model="ir.ui.view">
+            <field name="name">inherit_form_crm_booking_calendar_event</field>
+            <field name="model">crm.phone.call</field>
+            <field name="inherit_id" ref="crm_base.view_form_phone_call"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="create_an_appointment" type="object" string="Tạo lịch hẹn" class="btn-info" title="Tạo lịch hẹn cho PC này"/>
+                </xpath>
+                <xpath expr="//field[@name='booking_date']" position="after">
+                    <field name="domain_physician" widget="many2many_tags" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

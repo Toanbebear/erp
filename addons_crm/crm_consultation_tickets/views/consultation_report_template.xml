@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <template id="report_consultation_ticket_template">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:21px;">
+                    <div class="oe_structure"/>
+                    <div class="row mt32 mb32">
+                        <div class="col-6" style="font-size:18px;">
+                            <div class="m-0"
+                                 style="text-transform: uppercase;font-weight:bold;"/>
+                            <div>
+                                <span class="m-0" t-field="o.company_id.name"/>
+                                <br/>
+                                <span class="m-0" t-field="o.company_id.street"/>,
+                                <span class="m-0" t-field="o.company_id.street2"/>,
+                                <span class="m-0" t-field="o.company_id.city"/>
+                            </div>
+                            <div class="m-0" t-if="o.company_id.phone">Hotline:
+                                <span t-field="o.company_id.phone"/>
+                            </div>
+                        </div>
+                        <div class="col-6 text-right" style="font-size:18px;">
+                            <!--                            <b style="text-transform: uppercase;" class="m-0 mr-5" t-field="o.create_date"/>-->
+                            <b t-esc="(o.create_date + relativedelta(hours=7)).strftime('Ngày %d tháng %m năm %Y')"/>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h2 style="display: inline}">
+                            <b>PHIẾU TƯ VẤN</b>
+                        </h2>
+                        <br/>
+                        <i t-field="o.name"/>
+                    </div>
+                    <br/>
+                    <div>
+                        <h4>I. Thông tin cá nhân:</h4>
+                    </div>
+                    <div t-if="o.partner_id" class="bm-2">
+                        <span>1.Họ và tên:</span>
+                        <b style="text-transform: uppercase;" class="m-0 mr-5" t-field="o.partner_id.name"/>
+                        <span>Mã khách hàng:</span>
+                        <b class="m-0 mr-5" t-field="o.partner_id.code_customer"/>
+                        <span>Giới tính:</span>
+                        <b class="m-0 mr-5" t-field="o.partner_id.gender"/>
+                    </div>
+                    <div t-if="o.partner_id" class="bm-2">
+                        <span>2.Ngày/tháng/năm sinh:</span>
+                        <b style="text-transform: uppercase;" class="m-0 mr-5" t-field="o.partner_id.birth_date"/>
+                    </div>
+                    <div t-if="o.partner_id" class="bm-2">
+                        <span>3.Số CMTND/Hộ chiếu:</span>
+                        <b style="text-transform: uppercase;" class="m-0 mr-5" t-field="o.partner_id.pass_port"/>
+                        <span>Ngày cấp:</span>
+                        <b class="m-0 mr-5" t-field="o.partner_id.pass_port_date"/>
+                    </div>
+                    <div t-if="o.partner_id">
+                        <span>4.Tiền sử dị ứng:</span>
+                        <b style="text-transform: uppercase;" t-field="o.partner_id.allergy_history"/>
+                    </div>
+                    <br/>
+                    <div>
+                        <h4>II. Thông tin liên hệ:</h4>
+                    </div>
+                    <div t-if="o.partner_id" class="bm-2">
+                        <span>1.Nơi cư trú hiện tại:</span>
+                        <t t-if="o.partner_id.country_id">
+                            <b class="m-0" t-field="o.partner_id.street"/>,
+                            <b class="m-0" t-field="o.partner_id.district_id.name"/>,
+                            <b class="m-0" t-field="o.partner_id.state_id.name"/>,
+                            <b class="m-0" t-field="o.partner_id.country_id.name"/>
+                        </t>
+                    </div>
+<!--                    <div t-if="o.partner_id" class="bm-2">-->
+<!--                        <span>2.Điện thoại:</span>-->
+<!--                        <b class="m-0 mr-5" t-field="o.partner_id.phone"/>-->
+<!--                    </div>-->
+<!--                    <div class="bm-2">-->
+<!--                        <span>3.Điện thoại liên hệ trong trường hợp khẩn cấp:</span>-->
+<!--                        <b class="m-0 mr-5" t-field="o.emergency_phone_customer"/>-->
+<!--                    </div>-->
+                    <div t-if="o.partner_id" class="bm-2">
+                        <span>4.Email:</span>
+                        <b class="m-0 mr-5" t-field="o.partner_id.email"/>
+                    </div>
+                    <div class="bm-2">
+                        <span>5.Nguồn biết đến:</span>
+                        <b class="m-0 mr-5" t-field="o.know_source"/>
+                    </div>
+                    <br/>
+                    <div>
+                        <h4>III. Thông tin tư vấn dịch vụ:</h4>
+                    </div>
+                    <table class="table table-condensed">
+                        <thead style="font-size:16px;">
+                            <th class="text-center border border-dark">STT</th>
+                            <th class="text-center border border-dark">DỊCH VỤ TƯ VẤN</th>
+                            <th class="text-center border border-dark">MONG MUỐN CỦA KHÁCH HÀNG</th>
+                            <th class="text-center border border-dark">TÌNH TRẠNG</th>
+                            <th class="text-center border border-dark">TƯ VẤN</th>
+<!--                            <th class="text-center border border-dark">MỨC ĐỘ CẢI THIỆN</th>-->
+<!--                            <th class="text-center border border-dark">LỊCH TRÌNH</th>-->
+<!--                            <th class="text-center border border-dark">CHẾ ĐỘ BẢO HÀNH</th>-->
+<!--                            <th class="text-center border border-dark">SẢN PHẨM SỬ DỤNG TẠI NHÀ</th>-->
+                            <th class="text-center border border-dark">KẾT LUẬN</th>
+                        </thead>
+                        <tbody>
+                            <t t-set="i" t-value="0"/>
+                                <tr t-foreach="o.consultation_detail_ticket_ids" t-as="detail">
+                                    <t t-set="i" t-value="i + 1"/>
+                                    <td class="border border-dark pl-4 py-0">
+                                        <t t-esc="i"/>
+                                    </td>
+                                    <td class="border border-dark pl-4 py-0">
+                                        <span class="m-0" t-field="detail.service_id.name"/>
+                                    </td>
+                                    <td class="border border-dark pl-4 py-0">
+                                        <span t-field="detail.desire"/>
+                                    </td>
+                                    <td class="border border-dark pl-4 py-0">
+                                        <span class="m-0" t-field="detail.health_status"/>
+                                    </td>
+                                    <td class="border border-dark pl-4 py-0">
+                                        <span class="m-0" t-field="detail.consultation"/>
+                                    </td>
+<!--                                    <td class="border border-dark pl-4 py-0">-->
+<!--                                        <span class="m-0" t-field="detail.level_of_improvement"/>-->
+<!--                                    </td>-->
+<!--                                    <td class="border border-dark pl-4 py-0">-->
+<!--                                        <span class="m-0" t-field="detail.schedule"/>-->
+<!--                                    </td>-->
+<!--                                    <td class="border border-dark pl-4 py-0">-->
+<!--                                        <span class="m-0" t-field="detail.warranty"/>-->
+<!--                                    </td>-->
+<!--                                    <td class="border border-dark pl-4 py-0">-->
+<!--                                        <span class="m-0" t-field="detail.product_for_home_use"/>-->
+<!--                                    </td>-->
+                                    <td class="border border-dark pl-4 py-0">
+                                        <span class="m-0" t-field="detail.note"/>
+                                    </td>
+                                </tr>
+<!--                            </t>-->
+                        </tbody>
+                    </table>
+                    <div class="row my-2">
+                        <div class="col-4 bm-2 text-left">
+                            <div class="text-center">
+                                <div class="m-0">Bác sĩ tư vấn</div>
+                                <div style="height:100px;"></div>
+                                <span class="m-0" t-field="o.sh_medical_physician_id.name"/>
+                            </div>
+                        </div>
+                        <div class="col-4 bm-2">
+                        </div>
+                        <div class="col-4 bm-2 text-right">
+                            <div class="text-center">
+                                <div class="m-0">Lễ tân tư vấn</div>
+                                <div style="height:100px;"></div>
+                                <span class="m-0" t-field="o.consultation_reception.name"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+        <template id="report_consultation_ticket">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="crm_consultation_tickets.report_consultation_ticket_template" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

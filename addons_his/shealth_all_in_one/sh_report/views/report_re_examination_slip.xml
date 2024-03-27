@@ -1,0 +1,906 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--        In phiếu  tái khám tại màn hình phiếu khám-->
+        <template id="shealth_report_re_examination_slip_walkin_screen_document">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=o.sudo().partner_id.lang)"/>
+                    <t t-set="o" t-value="o.sudo()"/>
+                    <form>
+                        <div class="page" style="font-family:Times New Roman;font-size:18px;">
+                            <div class="oe_structure"/>
+                            <t t-if="o.state == 'Completed'">
+                                <div class="row mt32">
+                                    <div class="col-7">
+                                        <div style="font-size: 20px;">
+                                            <t t-if="o.institution.his_company.id == 12">
+                                                <img
+                                                 src="/shealth_all_in_one/static/img/logo_kn_218.png"
+                                                 width="100"
+                                                 border="1"/>
+                                                <b style="font-size: 15px;">CÔNG TY TNHH BVTM KANGNAM</b>
+                                            </t>
+                                            <t t-else="">
+                                                <img t-if="o.institution.his_company.favicon"
+                                                 t-att-src="image_data_uri(o.institution.his_company.favicon)"
+                                                 width="50"
+                                                 border="1"/>
+                                                <span t-field="o.institution.company_name"/>
+                                            </t>
+
+                                        </div>
+                                    </div>
+                                    <div class="col-5">
+                                        <b style="font-size: 30px;">PHIẾU TÁI KHÁM</b>
+                                    </div>
+                                </div>
+                                <div class="row text-right">
+                                    <div class="col-12">
+                                        <i style="font-size: 16px;"><span t-esc="o.institution.state_id.name"/>,
+                                            <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%H:%M ngày %d tháng %m năm %Y')"/>
+                                        </i>
+                                    </div>
+                                </div>
+                                <div class="row mt8 text-center">
+                                    <div class="col-6">
+                                        <b>MÃ BOOKING:
+                                            <b t-field="o.booking_id.name"/>
+                                        </b>
+                                    </div>
+                                    <div class="col-6">
+                                        <b>MÃ PHIẾU KHÁM:
+                                            <b t-field="o.name"/>
+                                        </b>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="col-12">
+                                        <span class="mr-5">&#8226; Họ và tên khách hàng:
+                                            <b t-field="o.patient.name"/>
+                                        </span>
+<!--                                        <span class="mr-5">Điện thoại:-->
+<!--                                            <t t-if="o.patient.phone">-->
+<!--                                                <span t-field="o.patient.phone"/>-->
+<!--                                            </t>-->
+<!--                                            <t t-if="o.patient.mobile">-->
+<!--                                                /-->
+<!--                                                <span t-field="o.patient.mobile"/>-->
+<!--                                            </t>-->
+<!--                                        </span>-->
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="mr-5">&#8226; Ngày sinh:
+                                            <t t-if="o.patient.birth_date">
+                                                <t t-esc="o.patient.birth_date.strftime('%d/%m/%Y')"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-if="o.patient.partner_id.year_of_birth">
+                                                    <span t-esc="o.patient.partner_id.year_of_birth"/>
+                                                </t>
+                                            </t>
+                                        </span>
+                                        <span class="mr-5">Giới tính: Nam
+                                            <t t-if="o.patient.gender == 'male'">
+                                                <input class="mr-5" type="checkbox" checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input class="mr-5" type="checkbox"/>
+                                            </t>
+                                            Nữ
+                                            <t t-if="o.patient.gender == 'female'">
+                                                <input class="mr-5" type="checkbox" checked="checked"/>
+                                            </t>
+                                            <t t-else="">
+                                                <input class="mr-5" type="checkbox"/>
+                                            </t>
+                                        </span>
+                                    </div>
+                                    <div class="col-12">
+                                        <span class="mr-5">&#8226; Địa chỉ:
+                                            <t t-if="o.patient.street">
+                                                <span t-field="o.patient.street"/>
+                                            </t>
+                                            <t t-if="o.patient.state_id">
+                                                ,
+                                                <span t-field="o.patient.state_id.name"/>
+                                            </t>
+                                        </span>
+                                    </div>
+                                    <div class="col-12">
+                                        <t t-if="o.service">
+                                            <div>
+                                                <span>&#8226; Dịch vụ thực hiện:</span>
+                                                <span t-esc="', '.join(o.service.mapped('name'))"/>
+                                                <div style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                                    <div>
+                                                        <t t-esc="'.'*400"/>
+                                                    </div>
+                                                    <div>
+                                                        <t t-esc="'.'*400"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </t>
+                                        <t t-else="">
+                                            <div style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                                <div>
+                                                    <t t-esc="'- Dịch vụ:' + '.'*200"/>
+                                                </div>
+                                                <div>
+                                                    <t t-esc="'.'*200"/>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                        <t t-if="o.surgeries_ids">
+                                            <span>&#8226; Ngày phẫu thuật:</span>
+                                            <t t-foreach="o.surgeries_ids" t-as="surgery"><span
+                                                    t-esc="surgery.surgery_date.strftime('%d/%m/%Y')"/>,
+                                            </t>
+                                        </t>
+                                        <t t-else="">
+                                            <div>
+                                                <t t-esc="'&#8226; Ngày phẫu thuật:' + '.'*1000"/>
+                                            </div>
+                                        </t>
+                                    </div>
+                                    <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                        <div>
+                                            <t t-esc="'&#8226; Dịch vụ tái khám:' + '.'*200"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*200"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                        <div>
+                                            <t t-esc="'&#8226; Bác sĩ phẫu thuật:' + '.'*200"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*200"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                        <div>
+                                            <t t-esc="'&#8226; BS hội chẩn:' + '.'*60"/>
+                                            <t t-esc="'&#8226; BS tái khám:' + '.'*80"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                        <div>
+                                            <t t-esc="'&#8226; ĐD chăm sóc:' + '.'*60"/>
+                                            <t t-esc="'&#8226; ĐD tái khám:' + '.'*80"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                        <div>
+                                            <t t-esc="'&#8226; BS chỉ định bảo hành:' + '.'*55"/>
+                                            <span>&#8226; Bảo hành</span>
+                                            <input type="checkbox"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                        <span>&#8226; Loại tái khám:</span>
+                                        <div class="d-flex justify-content-around">
+                                            <div class="mr-2">
+                                                <span>Tái khám
+                                                </span>
+                                                <input type="checkbox"/>
+                                                lần ...
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Thay băng
+                                                </span>
+                                                <input type="checkbox"/>
+                                                lần ...
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Cắt chỉ
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Rút ống</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Hút dịch</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-around">
+                                            <div class="mr-2">
+                                                <span>Truyền kháng sinh</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Thay thuốc</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Thay nẹp mũi</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Khác</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12">
+                                        <span>&#8226; Kết quả phẫu thuật/ dịch vụ đã tham gia:</span>
+                                        <div class="d-flex justify-content-around">
+                                            <div class="mr-2">
+                                                <span>Rất hài lòng
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Hài lòng
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Bình thường
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Không hài lòng
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Rất không hài lòng
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                        <div>
+                                            <t t-esc="'&#8226; Ghi chú tái khám của bác sĩ:' + '.'*200"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*1000"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*1000"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*1000"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*1000"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*1000"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*1000"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                        <div>
+                                            <t t-esc="'&#8226; Ý kiến của khách hàng:' + '.'*200"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*200"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*200"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*200"/>
+                                        </div>
+                                    </div>
+                                    <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                        <div>
+                                            <t t-esc="'- Vật tư tiêu hao:' + '.'*200"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*200"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*200"/>
+                                        </div>
+                                    </div>
+                                    <div class="row mt32 mb32 text-center">
+                                        <div class="col-6">
+                                            <span>Xác nhận của khách hàng</span>
+                                        </div>
+                                        <div class="col-6">
+                                            <span>Bác sĩ tái khám</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="col-12 text-center">
+                                    <h2>Phiếu khám
+                                        <span t-esc="o.name"/>
+                                        không ở trạng thái hoàn thành, không thể in phiếu tái khám!
+                                    </h2>
+                                </div>
+                            </t>
+                        </div>
+                    </form>
+                </t>
+            </t>
+        </template>
+
+        <template id="shealth_report_re_examination_slip_walkin_screen">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.shealth_report_re_examination_slip_walkin_screen_document"/>
+            </t>
+        </template>
+
+        <report
+                string="Phiếu tái khám"
+                id="action_report_re_examination_slip_walkin_screen"
+                model="sh.medical.appointment.register.walkin"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.shealth_report_re_examination_slip_walkin_screen"
+                file="shealth_all_in_one.shealth_report_re_examination_slip_walkin_screen"
+                print_report_name="Phiếu tái khám"
+                paperformat="shealth_all_in_one.sh_paperformat_test_result"
+        />
+
+        <!--        In phiếu tái khám tại màn hình tái khám-->
+        <template id="shealth_report_re_examination_slip_document">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=o.sudo().partner_id.lang)"/>
+                    <t t-set="o" t-value="o.sudo()"/>
+                    <form>
+                        <div class="page" style="font-family:Times New Roman;font-size:18px;">
+                            <div class="oe_structure"/>
+                            <div class="row mt32">
+                                <div class="col-7">
+                                    <div style="font-size: 20px;">
+                                        <t t-if="o.institution.his_company.id == 12">
+                                            <img
+                                             src="/shealth_all_in_one/static/img/logo_kn_218.png"
+                                             width="100"
+                                             border="1"/>
+                                            <b style="font-size: 15px;">CÔNG TY TNHH BVTM KANGNAM</b>
+                                        </t>
+                                        <t t-else="">
+                                            <img t-if="o.institution.his_company.favicon"
+                                             t-att-src="image_data_uri(o.institution.his_company.favicon)"
+                                             width="50"
+                                             border="1"/>
+                                            <span t-field="o.institution.company_name"/>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-5 text-center">
+                                    <div style="font-size: 30px;">
+                                        <b>PHIẾU TÁI KHÁM</b>
+                                        <br/>
+                                        <b t-esc="o.name"/>
+                                        <br/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row text-right">
+                                <div class="col-12">
+                                    <i style="font-size: 16px;"><span t-esc="o.institution.state_id.name"/>,
+                                        <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%H:%M ngày %d tháng %m năm %Y')"/>
+                                    </i>
+                                </div>
+                            </div>
+                            <div class="row mt8 text-center">
+                                <div class="col-6">
+                                    <b>MÃ BOOKING:
+                                        <b t-field="o.walkin.booking_id.name"/>
+                                    </b>
+                                </div>
+                                <div class="col-6">
+                                    <b>MÃ PHIẾU KHÁM:
+                                        <b t-field="o.name"/>
+                                    </b>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="col-12">
+                                    <span class="mr-5">&#8226; Họ và tên khách hàng:
+                                        <b t-field="o.patient.name"/>
+                                    </span>
+<!--                                    <span class="mr-5">Điện thoại:-->
+<!--                                        <t t-if="o.patient.phone">-->
+<!--                                            <span t-field="o.patient.phone"/>-->
+<!--                                        </t>-->
+<!--                                        <t t-if="o.patient.mobile">-->
+<!--                                            /-->
+<!--                                            <span t-field="o.patient.mobile"/>-->
+<!--                                        </t>-->
+<!--                                    </span>-->
+                                </div>
+                                <div class="col-12">
+                                    <span class="mr-5">&#8226; Ngày sinh:
+                                        <t t-if="o.patient.birth_date">
+                                            <t t-esc="o.patient.birth_date.strftime('%d/%m/%Y')"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-if="o.patient.partner_id.year_of_birth">
+                                                <span t-esc="o.patient.partner_id.year_of_birth"/>
+                                            </t>
+                                        </t>
+                                    </span>
+                                    <span class="mr-5">Giới tính: Nam
+                                        <t t-if="o.patient.gender == 'male'">
+                                            <input class="mr-5" type="checkbox" checked="checked"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input class="mr-5" type="checkbox"/>
+                                        </t>
+                                        Nữ
+                                        <t t-if="o.patient.gender == 'female'">
+                                            <input class="mr-5" type="checkbox" checked="checked"/>
+                                        </t>
+                                        <t t-else="">
+                                            <input class="mr-5" type="checkbox"/>
+                                        </t>
+                                    </span>
+                                </div>
+                                <div class="col-12">
+                                    <span class="mr-5">&#8226; Địa chỉ:
+                                        <t t-if="o.patient.street">
+                                            <span t-field="o.patient.street"/>
+                                        </t>
+                                        <t t-if="o.patient.state_id">
+                                            ,
+                                            <span t-field="o.patient.state_id.name"/>
+                                        </t>
+                                    </span>
+                                </div>
+                                <div class="col-12">
+                                    <t t-if="o.walkin.service">
+                                        <div>
+                                            <span>&#8226; Dịch vụ thực hiện:</span>
+                                            <span t-esc="', '.join(o.walkin.service.mapped('name'))"/>
+                                        </div>
+                                        <div style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                            <div>
+                                                <t t-esc="'.'*400"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*400"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                    <t t-else="">
+                                        <div style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                            <t t-esc="'- Dịch vụ:' + '.'*400"/>
+                                        </div>
+                                        <div>
+                                            <t t-esc="'.'*400"/>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                    <t t-if="o.walkin.surgeries_ids">
+                                        <span>&#8226; Ngày phẫu thuật:</span>
+                                        <t t-foreach="o.walkin.surgeries_ids" t-as="surgery"><span
+                                                t-esc="surgery.surgery_date.strftime('%d/%m/%Y')"/>,
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <div>
+                                            <t t-esc="'&#8226; Ngày phẫu thuật:' + '.'*1000"/>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-12">
+                                    <t t-if="o.services">
+                                        <span>&#8226; Dịch vụ tái khám:</span>
+                                        <b t-esc="', '.join(o.services.mapped('name'))"/>
+                                    </t>
+                                    <t t-else="">
+                                        <div style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                            <t t-esc="'&#8226; Dịch vụ tái khám:' + '.'*200"/>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-12">
+                                    <t t-if="o.surgery_history_ids">
+                                        <span>
+                                            &#8226; Trưởng ekip phẫu thuật:
+<!--                                            <t t-foreach="o.surgery_history_ids.mapped('main_doctor')"-->
+<!--                                               t-as="surgery_history_id">-->
+<!--                                                <span t-esc="surgery_history_id.tradenames"/>,-->
+<!--                                            </t>-->
+                                        </span>
+                                        <t t-if="o.doctor_order">
+                                            <span t-field="o.doctor_order.tradenames"/>
+                                        </t>
+                                        <t t-elif="o.surgery_history_ids.main_doctor">
+                                            <span t-esc="', '.join(o.surgery_history_ids.main_doctor.mapped('tradenames'))"/>
+                                        </t>
+                                        <t t-else="">
+                                            ..........................................................................
+                                        </t>
+
+                                    </t>
+                                    <t t-else="">
+                                        <div style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                            <t t-esc="'&#8226; Trưởng ekip phẫu thuật:' + '.'*200"/>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-12">
+                                    <t t-if="o.surgery_history_ids">
+                                        <span>
+                                            &#8226; Bác sĩ phẫu thuật:
+<!--                                            <t t-foreach="o.surgery_history_ids.mapped('main_doctor')"-->
+<!--                                               t-as="surgery_history_id">-->
+<!--                                                <span t-esc="surgery_history_id.tradenames"/>,-->
+<!--                                            </t>-->
+                                        </span>
+                                        <span t-esc="', '.join(o.surgery_history_ids.main_doctor.mapped('tradenames'))"/>
+                                    </t>
+                                    <t t-else="">
+                                        <div style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                            <t t-esc="'&#8226; Bác sĩ phẫu thuật:' + '.'*200"/>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                    <div>
+                                        <t t-if="o.evaluation_team">
+                                            <span>&#8226; BS hội chẩn:
+                                                <t t-foreach="o.evaluation_team" t-as="team">
+                                                    <t t-if="team.role.name == 'BS Hội chẩn'">
+                                                        <span t-field="team.team_member.name"/>,
+                                                    </t>
+                                                </t>
+                                            </span>
+                                            <span style="margin-left:200px">&#8226; BS tái khám:
+                                                <t t-foreach="o.evaluation_team" t-as="team">
+                                                    <t t-if="team.role.name == 'Bác sĩ tái khám Phẫu thuật'">
+                                                        <span t-field="team.team_member.name"/>,
+                                                    </t>
+                                                </t>
+                                            </span>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="'&#8226; BS hội chẩn:' + '.'*60"/>
+                                            <t t-esc="'&#8226; BS tái khám:' + '.'*80"/>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                    <t t-if="o.evaluation_team">
+                                        <span>&#8226; ĐD chăm sóc:
+                                            <t t-foreach="o.evaluation_team" t-as="team">
+                                                <t t-if="team.role.name in ['Điều dưỡng cắt chỉ','Điều dưỡng thay băng, cắt chỉ']">
+                                                    <span t-field="team.team_member.name"/>,
+                                                </t>
+                                            </t>
+                                        </span>
+                                        <span style="margin-left:50px">&#8226; ĐD tái khám:
+                                            <t t-foreach="o.evaluation_team" t-as="team">
+                                                <t t-if="team.role.name == 'Điều dưỡng hỗ trợ bác sĩ tái khám'">
+                                                    <span t-field="team.team_member.name"/>,
+                                                </t>
+                                            </t>
+                                        </span>
+                                    </t>
+                                    <t t-else="">
+                                        <div>
+                                            <t t-esc="'&#8226; ĐD chăm sóc:' + '.'*60"/>
+                                            <t t-esc="'&#8226; ĐD tái khám:' + '.'*80"/>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                    <div>
+                                        <t t-if="o.doctor_bh">
+                                            <span>&#8226; BS chỉ định bảo hành:</span>
+                                            <span t-esc="o.doctor_bh.tradenames "/>
+                                            <span style="margin-left:25px">&#8226; Bảo hành</span>
+                                            <input type="checkbox"/>
+                                        </t>
+                                        <t t-else="">
+                                            <t t-esc="'&#8226; BS chỉ định bảo hành:' + '.'*55"/>
+                                            <span>&#8226; Bảo hành</span>
+                                            <input type="checkbox"/>
+                                        </t>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <t t-if="o.evaluation_services">
+                                        <span>&#8226; Loại tái khám:</span>
+<!--                                        <t t-foreach="o.evaluation_services" t-as="evaluation_service">-->
+<!--                                            <span t-esc="evaluation_service.name"/>,-->
+<!--                                        </t>-->
+                                        <b t-esc="', '.join(o.evaluation_services.mapped('name'))"/>
+                                    </t>
+                                    <t t-else="">
+                                        <span>&#8226; Loại tái khám:</span>
+                                        <div class="d-flex justify-content-around">
+                                            <div class="mr-2">
+                                                <span>Tái khám
+                                                </span>
+                                                <input type="checkbox"/>
+                                                lần ...
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Thay băng
+                                                </span>
+                                                <input type="checkbox"/>
+                                                lần ...
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Cắt chỉ
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Rút ống</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Hút dịch</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-around">
+                                            <div class="mr-2">
+                                                <span>Truyền kháng sinh</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Thay thuốc</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Thay nẹp mũi</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Khác</span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-12">
+                                    <t t-if="o.customer_reviews">
+                                        <span>&#8226; Kết quả phẫu thuật/ dịch vụ đã tham gia:</span>
+                                        <t t-if="o.customer_reviews == 'Normal'">
+                                            <span>Bình thường</span>
+                                        </t>
+                                        <t t-elif="o.customer_reviews == 'WellPleased'">
+                                            <span>Rất hài lòng</span>
+                                        </t>
+                                        <t t-elif="o.customer_reviews == 'Satisfied'">
+                                            <span>Hài lòng</span>
+                                        </t>
+                                        <t t-elif="o.customer_reviews == 'Unsatisfied'">
+                                            <span>Không hài lòng</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span>Rất không hài lòng</span>
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <span>&#8226; Kết quả phẫu thuật/ dịch vụ đã tham gia:</span>
+                                        <div class="d-flex justify-content-around">
+                                            <div class="mr-2">
+                                                <span>Rất hài lòng
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Hài lòng
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Bình thường
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Không hài lòng
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                            <div class="mr-2">
+                                                <span>Rất không hài lòng
+                                                </span>
+                                                <input type="checkbox"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-12">
+                                    <t t-if="o.notes_complaint">
+                                        <span>&#8226; Ghi chú tái khám của bác sĩ:
+                                            <span t-esc="o.notes_complaint"/>
+                                        </span>
+                                    </t>
+                                    <t t-else="">
+                                        <div style="white-space: nowrap;
+                                                      width: auto;
+                                                      overflow: hidden;
+                                                      text-overflow: ellipsis;">
+                                            <div>
+                                                <t t-esc="'&#8226; Ghi chú tái khám của bác sĩ:' + '.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                    <div>
+                                        <t t-esc="'&#8226; Ý kiến của khách hàng:' + '.'*200"/>
+                                    </div>
+                                    <div>
+                                        <t t-esc="'.'*1000"/>
+                                    </div>
+                                    <div>
+                                        <t t-esc="'.'*1000"/>
+                                    </div>
+                                    <div>
+                                        <t t-esc="'.'*1000"/>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <t t-if="o.supplies">
+                                        <t t-foreach="o.supplies" t-as="o_supply">
+                                            <span>&#8226; Vật tư tiêu hao:</span>
+                                            <span t-esc="o_supply.supply.name"/>:
+                                            <span t-esc="o_supply.qty_used"/>
+                                            <span t-esc="o_supply.uom_id.name"/>,
+                                        </t>
+                                    </t>
+                                    <t t-else="">
+                                        <div style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                            <div>
+                                                <t t-esc="'- Vật tư tiêu hao:' + '.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                            <div>
+                                                <t t-esc="'.'*1000"/>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="row mt32 mb32 text-center">
+                                    <div class="col-6">
+                                        <span>Xác nhận của khách hàng</span>
+                                    </div>
+                                    <div class="col-6">
+                                        <span>Bác sĩ tái khám</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </t>
+            </t>
+        </template>
+
+        <template id="shealth_report_re_examination_slip">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.shealth_report_re_examination_slip_document"/>
+            </t>
+        </template>
+
+        <report
+                string="Phiếu tái khám"
+                id="action_report_re_examination_slip"
+                model="sh.medical.evaluation"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.shealth_report_re_examination_slip"
+                file="shealth_all_in_one.shealth_report_re_examination_slip"
+                print_report_name="Phiếu tái khám"
+                paperformat="shealth_all_in_one.sh_paperformat_test_result"
+        />
+    </data>
+</odoo>

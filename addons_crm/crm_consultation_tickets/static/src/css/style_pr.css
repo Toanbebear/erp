@@ -1,0 +1,66 @@
+.pr .title{
+    flex:1;
+}
+.pr .logo{
+    width: 160px;
+    height: 59px;
+    margin-left: 15px;
+    background: url('../img/logo_pr.png');
+}
+.pr h1{
+    color: #012C5F;
+    font-weight:bold;
+    font-size: 28pt;
+}
+
+.pr .content{
+    margin-top: 20px;
+}
+
+.pr .content .info{
+    margin-top: 10px;
+}
+
+.pr h2{
+    color: #012C5F;
+    font-weight:bold;
+    font-size: 16pt;
+}
+
+.pr ul.list-info{
+    list-style-type: none;
+    padding-left: 25px;
+}
+
+.pr ul.contact{
+    list-style-type: decimal;
+}
+
+.pr ul li label{
+    font-weight:normal;
+}
+
+.pr ul li .number_id{
+    margin-right: 20px;
+}
+
+.pr .footer{
+    margin-bottom:20px;
+}
+
+.pr textarea{
+    padding:3px 5px;
+}
+.pr .add-service i,
+.pr .add-service span{
+    color: #ffffff;
+}
+.pr .btn-success {
+
+}
+
+.pr .btn-submit{
+    color: #ffffff;
+    background-color: #012C5F;
+    border-color: #012C5F;
+}

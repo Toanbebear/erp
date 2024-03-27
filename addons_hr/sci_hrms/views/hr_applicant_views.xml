@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_applicant_view_pivot2" model="ir.ui.view">
+             <field name="name">hr.applicant.pivot</field>
+             <field name="model">hr.applicant</field>
+             <field name="arch" type="xml">
+                 <pivot string="Recruitment Analysis" disable_linking="True">
+                     <field name="stage_id" type="col"/>
+                     <field name="source_id" type="row"/>
+                 </pivot>
+             </field>
+        </record>
+
+        <record id="hr_applicant_view_graph2" model="ir.ui.view">
+             <field name="name">hr.applicant.graph</field>
+             <field name="model">hr.applicant</field>
+             <field name="arch" type="xml">
+                 <graph string="Recruitment Analysis">
+                     <field name="stage_id" type="col"/>
+                     <field name="source_id" type="row"/>
+                 </graph>
+             </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_applicant_view_tree2">
+            <field name="name">Applicants</field>
+            <field name="model">hr.applicant</field>
+            <field name="arch" type="xml">
+                <tree string="Applicants" decoration-muted="active==False" decoration-info="emp_id!=False" create="0" delete="0">
+                    <field name="job_id"/>
+                    <field name="department_id"/>
+                    <field name="create_date"/>
+                    <field name="name"/>
+                    <field name="source_id"/>
+                    <field name="partner_phone"/>
+                    <field name="email_from"/>
+                    <field name="gender"/>
+                    <field name="birthday"/>
+                    <field name="address"/>
+                    <field name="qualification"/>
+                    <field name="college"/>
+                    <field name="last_workplace"/>
+                    <field name="description"/>
+                    <field name="stage_id"/>
+                    <field name="user_id"/>
+                    <field name="active" invisible="1"/>
+                    <field name="emp_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sci_hr_applicant_view_search_inherit" model="ir.ui.view">
+            <field name="name">sci_hr_applicant_view_search_inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='User']" position="after">
+                    <filter string="Source" name="source_id" context="{'group_by':'source_id'}" />
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_recruitment.hr_applicant_view_form">
+            <field name="name">Jobs - Recruitment Form</field>
+            <field name="model">hr.applicant</field>
+            <field name="arch" type="xml">
+              <form string="Jobs - Recruitment Form">
+                <header>
+                    <button string="Tạo nhân viên" name="create_employee_from_applicant" type="object"
+                            class="oe_highlight" attrs="{'invisible': ['|',('stage_id', 'not in', (4,5)),'|',('emp_id', '!=', False),('active', '=', False)]}"/>
+                    <button string="Từ chối" name="archive_applicant" type="object" attrs="{'invisible': [('active', '=', False)]}"/>
+                    <button string="Mở lại ứng viên" name="reset_applicant" type="object" attrs="{'invisible': [('active', '=', True)]}"/>
+                    <field name="stage_id" widget="statusbar"  attrs="{'invisible': [('active', '=', False),('emp_id', '=', False)]}"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_get_attachment_tree_view"
+                            class="oe_stat_button"
+                            icon="fa-book"
+                            type="object">
+                            <field name="attachment_number" widget="statinfo" string="Tài liệu / CV"/>
+                        </button>
+                        <button name="action_get_created_employee"
+                            class="oe_stat_button"
+                            icon="fa-user"
+                            type="object"
+                            attrs="{'invisible': [('emp_id', '=', False)]}">
+                            <field name="employee_name" widget="statinfo" string="Nhân viên"/>
+                        </button>
+                        <button name="toggle_active" type="object"
+                                class="oe_stat_button" icon="fa-archive"
+                                attrs="{'invisible': [('active', '=', True)]}">
+                            <field name="active" widget="boolean_button"
+                                options='{"terminology": "archive"}'/>
+                        </button>
+                    </div>
+                    <field name="kanban_state" widget="kanban_state_selection"/>
+                    <field name="legend_normal" invisible="1"/>
+                    <field name="legend_blocked" invisible="1"/>
+                    <field name="legend_done" invisible="1"/>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1><field name="name"/></h1>
+                        <h2 class="o_row">
+                            <div>
+                                <label for="partner_name" class="oe_edit_only"/>
+                                <field name="partner_name"/>
+                            </div>
+                            <div>
+                                <label for="categ_ids" class="oe_edit_only"/>
+                                <field name="categ_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                            </div>
+                        </h2>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="email_from" widget="email"/>
+                            <field name="partner_phone"/>
+                            <field name="partner_mobile"/>
+                            <field name="priority" widget="priority"/>
+                            <field name="source_id" domain="[('flag', '=', True)]"/>
+                            <field name="part"/>
+<!--                            <field name="reference"/>-->
+                            <field name="type_id" placeholder="Degree" string="Bằng cấp"/>
+                            <field name="medium_id" groups="base.group_no_one" />
+                        </group>
+                        <group>
+                            <field name="gender" multiple="multiple"/>
+                            <field name="birthday"/>
+                            <field name="marital"/>
+                            <field name="address"/>
+                            <field name="qualification"/>
+                            <field name="college"/>
+                            <field name="last_workplace"/>
+                            <field name="workplace"/>
+                            <field name="social_facebook"/>
+                        </group>
+                        <group string="Vị trí công việc">
+                            <field name="job_id"/>
+                            <field name="department_id"/>
+                            <field name="user_id" required="1"/>
+                            <field name="company_id" groups="base.group_multi_company" options='{"no_open":True}' />
+                        </group>
+                        <group string="Hợp đồng">
+                            <label for="salary_expected" string="Mức lương mong đợi"/>
+                            <div>
+                                <field name="salary_expected" class="oe_inline" widget="monetary_format"/>
+                                <span class="oe_inline" attrs="{'invisible':[('salary_expected_extra','=',False)]}"> + </span>
+                                <field name="salary_expected_extra" class="oe_inline" placeholder="Extra advantages..." widget="monetary_format"/>
+                            </div>
+                            <label for="salary_proposed" string="Mức lương đề xuất"/>
+                            <div>
+                                <field name="salary_proposed" class="oe_inline" widget="monetary_format"/>
+                                <span class="oe_inline" attrs="{'invisible':[('salary_proposed_extra','=',False)]}"> + </span>
+                                <field name="salary_proposed_extra" class="oe_inline" placeholder="Extra advantages..." widget="monetary_format"/>
+                            </div>
+                            <field name="availability"/>
+                            <field name="emp_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <separator string="Tóm tắt ứng viên"/>
+                    <field name="description" placeholder="..."/>
+                </sheet>
+              </form>
+            </field>
+        </record>
+
+        <record id="hr_recruitment.hr_applicant_view_search_bis" model="ir.ui.view">
+            <field name="name">hr.applicant.view.search</field>
+            <field name="model">hr.applicant</field>
+            <field name="arch" type="xml">
+                <search string="Search Applicants">
+                    <field string="Applicant" name="partner_name"
+                           filter_domain="['|', '|', ('name', 'ilike', self), ('partner_name', 'ilike', self), ('email_from', 'ilike', self)]"/>
+                    <field string="Email" name="email_from" filter_domain="[('email_from', 'ilike', self)]"/>
+                    <field name="job_id"/>
+                    <field name="department_id" operator="child_of"/>
+                    <field name="user_id"/>
+                    <filter string="Lưu trữ" name="inactive" domain="[('active','=',False)]"/>
+                    <filter domain="[('emp_id','=', None)]" string="Chưa là nhân viên" name="in_applicant"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Responsible" name="responsible" domain="[]"  context="{'group_by':'user_id'}"/>
+                        <filter string="Job" name="job" domain="[]" context="{'group_by':'job_id'}"/>
+                        <filter string="Degree" name="degree" domain="[]" context="{'group_by':'type_id'}"/>
+                        <filter string="Stage" name="stage" domain="[]" context="{'group_by':'stage_id'}"/>
+                        <filter string="Creation Date" name="creation_date" context="{'group_by':'create_date'}"/>
+                        <filter string="Last Stage Update" name="last_stage_update" context="{'group_by':'date_last_stage_update'}"/>
+                    </group>
+               </search>
+            </field>
+        </record>
+
+
+       ######################## JOB OPPORTUNITIES (menu) ###########################
+        <record model="ir.actions.act_window" id="hr_recruitment.crm_case_categ0_act_job">
+            <field name="name">Applications</field>
+            <field name="res_model">hr.applicant</field>
+            <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
+            <field name="view_id" eval="False"/>
+            <field name="search_view_id" ref="hr_recruitment.hr_applicant_view_search_bis"/>
+            <field name="context">{'search_default_in_applicant': 1}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_empty_folder">
+                Chưa có ứng viên nào
+              </p>
+            </field>
+        </record>
+
+         <record id="sci_hr_applicant_view_tree_inherit" model="ir.ui.view">
+            <field name="name">sci_hr_applicant_view_tree_inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.crm_case_tree_view_job"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//field[@name='partner_name']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='medium_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='stage_id']" position="after">
+                    <field name="result" string="Kết quả"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sci_hr_applicant_view_form_inherit" model="ir.ui.view">
+            <field name="name">sci_hr_applicant_view_form_inherit</field>
+            <field name="model">hr.applicant</field>
+            <field name="inherit_id" ref="hr_recruitment.hr_applicant_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='kanban_state']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//h2" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='medium_id']" position="replace">
+                    <field name="categ_ids" widget="many2many_tags"/>
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="emp_id" string="Nhân viên" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='description']" position="after">
+                    <field name="applicant_state">
+                        <tree limit="10">
+                            <field name="partner_ids" widget="many2many_tags" options="{'no_create':True}"/>
+                            <field name="stage_id"/>
+                            <field name="start" />
+                            <field name="stop" />
+                            <field name="result" />
+                            <field name="description" />
+                            <field name="location" />
+                            <button name="action_applicant_send" string="Gửi mail" class="btn btn-sm btn-success" type="object"/>
+                        </tree>
+
+                        <form string="Các giai đoạn">
+                            <group>
+                                <group>
+                                    <field name="stage_id" options="{'no_create_edit': True}" required="1"/>
+                                    <field name="result" />
+                                </group>
+                                <group>
+                                    <field name="start"/>
+                                    <field name="stop"/>
+                                </group>
+                            </group>
+                            <group>
+                                <field name="partner_ids" widget="many2many_tags"/>
+                                <field name="location"/>
+                                <field name="description"/>
+                                <field name="attachment_ids" domain="[('res_model', '=', 'hr.applicant'), ('res_id', '=', parent.id)]"
+                                       context="{'default_res_model': 'hr.applicant', 'default_res_id': parent.id}">
+                                    <tree string="Attachments">
+                                        <field name="name"/>
+                                        <field name="create_uid"/>
+                                        <field name="create_date"/>
+                                    </tree>
+                                </field>
+                            </group>
+                        </form>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+        <!-- Hr Applicant Kanban View -->
+       <record model="ir.ui.view" id="hr_recruitment.hr_kanban_view_applicant">
+        <field name="name">Hr Applicants kanban</field>
+        <field name="model">hr.applicant</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage_id" class="o_kanban_applicant" quick_create_view="hr_recruitment.quick_create_applicant_form">
+                <field name="stage_id" options='{"group_by_tooltip": {"requirements": "Requirements"}}'/>
+                <field name="color"/>
+                <field name="priority"/>
+                <field name="user_id"/>
+                <field name="user_email"/>
+                <field name="partner_name"/>
+                <field name="type_id"/>
+                <field name="job_id"/>
+                <field name="department_id"/>
+                <field name="message_needaction_counter"/>
+                <field name="attachment_number"/>
+                <field name="active"/>
+                <field name="activity_ids" />
+                <field name="activity_state" />
+                <progressbar field="activity_state" colors='{"planned": "success", "overdue": "danger", "today": "warning"}'/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.color.raw_value)} oe_kanban_card oe_kanban_global_click oe_applicant_kanban oe_semantic_html_override">
+                            <div class="o_dropdown_kanban dropdown">
+
+                                <a class="dropdown-toggle o-no-caret btn" role="button" data-toggle="dropdown" href="#" aria-label="Dropdown menu" title="Dropdown menu">
+                                    <span class="fa fa-ellipsis-v"/>
+                                </a>
+                                <div class="dropdown-menu" role="menu">
+                                    <t t-if="widget.deletable"><a role="menuitem" type="delete" class="dropdown-item">Delete</a></t>
+                                    <a role="menuitem" name="action_makeMeeting" type="object" class="dropdown-item">Schedule Interview</a>
+                                    <ul class="oe_kanban_colorpicker" data-field="color"/>
+                                </div>
+                            </div>
+                            <div class="oe_kanban_content">
+                                <div class="o_kanban_record_top">
+                                    <div class="o_kanban_record_headings">
+                                        <b class="o_kanban_record_title mt8" t-if="record.partner_name.raw_value">
+                                            <field name="partner_name"/><br/>
+                                        </b><t t-else="1">
+                                            <i class="o_kanban_record_title"><field name="name"/></i><br/>
+                                        </t>
+                                        <div class="o_kanban_record_subtitle" invisible="context.get('search_default_job_id', False)">
+                                            <field name="job_id"/>
+                                        </div>
+                                    </div>
+                                </div>
+                                <field name="categ_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                                <t t-if="record.partner_mobile.raw_value"><i class="fa fa-mobile mr4" role="img" aria-label="Mobile" title="Mobile"/><field name="partner_mobile"/><br/></t>
+                                <div class="o_kanban_record_bottom mt4">
+                                    <div class="oe_kanban_bottom_left">
+                                        <div class="float-left mr4" groups="base.group_user">
+                                            <field name="priority" widget="priority"/>
+                                        </div>
+                                        <div class="o_kanban_inline_block mr8">
+                                            <field name="activity_ids" widget="kanban_activity" invisible="1"/>
+                                        </div>
+                                        <t t-if="record.message_needaction_counter.raw_value">
+                                            <span role="alert" class='oe_kanban_mail_new mr4' title='Unread Messages'><i class='fa fa-comments' role="img" aria-label="Unread messages"/><t t-raw="record.message_needaction_counter.raw_value"/></span>
+                                        </t>
+                                    </div>
+                                    <div class="oe_kanban_bottom_right">
+                                        <a name="action_get_attachment_tree_view" type="object">
+                                            <span title='Documents'><i class='fa fa-book' role="img" aria-label="Documents"/>
+                                                <t t-esc="record.attachment_number.raw_value"/>
+                                            </span>
+                                        </a>
+                                        <div class="o_kanban_state_with_padding">
+                                            <field name="kanban_state" widget="kanban_state_selection" invisible="1"/>
+                                            <field name="legend_normal" invisible="1"/>
+                                            <field name="legend_blocked" invisible="1"/>
+                                            <field name="legend_done" invisible="1"/>
+                                        </div>
+                                        <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)" t-att-title="record.user_id.value" t-att-alt="record.user_id.value" width="30" height="30" class="oe_kanban_avatar"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="oe_clear"></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="hr_applicant_state_view_tree">
+        <field name="name">Applicants State</field>
+        <field name="model">hr.applicant.state</field>
+        <field name="arch" type="xml">
+            <tree string="Applicants State" create="0" delete="0">
+                <field name="applicant_id"/>
+                <field name="phone_partner"/>
+                <field name="stage_id"/>
+                <field name="partner_ids" widget="many2many_tags"/>
+                <field name="start"/>
+                <field name="location"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="hr_applicant_state_view_search_bis" model="ir.ui.view">
+        <field name="name">hr.applicant.state.view.search</field>
+        <field name="model">hr.applicant.state</field>
+        <field name="arch" type="xml">
+            <search>
+                <filter string="Phỏng vấn ngày mai" name="interview_tomorrow"
+                                domain="[('start', '>=', (context_today() + relativedelta(days=1)).strftime('%Y-%m-%d')),('start', '&lt;', (context_today() + relativedelta(days=2)).strftime('%Y-%m-%d'))]"/>
+
+                <separator/>
+           </search>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="open_view_applicant_state">
+        <field name="name">Applicants State</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">hr.applicant.state</field>
+        <field name="view_mode">tree</field>
+        <field name="domain">[]</field>
+        <field name="context">{'search_default_interview_tomorrow': True}</field>
+    </record>
+
+    <record model="ir.actions.act_window.view" id="hr_recruitment.action_hr_sec_kanban_view_act_job">
+        <field name="sequence" eval="11"/>
+    </record>
+
+    <menuitem id="applicant_state_menu_item" name="Nhắc lịch phỏng vấn" parent="hr_recruitment.menu_hr_recruitment_root"
+              action="open_view_applicant_state" sequence="3"/>
+
+    <menuitem id="hr_recruitment.report_hr_recruitment" name="Reports"
+               parent="hr_recruitment.menu_hr_recruitment_root" sequence="99" />
+     <menuitem
+        name="Applications"
+        parent="hr_recruitment.menu_hr_recruitment_root"
+        id="hr_recruitment.menu_crm_case_categ0_act_job" sequence="2" action="hr_recruitment.crm_case_categ0_act_job"/>
+
+    </data>
+</odoo>

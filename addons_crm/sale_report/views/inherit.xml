@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sale_report_phieu_thu_form">
+            <field name="name">Phiếu chi</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="tas_payment.tas_payment_phieu_thu_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='tas_type']" position="after">
+                    <field name="thu_quy" attrs="{'invisible': [('tas_type', '=', 'outbound')]}"/>
+                    <field name="nop_quy" attrs="{'invisible': [('tas_type', '=', 'inbound')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

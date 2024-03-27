@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_booking_payment_schedule" model="ir.ui.view">
+            <field name="name">Bảng lịch trình thanh toán</field>
+            <field name="model">crm.lead</field>
+            <field name="priority" eval="7"/>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='statement']" position="attributes">
+
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//page[@name='statement']" position="after">
+
+                    <page name="payment_schedule" string="Lịch trình thanh toán">
+
+                        <group>
+                            <field name="show_notification" widget="statement_notification_widget"
+                                   options="{'notification_field': 'notification_message'}" invisible="1"/>
+                        </group>
+                        <div class="row">
+                            <div class="col-4">
+                                <button name="create_payment_schedule" string="Tạo lịch trình thanh toán"
+                                        class="btn-success" type="object"/>
+                            </div>
+                            <div class="col-4">
+                                <button name="update_payment_schedule" string="Cập nhật lịch trình thanh toán"
+                                        class="btn-success" type="object"/>
+                            </div>
+                            <div class="col-4">
+                            </div>
+
+                        </div>
+                        <br/>
+                        <field name="statement_service_ids"
+                               context="{'default_booking_id':active_id, 'default_currency_id': currency_id}"
+                               domain="[('booking_id', '=', active_id)]" mode="tree">
+
+                            <tree editable="bottom" decoration-success="paid==True">
+                                <field name="id" width="5%" optional="hide"/>
+                                <field name="booking_id" invisible="1"/>
+                                <field name="date" width="5%" invisible="1"/>
+                                <field name="scheduled_date" width="5%"/>
+                                <field name="service_id" width="15%" options="{'no_create':True, 'no_open':True}"
+                                       required="1"/>
+                                <field name="currency_id" width="5%" optional="hide"/>
+                                <field name="note" width="20%" optional="hide"/>
+                                <field name="amount" widget="monetary_format" width="20%" required="True"/>
+                                <field name="note" optional="show"/>
+                                <field name="create_uid" readonly="True" string="Người tạo" width="10%"
+                                       optional="hide"/>
+                                <field name="create_date" optional="hide"/>
+                                <field name="write_uid" readonly="True" string="Người cập nhật" width="10%"
+                                       optional="hide"/>
+                                <field name="write_date" optional="hide"/>
+                                <field name="paid" readonly="True" force_save="True"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_tree_statement_service" model="ir.ui.view">
+            <field name="name">Lịch trình thanh toán</field>
+            <field name="model">statement.service</field>
+            <field name="priority" eval="7"/>
+            <field name="inherit_id" ref="crm_base.tree_statement_service"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_ids']" position="attributes">
+
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='product_ids']" position="after">
+
+                    <field name="service_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

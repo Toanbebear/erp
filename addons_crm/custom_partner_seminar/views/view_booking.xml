@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_view_booking_add_seminar_customers" model="ir.ui.view">
+            <field name="name">inherit_view_booking_add_seminar_customers</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='online_counseling']" position="after">
+					<field name="seminar_customers" string="Khách hàng hội thảo"/>
+				</xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

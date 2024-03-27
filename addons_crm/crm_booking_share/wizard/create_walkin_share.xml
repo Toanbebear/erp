@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="walkin_share_form">
+            <field name="name">Wizard tạo phiếu khám share</field>
+            <field name="model">create.walkin.share</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group name="1" string="Khách hàng thuê phòng">
+                            <field name="partner_so_domain" widget="many2many_tags"
+                                   options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" invisible="1"/>
+                            <field name="partner_so"
+                                   options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" required="1"/>
+<!--                            <field name="booking"/>-->
+                        </group>
+                        <group name="2" string="Khách hàng thực hiện dịch vụ">
+                            <field name="booking" invisible="1"/>
+                            <field name="institution"
+                                   options="{'no_open':True,'no_create':True}" required="True" readonly="True"/>
+                            <field name="exam_room_id"
+                                   options="{'no_open':True,'no_create':True}" required="True"/>
+                            <field name="partner_walkin"
+                                   options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" required="1"/>
+                            <field name="service" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                                   required="1"/>
+                            <field name="currency_id"
+                                   options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" invisible="1"/>
+                            <field name="amount" required="1" widget="monetary_format"/>
+                        </group>
+                        <footer class="text-center">
+                            <button name="create_walkin_share" type="object" string="Tạo" class="btn-info"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

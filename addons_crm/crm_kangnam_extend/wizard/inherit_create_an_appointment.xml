@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="form_create_calendar_event_from_booking_extend" model="ir.ui.view">
+            <field name="name">form.create.calendar.event.from.booking.extend</field>
+            <field name="model">create.an.appointment</field>
+            <field name="inherit_id" ref="crm_calendar_event.form_create_calendar_event_from_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="request_appointment" type="object" string="Xác nhận" class="btn-primary btn-lg fa fa-check"/>
+                        <button string="Hủy thao tác" class="btn-secondary btn-lg fa fa-times" special="cancel"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

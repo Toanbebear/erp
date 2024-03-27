@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_partner_change_phone">
+            <field name="name">Partner Change phone</field>
+            <field name="model">partner.change.phone</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="phone"/>
+                            <field name="phone_new"/>
+                            <field name="mobile"/>
+                            <field name="mobile_new"/>
+                            <field name="apply_partner"/>
+                            <field name="country_id"/>
+                            <field name="country_id_new"/>
+                        </group>
+                        <group>
+
+                            <field name="apply_crm_lead"/>
+                            <field name="crm_lead_ids" string="Danh sách lead">
+                                <tree create="false" delete="false" class="tree_no_open">
+                                    <field name="contact_name"/>
+                                    <field name="phone"/>
+                                </tree>
+                            </field>
+                            <field name="apply_crm_booking"/>
+                            <field name="crm_booking_ids" string="Danh sách booking">
+                                <tree create="false" delete="false" class="tree_no_open">
+                                    <field name="contact_name"/>
+                                    <field name="phone"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+                            <field name="apply_phone_call"/>
+                            <field name="crm_phone_call_ids" string="Danh sách phonecall">
+                                <tree create="false" delete="false" class="tree_no_open">
+                                    <field name="name"/>
+                                    <field name="direction"/>
+                                    <field name="phone"/>
+                                    <field name="call_date"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <group>
+
+                            <field name="apply_sms"/>
+                            <field name="crm_sms_ids" string="Danh sách SMS">
+                                <tree create="false" delete="false" class="tree_no_open">
+                                    <field name="name"/>
+                                    <field name="phone"/>
+                                </tree>
+                            </field>
+                        </group>
+                        <!--                        <group>-->
+
+                        <!--                            <field name="apply_loyalty_card"></field>-->
+                        <!--                            <field name="crm_loyalty_card_ids" string="Danh sách thẻ thành viên">-->
+                        <!--                                <tree create="false" delete="false" class="tree_no_open">-->
+                        <!--                                    <field name="name"/>-->
+                        <!--                                    <field name="code_customer"/>-->
+                        <!--                                    <field name="phone"/>-->
+                        <!--                                </tree>-->
+                        <!--                            </field>-->
+                        <!--                        </group>-->
+                        <footer class="text-center">
+                            <button name="change_phone" type="object" string="Đổi số điện thoại" class="btn-info"/>
+                            <button special="cancel" string="Cancel" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="partner_change_phone_action" model="ir.actions.act_window">
+            <field name="name">Partner Change phone</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.change.phone</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_partner_change_phone"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

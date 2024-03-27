@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="inherit_calendar_event" model="ir.ui.view">
+            <field name="name">inherit_calendar_event</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='res_id']" position="after">
+                    <field name="is_calendar_surgery"/>
+                </xpath>
+                <xpath expr="//page[@name='page_details']" position="replace">
+                    <page name="page_details" string="Thông tin chi tiết"
+                          attrs="{'invisible': [('is_calendar_surgery','=',True)]}">
+                        <group attrs="{'invisible': [('recurrency','==',False)]}" class="oe_edit_only ">
+                            <p class='alert alert-warning' role="status">This event is linked to a recurrence...
+                                <br/>
+                                <button type="object" name="action_detach_recurring_event"
+                                        string="Update only this instance"
+                                        help="Click here to update only this instance and not all recurrences. "
+                                        class="oe_link"/>
+                            </p>
+                        </group>
+                        <group name="details">
+                            <group>
+                                <field name="customer_id" required="True" string="Khách hàng"
+                                       options="{'no_open':True,'no_create':True}"
+                                       attrs="{'readonly':[('customer_id','!=', False)]}" force_save="True"/>
+
+                                <field name="opportunity_id" options="{'no_create':True}"
+                                       string="Booking" force_save="True"
+                                       attrs="{'readonly':[('opportunity_id','!=', False)]}"/>
+                                <field name="domain_physician" widget="many2many_tags" invisible="1"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="physician" options="{'no_open':True,'no_create':True}"/>
+                                <field name="services" widget="many2many_tags"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="partner_ids" widget="many2many_tags"
+                                       options="{'no_open':True,'no_create':True}" invisible="True"/>
+                            </group>
+                            <group>
+                                <field name="start" attrs="{'invisible': True}" string="Thời gian bắt đầu"/>
+                                <field name="stop" attrs="{'invisible': True}"/>
+                                <field name="id" attrs="{'invisible': True}"/>
+                                <field name="allday" force_save="1" invisible="True"
+                                       attrs="{'readonly': [('id', '!=', False), ('recurrency','=',True)]}"/>
+                                <field name="recurrency" invisible="True"/>
+
+                                <field name="start_date" string="Starting at"
+                                       attrs="{'required': [('allday','=',True)], 'invisible': [('allday','=',False)], 'readonly': [('id', '!=', False), ('recurrency','=',True)]}"
+                                       force_save="1"/>
+                                <field name="stop_date" string="Ending at"
+                                       attrs="{'required': [('allday','=',True)],'invisible': [('allday','=',False)], 'readonly': [('id', '!=', False), ('recurrency','=',True)]}"
+                                       force_save="1"/>
+
+                                <field name="start_datetime" string="Starting at"
+                                       attrs="{'required': [('allday','=',False)], 'invisible': [('allday','=',True)], 'readonly': [('id', '!=', False), ('recurrency','=',True)]}"/>
+                                <field name="stop_datetime" invisible="1"/>
+                                <label for="duration" attrs="{'invisible': [('allday','=',True)]}"/>
+                                <div attrs="{'invisible': [('allday','=',True)]}">
+                                    <field name="duration" widget="float_time" string="Duration" class="oe_inline"
+                                           attrs="{'readonly': [('id', '!=', False), ('recurrency','=',True)]}"/>
+                                    <span>Giờ(Lịch hẹn kéo dài trong bao lâu)</span>
+                                </div>
+
+                                <field name="categ_ids" widget="many2many_tags" options="{'no_create_edit': True}"
+                                       invisible="True"/>
+                                <field name="alarm_ids" widget="many2many_tags"/>
+                                <field name="location" invisible="True"/>
+                                <field name="company_id" attrs="{'readonly': [('company_id', '!=', False)]}"/>
+                                <field name="event_tz" attrs="{'invisible': [('recurrency', '=', False)]}"/>
+                                <field name="color" invisible="1"/>
+                            </group>
+                            <label for="description"/>
+                            <field name="description"/>
+                        </group>
+                    </page>
+                    <page name="page_surgery" string="Thông tin chi tiết"
+                          attrs="{'invisible':[('is_calendar_surgery','=',False)]}">
+                        <group string="Thông tin khách hàng">
+                            <field name="partner_id" options="{'no_create':True, 'no_open':True}"/>
+                            <field name="opportunity_id" options="{'no_create':True, 'no_open':True}" string="Booking"/>
+                            <field name="guaranty_physician" options="{'no_create':True, 'no_open':True}"/>
+                            <field name="services" widget="many2many_tags"
+                                   options="{'no_create':True, 'no_open':True}"/>
+                            <field name="thanh_toan"/>
+                            <field name="consultant"/>
+
+                        </group>
+                        <group string="Thông tin phẫu thuật">
+                            <field name="start_datetime" string="Ngày phẫu thuật"
+                                   attrs="{'required': [('allday','=',False)], 'invisible': [('allday','=',True)], 'readonly': [('id', '!=', False), ('recurrency','=',True)]}"/>
+                            <field name="stop_datetime" invisible="1"/>
+                            <label for="duration" attrs="{'invisible': [('allday','=',True)]}"/>
+                            <div attrs="{'invisible': [('allday','=',True)]}">
+                                <field name="duration" widget="float_time" string="Duration" class="oe_inline"
+                                       attrs="{'readonly': [('id', '!=', False), ('recurrency','=',True)]}"/>
+                                <span>Giờ (Tổng thời gian phẫu thuật dự kiến)</span>
+                            </div>
+                            <field name="is_labtest"/>
+                            <field name="anesthetist_type"/>
+                            <field name="arrival_date"/>
+                            <field name="physician" options="{'no_create':True, 'no_open':True}" string="Bác sĩ PT"/>
+                            <field name="ekip_gay_me"/>
+                            <field name="phu_mo" widget="many2many_tags" options="{'no_create':True}"/>
+                            <field name="room"/>
+                            <field name="pcr"/>
+                        </group>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='page_invitations']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='page_misc']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='page_options']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="placeholder">Tiêu đề</attribute>
+                </xpath>
+                <xpath expr="//page[@name='page_misc']/group//field[@name='user_id']" position="after">
+                    <field name="company_id" readonly="True" force_save="True"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_ids']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//label[@for='partner_ids']" position="replace"/>
+            </field>
+        </record>
+
+        <record id="inherit_calendar_event_calendar" model="ir.ui.view">
+            <field name="name">inherit_calendar_event_view_calendar</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_calendar"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="replace">
+                    <field name="opportunity_id" string="Booking"/>
+                    <field name="phonecall"/>
+                    <field name="customer_id" options="{'no_open':True,'no_create':True}"/>
+                    <field name="services" widget="many2many_tags"/>
+                    <field name="physician" options="{'no_open':True,'no_create':True}"/>
+                    <field name="partner_id" string="Nhân viên tạo lịch"/>
+                    <field name="color" invisible="1"/>
+                    <!--                    <button name="calendar_state_cancel" type="object" string="Hủy lịch" class="btn-danger"/>-->
+                </xpath>
+                <xpath expr="//field[@name='description']" position="after">
+                    <field name="company_id" filters="True" avatar_field="image_128"/>
+                    <field name="state"/>
+
+                </xpath>
+                <xpath expr="//calendar" position="attributes">
+                    <attribute name="js_class">crm_attendance_calendar</attribute>
+                    <attribute name="color">physician</attribute>
+                    <attribute name="mode">day</attribute>
+                    <attribute name="quick_add">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='attendee_status']" position="replace"/>
+                <xpath expr="//field[@name='partner_ids']" position="replace"/>
+                <!--                <xpath expr="//field[@name='attendee_status']" position="replace"/>-->
+            </field>
+        </record>
+
+        <record id="calendar_search_state" model="ir.ui.view">
+            <field name="name">Bộ lọc trạng thái</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_ids']" position="replace">
+                    <field name="customer_id"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="string">Lịch hẹn</attribute>
+                </xpath>
+                <xpath expr="//field[@name='categ_ids']" position="replace"/>
+                <xpath expr="//field[@name='user_id']" position="replace"/>
+                <xpath expr="//field[@name='show_as']" position="replace"/>
+                <xpath expr="//group" position="replace"/>
+                <xpath expr="//filter[@name='inactive']" position="replace">
+                    <filter string="Xác nhận" name="confirm" domain="[('state', '=', 'confirm')]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="calendar_search" model="ir.ui.view">
+            <field name="name">Bộ lọc trạng thái</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="crm.view_crm_meeting_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='opportunity_id']" position="attributes">
+                    <attribute name="string">Booking</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_action_calendar_event" model="ir.actions.act_window">
+            <field name="name">Tất cả lịch hẹn</field>
+            <field name="res_model">calendar.event</field>
+            <field name="view_mode">calendar,form</field>
+            <field name="view_id" ref="calendar.view_calendar_event_calendar"/>
+            <field name="search_view_id" ref="calendar.view_calendar_event_search"/>
+            <field name="domain">[('company_id', 'in', allowed_company_ids), ('is_calendar_surgery','=',False)]</field>
+            <field name="context">{'search_default_confirm': 1}</field>
+        </record>
+
+        <record id="view_calendar_surgery" model="ir.ui.view">
+            <field name="name">calendar.event.calendar</field>
+            <field name="model">calendar.event</field>
+            <field name="priority" eval="2"/>
+            <field name="arch" type="xml">
+                <calendar js_class="crm_attendance_calendar" string="Lịch phẫu thuật" date_start="start"
+                          date_stop="stop"
+                          date_delay="duration" all_day="allday"
+                          event_open_popup="true"
+                          event_limit="5"
+                          color="physician" mode="day" quick_add="0">
+                    <!--                    <field name="attendee_status"/>-->
+                    <field name="opportunity_id" string="Booking"/>
+                    <field name="physician" string="Bác sĩ"/>
+                    <field name="customer_id"/>
+                    <field name="services" widget="many2many_tags"/>
+                    <field name="is_labtest"/>
+                    <field name="anesthetist_type"/>
+                    <field name="arrival_date"/>
+                    <!--                    <field name="surgery_date"/>-->
+                    <field name="ekip_gay_me"/>
+                    <field name="phu_mo"/>
+                    <field name="room"/>
+                    <field name="pcr"/>
+                </calendar>
+            </field>
+        </record>
+
+        <record id="open_calendar_surgery" model="ir.actions.act_window">
+            <field name="name">Lịch phẫu thuật</field>
+            <field name="res_model">calendar.event</field>
+            <field name="view_mode">calendar,form</field>
+            <field name="view_id" ref="view_calendar_surgery"/>
+            <field name="search_view_id" ref="calendar.view_calendar_event_search"/>
+            <field name="domain">[('company_id', 'in', allowed_company_ids), ('is_calendar_surgery','=',True)]</field>
+            <field name="context">{'search_default_confirm': 1,'default_is_calendar_surgery':True}</field>
+        </record>
+
+        <menuitem id="crm_menu_calendar"
+                  name="Lịch hẹn"
+                  sequence="0"
+                  parent="crm.crm_menu_root"
+                  groups="base.group_user"/>
+
+        <record id="crm_menu_calendar" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-calendar</field>
+        </record>
+
+        <menuitem id="crm_menu_calendar_event"
+                  name="Lịch hẹn"
+                  sequence="1"
+                  action="crm_action_calendar_event"
+                  parent="crm_menu_calendar"
+                  groups="base.group_user"/>
+
+        <menuitem id="menu_calendar_surgery"
+                  name="Lịch phẫu thuật"
+                  sequence="2"
+                  action="open_calendar_surgery"
+                  parent="crm_menu_calendar"
+                  groups="base.group_user"/>
+    </data>
+</odoo>

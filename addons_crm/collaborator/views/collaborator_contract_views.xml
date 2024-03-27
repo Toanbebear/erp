@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Hợp đồng CTV-->
+        <record id="collaborator_contract_view_form" model="ir.ui.view">
+            <field name="name">Hợp đồng</field>
+            <field name="model">collaborator.contract</field>
+            <field name="arch" type="xml">
+                <form create="false" duplicate="false">
+                    <header>
+                        <button name="set_to_effect" type="object" string="Được sử dụng" class="btn-info"
+                                confirm="Bạn có chắc muốn sử dụng hợp đồng này?"
+                                attrs="{'invisible':[('state','in',['effect', 'expired'])]}" groups="collaborator.collaborator_group_department"/>
+                        <button name="print_contract" type="object" string="In hợp đồng" class="btn-info"
+                                groups="collaborator.collaborator_group_user" invisible="True"/>
+                        <button name="print_contract_pdf" type="object" string="In hợp đồng" class="btn-info"
+                                attrs="{'invisible':[('collaborator_agency','=',True)]}"
+                                groups="collaborator.collaborator_group_user"/>
+                        <button name="print_contract_agency_pdf" type="object" string="In hợp đồng" class="btn-info"
+                                attrs="{'invisible':[('collaborator_agency','!=',True)]}"
+                                groups="collaborator.collaborator_group_user"/>
+                        <button name="expired_contract" type="object" string="Hết hiệu lực" class="btn-info"
+                                attrs="{'invisible':[('state','in',['new', 'expired'])]}"
+                                confirm="Bạn có chắc muốn chuyển hợp đồng thành hết hiệu lực?"
+                                groups="collaborator.collaborator_group_department"/>
+                        <button name="extend_contract" type="object" string="Gia hạn hợp đồng" class="btn-info"
+                                attrs="{'invisible':[('state','in',['new', 'effect'])]}"
+                                groups="collaborator.collaborator_group_department"/>
+                        <field name="state" widget="statusbar" statusbar_visible="new,confirmed,expired"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title" style="width:40%">
+                            <!--                            <label for="default_code" string="Tên" style="width:50%"/>-->
+                            <h1>
+                                <field name="default_code" placeholder="Describe the lead..." force_save="True"
+                                       style="width:100%" readonly="True" required="True"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group string="Thông tin hợp đồng">
+                                <field name="active" invisible="True"/>
+                                <group>
+                                    <field name="source_id"
+                                           options="{'no_create': True, 'no_open': True}" required="True"
+                                           attrs="{'readonly':[('state','!=','new')]}"/>
+                                    <field name="collaborator_id" options="{'no_create': True}"
+                                           attrs="{'readonly':[('state','!=','new')]}"/>
+                                    <field name="referrer_id"
+                                           options="{'no_create': True, 'no_open': True}"
+                                           attrs="{'readonly':[('state','!=','new')]}"
+                                           context="{'name_collaborator_partner': True}"/>
+                                    <field name="manager_id" required="True"
+                                           options="{'no_create': True, 'no_open': True}"
+                                           attrs="{'readonly':[('state','!=','new')]}"/>
+                                    <field name="company_id" attrs="{'readonly':[('state','!=','new')]}" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="company_ids" invisible="True" widget="many2many_tags" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                                    <field name="type_legal_contract" invisible="True"/>
+                                    <field name="brand_id" options="{'no_create': True, 'no_open': True}"
+                                           readonly="True"/>
+
+                                    <field name="contract_type_id" required="True"
+                                           attrs="{'readonly':[('state','!=', 'new')]}"
+                                           options="{'no_create':True}"/>
+                                    <field name="start_date" required="True"
+                                           attrs="{'readonly':[('state','!=','new')]}"/>
+                                    <field name="end_date" required="True"
+                                           attrs="{'readonly':[('state','!=','new')]}"/>
+                                    <field name="document" filename="document_name"/>
+                                    <field name="document_name" invisible="True"/>
+                                </group>
+                                <field name="category_source_id" options="{'no_create': True, 'no_open': True}"
+                                       invisible="1"/>
+
+                            </group>
+                            <group string="Thông tin cộng tác viên">
+                                <field name="passport"/>
+                                <field name="email"/>
+                                <field name="phone" widget="phone"/>
+                                <field name="mobile"/>
+                                <field name="bank_id" force_save="True"
+                                       context="{'name_collaborator_bank': True}"
+                                       attrs="{'readonly':[('state','in',['effect', 'expired'])]}" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="collaborator_agency" invisible="True"/>
+                            </group>
+                            <group>
+                                <field name="description" string="Ghi chú"
+                                       attrs="{'readonly':[('state','not in',('new'))]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <!--                            <page string="Ghi chú">-->
+                            <!--                                <group>-->
+                            <!--                                    <field name="description" string="Ghi chú"-->
+                            <!--                                           attrs="{'readonly':[('stage','not in',('draft','open'))]}"/>-->
+                            <!--                                </group>-->
+                            <!--                            </page>-->
+                        </notebook>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                    <div class="crm_lead_box_change_infor">
+                        <div class="col-lg-12">
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm tạo:
+                                <strong>
+                                    <field name="create_date" readonly="True" force_save="True"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Tạo bởi:
+                                <strong>
+                                    <field name="create_uid" readonly="True" force_save="True"
+                                           options="{'no_open':True,}"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm cập nhật:
+                                <strong>
+                                    <field name="write_date"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Cập nhật bởi:
+                                <strong>
+                                    <field name="write_uid"/>
+                                </strong>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="collaborator_contract_view_tree" model="ir.ui.view">
+            <field name="name">Hợp đồng</field>
+            <field name="model">collaborator.contract</field>
+            <field name="arch" type="xml">
+                <tree
+                        decoration-success="state=='effect'"
+                        decoration-danger="state=='expired'"
+                        create="false"
+                        default_order="create_date desc">
+                    <field name="default_code"/>
+                    <field name="company_id"/>
+                    <field name="brand_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="source_id"/>
+                    <field name="collaborator_id"/>
+                    <field name="state"/>
+                    <field name="create_uid"/>
+                    <field name="create_date"/>
+                    <!--                    <field name="create_uid" string="Người tạo"/>-->
+                    <!--                    <field name="create_date" string="Ngày tạo"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="collaborator_contract_view_search" model="ir.ui.view">
+            <field name="name">collaborator.contract.view.search</field>
+            <field name="model">collaborator.contract</field>
+            <field name="arch" type="xml">
+                <search string="Stage Search">
+                    <field name="default_code" string="Mã hợp đồng"/>
+                    <field name="collaborator_id" string="Tên cộng tác viên"/>
+                    <filter string="Lưu trữ" name="inactive" domain="[('active', '=', False)]"/>
+                    <group>
+                        <filter string="Tên cộng tác viên" name="group_collaborator"
+                                context="{'group_by': 'collaborator_id'}"/>
+                        <filter string="Công ty" name="group_company_id" context="{'group_by': 'company_id'}"/>
+                        <filter string="Trạng Thái" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Nguồn" name="group_source_id" context="{'group_by': 'source_id'}"/>
+                        <filter string="Quản lý CTV" name="group_manager_id" context="{'group_by': 'manager_id'}"/>
+                        <filter string="Ngày bắt đầu" name="group_create_date" context="{'group_by': 'create_date'}"/>
+                        <filter string="Ngày hết hạn" name="group_end_date" context="{'group_by': 'end_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="collaborator_contract_action" model="ir.actions.act_window">
+            <field name="name">Hợp đồng</field>
+            <field name="res_model">collaborator.contract</field>
+            <!--            <field name="context">{'search_default_group_collaborator':True, 'search_default_group_company_id':True}-->
+            <!--            </field>-->
+            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+            <field name="view_mode">tree,form</field>
+            <!--            <field name="search_view_id" ref="collaborator_contract_search"/>-->
+        </record>
+        <record id="in_hop_dong_ctv_attachment" model="ir.attachment">
+            <field name="name">In hợp đồng CTV</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="collaborator/static/doc/form.docx"/>
+            <field name="store_fname">hop_dong_ctv.docx</field>
+        </record>
+
+        <!--Hợp đồng sắp hết hạn-->
+
+         <record id="collaborator_contract_almost_expired_view_tree" model="ir.ui.view">
+            <field name="name">Hợp đồng sắp hết hạn</field>
+            <field name="model">collaborator.contract</field>
+            <field name="arch" type="xml">
+                <tree
+                        decoration-success="state=='effect'"
+                        decoration-danger="state=='expired'"
+                        create="false"
+                        default_order="create_date desc">
+                    <field name="default_code"/>
+                    <field name="collaborator_id"/>
+                    <field name="end_date"/>
+                    <field name="manager_id"/>
+                    <field name="expired_state"/>
+                    <field name="company_id" string="Chi nhánh"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+
+
+        <record id="collaborator_contract_almost_expired_action" model="ir.actions.act_window">
+            <field name="name">Hợp đồng sắp hết hạn</field>
+            <field name="res_model">collaborator.contract</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('collaborator_contract_almost_expired_view_tree')})]"/>
+        </record>
+
+        <record model="ir.actions.server" id="collaborator_contract_almost_expired_action_server">
+            <field name="name">Hợp đồng sắp hết hạn</field>
+            <field name="model_id" ref="collaborator.model_collaborator_contract"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.action_contract_almost_expired()
+            </field>
+        </record>
+
+<!--        # hợp đòng hết hạn-->
+        <record id="collaborator_contract_expired_action" model="ir.actions.act_window">
+            <field name="name">Hợp đồng hết hạn</field>
+            <field name="res_model">collaborator.contract</field>
+            <field name="view_mode">tree</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('collaborator_contract_almost_expired_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('collaborator_contract_view_form')})]"/>
+        </record>
+
+        <record model="ir.actions.server" id="collaborator_contract_expired_action_server">
+            <field name="name">Hợp đồng hết hạn</field>
+            <field name="model_id" ref="collaborator.model_collaborator_contract"/>
+            <field name="state">code</field>
+            <field name="code">
+                action = model.action_contract_expired()
+            </field>
+        </record>
+        <record id="collaborator_contract_form_view_inherit" model="ir.ui.view">
+            <field name="name">collaborator.contract.form.view.inherit</field>
+            <field name="model">collaborator.contract</field>
+            <field name="groups_id" eval="[(4,ref('collaborator.collaborator_group_manager'))]"/>
+            <field name="inherit_id" ref="collaborator.collaborator_contract_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='manager_id']" position="replace">
+                    <field name="manager_id" required="True"
+                           options="{'no_create': True, 'no_open': True}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

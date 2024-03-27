@@ -1,0 +1,132 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="crm_advise_line_potential_tree_view">
+            <field name="name">Dịch vụ tiềm năng</field>
+            <field name="model">crm.advise.line</field>
+            <field name="arch" type="xml">
+                <tree default_order='create_date desc' duplicate="false" create="false" edit="false" delete="false">
+                    <field name="crm_id"/>
+                    <field name="service"/>
+                    <field name="group_service"/>
+                    <field name="partner_id"/>
+                    <field name="consultant"/>
+                    <field name="company_id"/>
+                    <field name="stage_potential"/>
+                    <field name="create_date" string="Ngày tạo"/>
+                    <field name="booking_source"/>
+                    <field name="booking_by"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="crm_advise_line_potential_form_view">
+            <field name="name">Dịch vụ tiềm năng</field>
+            <field name="model">crm.advise.line</field>
+            <field name="arch" type="xml">
+                <form duplicate="false" create="false" edit="false" delete="false">
+                    <sheet>
+                        <header>
+                            <field name="is_potential" invisible="1"/>
+                            <button name="create_phone_call_info_line" type="object" string="Tạo PhoneCall" title="Tạo phone call" class="btn-info" attrs="{'invisible':[('is_potential', '=', False)]}"/>
+                            <button name="cancel_potential" type="object" string="Hủy tiềm năng" title="Hủy tiềm năng" class="btn-info" attrs="{'invisible':['|', ('is_potential', '=', False), ('brand_id', '!=', 3)]}"/>
+                            <field name="stage_potential" widget="statusbar" statusbar_visible="potential,exploited"/>
+                        </header>
+                        <group>
+                            <field name="service" readonly="True"/>
+                            <field name="group_service" readonly="True"/>
+                            <field name="crm_id" readonly="True"/>
+                            <field name="booking_source" readonly="True"/>
+                            <field name="booking_by" readonly="True"/>
+                            <field name="brand_id"/>
+                            <field name="company_id"/>
+                            <field name="company_done" attrs="{'invisible':[('stage_potential','!=','exploited')]}"/>
+                            <field name="partner_id"/>
+                            <field name="desire_ids" widget="many2many_tags" placeholder="Mong muốn"/>
+                            <field name="pain_point_ids" widget="many2many_tags" placeholder="Điểm đau"/>
+                            <field name="state_ids" widget="many2many_tags" placeholder="Tình trạng "/>
+                            <field name="information"/>
+                            <field name="conclude"/>
+                            <field name="unit_price"/>
+                            <field name="total"/>
+                            <field name="consultant"/>
+                            <field name="reason_line_cancel" attrs="{'invisible':[('reason_line_cancel','=',False)]}"/>
+                            <field name="note" attrs="{'invisible':[('note','=',False)]}"/>
+                            <field name="reason_cancel_potential" attrs="{'invisible':[('stage_potential','!=','cancel')]}"/>
+                            <field name="note_cancel_potential" attrs="{'invisible':[('stage_potential','!=','cancel')]}"/>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                        </div>
+                        <footer>
+                            <div class="crm_box_change_infor">
+                                <div class="row pt-3">
+                                    <div class="col-lg-12">
+                                        <span>
+                                            <i class="fa fa-clock-o"/>
+                                            Thời điểm hủy dịch vụ:
+                                            <strong>
+                                                <field name="create_date" readonly="True" force_save="True"/>
+                                            </strong>
+                                        </span>
+                                        <span>
+                                            <i class="fa fa-user"/>
+                                            Tạo bởi:
+                                            <strong>
+                                                <field name="create_uid" readonly="True" force_save="True" options="{'no_open':True,}"/>
+                                            </strong>
+                                        </span>
+                                        <span>
+                                            <i class="fa fa-clock-o"/>
+                                            Thời điểm cập nhật:
+                                            <strong>
+                                                <field name="write_date"/>
+                                            </strong>
+                                        </span>
+                                        <span>
+                                            <i class="fa fa-user"/>
+                                            Cập nhật bởi:
+                                            <strong>
+                                                <field name="write_uid"/>
+                                            </strong>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="crm_advise_line_search" model="ir.ui.view">
+            <field name="name">Dịch vụ tiềm năng - Search</field>
+            <field name="model">crm.advise.line</field>
+            <field name="arch" type="xml">
+                <search string="Stage Search">
+                     <group>
+                        <filter string="Trạng Thái" name="group_stage_potential" context="{'group_by': 'stage_potential'}"/>
+                        <filter string="Nguồn booking" name="group_booking_source" context="{'group_by': 'booking_source'}"/>
+                        <filter string="Tư vấn viên" name="group_consultant" context="{'group_by': 'consultant'}"/>
+                        <filter string="Dịch vụ tư vấn" name="group_service" context="{'group_by': 'service'}"/>
+                        <filter string="Nhóm dịch vụ" name="group_group_service" context="{'group_by': 'group_service'}"/>
+                        <filter string="Lý do hủy dịch vụ" name="group_reason_line_cancel" context="{'group_by': 'reason_line_cancel'}"/></group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_crm_advise_line_potential_view" model="ir.actions.act_window">
+            <field name="name">Dịch vụ tiềm năng</field>
+            <field name="res_model">crm.advise.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('company_id', 'in', allowed_company_ids), ('is_potential', '=', True)]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="crm_advise_line_potential_menu"
+            name="Dịch vụ tiềm năng"
+            parent="crm.crm_menu_root"
+            action="action_crm_advise_line_potential_view"
+            sequence="5"/>
+    </data>
+</odoo>

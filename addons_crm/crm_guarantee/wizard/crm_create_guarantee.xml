@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_create_booking_guarantee_new" model="ir.ui.view">
+            <field name="name">view.form.create.booking.guarantee.new</field>
+            <field name="model">crm.create.guarantee</field>
+            <field name="inherit_id" ref="crm_base.view_form_create_booking_guarantee"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='confirm']" position="replace">
+                    <button name="confirm_create" type="object" string="Xác nhận" class="btn-primary btn-lg fa fa-check"/>
+                </xpath>
+                <xpath expr="//footer" position="before">
+                    <group string='Dịch vụ bán mới'>
+                        <field name="service_new_ids" widget="many2many_tags" string="Dịch vụ" options="{'no_open':True, 'no_create':True}"/>
+                    </group>
+                </xpath>
+                <xpath expr="//field[@name='convert_service_guarantee_ids']" position="replace">
+                    <field name="convert_service_guarantee_ids" context="{'default_crm_create_guarantee_id':id,}" mode="tree">
+                        <tree editable="bottom">
+                            <field name="crm_create_guarantee_id" optional="hide"/>
+                            <field name="crm_id" optional="hide"/>
+                            <field name="type_guarantee_2" optional="show" width="15" required="True"/>
+                            <field name="reason_id" optional="show" width="20" required="True" options="{'no_open':True, 'no_create':True}"/>
+                            <field name="crm_line_guarantee" optional="show" width="30" options="{'no_open':True, 'no_create':True}" required="True"/>
+                            <field name="product_incurred" optional="show" width="30" options="{'no_open':True, 'no_create':True}"/>
+<!--                            <field name="checked" optional="show" width="5" string="Thu tiền"/>-->
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

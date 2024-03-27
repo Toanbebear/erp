@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_user_act" model="ir.actions.act_window">
+			<field name="name">Người dùng</field>
+			<field name="view_mode">tree,form</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.hh.ehc.user</field>
+			<field name="domain">[]</field>
+		</record>
+		
+		<menuitem id="menu_service_user_ehc"
+				  name="Người dùng"
+				  parent="crm_ehc.crm_hh_ehc_root_menu"
+				  action="crm_ehc.crm_hh_ehc_user_act"
+		/>
+		
+		<record id="crm_hh_ehc_user_tree" model="ir.ui.view">
+			<field name="name">User EHC tree</field>
+			<field name="model">crm.hh.ehc.user</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="user_code"/>
+					<field name="user_name"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_user_form" model="ir.ui.view">
+			<field name="name">User EHC form</field>
+			<field name="model">crm.hh.ehc.user</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<field name="user_stage" widget="statusbar" statusbar_visible="0,1"/>
+					</header>
+					<group>
+<!--						<field name="user_id"/>-->
+						<field name="user_code"/>
+						<field name="user_stage"/>
+						<field name="user_name"/>
+						<field name="user_phone"/>
+						<field name="user_name_practicing_certificate"/>
+						<field name="user_code_practicing_certificate"/>
+					</group>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

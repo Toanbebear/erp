@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+records_com_ent_rel,records.com.ent.rel,model_records_com_ent_rel,base.group_user,1,1,1,1
+enterprise_api_log,enterprise.api.log,model_enterprise_api_log,base.group_user,1,1,1,1

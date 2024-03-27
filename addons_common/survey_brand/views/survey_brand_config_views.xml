@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="survey_brand_config_form" model="ir.ui.view">
+        <field name="name">survey.brand.config.form</field>
+        <field name="model">survey.brand.config</field>
+        <field name="arch" type="xml">
+            <form string="Cấu hình thương hiệu">
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                        <group name="survey_setting_api" string="Hệ thống khảo sát người dùng">
+                            <field name="brand_id"/>
+                            <field name="survey_brand_url"/>
+<!--                            <field name="survey_brand_user"/>-->
+<!--                            <field name="survey_brand_password" password="True"/>-->
+<!--                            <button name="action_get_token_survey" string="Tạo Token" type="object" class="btn-secondary"/>-->
+<!--                            <field name="survey_brand_token"/>-->
+<!--                            <field name="survey_brand_expires"/>-->
+                        </group>
+
+                        <group name="survey_settings" string="Cấu hình SMS">
+                            <field name="is_remove_vietnamese"/>
+                            <field name="survey_sms" required="True" placeholder="Ban [Name] oi, vui long vao link [LINK] de khao sat nhe."/>
+                        </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="survey_brand_config_tree" model="ir.ui.view">
+        <field name="name">survey.brand.config.tree</field>
+        <field name="model">survey.brand.config</field>
+        <field name="arch" type="xml">
+            <tree string="Survey">
+                <field name="brand_id"/>
+                <field name="survey_brand_url"/>
+<!--                <field name="survey_brand_token"/>-->
+            </tree>
+        </field>
+    </record>
+
+    <record id="action_survey_brand_config" model="ir.actions.act_window">
+        <field name="name">Cấu hình thương hiệu</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.brand.config</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="survey_brand_config_menu"
+              name="Cấu hình thương hiệu"
+              parent="survey_base.config_menu"
+              sequence="10"
+              action="action_survey_brand_config"/>
+</odoo>

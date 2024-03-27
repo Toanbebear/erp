@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bao_cao_xnt_form">
+            <field name="name">Báo cáo xuất nhập tồn</field>
+            <field name="model">bc.xnt</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo ">
+                    <group>
+                        <field name="company" invisible="1"/>
+                        <field name="warehouse_id" required="0" options="{'no_open':True,'no_create':True}" domain="[('id', 'in', allowed_company_ids)]" />
+                        <field name="location" required="0" options="{'no_open':True,'no_create':True}" widget="many2many_tags" domain="[('company_id', '=', company)]"/>
+                        <field name="start_date" required="1"/>
+                        <field name="end_date" required="1"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_new" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_xnt_act">
+            <field name="name">Báo cáo XNT</field>
+            <field name="res_model">bc.xnt</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_xnt_form"/>
+            <field name="context"></field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="bao_cao_xnt_attachment" model="ir.attachment">
+            <field name="name">Báo cáo xuất nhập tồn</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="sh_bao_cao/static/xls/bc_xnt.xlsx"/>
+            <field name="store_fname">bao_cao_xnt.xlsx</field>
+        </record>
+    </data>
+</odoo>

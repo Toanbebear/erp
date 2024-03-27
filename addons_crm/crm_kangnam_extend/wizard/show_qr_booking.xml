@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="show_qr_booking_form_view" model="ir.ui.view">
+            <field name="name">QR Booking</field>
+            <field name="model">show.qr.booking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="text-center">
+                            <field name="qr_code_id" widget="image" style="width:160px; height:160px;"/>
+                            <h4>
+                                 <field name="crm_name" class="oe_center" readonly="True" attrs="{'invisible': [('crm_name', '=', False)]}"/>
+                                <br></br>
+                                 <field name="partner_name" style="text-align:center" readonly="True" attrs="{'invisible': [('partner_name', '=', False)]}"/>
+                                <br></br>
+                                <label for="hotline_brand" string="Hotline liên hệ:" attrs="{'invisible': [('hotline_brand', '=', False)]}"/>
+                                <field name="hotline_brand" readonly="True" attrs="{'invisible': [('hotline_brand', '=', False)]}"/>
+                            </h4>
+                        </div>
+                        <footer>
+                            <button string="Đóng" class="btn-secondary btn-lg" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

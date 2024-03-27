@@ -1,0 +1,1321 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="template_customer_information_sheet">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:18px;">
+
+                    <div class="oe_structure"/>
+                    <div class="row mt32 mb32" style="font-family:Times New Roman;font-size:16px;">
+                        <div class="col-5">
+                            <img t-if="o.company_id.favicon" t-att-src="image_data_uri(o.company_id.favicon)"
+                                 width="60%"/>
+
+                        </div>
+                        <div class="col-7">
+                            <div>
+                                <strong>
+                                    <t t-if="o.company_id.id == 12">
+                                        <span>BỆNH VIỆN THẨM MỸ ĐÔNG Á</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="o.company_id.name"/>
+                                    </t>
+
+                                </strong>
+
+                            </div>
+                            <div>
+                                <strong>Địa chỉ:</strong>
+                                <span class="m-0" t-field="o.company_id.street"/>,
+                                <span class="m-0" t-field="o.company_id.street2"/>,
+                                <span class="m-0" t-field="o.company_id.city"/>
+                            </div>
+                            <div>
+                                <strong>HOTLINE:</strong>
+                                <span t-field="o.company_id.phone"/>
+
+                            </div>
+                            <div>
+                                <strong>WEBSITE:</strong>
+                                <span t-field="o.company_id.website"/>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="text-center" style="font-family:Times New Roman;font-weight:bolder;">
+                        <div style="font-size: 24px;">PHIẾU THÔNG TIN KHÁCH HÀNG</div>
+                    </div>
+                    <div class="row col-12">
+                        <div class="col-6 text-right">
+                            <span>Mã Booking:</span>
+                            <b>
+                                <i t-field="o.name"/>
+                            </b>
+                        </div>
+                        <div class="col-1">
+
+                        </div>
+                        <div class="col-7 text-left">
+                            Thời gian đến cửa:
+                            <t t-if="o.arrival_date">
+                                <strong>
+                                    <span t-esc="context_timestamp(o.arrival_date).strftime('%H:%M, Ngày %d/ %m/ %Y')"/>
+                                </strong>
+                            </t>
+                            <t t-else="">
+                                <strong>
+                                    Khách chưa đến
+                                </strong>
+                            </t>
+
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row col-12">
+                        <div class="col-6">Họ và tên:
+                            <strong>
+                                <span t-field="o.partner_id.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-6">
+                            Phân loại khách hàng:
+                            <strong>
+                                <span t-field="o.type_data_partner"/>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="row col-12">
+                        <div class="col-6">Ngày/tháng/năm sinh:
+                            <t t-if="o.partner_id.birth_date">
+                                <strong>
+                                    <span t-field="o.partner_id.birth_date"/>
+                                </strong>
+                            </t>
+                            <t t-elif="o.partner_id.year_of_birth">
+                                <strong>
+                                    <span t-field="o.partner_id.year_of_birth"/>
+                                </strong>
+                            </t>
+                            <t t-else="">
+                            </t>
+                        </div>
+                        <div class="col-6">
+                            Quốc tịch:
+                            <!--<strong>-->
+                            <!--    <span t-field="o.phone"/>-->
+                            <!--</strong>-->
+                            <t t-if="o.country_id">
+                                <strong>
+                                    <span t-field="o.country_id.name"/>
+                                </strong>
+                            </t>
+                            <t t-else="">
+                                <span>...........................................</span>
+                            </t>
+                        </div>
+
+                    </div>
+                    <div class="col-12">
+                        Nguồn Booking :
+                        <strong>
+                            <span t-field="o.source_id.name"/>
+                        </strong>
+                    </div>
+                    <div class="col-12">
+                        Địa chỉ :
+                        <t t-if="o.pass_port_address">
+                            <span t-field="o.pass_port_address"/>
+                        </t>
+                        <t t-else="">
+                            <strong>
+                                <span t-field="o.street"/>,
+                                <span t-field="o.district_id.name"/>,
+                                <span t-field="o.state_id.name"/>,
+                                <span t-field="o.country_id.name"/>
+                            </strong>
+                        </t>
+                    </div>
+
+                    <div class="col-12">Khuyến mãi S&amp;M đã sử dụng:
+                        <t t-if="o.prg_ids">
+                            <strong>
+                                <span t-esc="', '.join(o.prg_ids.mapped('name'))"/>
+                            </strong>
+                        </t>
+                        <t t-else="">Chưa có</t>
+                    </div>
+                    <div class="col-12">Trạng thái:
+
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div style="width:50px;"/>
+                        <div class="mr-2">
+                            <span style="margin-right:10px">Thực hiện dịch vụ
+                            </span>
+                            <input class="mr-2" type="checkbox"/>
+                        </div>
+                        <div class="mr-2">
+                            <span style="margin-right:10px">Đặt cọc
+                            </span>
+                            <input type="checkbox"/>
+                        </div>
+                        <div class="mr-2">
+                            <span style="margin-right:10px">Hẹn ngày làm DV
+                            </span>
+                            <input type="checkbox"/>
+                            ( ..../ ..../ 20...)
+                        </div>
+                        <div class="mr-2">
+                            <span style="margin-right:10px">Out sold
+                            </span>
+                            <input type="checkbox"/>
+                        </div>
+                    </div>
+                    <div class="col-12" style="font-family:Times New Roman;font-size:18px;">
+                        DỊCH VỤ TƯ VẤN
+                    </div>
+                    <style>
+                        .border.border-dark.align-middle{padding:2px}
+                    </style>
+                    <table class="table border border-dark text-center">
+                        <tr>
+                            <th class="border border-dark align-middle">
+                                <strong>STT</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Dịch vụ</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Số buổi</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Đơn giá</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Khuyến mãi</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Thành tiền</strong>
+                            </th>
+                        </tr>
+
+                        <t t-if="o.crm_line_ids">
+                            <t t-set="i" t-value="0"/>
+                            <t t-foreach="o.crm_line_ids" t-as="line">
+                                <t t-set="i" t-value="i + 1"/>
+                                <tr t-if="line.stage not in ['cancel', 'done']">
+                                    <td style="text-align:center;" class="border border-dark align-middle">
+                                        <span t-esc="i"/>
+                                    </td>
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <strong>
+                                            <span t-field="line.service_id.name"/>
+                                        </strong>
+                                    </td>
+                                    <td style="text-align:center;" class="border border-dark align-middle">
+                                        <span t-field="line.quantity"/>
+                                    </td>
+                                    <td style="text-align:right;" class="border border-dark align-middle">
+                                        <span t-field="line.unit_price"/>
+                                    </td>
+                                    <td style="text-align:center;" class="border border-dark align-middle">
+                                        <t t-if="line.total_before_discount != line.total">
+                                            <span>Có</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span>Không</span>
+                                        </t>
+                                    </td>
+                                    <td style="text-align:right;" class="border border-dark align-middle">
+                                        <span t-field="line.total"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </table>
+                    <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                        <!--                        <div>-->
+                        <!--                            <t t-esc="'Dịch vụ chi nhánh tư vấn:' + '.'*400"/>-->
+                        <!--                        </div>-->
+                        <t t-foreach="range(14-len(o.crm_line_ids))" t-as="i">
+                            <div>
+                                <t t-esc="'.'*400"/>
+                            </div>
+                        </t>
+                        <!--                        <div>-->
+                        <!--                            <t t-esc="'Số thứ tự dịch vụ sửa lại:' + '.'*400"/>-->
+                        <!--                        </div>-->
+                        <!--                        <div>-->
+                        <!--                            <t t-esc="'Số thứ tự dịch vụ tham gia:' + '.'*400"/>-->
+                        <!--                        </div>-->
+                        <div>
+                            <t t-esc="'Ghi chú cần lưu ý:' + '.'*400"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*400"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="col-12" style="font-size:14px;">
+                        <style>.indent{ padding-left: 1.8em }</style>
+                        Tôi đồng ý tiến hành làm xét nghiệm cận lâm sàng trước phẫu thuật mà Bác sĩ gây tê/mê chỉ định
+                        để đảm bảo an toàn và giảm thiểu rủi ro tối đa
+                        cho sức khoẻ của bản thân tôi. Trường hợp sức khoẻ của tôi đảm bảo tốt để thực hiện được phẫu
+                        thuật nhưng vì lý do cá nhân tôi KHÔNG thể tham
+                        gia thì tôi đồng ý thanh toán chi phí huỷ dịch vụ, chi phí xét nghiệm cụ thể như sau:
+                        <br/>
+                        Dịch vụ phẫu thuật gây tê:
+                        <br/>
+                        <span class="indent">- Trên 15.000.000vnđ (mười lăm triệu đồng) là 1.000.000vnđ (một triệu đồng)
+                            + phí xét nghiệm (nếu có)
+                        </span>
+                        <br/>
+                        <span class="indent">- Dưới 15.000.000vnđ (mười lăm triệu đồng) là 500.000vnđ (năm trăm ngàn
+                            đồng) + phí xét nghiệm (nếu có)
+                        </span>
+                        <br/>
+                        Dịch vụ phẫu thuật gây mê: 5.000.000vnđ (Năm triệu đồng) bao gồm phí xét nghiệm.
+                        <br/>
+                        Trong trường hợp bệnh nhân không đủ điều kiện sức khoẻ để làm dịch vụ, mà đã làm xét nghiệm thì
+                        phải đóng tiền xét nghiệm là : 3.000.000vnđ (Ba triệu đồng).
+                        Đối với bệnh nhân đăng ký tham gia DV nếu có bệnh lý không đủ điều kiện sức khoẻ để thực hiện
+                        phẫu thuật, bệnh viện sẽ thu một khoản phí hợp lý 500.000vnđ/bệnh nhân
+                        (Bao gồm phí thăm khám, tư vấn, phí phục vụ, phí hồ sơ, phí khám sức khoẻ, xét nghiệm tại Bệnh
+                        viện) + phí xét nghiệm khác (nếu có).
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 16px;">Khách hàng đồng ý ký tên</strong>
+                            <div>
+                                <i>(Ký, ghi rõ họ tên)</i>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 16px;">Ngày ..... tháng ..... năm .........</strong>
+                            <br/>
+                            Nhân viên: ..........................................
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+
+        <template id="customer_information_sheet">
+            <t t-call="web.html_container">
+                <t t-if="docs">
+                    <t t-call="crm_his_13.template_customer_information_sheet" t-lang="docs[0].partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+                string="PHIẾU THÔNG TIN KHÁCH HÀNG (KN)"
+                id="action_customer_info_sheet"
+                model="crm.lead"
+                report_type="qweb-pdf"
+                name="crm_his_13.customer_information_sheet"
+                file="crm_his_13.customer_information_sheet"
+                paperformat="shealth_all_in_one.sh_paperformat_medicine_public"
+                menu="True"
+        />
+
+        <template id="template_service_information_sheet">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:19px;">
+
+                    <div class="oe_structure"/>
+                    <div class="row mt32 mb32" style="font-family:Times New Roman;font-size:17px;">
+                        <div class="col-3 text-center">
+                            <t t-if="o.company_id.id == 12">
+                                <img src="/backend_theme_v13/static/src/img/icon_da.png" width="50%" height="auto"/>
+                            </t>
+                            <t t-elif="o.company_id.brand_id.code == 'KN'">
+                                <img src="/check_in_app/static/description/logo_kn.png" width="50%" height="auto"/>
+                            </t>
+                            <t t-elif="o.company_id.brand_id.code == 'PR'">
+                                <img src="/check_in_app/static/description/logo_pr.png" width="50%" height="auto"/>
+                            </t>
+                            <t t-else=""/>
+
+                        </div>
+                        <div class="col-6">
+                            <div>
+                                <b>
+                                    <t t-if="o.company_id.id == 12">
+                                        <span>BỆNH VIỆN THẨM MỸ ĐÔNG Á</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="o.company_id.name"/>
+                                    </t>
+                                </b>
+
+                            </div>
+                            <div>
+                                <strong>Địa chỉ:</strong>
+                                <span class="m-0" t-field="o.company_id.street"/>,
+                                <span class="m-0" t-field="o.company_id.street2"/>,
+                                <span class="m-0" t-field="o.company_id.city"/>
+                            </div>
+                            <!--                            <div>-->
+                            <!--                                <strong>HOTLINE:</strong>-->
+                            <!--                                <span t-field="o.company_id.phone"/>-->
+
+                            <!--                            </div>-->
+                            <div>
+                                <!--                                <strong>WEBSITE:</strong>-->
+                                <span t-field="o.company_id.website"/>
+                            </div>
+                        </div>
+                        <div class="col-3 text-center">
+                            <img t-if="o.qr_code_id" t-att-src="image_data_uri(o.qr_code_id)" width="50%"/>
+                            <br/>
+                            <i style="font-size:15px;">QR Booking</i>
+                        </div>
+
+                    </div>
+                    <div class="text-center" style="font-family:Times New Roman;">
+                        <div style="font-size: 24px;">
+                            <strong>PHIẾU THÔNG TIN DỊCH VỤ TƯ VẤN</strong>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <span>Mã Booking:</span>
+                        <b>
+                            <i t-field="o.name"/>
+                        </b>
+                    </div>
+                    <br/>
+                    <div class="row col-12">
+                        <div class="col-8">Họ và tên:
+                            <strong>
+                                <span t-field="o.partner_id.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-8">Năm sinh:
+                            <t t-if="o.partner_id.birth_date">
+                                <strong>
+                                    <span t-field="o.partner_id.birth_date"/>
+                                </strong>
+                            </t>
+                            <t t-elif="o.partner_id.year_of_birth">
+                                <strong>
+                                    <span t-field="o.partner_id.year_of_birth"/>
+                                </strong>
+                            </t>
+                            <t t-else="">
+                            </t>
+                        </div>
+                    </div>
+                    <div class="col-12">
+                        Địa chỉ :
+                        <t t-if="o.pass_port_address">
+                            <strong>
+                                <span t-field="o.pass_port_address"/>
+                            </strong>
+                        </t>
+                        <t t-else="">
+                            <strong>
+                                <span t-field="o.street"/>,
+                                <span t-field="o.district_id.name"/>,
+                                <span t-field="o.state_id.name"/>,
+                                <span t-field="o.country_id.name"/>
+                            </strong>
+                        </t>
+                    </div>
+                    <!--                <div class="col-12">-->
+                    <!--                    Điện thoại - email:     <strong><span t-field="o.phone"/> </strong>-->
+                    <!--                    <t t-if="o.email_from">-->
+                    <!--                        <strong> - <span t-field="o.email_from"/> </strong>-->
+                    <!--                    </t>-->
+                    <!--                    <t t-else="">-->
+
+                    <!--                    </t>-->
+                    <!--                </div>-->
+                    <div class="col-12">
+                        Thời gian đến cửa:
+                        <strong>
+                            <!--                            <span t-field="o.arrival_date"/>-->
+                            <t t-if="o.arrival_date">
+                                <span t-esc="(o.arrival_date + relativedelta(hours=7)).strftime('%H:%M, Ngày %d/ %m/ %Y')"/>
+                            </t>
+                            <t t-else="">
+                                Khách chưa đến
+                            </t>
+                        </strong>
+                    </div>
+
+                    <div class="col-12">Khuyến mãi S&amp;M đã sử dụng:
+                        <!--                    <t t-set="prg_name" t-value="o.prg_ids.mapped('name')"/>-->
+                        <t t-if="o.prg_ids">
+                            <span t-esc="', '.join(o.prg_ids.mapped('name'))"/>
+                        </t>
+                        <t t-else="">Chưa có</t>
+                    </div>
+                    <!--                <div class="col-12">-->
+                    <!--                    <t t-if="o.prg_voucher_ids"> Voucher tổng đài đã sử dụng-->
+                    <!--                            <span t-field="o.prg_voucher_ids[0].name"/>-->
+                    <!--                    </t>-->
+                    <!--                    <t t-else=""></t>-->
+                    <!--                </div>-->
+                    <div class="col-12">
+                        Dịch vụ S&amp;M tư vấn:
+                    </div>
+                    <style>
+                        .border.border-dark.align-middle{padding:2px}
+                    </style>
+                    <table class="table border border-dark text-center">
+                        <tr>
+                            <th class="border border-dark align-middle">
+                                <strong>STT</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Dịch vụ</strong>
+                            </th>
+                            <!--                        <th class="border border-dark align-middle"><strong>Đơn vị xử lý</strong></th>-->
+                            <th class="border border-dark align-middle">
+                                <strong>Số buổi</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Đơn giá</strong>
+                            </th>
+                            <!--                        <th class="border border-dark align-middle"><strong>Tổng tiền ban đâu</strong></th>-->
+                            <th class="border border-dark align-middle">
+                                <strong>Giảm %</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Giảm tiền mặt</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Giảm còn</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Giảm khác</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Tổng tiền phải thu</strong>
+                            </th>
+                        </tr>
+
+                        <t t-set="total_price" t-value="0"/>
+                        <t t-set="total_discount" t-value="0"/>
+
+                        <t t-if="o.crm_line_ids">
+                            <t t-set="i" t-value="0"/>
+                            <t t-foreach="o.crm_line_ids" t-as="line">
+                                <t t-set="i" t-value="i + 1"/>
+                                <tr t-if="line">
+                                    <td style="text-align:center;" class="border border-dark align-middle">
+                                        <span t-esc="i"/>
+                                    </td>
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <strong>
+                                            <span t-field="line.service_id.name"/>
+                                        </strong>
+                                    </td>
+                                    <!--                                <td style="text-align:left;" class="border border-dark align-middle"><span t-field="line.uom_price"/></td>-->
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <span t-field="line.quantity"/>
+                                    </td>
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <span t-field="line.unit_price"/>
+                                    </td>
+                                    <!--                                <td style="text-align:left;" class="border border-dark align-middle"><span t-field="line.total_before_discount"/></td>-->
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <span t-field="line.discount_percent"/>
+                                    </td>
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <span t-field="line.discount_cash"/>
+                                    </td>
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <span t-field="line.sale_to"/>
+                                    </td>
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <span t-field="line.other_discount"/>
+                                    </td>
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <span t-field="line.total"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </table>
+                    <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                        <div>
+                            <t t-esc="'Dịch vụ chi nhánh tư vấn:' + '.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <!--                    <div><t t-esc="'Số thứ tự dịch vụ sửa lại:' + '.'*200"/></div>-->
+                        <!--                    <div><t t-esc="'Số thứ tự dịch vụ tham gia:' + '.'*200"/></div>-->
+                        <div>
+                            <t t-esc="'Ghi chú cần lưu ý:' + '.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="col-12" style="font-size:18px;">
+                        <style>.indent{ padding-left: 1.8em }</style>
+                        Tôi đồng ý tiến hành làm xét nghiệm cận lâm sàng trước phẫu thuật mà Bác sĩ gây tê/mê chỉ định
+                        để đảm bảo an toàn và giảm thiểu rủi ro tối đa
+                        cho sức khoẻ của bản thân tôi. Trường hợp sức khoẻ của tôi đảm bảo tốt để thực hiện được phẫu
+                        thuật nhưng vì lý do cá nhân tôi KHÔNG thể tham
+                        gia thì tôi đồng ý thanh toán chi phí huỷ dịch vụ, chi phí xét nghiệm cụ thể như sau:
+                        <br/>
+                        Dịch vụ phẫu thuật gây tê:
+                        <br/>
+                        <span class="indent">- Trên 15.000.000vnđ (mười lăm triệu đồng) là 1.000.000vnđ (một triệu đồng)
+                            + phí xét nghiệm (nếu có)
+                        </span>
+                        <br/>
+                        <span class="indent">- Dưới 15.000.000vnđ (mười lăm triệu đồng) là 500.000vnđ (năm trăm ngàn
+                            đồng) + phí xét nghiệm (nếu có)
+                        </span>
+                        <br/>
+                        Dịch vụ phẫu thuật gây mê: 5.000.000vnđ (Năm triệu đồng) bao gồm phí xét nghiệm.
+                        <br/>
+                        Trong trường hợp bệnh nhân không đủ điều kiện sức khoẻ để làm dịch vụ, mà đã làm xét nghiệm thì
+                        phải đóng tiền xét nghiệm là : 3.000.000vnđ (Ba triệu đồng).
+                        Đối với bệnh nhân đăng ký tham gia DV nếu có bệnh lý không đủ điều kiện sức khoẻ để thực hiện
+                        phẫu thuật, bệnh viện sẽ thu một khoản phí hợp lý 500.000vnđ/bệnh nhân
+                        (Bao gồm phí thăm khám, tư vấn, phí phục vụ, phí hồ sơ, phí khám sức khoẻ, xét nghiệm tại Bệnh
+                        viện) + phí xét nghiệm khác (nếu có).
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 22px;">Khách hàng đồng ý ký tên</strong>
+                            <div>
+                                <i>(Ký, ghi rõ họ tên)</i>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 22px;">Ngày ..... tháng ..... năm .........</strong>
+                            <br/>
+                            Nhân viên: ..........................................
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+        <template id="service_information_sheet">
+            <t t-call="web.html_container">
+                <t t-if="docs">
+                    <t t-call="crm_his_13.template_service_information_sheet" t-lang="docs[0].partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+                string="PHIẾU THÔNG TIN DỊCH VỤ (KN)"
+                id="action_service_info_sheet"
+                model="crm.lead"
+                report_type="qweb-pdf"
+                name="crm_his_13.service_information_sheet"
+                file="crm_his_13.service_information_sheet"
+                paperformat="shealth_all_in_one.sh_paperformat_medicine_public"
+                menu="True"
+        />
+
+        <template id="template_crm_guarantee_sheet">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:18px;">
+
+                    <div class="oe_structure"/>
+                    <t t-if="o.type_price_list=='guarantee'">
+                        <div class="row mt32 mb32" style="font-family:Times New Roman;font-size:16px;">
+                            <div class="col-5">
+                                <img t-if="o.company_id.favicon" t-att-src="image_data_uri(o.company_id.favicon)"
+                                     width="60%"/>
+                            </div>
+                            <div class="col-7">
+                                <div>
+                                    <strong>
+                                        <span t-field="o.company_id.name"/>
+                                    </strong>
+                                </div>
+                                <div>
+                                    <strong>Địa chỉ:</strong>
+                                    <span class="m-0" t-field="o.company_id.street"/>,
+                                    <span class="m-0" t-field="o.company_id.street2"/>,
+                                    <span class="m-0" t-field="o.company_id.city"/>
+                                </div>
+                                <div>
+                                    <strong>HOTLINE:</strong>
+                                    <span t-field="o.company_id.phone"/>
+                                </div>
+                                <div>
+                                    <strong>WEBSITE:</strong>
+                                    <span t-field="o.company_id.website"/>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="text-center" style="font-family:Times New Roman;font-weight:bolder;">
+                            <div style="font-size: 25px;">PHIẾU THÔNG TIN DỊCH VỤ BẢO HÀNH</div>
+                        </div>
+                        <div class="row col-12">
+                            <div class="col-6 text-right">
+                                <span>Booking BH:</span>
+                                <b>
+                                    <i t-field="o.name"/>
+                                </b>
+                            </div>
+                            <div class="col-1">
+
+                            </div>
+                            <div class="col-7 text-left">
+                                Booking ban đầu:
+                                <strong>
+                                    <span t-field="o.lead_id.name"/>
+                                </strong>
+                            </div>
+                        </div>
+                        <br/>
+                        <div class="row col-12">
+
+                            <div class="col-7">
+                                Họ và tên:
+                                <strong>
+                                    <span t-field="o.partner_id.name"/>
+                                </strong>
+                            </div>
+                            <div class="col-5">
+                                Ngày/tháng/năm sinh:
+                                <t t-if="o.partner_id.birth_date">
+                                    <strong>
+                                        <span t-field="o.partner_id.birth_date"/>
+                                    </strong>
+                                </t>
+                                <t t-elif="o.partner_id.year_of_birth">
+                                    <strong>
+                                        <span t-field="o.partner_id.year_of_birth"/>
+                                    </strong>
+                                </t>
+                                <t t-else="">
+                                </t>
+                            </div>
+                        </div>
+                        <!--                        <div class="row col-12">-->
+                        <!--                            <div class="col-12">Ngày/tháng/năm sinh:-->
+                        <!--                                <t t-if="o.partner_id.birth_date">-->
+                        <!--                                    <strong>-->
+                        <!--                                        <span t-field="o.partner_id.birth_date"/>-->
+                        <!--                                    </strong>-->
+                        <!--                                </t>-->
+                        <!--                                <t t-elif="o.partner_id.year_of_birth">-->
+                        <!--                                    <strong>-->
+                        <!--                                        <span t-field="o.partner_id.year_of_birth"/>-->
+                        <!--                                    </strong>-->
+                        <!--                                </t>-->
+                        <!--                                <t t-else="">-->
+                        <!--                                </t>-->
+                        <!--                            </div>-->
+
+                        <!--                        </div>-->
+                        <div class="col-12">
+                            Địa chỉ :
+                            <t t-if="o.pass_port_address">
+                                <span t-field="o.pass_port_address"/>
+                            </t>
+                            <t t-else="">
+                                <span t-field="o.street"/>,
+                                <span t-field="o.district_id.name"/>,
+                                <span t-field="o.state_id.name"/>,
+                                <span t-field="o.country_id.name"/>
+                            </t>
+                        </div>
+
+                        <!--                        <div class="col-12">Khuyến mãi S&amp;M đã sử dụng:-->
+                        <!--                            <t t-if="o.prg_ids">-->
+                        <!--                                <span t-esc="', '.join(o.prg_ids.mapped('name'))"/>-->
+                        <!--                            </t>-->
+                        <!--                            <t t-else="">Chưa có</t>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="col-12">Trạng thái:-->
+
+                        <!--                        </div>-->
+                        <!--                        <div class="d-flex justify-content-center">-->
+                        <!--                            <div style="width:50px;"/>-->
+                        <!--                            <div class="mr-2">-->
+                        <!--                                <span style="margin-right:10px">Thực hiện dịch vụ-->
+                        <!--                                </span>-->
+                        <!--                                <input class="mr-2" type="checkbox"/>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="mr-2">-->
+                        <!--                                <span style="margin-right:10px">Đặt cọc-->
+                        <!--                                </span>-->
+                        <!--                                <input type="checkbox"/>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="mr-2">-->
+                        <!--                                <span style="margin-right:10px">Hẹn ngày làm DV-->
+                        <!--                                </span>-->
+                        <!--                                <input type="checkbox"/>-->
+                        <!--                                ( ..../ ..../ 20...)-->
+                        <!--                            </div>-->
+                        <!--                            <div class="mr-2">-->
+                        <!--                                <span style="margin-right:10px">Out sold-->
+                        <!--                                </span>-->
+                        <!--                                <input type="checkbox"/>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <div class="col-12" style="font-family:Times New Roman;font-size:18px;">
+                            <b>
+                                <i>I. Thông tin dịch vụ bảo hành</i>
+                            </b>
+                        </div>
+                        <style>
+                            .border.border-dark.align-middle{padding:4px}
+                        </style>
+                        <table class="table border border-dark text-center">
+                            <tr>
+                                <th class="border border-dark align-middle">
+                                    <strong>STT</strong>
+                                </th>
+                                <th class="border border-dark align-middle">
+                                    <strong>Dịch vụ</strong>
+                                </th>
+                                <th class="border border-dark align-middle">
+                                    <strong>Loại bảo hành</strong>
+                                </th>
+                                <th class="border border-dark align-middle">
+                                    <strong>Dịch vụ ban đầu</strong>
+                                </th>
+                            </tr>
+
+                            <t t-if="o.crm_line_ids">
+                                <t t-set="i" t-value="0"/>
+                                <t t-foreach="o.crm_line_ids" t-as="line">
+                                    <t t-set="i" t-value="i + 1"/>
+                                    <tr t-if="line and line.initial_product_id">
+                                        <td style="text-align:center;" class="border border-dark align-middle">
+                                            <span t-esc="i"/>
+                                        </td>
+                                        <td style="text-align:left;" class="border border-dark align-middle">
+                                            <span t-field="line.service_id.name"/>
+                                        </td>
+                                        <td style="text-align:left;" class="border border-dark align-middle">
+                                            <span t-field="line.type_guarantee"/>
+                                        </td>
+                                        <td style="text-align:left;" class="border border-dark align-middle">
+                                            <span t-field="line.initial_product_id.name"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </table>
+
+                        <div class="col-12" style="font-family:Times New Roman;font-size:18px;">
+                            <b>
+                                <i>II. Thông tin dịch vụ tư vấn mới</i>
+                            </b>
+                        </div>
+                        <!--<style>-->
+                        <!--    .border.border-dark.align-middle{padding:5px}-->
+                        <!--</style>-->
+                        <table class="table border border-dark text-center">
+                            <tr>
+                                <th class="border border-dark align-middle">
+                                    <strong>STT</strong>
+                                </th>
+                                <th class="border border-dark align-middle">
+                                    <strong>Dịch vụ</strong>
+                                </th>
+                                <th class="border border-dark align-middle">
+                                    <strong>Số buổi</strong>
+                                </th>
+                                <th class="border border-dark align-middle">
+                                    <strong>Đơn vị xử lý</strong>
+                                </th>
+                                <th class="border border-dark align-middle">
+                                    <strong>Tư vấn viên</strong>
+                                </th>
+                            </tr>
+
+                            <t t-if="o.crm_line_ids">
+                                <t t-set="i" t-value="0"/>
+                                <t t-foreach="o.crm_line_ids" t-as="line">
+                                    <t t-set="i" t-value="i + 1"/>
+                                    <tr t-if="line and not line.initial_product_id">
+                                        <td style="text-align:center;" class="border border-dark align-middle">
+                                            <span t-esc="i"/>
+                                        </td>
+                                        <td style="text-align:left;" class="border border-dark align-middle">
+                                            <strong>
+                                                <span t-field="line.service_id.name"/>
+                                            </strong>
+                                        </td>
+                                        <td style="text-align:center;" class="border border-dark align-middle">
+                                            <span t-field="line.quantity"/>
+                                        </td>
+                                        <td style="text-align:center;" class="border border-dark align-middle">
+                                            <span t-field="line.uom_price"/>
+                                        </td>
+                                        <td style="text-align:left;" class="border border-dark align-middle">
+                                            -
+                                            <span style="font-size: 12px" t-field="line.consultants_1.name"/>
+                                            <t t-if="line.consultants_2">
+                                                <br/>
+                                                -
+                                                <span style="font-size: 12px"
+                                                      t-field="line.consultants_2.name"/>
+                                            </t>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </table>
+                        <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                            <div>
+                                <t t-esc="'Ghi chú:' + '.'*400"/>
+                            </div>
+                            <div>
+                                <t t-esc="'.'*400"/>
+                            </div>
+                            <div>
+                                <t t-esc="'.'*400"/>
+                            </div>
+                            <div>
+                                <t t-esc="'.'*400"/>
+                            </div>
+                            <!--                            <div>-->
+                            <!--                                <t t-esc="'Số thứ tự dịch vụ sửa lại:' + '.'*400"/>-->
+                            <!--                            </div>-->
+                            <!--                            <div>-->
+                            <!--                                <t t-esc="'Số thứ tự dịch vụ tham gia:' + '.'*400"/>-->
+                            <!--                            </div>-->
+                            <div>
+                                <t t-esc="'Bác sĩ chỉ định:' + '.'*400"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <!--                        <table class="table border border-dark text-center" width="100%" style="font-size: 14px;">-->
+                        <!--                            <tr>-->
+                        <!--                                <td class="border border-dark align-middle">Bác sĩ Phẫu thuật</td>-->
+                        <!--                                <td class="border border-dark align-middle">.................................</td>-->
+                        <!--                                <td class="border border-dark align-middle">Phòng mổ</td>-->
+                        <!--                                <td class="border border-dark align-middle">.................................</td>-->
+                        <!--                                <td class="border border-dark align-middle">Sữa tươi</td>-->
+                        <!--                                <td class="border border-dark align-middle">-->
+                        <!--                                    <input type="checkbox"/>-->
+                        <!--                                </td>-->
+                        <!--                            </tr>-->
+                        <!--                            <tr>-->
+                        <!--                                <td class="border border-dark align-middle">Bác sĩ Gây mê</td>-->
+                        <!--                                <td class="border border-dark align-middle">.................................</td>-->
+                        <!--                                <td class="border border-dark align-middle">Bàn mổ</td>-->
+                        <!--                                <td class="border border-dark align-middle">.................................</td>-->
+                        <!--                                <td class="border border-dark align-middle">Nước suối</td>-->
+                        <!--                                <td class="border border-dark align-middle">-->
+                        <!--                                    <input type="checkbox"/>-->
+                        <!--                                </td>-->
+                        <!--                            </tr>-->
+                        <!--                            <tr>-->
+                        <!--                                <td class="border border-dark align-middle">Điều dưỡng dụng cụ</td>-->
+                        <!--                                <td class="border border-dark align-middle">.................................</td>-->
+                        <!--                                <td class="border border-dark align-middle">Thời gian bắt đầu</td>-->
+                        <!--                                <td class="border border-dark align-middle">.................................</td>-->
+                        <!--                                <td class="border border-dark align-middle">Bánh</td>-->
+                        <!--                                <td class="border border-dark align-middle">-->
+                        <!--                                    <input type="checkbox"/>-->
+                        <!--                                </td>-->
+                        <!--                            </tr>-->
+                        <!--                            <tr>-->
+                        <!--                                <td class="border border-dark align-middle">KTV Gây mê</td>-->
+                        <!--                                <td class="border border-dark align-middle">.................................</td>-->
+                        <!--                                <td class="border border-dark align-middle">Thời gian kết thúc</td>-->
+                        <!--                                <td class="border border-dark align-middle">.................................</td>-->
+                        <!--                                <td class="border border-dark align-middle">Sữa đậu nành</td>-->
+                        <!--                                <td class="border border-dark align-middle">-->
+                        <!--                                    <input type="checkbox" class="text-center"/>-->
+                        <!--                                </td>-->
+                        <!--                            </tr>-->
+                        <!--                            <tr>-->
+                        <!--                                <th colspan="5" class="border border-dark align-middle">KHÁCH HÀNG ĐỦ ĐIỀU KIỆN PHẪU-->
+                        <!--                                    THUẬT-->
+                        <!--                                </th>-->
+                        <!--                                <td class="border border-dark align-middle">-->
+                        <!--                                    <input type="checkbox"/>-->
+                        <!--                                </td>-->
+                        <!--                            </tr>-->
+                        <!--                        </table>-->
+                        <table class="table border border-dark" width="100%">
+                            <tr>
+                                <th colspan="6" class="border border-dark">Ekip PT:
+                                </th>
+                            </tr>
+                            <tr>
+                                <th colspan="6" class="border border-dark">Ekip Gây mê:
+                                </th>
+                            </tr>
+                            <tr>
+                                <td class="border border-dark align-middle">Phòng mổ</td>
+                                <td class="border border-dark align-middle">.................................</td>
+                                <td class="border border-dark align-middle">Bàn mổ</td>
+                                <td class="border border-dark align-middle">.................................</td>
+                                <td class="border border-dark align-middle">Sữa tươi</td>
+                                <td class="border border-dark align-middle">
+                                    <input type="checkbox"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="border border-dark align-middle">Thơi gian bắt đầu</td>
+                                <td class="border border-dark align-middle">.................................</td>
+                                <td class="border border-dark align-middle">Thời gian kết thúc</td>
+                                <td class="border border-dark align-middle">.................................</td>
+                                <td class="border border-dark align-middle">Nước suối</td>
+                                <td class="border border-dark align-middle">
+                                    <input type="checkbox"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="2" class="border border-dark align-middle">Bánh</td>
+                                <td class="border border-dark align-middle">
+                                    <input type="checkbox"/>
+                                </td>
+                                <td colspan="2" class="border border-dark align-middle">Sữa đậu nành</td>
+                                <td class="border border-dark align-middle">
+                                    <input type="checkbox"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th colspan="5" class="border border-dark align-middle text-center">KHÁCH HÀNG ĐỦ ĐIỀU
+                                    KIỆN PHẪU THUẬT
+                                </th>
+                                <td class="border border-dark align-middle">
+                                    <input type="checkbox"/>
+                                </td>
+                            </tr>
+                        </table>
+
+                        <div class="row">
+                            <div class="col-6 text-center">
+                                <strong style="font-size: 18px;">Khách hàng đồng ý ký tên</strong>
+                                <div>
+                                    <i>(Ký, ghi rõ họ tên)</i>
+                                </div>
+                            </div>
+                            <div class="col-6 text-center">
+                                <strong style="font-size: 18px;">Ngày ..... tháng ..... năm .........</strong>
+                                <br/>
+                                Nhân viên: ..........................................
+                            </div>
+                        </div>
+                    </t>
+                    <t t-else="">
+                        <div class="text-center col-12">
+                            <span>Không thể in Phiếu thông tin bảo hành do Booking:
+                                <b>
+                                    <span t-esc="o.name"/>
+                                </b>
+                                không phải Booking bảo hành
+                            </span>
+                        </div>
+                    </t>
+
+                </div>
+            </t>
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:18px;">
+
+                    <div class="oe_structure"/>
+                    <div class="text-center" style="font-family:Times New Roman;font-weight:bolder;">
+                        <div style="font-size: 25px;">CHECK LIST DÀNH CHO KHÁCH HÀNG PHẪU THUẬT</div>
+                    </div>
+                    <!--                    <div class="text-center">-->
+                    <!--                        <span>Mã Booking:</span>-->
+                    <!--                        <b>-->
+                    <!--                            <i t-field="o.booking_id.name"/>-->
+                    <!--                        </b>-->
+                    <!--                    </div>-->
+                    <br/>
+                    <div class="row col-12">
+                        <div class="col-6">Họ và tên:
+                            <strong>
+                                <span t-field="o.partner_id.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-6">Mã Booking:
+                            <i>
+                                <strong>
+                                    <span t-field="o.name"/>
+                                </strong>
+                            </i>
+                        </div>
+                    </div>
+                    <table class="table border border-dark text-center" width="100%" height="0px">
+                        <tr>
+                            <td class="border border-dark align-middle">STT</td>
+                            <td class="border border-dark align-middle">Nội dung</td>
+                            <td class="border border-dark align-middle"></td>
+                            <td class="border border-dark align-middle">STT</td>
+                            <td class="border border-dark align-middle">Nội dung</td>
+                            <td class="border border-dark align-middle"></td>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">1</td>
+                            <td class="border border-dark align-middle">Thanh toán đủ</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+                            <td class="border border-dark align-middle">7</td>
+                            <td class="border border-dark align-middle">Điện tim</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">2</td>
+                            <td class="border border-dark align-middle">Thanh toán ........... Nợ ...............</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+                            <td class="border border-dark align-middle">8</td>
+                            <td class="border border-dark align-middle">Xét nghiệm nước tiểu</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">3</td>
+                            <td class="border border-dark align-middle">Xét nghiệm máu</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+                            <td class="border border-dark align-middle">9</td>
+                            <td class="border border-dark align-middle">Lấy mẫu hàm</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">4</td>
+                            <td class="border border-dark align-middle">Chụp phim hàm mặt</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+                            <td class="border border-dark align-middle">10</td>
+                            <td class="border border-dark align-middle">Lên cung mặt</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">5</td>
+                            <td class="border border-dark align-middle">Chụp phim Xquang</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+                            <td class="border border-dark align-middle">11</td>
+                            <td class="border border-dark align-middle">Vệ sinh răng miệng</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">6</td>
+                            <td class="border border-dark align-middle">Siêu âm</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+                            <td class="border border-dark align-middle">12</td>
+                            <td class="border border-dark align-middle">Đặt kim luồn</td>
+                            <td class="border border-dark align-middle">
+                                <input type="checkbox"/>
+                            </td>
+
+                        </tr>
+
+                    </table>
+                    <style>
+                        .border.border-dark.align-middle{padding:8px}
+                    </style>
+                    <div class="text-center" style="font-family:Times New Roman;font-weight:bolder;">
+                        <div style="font-size: 25px;">CHECK LIST THÔNG TIN KHÁCH HÀNG TRÊN PHÒNG MỔ</div>
+                    </div>
+
+                    <table class="table border border-dark" width="100%">
+                        <tr>
+                            <td class="border border-dark  text-center" style="width:30%;">
+                                <strong>CHUẨN BỊ TRƯỚC PT</strong>
+                            </td>
+                            <td class="border border-dark  text-center" style="width:20%;">
+                                <strong>NGƯỜI THỰC HIỆN</strong>
+                            </td>
+                            <td class="border border-dark align-middle text-center" style="width:25%;">
+                                <strong>TÊN THUỐC</strong>
+                            </td>
+                            <td class="border border-dark align-middle text-center" style="width:25%;">
+                                <strong>LIỀU DÙNG</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark  ">1. Chữ ký KH</td>
+                            <td class="border border-dark "></td>
+                            <td class="border border-dark align-middle">Midadanium 5mg/ml</td>
+                            <td class="border border-dark align-middle"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">1. Đúng tên,năm sinh, giới tính KH</td>
+                            <td class="border border-dark align-middle"/>
+                            <td class="border border-dark align-middle">Fentanyl 0.1 mg/ 2ml</td>
+                            <td class="border border-dark align-middle"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">3. Bs tư vấn</td>
+                            <td class="border border-dark align-middle"></td>
+                            <td class="border border-dark align-middle">Dolcontral 100mg/10ml</td>
+                            <td class="border border-dark align-middle"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">4. Chụp ảnh trước PT</td>
+                            <td class="border border-dark align-middle"></td>
+                            <td class="border border-dark align-middle">Propofol 1% 200mg/ 10 ml</td>
+                            <td class="border border-dark align-middle"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">5. Khám SK</td>
+                            <td class="border border-dark align-middle"></td>
+                            <td class="border border-dark align-middle">Lidocain 2% 200mg/10ml</td>
+                            <td class="border border-dark align-middle"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">6. Đã có KQ xét nghiệm</td>
+                            <td class="border border-dark align-middle"></td>
+                            <td class="border border-dark align-middle">Ketamin 500mg/10ml</td>
+                            <td class="border border-dark align-middle"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">7. Chuẩn bị trước PT</td>
+                            <td class="border border-dark align-middle"></td>
+                            <td colspan="2" class="border border-dark align-middle">Mạch: ....................... HA:
+                                .......................
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="2" class="border border-dark align-middle">PP vô cảm:
+                                .....................................................
+                            </td>
+                            <td colspan="2" class="border border-dark align-middle">Cân nặng: .....................
+                                Chiều cao: .....................
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark  text-center">
+                                <strong>SAU PT</strong>
+                            </td>
+                            <td class="border border-dark  text-center"/>
+                            <td rowspan="8" colspan="2" class="border border-dark">Ghi chú:</td>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">1. Chụp ảnh trong PM</td>
+                            <td class="border border-dark  text-center"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">2. Chụp ảnh sau PT</td>
+                            <td class="border border-dark  text-center"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">3. Hướng dẫn thuốc:</td>
+                            <td class="border border-dark  text-center"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">4. Khảo sát sự hài lòng KH</td>
+                            <td class="border border-dark  text-center"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">5. Trả biển tên, băng đô</td>
+                            <td class="border border-dark  text-center"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">6. Nhập ERP</td>
+                            <td class="border border-dark  text-center"/>
+                        </tr>
+                        <tr>
+                            <td class="border border-dark align-middle">7. BS Phẫu thuật khám KH trước khi về</td>
+                            <td class="border border-dark align-middle"/>
+                        </tr>
+
+                    </table>
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+
+        <template id="crm_guarantee_sheet">
+            <t t-call="web.html_container">
+                <t t-if="docs">
+                    <t t-call="crm_his_13.template_crm_guarantee_sheet" t-lang="docs[0].partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+                string="PHIẾU THÔNG TIN BẢO HÀNH (KN)"
+                id="action_crm_guarantee_sheet"
+                model="crm.lead"
+                report_type="qweb-pdf"
+                name="crm_his_13.crm_guarantee_sheet"
+                file="crm_his_13.crm_guarantee_sheet"
+                paperformat="crm_base.paper_format_crm"
+                menu="True"
+        />
+
+    </data>
+</odoo>

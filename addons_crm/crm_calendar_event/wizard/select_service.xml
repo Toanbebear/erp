@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="calendar_select_service_1" model="ir.ui.view">
+            <field name="name">Lịch hẹn</field>
+            <field name="model">crm.select.service</field>
+            <field name="inherit_id" ref="crm_base.view_form_crm_select_service"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='check_booking_date']" position="after">
+                    <field name="calendar_events" widget="many2many_tags" options="{'no_open':True,'no_create':True}" />
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

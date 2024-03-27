@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="source_config_account_tree_view" model="ir.ui.view">
+            <field name="name">source.config.account.tree</field>
+            <field name="model">source.config.account</field>
+            <field name="arch" type="xml">
+                <tree string="Nguồn/Khối" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="source_config_account_act_window" model="ir.actions.act_window">
+            <field name="name">Cấu hình Nguồn/Khối</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">source.config.account</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new ModelTitle.
+                </p>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

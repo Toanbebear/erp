@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="report_service_overview_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO TỔNG QUAN THEO NHÓM DỊCH VỤ</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_report/static/xls/bao_cao_tong_quan_theo_dich_vu.xlsx"/>
+            <field name="store_fname">bao_cao_tong_quan_theo_nhom_dich_vu.xls</field>
+        </record>
+
+        <record model="ir.ui.view" id="bao_cao_thong_ke_tuong_tac_theo_nhom_dich_vu_form">
+            <field name="name">report.service.overview</field>
+            <field name="model">report.service.overview</field>
+            <field name="arch" type="xml">
+                <form string="Service Overview Report">
+                    <group>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}" required="True"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_service_overview" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_thong_ke_tuong_tac_theo_nhom_dich_vu_act">
+            <field name="name">Báo cáo thống kê tương tác theo nhóm dịch vụ</field>
+            <field name="res_model">report.service.overview</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_thong_ke_tuong_tac_theo_nhom_dich_vu_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_thong_ke_tuong_tac_theo_nhom_dich_vu_menu"
+                  name="Báo cáo thống kê tương tác theo nhóm dịch vụ"
+                  parent="crm_report.menu_crm_report_brand_overview"
+                  action="bao_cao_thong_ke_tuong_tac_theo_nhom_dich_vu_act"
+        />
+
+    </data>
+</odoo>

@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="collaborator_extebd_contract_wizard_view_form" model="ir.ui.view">
+            <field name="name">collaborator.extend.contract</field>
+            <field name="model">collaborator.extend.contract</field>
+            <field name="arch" type="xml">
+                <form string="Thông tin gia hạn hợp đồng">
+                    <group>
+                        <group>
+                            <field name="collaborator" options="{'no_create': True, 'no_open': True}" readonly="True"/>
+                            <field name="company_id" options="{'no_create': True, 'no_open': True}"  readonly="True"/>
+                            <field name="brand_id" readonly="True" force_save="True"/>
+                            <field name="manager_id"  force_save="True" required="True"/>
+                            <field name="referrer_id"  force_save="True" />
+                        </group>
+                        <group>
+                            <field name="contract_ids" options="{'no_create': True, 'no_open': True}" readonly="True"/>
+                            <field name="contract_type_id"  options="{'no_create': True, 'no_open': True}" required="True"/>
+                            <field name="start_date" required="True"/>
+                            <field name="end_date" required="True"/>
+                        </group>
+                    </group>
+                    <footer class="text-left">
+                        <button name="extend_create_contract" confirm="Bạn chắc chắn muốn gia hạn hợp đồng này"
+                                type="object" class="oe_highlight fa fa-plus"
+                                string="Gia hạn"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

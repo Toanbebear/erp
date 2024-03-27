@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_booking_create_sale_payment" model="ir.ui.view">
+            <field name="name">view_booking_create_sale_payment</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='total']" position="after">
+                    <field name="total_received"/>
+                    <field name="remaining_amount"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_booking_create_sale_payment_product" model="ir.ui.view">
+            <field name="name">view_booking_create_sale_payment_product</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_booking_order.view_booking_create_sale_order"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree/field[@name='stage_line_product']" position="before">
+                    <field name="total_received"/>
+                    <field name="remaining_amount"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

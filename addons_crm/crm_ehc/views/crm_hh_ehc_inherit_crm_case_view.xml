@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_crm_case_view_form_inherit" model="ir.ui.view">
+			<field name="name">CRM Case</field>
+			<field name="model">crm.case</field>
+			<field name="inherit_id" ref="crm_base.crm_case_view_form"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='company_id']" position="after">
+					<field name="check_case_ehc" invisible="1"/>
+					<field name="case_coincide" attrs="{'invisible': [('check_case_ehc', '!=', True)]}"/>
+				</xpath>
+				<xpath expr="//form/sheet" position="before">
+					<header>
+						<button name="set_case_coincide" type="object" string="Case trùng"
+								attrs="{'invisible': ['|',('check_case_ehc', '!=', True), ('case_coincide', '=', True)]}"/>
+					</header>
+				</xpath>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_crm_case_view_tree_inherit" model="ir.ui.view">
+			<field name="name">CRM Case</field>
+			<field name="model">crm.case</field>
+			<field name="inherit_id" ref="crm_base.crm_case_tree_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='company_id']" position="after">
+					<field name="check_case_ehc" invisible="1"/>
+					<field name="case_coincide" invisible="1"/>
+				</xpath>
+				<xpath expr="//tree" position="attributes">
+					<attribute name="decoration-muted">case_coincide==True</attribute>
+				</xpath>
+			</field>
+		</record>
+	
+	</data>
+</odoo>

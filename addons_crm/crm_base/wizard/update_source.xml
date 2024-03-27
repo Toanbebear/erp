@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="wizard_update_source" model="ir.ui.view">
+            <field name="name">Cập nhập nguồn</field>
+            <field name="model">crm.line.update.source</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="booking_id" readonly="True" force_dave="True"/>
+                            <field name="crm_line_ids" required="True" options="{'no_open':True,'no_create':True}" widget="many2many_tags"/>
+                            <field name="source_id" required="True" options="{'no_open':True,'no_create':True}"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="update_source" type="object" string="Cập nhật" class="oe_highlight"/>
+                        <button string="Hủy" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

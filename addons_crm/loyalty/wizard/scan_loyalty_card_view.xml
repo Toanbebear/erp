@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <record id="scan_loyalty_card_form" model="ir.ui.view">
+        <field name="name">scan.loyalty.card.form</field>
+        <field name="model">scan.loyalty.card</field>
+        <field name="arch" type="xml">
+            <form string="Find">
+                <div class="text-center">
+                    <separator string="ID CARD"/>
+                    <field name="name"/>
+                </div>
+                <footer>
+                    <button type="object" string="Confirm" name="qr_confirm" class="oe_highlight"/>
+                    <button special="cancel" class="oe_highlight" string="Cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="open_scan_loyalty_card">
+        <field name="name">Loyalty Card Scan</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">scan.loyalty.card</field>
+        <field name="view_mode">form</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

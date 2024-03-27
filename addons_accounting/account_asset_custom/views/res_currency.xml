@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_currency_form_account_asset_custom" model="ir.ui.view">
+        <field name="name">view.currency.form.account_asset_custom</field>
+        <field name="model">res.currency</field>
+        <field name="inherit_id" ref="base.view_currency_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='currency_subunit_label']" position="after">
+                <field name="receivable_account_id"/>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inheriting vaccine screen to display walkin reference -->
+        <record id="sh_medical_vaccine_walkin_view" model="ir.ui.view">
+            <field name="name">Vaccines</field>
+            <field name="model">sh.medical.vaccines</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_vaccine_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='institution']" position="after">
+                    <field name="walkin"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

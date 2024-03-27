@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record model="ir.rule" id="account_payment_register_behalf">
+            <field name="name">Bảng kê thanh toán</field>
+            <field name="model_id" ref="model_account_register_payment_behalf"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_read" eval="True"/>
+            <field name="groups" eval="[(4, ref('account.group_account_invoice')),(4, ref('account.group_account_manager'))]"/>
+            <field name="domain_force">[('company_id', 'in', company_ids)]</field>
+        </record>
+
+        <!--        <record model="ir.rule" id="account_payment_register_behalf_line">-->
+        <!--            <field name="name">Bảng chi tiết thanh toán công nợ</field>-->
+        <!--            <field name="model_id" ref="model_account_register_payment_behalf_line"/>-->
+        <!--            <field name="perm_create" eval="True"/>-->
+        <!--            <field name="perm_write" eval="True"/>-->
+        <!--            <field name="perm_unlink" eval="True"/>-->
+        <!--            <field name="perm_read" eval="True"/>-->
+        <!--            <field name="groups" eval="[(4, ref('account.group_account_invoice')),(4, ref('account.group_account_manager'))]"/>-->
+        <!--            <field name="domain_force">[('register_payment.company_id', 'in', company_ids)]</field>-->
+        <!--        </record>-->
+
+        <record model="ir.rule" id="account_payment_approval_register_behalf_line">
+            <field name="name">Rule duyệt chi</field>
+            <field name="model_id" ref="model_account_register_payment_behalf_line"/>
+            <field name="perm_create" eval="False"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+            <field name="perm_read" eval="True"/>
+            <field name="groups" eval="[(4, ref('account.group_account_invoice')),(4, ref('account.group_account_manager'))]"/>
+            <field name="domain_force">[('register_payment.company_id', 'in', company_ids), ('register_payment.type', '=', 'dc')]</field>
+        </record>
+
+        <record model="ir.rule" id="account_payment_register_behalf_line">
+            <field name="name">Rule tạo đề nghị chi hộ</field>
+            <field name="model_id" ref="model_account_register_payment_behalf_line"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+            <field name="perm_read" eval="True"/>
+            <field name="groups" eval="[(4, ref('account.group_account_invoice')),(4, ref('account.group_account_manager'))]"/>
+            <field name="domain_force">[('register_payment.company_id', 'in', company_ids), ('register_payment.type', '=', 'dn')]</field>
+        </record>
+    </data>
+</odoo>

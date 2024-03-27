@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--        <menuitem id="menu_crm_report"-->
+        <!--              name="Report CRM"-->
+        <!--              parent="crm.crm_menu_report"-->
+        <!--        />-->
+
+        <menuitem id="menu_crm_report"
+                  name="Báo cáo CRM"
+                  parent="crm.crm_menu_root"
+        />
+
+        <menuitem id="menu_crm_report_brand_overview"
+                  name="Báo cáo tổng quan thương hiệu"
+                  parent="crm_report.menu_crm_report"
+        />
+
+        <menuitem id="menu_crm_report_sales"
+                  name="Báo cáo doanh thu"
+                  parent="crm_report.menu_crm_report"
+        />
+    </data>
+</odoo>

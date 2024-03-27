@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="log_api_action" model="ir.actions.act_window">
+        <field name="name">Log Api</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">enterprise.api.log</field>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+    <record id="log_api_tree" model="ir.ui.view">
+        <field name="name">log.api.tree</field>
+        <field name="model">enterprise.api.log</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="id"/>
+                <field name="name"/>
+                <field name="url"/>
+                <field name="type"/>
+                <field name="header"/>
+                <field name="request"/>
+                <field name="status"/>
+                <field name="response"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="enterprise_api_sync_wizard_form_view" model="ir.ui.view">
+        <field name="name">enterprise.api.sync.form</field>
+        <field name="model">enterprise.api.sync</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <group>
+                        <field name="model" required="1"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_sync" string="Sync" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="enterprise_api_sync_action" model="ir.actions.act_window">
+        <field name="name">Sync Enterprise</field>
+        <field name="res_model">enterprise.api.sync</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="api_log" name="API Enterprise" parent="base.menu_custom"/>
+    <menuitem parent="api_log" name="Api Logs"
+            id="Logs api" action="log_api_action" sequence="1"/>
+    <menuitem action="enterprise_api_sync_action" id="menu_action_enterprise_api_sync"
+              name="Sync Enterprise" sequence="20" parent="api_log"/>
+</odoo>

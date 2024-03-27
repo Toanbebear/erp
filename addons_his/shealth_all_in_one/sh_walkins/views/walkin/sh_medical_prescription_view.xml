@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inheriting prescription screen to display walkin reference -->
+        <record id="sh_medical_prescription_walkin_view" model="ir.ui.view">
+            <field name="name">Prescriptions</field>
+            <field name="model">sh.medical.prescription</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_prescription_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='doctor']" position="after">
+                    <field name="walkin" force_save="1" options="{'no_create':True}" attrs="{'readonly': [('state','in',['Đã xuất thuốc'])]}"/>
+                    <field name="evaluation" readonly="1" force_save="1"/>
+                    <field name="service_related" force_save="1" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='services']" position="attributes">
+                    <attribute name="domain">[('id','in',service_related)]</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date']" position="before">
+                    <field name="his_company" invisible="1"/>
+                    <field name="location_id" invisible="1" options="{'no_open':True,'no_create':True}"
+                           attrs="{'readonly':[('state','=','Đã xuất thuốc')]}" force_save="1"
+                           context="{'view_only_name': True}"/>
+                </xpath>
+                <xpath expr="//field[@name='institution']" position="replace">
+                    <field name="allow_institutions" invisible="1"/>
+                    <field name="institution" domain="[('id', 'in', allow_institutions)]"
+                           options="{'no_create': True,'no_open':True}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="payment_list_form_view" model="ir.ui.view">
+            <field name="name">payment_list_form</field>
+            <field name="model">payment.list</field>
+            <field name="arch" type="xml">
+                <form string="Form bảng kê thanh toán">
+                    <header>
+                        <button name="action_confirm" string="Xác nhận" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('draft',))]}"/>
+                        <button name="action_draft" string="Đưa về dự thảo" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'in', ('draft',))]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,waiting,done"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="name"/>
+                            <h1>
+                                <field name="name" placeholder="Title"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="payment_type"/>
+                                <field name="payment_date"/>
+                                <field name="crm_id" required="True" options="{'no_open':False,'no_create':True}"
+                                       attrs="{'readonly':[('state','!=','draft'),('crm_id','!=',False)]}" force_save="True"/>
+                                <field name="communication"/>
+                            </group>
+                            <group>
+                                <field name="partner_type"/>
+                                <field name="payment_method" invisible="1"/>
+                                <field name="partner_id" options="{'no_open':False,'no_create':True}"/>
+                                <field name="company_id"/>
+                                <field name="brand_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Phiếu thanh toán" name="payment_list_items">
+                                <field name="payment_ids" context="{'default_payment_type': payment_type,
+                                                                    'default_payment_method_id': payment_method,
+                                                                    'default_crm_id': crm_id,
+                                                                    'default_partner_id': partner_id,
+                                                                    'default_company_id': company_id,
+                                                                    'default_default_payment_date': payment_date,
+                                                                    'default_communication': communication,
+                                                                    'default_payment_list_id': active_id,
+                                                                    'is_payment_list_id': True}" mode="tree"
+                                       attrs="{'readonly': [('state','!=','draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="payment_method"/>
+                                        <field name="journal_id"/>
+                                        <field name="amount"/>
+                                        <field name="currency_id"/>
+                                        <field name="currency_rate_id" attrs="{'invisible': [('currency_id','=','VND')]}"/>
+                                        <field name="amount_vnd"/>
+                                        <field name="payment_type" invisible="1"/>
+                                        <field name="company_id" invisible="1"/>
+                                        <field name="state" optional="hide"/>
+                                        <field name="payment_list_state" optional="hide"/>
+                                        <button name="post" string="Xác nhận" type="object"
+                                                class="btn-danger" optional="show"
+                                                confirm="Bạn có chắc ghi nhận phiếu thanh toán này"
+                                                attrs="{'invisible':['|', ('payment_list_state','=', 'draft'), ('state', '!=', 'draft')]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <group name="note_group" col="6">
+                            <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                                <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                    <label for="amount_subtotal"/>
+                                </div>
+                                <field name="amount_subtotal" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_id'}"/>
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                        </group>
+                        <div class="oe_right oe_inline o_td_label">
+                            <label for="user"/>
+                            <field name="user" readonly="True"/>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers" groups="base.group_user"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="payment_list_tree_view" model="ir.ui.view">
+            <field name="name">payment.list.tree</field>
+            <field name="model">payment.list</field>
+            <field name="arch" type="xml">
+                <tree string="Dan sách bảng kê thanh toán">
+                    <field name="payment_type"/>
+                    <field name="payment_date"/>
+                    <field name="name"/>
+                    <field name="company_id"/>
+                    <field name="brand_id"/>
+                    <field name="user"/>
+                    <field name="payment_ids" widget="many2many_tags"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="payment_list_search_view" model="ir.ui.view">
+            <field name="name">bảng kê thanh toán search</field>
+            <field name="model">payment.list</field>
+            <field name="arch" type="xml">
+                <search string="Taskbars ">
+                    <group expand="1" string="Group By">
+                        <filter string="Công ty" name="company" context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="payment_list_act_window" model="ir.actions.act_window">
+            <field name="name">Bảng kê thanh toán</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">payment.list</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem name="Bảng kê thanh toán"
+                  id="sci_payment_list_menu"
+                  parent="crm_base.crm_menu_payment"
+                  groups="account.group_account_invoice,crm_base.manager_customer_service"
+                  sequence="2"
+                  action="payment_list_act_window"/>
+
+    </data>
+</odoo>

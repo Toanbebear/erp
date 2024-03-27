@@ -1,0 +1,26 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+
+access_crm_collaborators,group crm collaborators,model_crm_collaborators,,1,0,0,0
+access_crm_collaborators_user,group user collaborators,model_crm_collaborators,crm_collaborators.group_collaborators_user,1,1,1,0
+access_crm_collaborators_system,group system crm collaborators,model_crm_collaborators,crm_collaborators.group_collaborators_system,1,1,1,0
+access_crm_collaborators_manager,group manager crm collaborator,model_crm_collaborators,crm_collaborators.group_collaborators_manager,1,1,1,1
+
+access_products_discount,group crm product discount,model_products_discount,,1,0,0,0
+access_products_discount_user,group user collaborators products discount,model_products_discount,crm_collaborators.group_collaborators_user,1,1,1,0
+access_products_discount_system,group system products discount,model_products_discount,crm_collaborators.group_collaborators_system,1,1,1,0
+access_products_discount_manager,group manager products discount,model_products_discount,crm_collaborators.group_collaborators_manager,1,1,1,1
+
+access_collaborators_contract,group crm collaborators contract,model_collaborators_contract,,1,0,0,0
+access_collaborators_contract_user,group user collaborators contract,model_collaborators_contract,crm_collaborators.group_collaborators_user,1,1,1,0
+access_collaborators_contract_system,group system collaborators contract,model_collaborators_contract,crm_collaborators.group_collaborators_system,1,1,1,0
+access_collaborators_contract_manager,group manager collaborators contract,model_collaborators_contract,crm_collaborators.group_collaborators_manager,1,1,1,1
+
+access_crm_payment_ctv,group crm payment ctv,model_crm_payment_ctv,,1,1,1,0
+access_crm_payment_ctv_manager,group crm payment ctv manager,model_crm_payment_ctv,crm_collaborators.group_collaborators_manager,1,1,1,1
+
+access_crm_detail_sale,group crm detail sale,model_crm_detail_sale,,1,1,1,1
+
+
+access_account_payment_ctv_manager,group system account payment ctv,model_account_payment_ctv,crm_collaborators.group_collaborators_system,1,1,1,1
+

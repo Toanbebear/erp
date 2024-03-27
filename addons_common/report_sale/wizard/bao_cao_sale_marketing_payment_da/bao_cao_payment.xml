@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bao_cao_payment_form_da">
+            <field name="name">Báo cáo Payment</field>
+            <field name="model">sale.marketing.payment.da</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo Booking">
+                    <group>
+                        <field name="report_type" required="True"/>
+                        <field name="start_date" required="True" string="Từ ngày:"/>
+                        <field name="end_date" required="True" string="Đến ngày:"/>
+                        <field name="company_ids" required="True" string="Chi nhánh" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_da" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_payment_act_da">
+            <field name="name">Báo cáo Payment</field>
+            <field name="res_model">sale.marketing.payment.da</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_payment_form_da"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_payment_menu"
+                  name="A.I.4 Báo cáo Payment"
+                  parent="report_sale.menu_report_brand_sale_marketing_and_accounting_marketing_dong_a"
+                  sequence="4"
+                  action="report_sale.bao_cao_payment_act_da"
+        />
+
+        <record id="bao_cao_payment_attachment" model="ir.attachment">
+            <field name="name">Báo cáo Payment</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_payment.xlsx"/>
+            <field name="store_fname">bao_cao_payment.xls</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_form_brand" model="ir.ui.view">
+            <field name="name">res.brand.form</field>
+            <field name="model">res.brand</field>
+            <field name="priority">2</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <field name="logo" widget="image" class="oe_avatar"/>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="code"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="phone" widget="phone"/>
+                                <field name="website" widget="url"/>
+                                <field name="company_ids" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <notebook>
+                    </notebook>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_brand" model="ir.ui.view">
+            <field name="name">Brand</field>
+            <field name="model">res.brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="phone"/>
+                    <field name="type"/>
+                    <field name="website"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="view_res_brand_kanban" model="ir.ui.view">
+            <field name="name">res.brand.kanban</field>
+            <field name="model">res.brand</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <field name="id"/>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="phone"/>
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div t-attf-class="oe_kanban_global_click">
+                                <div class="o_kanban_image">
+                                    <img t-att-src="kanban_image('res.brand', 'logo', record.id.raw_value)" alt="Brand"
+                                         class="o_image_64_contain"/>
+                                </div>
+                                <div class="oe_kanban_details">
+                                    <div>
+                                        <strong>
+                                            <field name="name"/>
+                                        </strong>
+                                    </div>
+
+                                    <div>
+                                        <field name="code"/>
+                                    </div>
+
+                                    <div>
+                                        <field name="phone"/>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="action_open_view_brand" model="ir.actions.act_window">
+            <field name="name">Brands</field>
+            <field name="res_model">res.brand</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <record id="action_res_brand_form" model="ir.actions.act_window">
+            <field name="name">Brands</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.brand</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new brand
+                </p>
+                <p>
+                    Create and manage the brands that will be managed from here.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="action_res_brand_form" id="menu_action_res_brand_form" parent="base.menu_users"/>
+    </data>
+</odoo>

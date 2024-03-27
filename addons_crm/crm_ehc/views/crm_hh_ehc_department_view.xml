@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_department_act" model="ir.actions.act_window">
+			<field name="name">Phòng khám</field>
+			<field name="view_mode">tree,form</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.hh.ehc.department</field>
+			<field name="domain">[]</field>
+		</record>
+		
+		<menuitem id="menu_service_department_ehc"
+				  name="Phòng khám"
+				  parent="crm_ehc.crm_hh_ehc_root_menu"
+				  action="crm_ehc.crm_hh_ehc_department_act"
+		/>
+		
+		<record id="crm_hh_ehc_department_tree" model="ir.ui.view">
+			<field name="name">Department EHC tree</field>
+			<field name="model">crm.hh.ehc.department</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="room_code"/>
+					<field name="room_name"/>
+					<field name="faculty_id"/>
+					<field name="room_stage"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_department_form" model="ir.ui.view">
+			<field name="name">Department EHC form</field>
+			<field name="model">crm.hh.ehc.department</field>
+			<field name="arch" type="xml">
+				<form>
+					<sheet>
+						<group>
+							<field name="room_id"/>
+							<field name="faculty_id"/>
+							<field name="room_code"/>
+							<field name="room_name"/>
+							<!--						<field name="id_department_room"/>-->
+							<!--						<field name="code_department_room"/>-->
+							<field name="room_stage"/>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

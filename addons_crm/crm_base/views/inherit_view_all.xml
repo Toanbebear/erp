@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_crm_stage" model="ir.ui.view">
+            <field name="name">Form.crm.stage</field>
+            <field name="model">crm.stage</field>
+            <field name="inherit_id" ref="crm.crm_stage_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='fold']" position="after">
+                    <field name="crm_type_id" widget="many2many_tags"/>
+                    <field name="crm_stage_insight_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_payment_crm" model="ir.actions.act_window">
+            <field name="name">Thanh toán</field>
+            <field name="res_model">account.payment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('partner_type', '=', 'customer')]</field>
+            <field name="context">{'default_payment_type': 'inbound','default_partner_type': 'customer','search_default_inbound_filter': 1,'res_partner_search_mode': 'customer','currency_rate_date': True}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('account.view_account_payment_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('account.view_account_payment_form')})]"/>
+        </record>
+
+        <!--        <record id="view_form_crm_partner_" model="ir.ui.view">-->
+        <!--            <field name="name">Form crm partner</field>-->
+        <!--            <field name="model">res.partner</field>-->
+        <!--            <field name="inherit_id" ref="base.view_partner_form"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//sheet[1]" position="before">-->
+        <!--                    <header>-->
+        <!--                        <button name="booking_guarantee" string="Tạo booking bảo hành" type="object" class="btn-info"/>-->
+        <!--                    </header>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <!--        <record id="view_form_brand_company" model="ir.ui.view">-->
+        <!--            <field name="name">Brand company</field>-->
+        <!--            <field name="model">res.company</field>-->
+        <!--            <field name="inherit_id" ref="base.view_company_form"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//field[@name='partner_id']" position="after">-->
+        <!--                    <field name="brand_id"/>-->
+        <!--                    <field name="brand_ids" widget="many2many_tags"/>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <record id="view_campaign_brand" model="ir.ui.view">
+            <field name="name">Campaign brand</field>
+            <field name="model">utm.campaign</field>
+            <field name="inherit_id" ref="utm.utm_campaign_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/field[@name='stage_id']" position="before">
+                    <button name="set_new" class="btn-danger" string="Đặt là Chưa bắt đầu" type="object" attrs="{'invisible' : [('campaign_status', '=', '1')]}"/>
+                    <button name="set_active" class="oe_highlight" string="Đặt là Đang chạy" type="object" attrs="{'invisible' : [('campaign_status', '=', '2')]}"/>
+                    <button name="set_expire" class="oe_highlight" string="Đặt là Kết thúc" type="object" attrs="{'invisible' : [('campaign_status', '=', '3')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+<!--                    <field name="active" invisible="True"/>-->
+                    <field name="brand_id" required="True" options='{"no_open": True, "no_create": True}'/>
+                    <field name="text_code" required="True"/>
+                    <field name="doc_attachment_id" widget="many2many_binary" class="oe_inline"/>
+                    <field name="start_date" required="True"/>
+                    <field name="end_date" required="True"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="code" required="True"/>
+                </xpath>
+                <xpath expr="//header/field[@name='stage_id']" position="replace">
+                    <field name="campaign_status" widget="statusbar"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_tree_campaign_inherit" model="ir.ui.view">
+            <field name="name">Campaign</field>
+            <field name="model">utm.campaign</field>
+            <field name="inherit_id" ref="utm.utm_campaign_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='stage_id']" position="replace">
+                    <field name="campaign_status"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="replace">
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="utm_campaign_search_view">
+            <field name="name">Tìm kiếm chiến dịch ...</field>
+            <field name="model">utm.campaign</field>
+            <field name="inherit_id" ref="utm.view_utm_campaign_view_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='user_id']" position="replace">
+                    <filter string="Chưa bắt đầu" name="campaign_1" domain="[('campaign_status', '=', '1')]"/>
+                    <filter string="Đang chạy" name="campaign_2" domain="[('campaign_status', '=', '2')]"/>
+                    <filter string="Kết thúc" name="campaign_3" domain="[('campaign_status', '=', '3')]"/>
+                </xpath>
+                <xpath expr="//group" position="replace">
+                    <filter string="Thương hiệu" name="group_brand_id"
+                        context="{'group_by': 'brand_id'}"/>
+                    <filter string="Trạng thái chiến dịch" name="group_campaign_status"
+                        context="{'group_by': 'campaign_status'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="action_open_view_campaign_by_crm_base" model="ir.actions.act_window">
+            <field name="name">Chiến dịch</field>
+            <field name="res_model">utm.campaign</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('brand_id.company_ids', 'in', allowed_company_ids)]</field>
+            <field name="context">{'search_default_group_brand_id': 1, 'search_default_campaign_2': 1}</field>
+        </record>
+
+        <record id="view_form_utm_source_crm" model="ir.ui.view">
+            <field name="name">Source</field>
+            <field name="model">utm.source</field>
+            <field name="inherit_id" ref="utm.utm_source_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="edit">0</attribute>
+                    <attribute name="duplicate">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="active" invisible="True"/>
+                    <field name="code" required="True"/>
+                    <field name="type_source"/>
+                    <field name="category_id" required="True" options="{'no_open':True,'no_create':True}"/>
+                    <field name="utm_source_ins_id"/>
+                    <field name="tag_ids" widget="many2many_tags"/>
+                    <field name="original_source"/>
+                    <field name="extend_source"/>
+                    <field name="khach_hang_gioi_thieu"/>
+                    <field name="accounting_source_category" options="{'no_open':True,'no_create':True}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_form_utm_category_source_crm" model="ir.ui.view">
+            <field name="name">Category Source</field>
+            <field name="model">crm.category.source</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_utm_ctg_source" model="ir.ui.view">
+            <field name="name">Category source</field>
+            <field name="model">crm.category.source</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_open_view_category_source" model="ir.actions.act_window">
+            <field name="name">Category source</field>
+            <field name="res_model">crm.category.source</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="view_form_tag_source" model="ir.ui.view">
+            <field name="name">Tags Source</field>
+            <field name="model">crm.tag.source</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_tags_source" model="ir.ui.view">
+            <field name="name">Tags source</field>
+            <field name="model">crm.tag.source</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"/>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_open_view_tags_source" model="ir.actions.act_window">
+            <field name="name">Tags source</field>
+            <field name="res_model">crm.tag.source</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+
+        <record id="view_form_price_list_crm" model="ir.ui.view">
+            <field name="name">Price List</field>
+            <field name="model">product.pricelist</field>
+            <field name="inherit_id" ref="product.product_pricelist_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="brand_id" required="True"/>
+                    <field name="start_date" invisible="1"/>
+                    <field name="end_date" invisible="1"/>
+                    <field name="type" required="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_form_sol" model="ir.ui.view">
+            <field name="name">Sale order line</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.sale_order_line_view_form_readonly"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_id']" position="after">
+                    <field name="crm_line_id"/>
+                    <field name="discount_cash"/>
+                    <field name="sale_to"/>
+                    <field name="other_discount" string="Giảm khác"/>
+                    <field name="uom_price"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_form_product" model="ir.ui.view">
+            <field name="name">Product</field>
+            <field name="model">product.product</field>
+            <field name="inherit_id" ref="product.product_normal_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='categ_id']" position="after">
+                    <field name="type_product_crm" groups="base.group_system"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        <record model="ir.ui.view" id="view_form_order">-->
+        <!--            <field name="name">Sale order</field>-->
+        <!--            <field name="model">sale.order</field>-->
+        <!--            <field name="inherit_id" ref="sale.view_order_form"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="after">-->
+        <!--                    <field name="discount_cash" readonly="True"/>-->
+        <!--                    <field name="sale_to" readonly="True"/>-->
+        <!--                    <field name="other_discount" readonly="True" string="Giảm khác"/>-->
+        <!--                    <field name="uom_price" invisible="True"/>-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//button[@name='action_quotation_send']" position="attributes">-->
+        <!--                    <attribute name="invisible">True</attribute>-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//button[@name='action_confirm']" position="after">-->
+        <!--                    <button name="open_discount_review" type="object" string="Giảm giá sâu" class="btn-info"-->
+        <!--                            attrs="{'invisible':[('state', '!=', 'draft')]}"-->
+        <!--                            groups="crm_base.receptionist_crm"/>-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//field[@name='pricelist_id']" position="before">-->
+        <!--                    <field name="brand_id"/>-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//field[@name='pricelist_id']" position="after">-->
+        <!--                    <field name="amount_remain" invisible="False"/>-->
+        <!--                    &lt;!&ndash;                    <field name="document_related" string="Mã booking tương ứng"/>&ndash;&gt;-->
+        <!--                    <field name="booking_id" groups="base.group_system" invisible="True"/>-->
+        <!--                    <field name="debt_review_id" readonly="True" force_save="True" widget="many2many_tags" options="{'color_field': 'color'}"/>-->
+        <!--                    <field name="amount_owed" readonly="True" force_save="True" invisible="False"/>-->
+        <!--&lt;!&ndash;                    <field name="amount_receivable" readonly="True" force_save="True" invisible="False"/>&ndash;&gt;-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//field[@name='pricelist_id']" position="attributes">-->
+        <!--                    <attribute name="domain">[('type','=','product')]</attribute>-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//field[@name='partner_id']" position="attributes">-->
+        <!--                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">-->
+        <!--                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">-->
+        <!--                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>-->
+        <!--                </xpath>-->
+        <!--&lt;!&ndash;                <xpath expr="//page[@name='order_lines']/field/form/group/group/field[@name='product_id']" position="attributes">&ndash;&gt;-->
+        <!--&lt;!&ndash;                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>&ndash;&gt;-->
+        <!--&lt;!&ndash;                </xpath>&ndash;&gt;-->
+        <!--                <xpath expr="//field[@name='product_id']" position="attributes">-->
+        <!--                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//field[@name='product_uom']" position="attributes">-->
+        <!--                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>-->
+        <!--                </xpath>-->
+        <!--&lt;!&ndash;                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">&ndash;&gt;-->
+        <!--&lt;!&ndash;                    <attribute name="readonly">True</attribute>&ndash;&gt;-->
+        <!--&lt;!&ndash;                </xpath>&ndash;&gt;-->
+        <!--                <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="attributes">-->
+        <!--                    <attribute name="readonly">True</attribute>-->
+        <!--                </xpath>-->
+        <!--                <xpath expr="//field[@name='partner_id']" position="after">-->
+        <!--                    <field name="code_customer"/>-->
+        <!--                    <field name="phone_customer"/>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <record model="ir.ui.view" id="view_form_crm_price_item">
+            <field name="name">Product price item</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='fixed_price']" position="before">
+                    <field name="price_currency_usd"/>
+                    <field name="rate_currency_id"/>
+                </xpath>
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="product_default_code"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_tree_crm_price_item">
+            <field name="name">Product price item</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_tree_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="product_id"/>
+                    <field name="product_default_code"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="open_sale_order_line" model="ir.actions.act_window">
+            <field name="name">Sale order line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+
+        <record id="view_form_payment_crm" model="ir.ui.view">
+            <field name="name">Payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="brand_id" options="{'no_open':True,'no_create':True}"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="string">Khách hàng</attribute>
+                    <attribute name="options">{'no_create':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                     <field name="format_phone"/>
+                </xpath>
+                <xpath expr="//field[@name='amount']" position="attributes">
+                    <attribute name="widget">monetary_format</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="crm_id" options="{'no_open':False,'no_create':True}"
+                           attrs="{'readonly':[('state','!=','draft'),('crm_id','!=',False)]}" force_save="True"/>
+                </xpath>
+                <xpath expr="//div[@name='amount_div']" position="after">
+                    <field name="currency_rate_id" options="{'no_open':True,'no_create':True}"
+                           attrs="{'readonly':[('state','!=','draft')]}" context="{'currency_rate_date': True}"/>
+<!--                    <field name="currency_rate_id" options="{'no_open':True,'no_create':True}"-->
+<!--                           attrs="{'readonly':[('state','!=','draft')]}"/>-->
+                    <field name="amount_vnd"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_type']" position="after">
+                    <field name="payment_method" required="True" attrs="{'readonly':[('state','!=','draft')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_tree_payment_crm" model="ir.ui.view">
+            <field name="name">Payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='write_uid']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='write_date']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='create_date']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount']" position="after">
+                    <field name="amount_vnd" sum="VND"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="communication" optional="hide"/>
+                </xpath>
+                <xpath expr="//field[@name='amount']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_method_id']" position="replace">
+                    <field name="payment_type"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                     <attribute name="string">Khách hàng</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        <record id="cron_sync_tag_source" model="ir.cron">-->
+        <!--            <field name="name">Sync tag source</field>-->
+        <!--            <field name="model_id" ref="model_crm_tag_source"/>-->
+        <!--            <field name="state">code</field>-->
+        <!--            <field name="code">model.sync_source_mkt()</field>-->
+        <!--            <field name='interval_number'>5</field>-->
+        <!--            <field name='interval_type'>minutes</field>-->
+        <!--            <field name="numbercall">-1</field>-->
+        <!--        </record>-->
+
+        <record id="open_product_price_list_item" model="ir.actions.act_window">
+            <field name="name">Price list item</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">product.pricelist.item</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="set_rate" model="ir.cron">
+            <field name="name">Set rate price list item</field>
+            <field name="model_id" ref="model_product_pricelist_item"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_set_rate()</field>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+        <record id="partner_view_filter" model="ir.ui.view">
+            <field name="name">partner.search</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search" position="replace">
+                    <search string="Search partner">
+                        <field name="phone" filter_domain="['|', ('phone', 'ilike', self), ('mobile', 'ilike', self)]"/>
+                        <field name="name"
+                               filter_domain="['|', '|', ('display_name', 'ilike', self), ('code_customer', 'ilike', self), ('phone', 'ilike', self)]"/>
+                        <field name="parent_id" domain="[('is_company', '=', True)]" operator="child_of"/>
+                        <field name="email" filter_domain="[('email', 'ilike', self)]"/>
+                        <field name="category_id" string="Tag" filter_domain="[('category_id', 'child_of', self)]"/>
+                        <field name="user_id"/>
+                        <separator/>
+                        <filter string="Individuals" name="type_person" domain="[('is_company', '=', False)]"/>
+                        <filter string="Companies" name="type_company" domain="[('is_company', '=', True)]"/>
+                        <separator/>
+                        <filter string="Archived" name="inactive" domain="[('active', '=', False)]"/>
+                        <separator/>
+                        <group expand="0" name="group_by" string="Group By">
+                            <filter name="salesperson" string="Salesperson" domain="[]"
+                                    context="{'group_by' : 'user_id'}"/>
+                            <filter name="group_company" string="Company" context="{'group_by': 'parent_id'}"/>
+                            <filter name="group_country" string="Country" context="{'group_by': 'country_id'}"/>
+                        </group>
+                    </search>
+                </xpath>
+            </field>
+        </record>
+
+<!--        <record id="form_crm_lead_check_country_inherit" model="ir.ui.view">-->
+<!--            <field name="name">Form crm lead</field>-->
+<!--            <field name="model">crm.lead</field>-->
+<!--            <field name="inherit_id" ref="crm_base.form_crm_lead"/>-->
+<!--            <field name="priority" eval="8"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='pass_port_address']" position="after">-->
+<!--                    <field name="check_country" readonly="True" invisible="True"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='state_id']" position="attributes">-->
+<!--                    <attribute name="attrs">{'readonly':[('stage_id','=',%(crm_base.crm_stage_booking)d)], 'required':[('check_country','=',True )]}</attribute>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--</record>-->
+
+        <record id="sale.sale_menu_root" model="ir.ui.menu">
+            <field name="groups_id"
+                   eval="[(4, ref('crm_base.manager_customer_service')),(4, ref('crm_base.receptionist_crm')),(4, ref('account.group_account_invoice'))]"/>
+        </record>
+
+        <!--        <menuitem-->
+        <!--                id="crm.crm_menu_sales"-->
+        <!--                name="All Booking"-->
+        <!--                groups="base.group_system"-->
+        <!--                parent="crm.crm_menu_root"-->
+        <!--        />-->
+
+        <menuitem
+                id="crm.crm_menu_root"
+                name="CRM"
+                groups="sales_team.group_sale_salesman,crm_base.receptionist_crm"
+        />
+
+        <menuitem id="crm_menu_tag_source"
+                  name="Tags source"
+                  parent="crm.menu_crm_config_lead"
+                  action="action_open_view_tags_source"
+                  groups="base.group_system"
+                  sequence="21"/>
+
+        <menuitem id="crm_menu_price_list"
+                  name="Price list"
+                  parent="crm.menu_crm_config_lead"
+                  action="product.product_pricelist_action2"
+                  sequence="21"/>
+
+        <menuitem id="crm_menu_price_list"
+                  name="Price list"
+                  parent="crm.menu_crm_config_lead"
+                  action="product.product_pricelist_action2"
+                  sequence="21"/>
+
+        <menuitem id="crm_menu_price_list_item"
+                  name="Price list item"
+                  parent="crm.menu_crm_config_lead"
+                  action="open_product_price_list_item"
+                  sequence="22"/>
+
+        <!--        <menuitem id="crm_menu_customer"-->
+        <!--                  name="Customer"-->
+        <!--                  parent="crm.crm_menu_root"-->
+        <!--                  action="contacts.action_contacts"-->
+        <!--                  sequence="4"/>-->
+
+        <!--        <menuitem id="crm_menu_payment"-->
+        <!--                  name="Payments"-->
+        <!--                  parent="crm.crm_menu_root"-->
+        <!--                  action="account.action_account_payments"-->
+        <!--                  groups="account.group_account_invoice,crm_base.manager_customer_service"-->
+        <!--                  sequence="5"/>-->
+
+        <!--        <menuitem id="crm_menu_order"-->
+        <!--                  name="Orders"-->
+        <!--                  parent="crm.crm_menu_root"-->
+        <!--                  action="sale.action_quotations_with_onboarding"-->
+        <!--                  groups="crm_base.receptionist_crm"-->
+        <!--                  sequence="6"/>-->
+
+        <!--        <menuitem id="crm_sale_order_line"-->
+        <!--                  name="Sale order line"-->
+        <!--                  parent="crm.menu_crm_config_lead"-->
+        <!--                  action="open_sale_order_line"-->
+        <!--                  sequence="7"/>-->
+
+        <!--        <menuitem id="crm_menu_company"-->
+        <!--                  name="Companys"-->
+        <!--                  parent="crm_base.crm_menu_brand"-->
+        <!--                  action="base.action_res_company_form"-->
+        <!--                  sequence="14"/>-->
+
+        <menuitem id="crm_menu_source"
+                  name="Source"
+                  parent="crm.menu_crm_config_lead"
+                  action="utm.utm_source_action"
+                  groups="base.group_system"
+                  sequence="17"/>
+
+        <menuitem id="crm_menu_ctg_source"
+                  name="Category source"
+                  parent="crm.menu_crm_config_lead"
+                  action="action_open_view_category_source"
+                  groups="base.group_system"
+                  sequence="17"/>
+        
+
+    </data>
+</odoo>

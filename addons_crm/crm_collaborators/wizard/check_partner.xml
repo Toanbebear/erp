@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="check_partner_view_form" model="ir.ui.view">
+            <field name="name">check.partner.view</field>
+            <field name="model">check.partner</field>
+            <field name="arch" type="xml">
+                <form string="CHECK PARTNER">
+                    <group string="Thông tin">
+                        <group>
+                            <field name="name" readonly="True" force_save="True"/>
+                            <field name="source_id" readonly="True" force_save="True"  options="{'no_create': True, 'no_open': True}"/>
+                            <field name="phone" readonly="True" force_save="True"/>
+                            <field name="mobile" readonly="True" force_save="True"/>
+                            <field name="pass_port" readonly="True" force_save="True"/>
+                            <field name="email" readonly="True" force_save="True"/>
+                        </group>
+                        <group>
+                            <field name="partner_id" readonly="True" force_save="True" invisible="True"/>
+                            <field name="company_id" options="{'no_create': True, 'no_open': True}" force_save="True"/>
+                            <field name="brand_id" readonly="True" force_save="True"/>
+                            <field name="start_date" required="True" readonly="True"/>
+                        </group>
+                        <ul class="text-info">
+                            <strong style="font-size: 20px; color: #808080; ">Lưu ý <i class="fa fa-warning text-warning"/>: </strong>
+                                    <i> Bạn cần chọn đúng <b>công ty</b> khi tạo hợp đồng cho cộng tác viên.
+                                    </i>
+                        </ul>
+                    </group>
+                    <footer class="text-left">
+                        <button name="qualify" confirm="Bạn đã chọn đúng công ty mà cộng tác viên đã ký?" type="object" string="Tạo hợp đồng" class="oe_highlight"/>
+                       <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

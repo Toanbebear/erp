@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_create_negative_so">
+            <field name="name">Tạo SO âm</field>
+            <field name="model">create.negative.so</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="company" readonly="True" force_save="True" options="{'no_open':True}"/>
+                                <field name="partner" readonly="True" force_save="True" options="{'no_open':True}"/>
+                                <field name="booking" readonly="True" force_save="True" options="{'no_open':True}"/>
+                                <field name="company_id" invisible="1"/>
+                                <field name="service_price_list" invisible="1"/>
+                                <field name="product_price_list" invisible="1"/>
+                                <field name="type" required="True"/>
+                                <field name="price_list_id"
+                                       attrs="{'invisible':[('type','=','product')], 'required': [('type','=','service')]}"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="price_list_id_prd"
+                                       attrs="{'invisible':[('type','=','service')], 'required': [('type','=','product')]}"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="sh_room_id"
+                                       attrs="{'invisible':[('type','=','service')], 'required': [('type','=','product')]}"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="account_511" required="True" options="{'no_open':True,'no_create':True}"/>
+                            </group>
+                            <field name="details" context="{'default_booking': booking, 'default_negative_so': id}"
+                                   attrs="{'invisible':[('type','!=','service')]}">
+                                <tree editable="bottom">
+                                    <field name="booking" optional="hide"/>
+                                    <field name="line" required="1" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="currency_id" optional="hide"/>
+                                    <field name="amount" required="1"/>
+                                    <field name="stage_line" optional="hide"/>
+                                </tree>
+                            </field>
+                            <field name="details_prd" context="{'default_booking': booking, 'default_negative_so': id}"
+                                   attrs="{'invisible':[('type','!=','product')]}">
+                                <tree editable="bottom">
+                                    <field name="booking" optional="hide"/>
+                                    <field name="line" required="1" options="{'no_open':True,'no_create':True}"/>
+                                    <field name="currency_id" optional="hide"/>
+                                    <field name="amount" required="1"/>
+                                    <field name="stage_line" optional="hide"/>
+                                </tree>
+                            </field>
+                        </group>
+
+                        <group>
+                            <field name="note" required="True"/>
+                        </group>
+                        <footer class="text-center">
+                            <button name="confirm" type="object" string="Xác nhận" class="btn-info"
+                                    attrs="{'invisible':[('type','!=','service')]}"/>
+                            <button name="confirm_prd" type="object" string="Xác nhận" class="btn-info"
+                                    attrs="{'invisible':[('type','!=','product')]}"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<templates id="template" xml:space="preserve">
+    <t t-name="FieldImageCloud">
+    <div class="o_field_image" aria-atomic="true">
+        <t t-if="widget.mode !== 'readonly'">
+            <div class="o_form_image_controls">
+                <button class="fa fa-pencil fa-lg float-left o_select_file_button" title="Edit" aria-label="Edit"/>
+                <button class="fa fa-trash-o fa-lg float-right o_clear_file_button" title="Clear" aria-label="Clear"/>
+
+                <span class="o_form_binary_progress">Uploading...</span>
+                <t t-call="HiddenInputFile">
+                    <t t-set="image_only" t-value="true"/>
+                    <t t-set="fileupload_id" t-value="widget.fileupload_id"/>
+                </t>
+            </div>
+        </t>
+    </div>
+</t>
+    <t t-name="FieldImageCloud-img">
+        <img class="img img-fluid img-cloud"
+             alt="Binary file"
+             t-att-src='url'
+             t-att-border="widget.readonly ? 0 : 1"
+             t-att-name="widget.name"/>
+    </t>
+
+    <t t-name="HiddenInputFile">
+    <div t-attf-class="o_hidden_input_file #{fileupload_class or ''}" t-att-style="fileupload_style" aria-atomic="true">
+        <form class="o_form_binary_form" t-att-target="fileupload_id"
+              method="post" enctype="multipart/form-data" t-att-action="fileupload_action || '/web/binary/upload'">
+            <input type="hidden" name="csrf_token" t-att-value="csrf_token"/>
+            <input type="hidden" name="callback" t-att-value="fileupload_id"/>
+            <input t-if="widget.image_only" type="file" class="o_input_file" name="ufile" accept="image/*"/>
+            <input t-if="!widget.image_only" type="file" class="o_input_file" name="ufile"
+                   t-att="{'multiple': multi_upload ? 'multiple' : null}"/>
+            <t t-raw="0"/>
+        </form>
+        <iframe t-att-id="fileupload_id" t-att-name="fileupload_id" style="display: none"/>
+    </div>
+</t>
+</templates>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="crm_advise_desire_tree_view">
+            <field name="name">Mong muốn</field>
+            <field name="model">crm.advise.desire</field>
+            <field name="arch" type="xml">
+                <tree default_order='create_date desc'>
+                    <field name="sequence" widget='handle'/>
+                    <field name="name"/>
+                    <field name="brand_id"/>
+                    <field name="service_group"/>
+                </tree>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="crm_advise_desire_form_view">
+            <field name="name">Mong muốn</field>
+            <field name="model">crm.advise.desire</field>
+            <field name="arch" type="xml">
+                <form duplicate="false" create="false" edit="false">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="brand_id"/>
+                            <field name="service_group"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="crm_advise_desire_action" model="ir.actions.act_window">
+            <field name="name">Mong muốn</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.advise.desire</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

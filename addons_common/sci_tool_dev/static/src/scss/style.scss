@@ -1,0 +1,110 @@
+// body.o_test_environment .o_main_navbar {
+//     background: repeating-linear-gradient(135deg, #d9b904, #d9b904 10px, #373435 10px, #373435 20px);
+//     border-bottom-left-radius: 20px;
+// }
+
+body .box_test {
+  position: relative;
+  background: #fff;
+  box-shadow: 0 0 15px rgba(0,0,0,.1);
+}
+
+/* common */
+body .box_test .ribbon {
+  width: 150px;
+  height: 150px;
+  overflow: hidden;
+  position: absolute;
+}
+body .box_test .ribbon::before,
+body .box_test .ribbon::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+  display: block;
+  border: 5px solid #2980b9;
+}
+body .box_test .ribbon span {
+  position: absolute;
+  display: block;
+  width: 225px;
+  padding: 15px 0;
+  background-color: #d9b904;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+  color: #fff;
+  font: 700 18px/1 'Lato', sans-serif;
+  text-shadow: 0 1px 1px rgba(0,0,0,.2);
+  text-transform: uppercase;
+  text-align: center;
+}
+
+body .box_test .ribbon span {
+  -webkit-animation: change_color 1s infinite;  /* Safari 4+ */
+  -moz-animation: change_color 1s infinite;  /* Fx 5+ */
+  -o-animation: change_color 1s infinite;  /* Opera 12+ */
+  animation: change_color 1s infinite;  /* IE 10+, Fx 29+ */
+}
+
+@-webkit-keyframes change_color {
+  0%, 33% {
+    background-color: green;
+    color: #fff;
+  }
+  34%, 66% {
+    background-color: red;
+    color: #fff;
+  }
+  67%, 100% {
+    background-color: yellow;
+    color: #333;
+  }
+}
+
+/* top right*/
+body .box_test .ribbon-top-right {
+  margin-top: 0;
+  top: 0;
+  right: -10px;
+}
+body .box_test .ribbon-top-right::before,
+body .box_test .ribbon-top-right::after {
+  border-top-color: transparent;
+  border-right-color: transparent;
+}
+body .box_test .ribbon-top-right::before {
+  top: 0;
+  left: 0;
+}
+body .box_test .ribbon-top-right::after {
+  bottom: 0;
+  right: 0;
+}
+body .box_test .ribbon-top-right span {
+  left: -25px;
+  top: 30px;
+  transform: rotate(45deg);
+}
+
+/* bottom right*/
+body .box_test .ribbon-bottom-right {
+  bottom: -10px;
+  right: -10px;
+}
+body .box_test .ribbon-bottom-right::before,
+body .box_test .ribbon-bottom-right::after {
+  border-bottom-color: transparent;
+  border-right-color: transparent;
+}
+body .box_test .ribbon-bottom-right::before {
+  bottom: 0;
+  left: 0;
+}
+body .box_test .ribbon-bottom-right::after {
+  top: 0;
+  right: 0;
+}
+body .box_test .ribbon-bottom-right span {
+  left: -25px;
+  bottom: 30px;
+  transform: rotate(-225deg);
+}

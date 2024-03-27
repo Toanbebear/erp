@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="vnpay_res_brand_form_inherit" model="ir.ui.view">
+        <field name="name">vnpay.res.brand.form.inherit</field>
+        <field name="model">res.brand</field>
+        <field name="inherit_id" ref="sci_brand.view_form_brand" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="vnpayqr" string="VNPAYQR">
+                    <group name="vnpayqr_settings">
+                        <field name="merchant_code"/>
+                        <field name="merchant_name"/>
+                        <field name="merchant_type"/>
+                        <field name="master_merchant_code"/>
+                        <field name="app_id"/>
+                        <field name="secret_key" password="True"/>
+                    </group>
+
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

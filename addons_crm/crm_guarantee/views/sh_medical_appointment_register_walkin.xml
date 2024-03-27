@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="sh_medical_register_for_walkin_view_guarantee" model="ir.ui.view">
+            <field name="name">sh.medical.register.for.walkin.view.guarantee</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='service']" position="replace">
+                    <field name="service" widget="many2many_tags" options="{'no_create': True}"
+                           domain="[('exam_room','=',service_room), ('product_id', 'in', pricelist_products)]"
+                           attrs="{'readonly': ['|', ('state','in',['Completed']), ('type_crm_id', '=', 3)]}"
+                           context="{'tree_view_ref': 'shealth_all_in_one.sh_medical_service_tree_simple'}"
+                           force_save="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

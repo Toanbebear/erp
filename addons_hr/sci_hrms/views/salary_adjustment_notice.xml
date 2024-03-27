@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--        SCI-->
+        <record id="salary_adjustment_sci_kpi_report_attachment" model="ir.attachment">
+            <field name="name">Thông báo điều chuyển thu nhập SCI - KPI</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="sci_hrms/data/notice/thong_bao_dieu_chinh_thu_nhap_sci_kpi.docx"/>
+            <field name="store_fname">thong_bao_dieu_chinh_thu_nhap_sci_kpi.docx</field>
+        </record>
+
+        <record id="salary_adjustment_sci_kd_report_attachment" model="ir.attachment">
+            <field name="name">Thông báo điều chuyển thu nhập SCI - Kinh doanh</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="sci_hrms/data/notice/thong_bao_dieu_chinh_thu_nhap_sci_kd.docx"/>
+            <field name="store_fname">thong_bao_dieu_chinh_thu_nhap_sci_kd.docx</field>
+        </record>
+
+        <!--        Paris-->
+        <record id="salary_adjustment_paris_report_attachment" model="ir.attachment">
+            <field name="name">Thông báo điều chuyển thu nhập Paris</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="sci_hrms/data/notice/thong_bao_dieu_chinh_thu_nhap_pr.docx"/>
+            <field name="store_fname">thong_bao_dieu_chinh_thu_nhap_pr.docx</field>
+        </record>
+
+        <!--        Dong A-->
+        <record id="salary_adjustment_donga_kd_report_attachment" model="ir.attachment">
+            <field name="name">Thông báo điều chuyển thu nhập Đông Á</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="sci_hrms/data/notice/thong_bao_dieu_chinh_thu_nhap_da_kd.docx"/>
+            <field name="store_fname">thong_bao_dieu_chinh_thu_nhap_da.docx</field>
+        </record>
+
+        <!--        KangNam-->
+        <record id="salary_adjustment_kn_kpi_report_attachment" model="ir.attachment">
+            <field name="name">Thông báo điều chuyển thu nhập KangNam - KPI</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="sci_hrms/data/notice/thong_bao_dieu_chinh_thu_nhap_kn_kpi.docx"/>
+            <field name="store_fname">thong_bao_dieu_chinh_thu_nhap_kn_kpi.docx</field>
+        </record>
+
+        <record id="salary_adjustment_kn_kd_report_attachment" model="ir.attachment">
+            <field name="name">Thông báo điều chuyển thu nhập KangNam - Kinh doanh</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="sci_hrms/data/notice/thong_bao_dieu_chinh_thu_nhap_kn_kd.docx"/>
+            <field name="store_fname">thong_bao_dieu_chinh_thu_nhap_kn_kd.docx</field>
+        </record>
+
+<!--        Hồng Hà-->
+        <record id="salary_adjustment_hh_kpi_report_attachment" model="ir.attachment">
+            <field name="name">Thông báo điều chuyển thu nhập Hồng Hà - KPI</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="sci_hrms/data/notice/thong_bao_dieu_chinh_thu_nhap_hh_kpi.docx"/>
+            <field name="store_fname">thong_bao_dieu_chinh_thu_nhap_hh_kpi.docx</field>
+        </record>
+
+        <record id="salary_adjustment_hh_kd_report_attachment" model="ir.attachment">
+            <field name="name">Thông báo điều chuyển thu nhập Hồng Hà - Kinh doanh</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="sci_hrms/data/notice/thong_bao_dieu_chinh_thu_nhap_hh_kd.docx"/>
+            <field name="store_fname">thong_bao_dieu_chinh_thu_nhap_hh_kd.docx</field>
+        </record>
+
+    </data>
+</odoo>

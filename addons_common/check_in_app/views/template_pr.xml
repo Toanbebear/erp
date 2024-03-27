@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+
+        <!--        Checkin khách hàng chưa có Booking-->
+        <template id="template_customer_information_checkin_pr">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:21px;">
+
+                    <div class="oe_structure"/>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <img src="/crm_his_13/static/description/logo_pr.jpg" width="150" height="auto"/>
+                            <br/>
+                            <i style="font-size:15px;">Nụ cười mới - Cuộc sống mới</i>
+                        </div>
+                        <div class="col-9 ">
+                            <div class="text-center">
+                                <h1 style="text-transform:uppercase;">Phiếu thông tin khách hàng</h1>
+                                <div style="width:50%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis;margin:0 auto">
+                                    <p>Mã Booking: <t t-esc="'.'*200"/></p>
+                                </div>
+                            </div>
+
+                            <div class="text-right">
+
+                                    <span>Giờ khách đến:</span>
+
+                                    <span>......../........../20.....</span>
+                                    <br/>
+                                    <span>Giờ làm dịch vụ:</span>......../........../20.....
+
+                            </div>
+                        </div>
+
+                    </div>
+                    <style>.indent-1-7{padding-left: 1.7em }</style>
+                    <style>.indent-3-4{padding-left: 3.4em }</style>
+
+                    <div class="row mt-5">
+                        <div class="col-7 indent-1-7">
+                            Khách hàng :
+                            <strong>
+                                <span t-field="o.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-5" style="width:100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis">
+                           <span> Ngày sinh : <t t-esc="'.'*200"/></span>
+                        </div>
+                    </div>
+
+                    <div class="row ">
+                        <div class="col-7 indent-1-7" style="width:100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis">
+                            <t t-if="o.phone">
+                                Điện thoại :
+                                <span t-field="o.phone"/>
+
+                            </t>
+                            <t t-else="">
+                                Điện thoại :  <t t-esc="'.'*200"/>
+                            </t>
+
+
+                        </div>
+                        <div class="col-5" style="width:100%;white-space: nowrap;overflow: hidden;text-overflow: ellipsis">
+                           <span> Địa chỉ : <t t-esc="'.'*200"/></span>
+                        </div>
+                    </div>
+
+                    <div class="mt-5" style="font-family:Times New Roman;font-weight:bolder;">I. Bạn biết đến Nha khoa Paris từ:</div>
+                    <div style="font-family:Times New Roman;" class="indent-1-7 row mt16 p-0">
+                        <div class="col-8 indent-1-7" style="white-space: nowrap;
+                                                      width: auto;
+                                                      overflow: hidden;
+                                                      text-overflow: ellipsis;">
+                            Người giới thiệu:
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div class="col-4 indent-1-7" style="white-space: nowrap;
+                                                      width: auto;
+                                                      overflow: hidden;
+                                                      padding-right:0;
+                                                      text-overflow: ellipsis;">
+                            SĐT:
+                            <t t-esc="'.'*200"/>
+                        </div>
+                    </div>
+                    <div  class="row indent-1-7 mt16" >
+                        <span class="mr-3" >
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Internet(fb, gg, tiktok )
+                        </span>
+                        <span class="mr-3" >
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Voucher/quà tặng
+                        </span>
+                        <span class="mr-3" >
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Được giới thiệu
+                        </span>
+                         <span class="" >
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Biển hiệu chi nhánh
+                        </span>
+                    </div>
+                    <div class="row p-0">
+                            <div style="font-family:Times New Roman;white-space: nowrap;
+                                                          width: auto;
+                                                          overflow: hidden;
+                                                          text-overflow: ellipsis;" class="col-12 indent-1-7 mt24 ">
+                            Nguồn khác:
+                            <t t-esc="'.'*200"/>
+                        </div>
+                    </div>
+
+                     <div style="font-family:Times New Roman;font-weight:bolder;">II. Yêu cầu khám
+                    </div>
+                    <div style="font-family:Times New Roman;font-size: 20px;" class="row indent-1-7 mt16">
+                        <div class="col-5 ">
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Phẫu thuật nha khoa
+                        </div>
+                        <div class="col-7 ">
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Tẩy trắng răng
+                        </div>
+                    </div>
+                    <div style="font-family:Times New Roman;font-size: 20px;" class="row indent-1-7 mt16">
+                        <div class="col-5 ">
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Chỉnh nha
+                        </div>
+                        <div class="col-7 ">
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Răng Sứ
+                        </div>
+                    </div>
+                    <div style="font-family:Times New Roman;font-size: 20px;" class="row indent-1-7 mt16">
+                        <div class="col-5 ">
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Implant
+                        </div>
+                        <div class="col-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Dịch vụ nha khoa khác (Tẩy trắng, hàn trám,..)
+                        </div>
+                    </div>
+                    <div style="font-family:Times New Roman;font-size: 20px;" class="row indent-1-7 mt16">
+                        <div class="col-5 ">
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                           PT hàm mặt
+                        </div>
+                        <div class="col-7 ">
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                           PT thẩm mỹ (mắt, mũi…)
+                        </div>
+                    </div>
+                    <div class="row mt24">
+                        <div style="font-family:Times New Roman;white-space: nowrap;
+                                                          width: auto;
+                                                          overflow: hidden;
+                                                          text-overflow: ellipsis;" class="col-12 indent-1-7">
+                            Yêu cầu khác:
+                            <t t-esc="'.'*200"/>
+                        </div>
+                    </div>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">III. Lịch hẹn</div>
+                    <div style="white-space: nowrap;
+                              width: auto;
+                              overflow: hidden;
+                              text-overflow: ellipsis;margin-left: 20px">
+                        <div class="mt16">
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Tôi đã có lịch hẹn trước lúc
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div class="mt16">
+                            <img src="/crm_his_13/static/checkbox.png" width="30px" height="30px"/>
+                            Tôi chưa đặt hẹn và muốn đặt lịch chờ khám
+                            <t t-esc="'.'*200"/>
+                        </div>
+                    </div>
+
+                    <div class="row mt-5">
+                        <div class="col-6 text-center">
+                        </div>
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 22px;">Khách hàng</strong>
+                            <div>
+                                <i>(Ký, ghi rõ họ tên)</i>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+
+        <template id="customer_information_checkin_pr">
+            <t t-call="web.html_container">
+                <t t-if="docs">
+                    <t t-call="check_in_app.template_customer_information_checkin_pr" t-lang="lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+                string="Checkin chưa có Booking PR"
+                id="action_customer_info_checkin_pr"
+                model="crm.check.in"
+                report_type="qweb-pdf"
+                name="check_in_app.customer_information_checkin_pr"
+                file="check_in_app.customer_information_checkin_pr"
+                paperformat="shealth_all_in_one.sh_paperformat_medicine_public"
+                menu="True"
+        />
+    </data>
+</odoo>

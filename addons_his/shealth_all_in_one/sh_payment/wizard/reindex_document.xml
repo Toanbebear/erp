@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="reindex_document_view">
+            <field name="name">sh.reindex.document</field>
+            <field name="model">sh.reindex.document</field>
+            <field name="arch" type="xml">
+                <form string="Đánh lại số chứng từ">
+                    <group string="Lọc chứng từ">
+                        <field name="start_date" string="Từ ngày"/>
+                        <field name="end_date" string="Đến ngày"/>
+                        <field name="document_model" required="1"/>
+                    </group>
+                    <group string="Quy tắc đánh số chứng từ">
+                        <field name="prefix" required="1"/>
+                        <field name="start_number" required="1"/>
+                        <field name="padding" required="1"/>
+                        <field name="suffix"/>
+                    </group>
+                    <footer>
+                        <button name="reindex" type="object" string="Đánh lại số chứng từ" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="reindex_document_action">
+            <field name="name">Đánh lại số chứng từ</field>
+            <field name="res_model">sh.reindex.document</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="reindex_document_view"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="reindex_document_menu"
+                  name="Đánh lại số chứng từ"
+                  parent="shealth_all_in_one.sh_medical_conf_menu"
+                  action="reindex_document_action"
+                  sequence="11" groups="shealth_all_in_one.group_sh_medical_accountant"/>
+        <record id="reindex_document_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-pencil</field>
+        </record>
+    </data>
+</odoo>

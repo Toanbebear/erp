@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_crm_payment_list_detail" model="ir.ui.view">
+            <field name="name">Payment list detail</field>
+            <field name="model">payment.list</field>
+            <field name="inherit_id" ref="sci_payment_list.payment_list_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='post']" position="after">
+                    <button type="object" name="get_formview_action" string="Open" icon="fa-edit"
+                            attrs="{'invisible':['|', ('payment_list_state','=', 'draft'), ('state', '!=', 'draft')]}"/>
+                </xpath>
+                <xpath expr="//page[@name='payment_list_items']/field[@name='payment_ids']" position="before">
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <field name="check_manual_allocation" attrs="{'readonly':[('state','!=','draft')]}"/> Phân bổ thủ công
+                        </div>
+                    </div>
+                </xpath>
+                <xpath expr="//page[@name='payment_list_items']" position="after">
+                    <page string="Phân bổ theo dịch vụ" name="payment_list_items">
+                        <div class="row">
+                            <div class="col-md-3">
+                                Bảng phân bổ doanh số theo dịch vụ
+                            </div>
+                            <div class="col-md-9 text-right">
+                                <field name="check_auto_input_money" attrs="{'readonly': [('check_manual_allocation', '=', True)]}"/> Tự động điền thông tin số tiền phải nộp
+                            </div>
+                        </div>
+                        <field name="check_manual_allocation" invisible="1"/>
+                        <field name="service_ids">
+                            <tree create="false" delete="false" editable="top" options="{'no_open':True,'no_create':True}">
+                                <field name="crm_line_id" attrs="{'readonly': [('parent.check_manual_allocation', '=', True)]}" force_save="True"/>
+                                <field name="unit_price" optional="show"/>
+                                <field name="quantity" optional="show"/>
+                                <field name="uom_price" optional="show"/>
+                                <field name="number_used" optional="show"/>
+                                <field name="discount_percent" optional="show"/>
+                                <field name="discount_cash" optional="show"/>
+                                <field name="sale_to" optional="show"/>
+                                <field name="other_discount" optional="show"/>
+                                <field name="total_before_discount" optional="show"/>
+                                <field name="total" sum="Tổng tiền"/>
+                                <field name="total_received" sum="Tổng tiền"/>
+                                <field name="prepayment_amount" sum="Tổng tiền" attrs="{'readonly': [('parent.check_manual_allocation', '=', True)]}" widget="monetary_format" force_save="True"/>
+                                <field name="company_id" required="True" attrs="{'readonly': [('parent.check_manual_allocation', '=', True)]}" force_save="True"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Phân bổ theo sản phẩm" name="payment_list_items">
+                        <div class="row">
+                            <div class="col-md-3">
+                                Bảng phân bổ doanh số theo sản phẩm
+                            </div>
+                            <div class="col-md-9 text-right">
+                                <field name="check_auto_input_money_product" attrs="{'readonly': [('check_manual_allocation', '=', True)]}"/> Tự động điền thông tin số tiền phải nộp
+                            </div>
+                        </div>
+                        <field name="product_ids">
+                            <tree create="false" delete="false" editable="top" options="{'no_open':True,'no_create':True}">
+                                <field name="crm_line_product_id" attrs="{'readonly': [('parent.check_manual_allocation', '=', True)]}" force_save="True"/>
+                                <field name="unit_price" optional="show"/>
+                                <field name="quantity" optional="show"/>
+                                <field name="discount_percent" optional="show"/>
+                                <field name="discount_cash" optional="show"/>
+                                <field name="sale_to" optional="show"/>
+                                <field name="other_discount" optional="show"/>
+                                <field name="total_before_discount" optional="show"/>
+                                <field name="total" sum="Tổng tiền"/>
+                                <field name="total_received" sum="Tổng tiền"/>
+                                <field name="prepayment_amount" sum="Tổng tiền" attrs="{'readonly': [('parent.check_manual_allocation', '=', True)]}" widget="monetary_format" force_save="True"/>
+                                <field name="company_id" attrs="{'readonly': [('parent.check_manual_allocation', '=', True)]}" force_save="True"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

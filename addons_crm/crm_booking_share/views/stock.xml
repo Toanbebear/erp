@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="book_share_stock_location_view" model="ir.ui.view">
+        <field name="name">book.share.stock.location.view</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="shealth_all_in_one.shealth_view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='location_institution_type']" position="after">
+                <field name="is_location_supply_share"/>
+            </xpath>
+        </field>
+    </record>
+    </data>
+</odoo>

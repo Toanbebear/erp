@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <record id="view_partner_his_connector_extend" model="ir.ui.view">
+            <field name="name">His connector: Partner Form</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//notebook" position="inside">
+                    <page name="config" string="His 83">
+                        <group>
+                            <field name="height"/>
+                            <field name="weight"/>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

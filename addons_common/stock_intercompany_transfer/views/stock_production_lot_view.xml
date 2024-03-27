@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="stock_intercompany_view_production_lot_form">
+            <field name="name">stock_intercompany.view.production.lot.form</field>
+            <field name="model">stock.production.lot</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="product_expiry.view_move_form_expiry"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='removal_date']" position="after">
+                    <field name="production_date"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

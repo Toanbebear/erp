@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_faculty_act" model="ir.actions.act_window">
+			<field name="name">Khoa</field>
+			<field name="view_mode">tree,form</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.hh.ehc.faculty</field>
+			<field name="domain">[]</field>
+		</record>
+		
+		<menuitem id="menu_service_faculty_ehc"
+				  name="Khoa"
+				  parent="crm_ehc.crm_hh_ehc_root_menu"
+				  action="crm_ehc.crm_hh_ehc_faculty_act"
+		/>
+		
+		<record id="crm_hh_ehc_faculty_tree" model="ir.ui.view">
+			<field name="name">Faculty EHC tree</field>
+			<field name="model">crm.hh.ehc.faculty</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="name"/>
+					<field name="code"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_faculty_form" model="ir.ui.view">
+			<field name="name">Faculty EHC form</field>
+			<field name="model">crm.hh.ehc.faculty</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<field name="name"/>
+						<field name="code"/>
+						<field name="id_ehc"/>
+					</group>
+				</form>
+			</field>
+		</record>
+	</data>
+</odoo>

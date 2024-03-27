@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="deposit_document_view">
+            <field name="name">sh.deposit.document</field>
+            <field name="model">sh.deposit.document</field>
+            <field name="arch" type="xml">
+                <form string="In phiếu hẹn">
+                    <group string="Nhập thông tin">
+                        <field name="payment" readonly="1" force_save="1"/>
+                        <field name="services" required="1"/>
+                        <field name="attachs"/>
+                        <field name="counselor" options="{'no_create': True}"/>
+                        <field name="note"/>
+                    </group>
+                    <footer>
+                        <button name="action_report_phieu_hen" type="object" string="In phiếu" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+<!--        <record model="ir.actions.act_window" id="deposit_document_action">-->
+<!--            <field name="name">IN PHIẾU HẸN</field>-->
+<!--            <field name="res_model">sh.deposit.document</field>-->
+<!--            <field name="view_mode">form</field>-->
+<!--            <field name="view_id" ref="deposit_document_view"/>-->
+<!--            <field name="context">{}</field>-->
+<!--            <field name="target">new</field>-->
+<!--        </record>-->
+
+
+<!--        <record id="model_surgery_action_report_phieu_hen" model="ir.actions.server">-->
+<!--            <field name="name">IN PHIẾU HẸN</field>-->
+<!--            <field name="model_id" ref="account.model_account_payment"/>-->
+<!--            <field name="binding_model_id" ref="account.model_account_payment"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">-->
+<!--                if records:-->
+<!--                action = records.action_report_phieu_hen()-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <!--  FILE - PHIẾU HẸN MẪU -->
+        <record id="phieuhen_report_attachment" model="ir.attachment">
+            <field name="name">PHIẾU HẸN</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/phieu_hen.docx"/>
+            <field name="store_fname">phieu_hen.doc</field>
+        </record>
+
+    </data>
+</odoo>

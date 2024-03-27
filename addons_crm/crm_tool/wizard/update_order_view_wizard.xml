@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_crm_update_order">
+            <field name="name">Cập nhập báo giá</field>
+            <field name="model">crm.update.order</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="partner_id" readonly="True" force_save="True"/>
+                        <field name="partner_code" readonly="True" force_save="True"/>
+                        <field name="partner_phone" readonly="True" force_save="True"/>
+                        <field name="order_id" readonly="True" force_save="True"
+                               options="{'no_open':True,'no_create':True}"/>
+                        <field name="action_type" required="True"/>
+                        <field name="booking_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'required': [('action_type', '=', 'attach_booking')], 'invisible': [('action_type', '!=', 'attach_booking')]}"/>
+                        <field name="order_line_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'required': [('action_type', '=', 'update_order_line')], 'invisible': [('action_type', '!=', 'update_order_line')]}"/>
+                        <field name="uom_price" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible': [('action_type', '!=', 'update_order_line')]}"/>
+                        <field name="price_unit" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible': [('action_type', '!=', 'update_order_line')]}"/>
+                        <field name="discount" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible': [('action_type', '!=', 'update_order_line')]}"/>
+                        <field name="discount_cash" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible': [('action_type', '!=', 'update_order_line')]}"/>
+                        <field name="sale_to" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible': [('action_type', '!=', 'update_order_line')]}"/>
+                        <field name="other_discount" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible': [('action_type', '!=', 'update_order_line')]}"/>
+                        <field name="line" options="{'no_open':True,'no_create':True}"
+                               attrs="{'invisible': [('action_type', '!=', 'update_order_line')]}"/>
+                    </group>
+                    <footer class="text-center">
+                        <button name="update_order" type="object" string="Cập nhập" class="btn-info"
+                                confirm="Bạn chắc chắn muốn cập nhật chứ ?"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

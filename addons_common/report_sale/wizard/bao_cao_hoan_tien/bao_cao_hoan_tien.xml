@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="report_payment_cancel_form_view">
+            <field name="name">Báo cáo hoàn tiền</field>
+            <field name="model">report.payment.cancel</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo hoàn tiền">
+                    <group>
+                        <field name="start_date" required="True" string="Ngày tạo: Từ"/>
+                        <field name="end_date" required="True" string="Ngày tạo: Đến"/>
+                        <field name="company_ids" required="True" string="Chi nhánh" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_da" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_payment_cancel_act">
+            <field name="name">Báo cáo hoàn tiền</field>
+            <field name="res_model">report.payment.cancel</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_payment_cancel_form_view"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="report_payment_cancel_menu_kangnam"
+                  name="A.I.3 Báo cáo hoàn tiền"
+                  parent="report_sale.menu_report_brand_kangnam_van_hanh_kinh_doanh"
+                  sequence="3"
+                  action="report_payment_cancel_act"/>
+        <menuitem id="report_payment_cancel_menu_dong_a"
+                  name="A.I.1 Báo cáo hoàn tiền"
+                  parent="report_sale.menu_report_brand_donga_kinh_doanh_van_hanh_kinh_doanh"
+                  sequence="1"
+                  action="report_payment_cancel_act"/>
+        <menuitem id="report_payment_cancel_menu_paris"
+                  name="A.I.3 Báo cáo hoàn tiền"
+                  parent="report_sale.menu_report_brand_paris_kinh_doanh_phan_tich_van_hanh_kinh_doanh"
+                  sequence="3"
+                  action="report_payment_cancel_act"/>
+
+        <record id="report_payment_cancel_attachment" model="ir.attachment">
+            <field name="name">Báo cáo hoàn tiền</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_hoan_tien.xlsx"/>
+            <field name="store_fname">bao_cao_hoan_tien.xls</field>
+        </record>
+
+    </data>
+</odoo>

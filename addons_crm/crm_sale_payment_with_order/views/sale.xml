@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_sale_order_add_remaining_amount">
+            <field name="name">view_form_sale_order_add_remaining_amount</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
+                    <field name="amount_remain" optional="hide"/>
+                    <field name="amount_owed" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_form_sale_order_add_debt">
+            <field name="name">Thay đổi trường thông tin nợ</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="crm_base.view_form_order"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='debt_review_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

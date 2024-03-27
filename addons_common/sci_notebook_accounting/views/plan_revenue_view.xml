@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!--Tree view-->
+        <record id="plan_revenue_view_tree" model="ir.ui.view">
+            <field name="name">plan_revenue_view_tree</field>
+            <field name="model">annual.plan.revenue</field>
+            <field name="arch" type="xml">
+                <tree string="_tree">
+                    <field name="year"/>
+                    <field name="company_ids"/>
+                    <field name="plan_amount"/>
+<!--                    <field name="worth_amount_of_month"/>-->
+                    <field name="currency_id" invisible="1"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Form view-->
+        <record id="plan_revenue_view_form" model="ir.ui.view">
+            <field name="name">plan_revenue_view_form</field>
+            <field name="model">annual.plan.revenue</field>
+            <field name="arch" type="xml">
+                <form string="_form">
+                    <header>
+                        <button name="confirm" type="object" string="Xác nhận" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="create_plan_month" type="object" string="Tạo kế hoạch tháng" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'confirm')]}"/>
+                        <button name="do_cancel" type="object" string="Hủy" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,allotment,cancel"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="year"/>
+                                <field name="plan_amount" attrs="{'invisible': [('subtotal', '!=', 0.0)]}" widget="monetary_format"/>
+                                <field name="subtotal" attrs="{'invisible': [('subtotal', '=', 0.0)]}" string="Giá trị kế hoạch"/>
+<!--                                <field name="worth_amount_of_month" widget="monetary_format"/>-->
+
+                                <field name="currency_id" invisible="1"/>
+                            </group>
+                            <group>
+                                <field name="company_ids"/>
+                                <field name="text_plan_amount" attrs="{'invisible': [('subtotal', '!=', 0.0)]}" readonly="1"/>
+                                <field name="text_subtotal" attrs="{'invisible': [('subtotal', '=', 0.0)]}" readonly="1"/>
+                            </group>
+                            <notebook>
+                                <page name="Chi tiết kế hoạch tháng" string="Kế hoạch từng tháng">
+                                    <field name="plan_revenue_detail_id" nolabel="1" widget="one2many" mode="tree">
+                                        <tree string="Chi tiết" create="false" editable="bottom">
+                                            <field name="year"/>
+                                            <field name="month"/>
+                                            <field name="amount" sum="Amount" widget="monetary_format"/>
+                                            <field name="currency_id" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Action-->
+        <record id="plan_revenue_action" model="ir.actions.act_window">
+            <field name="name">Kế hoạch</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">annual.plan.revenue</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <!--==================================================================================================================================-->
+        <!--Tree view-->
+        <record id="plan_revenue_detail_view_tree" model="ir.ui.view">
+            <field name="name">plan_revenue_view_tree</field>
+            <field name="model">annual.plan.revenue.detail</field>
+            <field name="arch" type="xml">
+                <tree string="_tree" delete="false" create="false">
+                    <field name="year"/>
+                    <field name="month"/>
+                    <field name="company"/>
+                    <field name="amount"/>
+                    <field name="currency_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!--Form view-->
+        <record id="plan_revenue_detail_view_form" model="ir.ui.view">
+            <field name="name">plan_revenue_view_form</field>
+            <field name="model">annual.plan.revenue.detail</field>
+            <field name="arch" type="xml">
+                <form string="_form">
+                    <header>
+                        <button name="create_plan_date" type="object" string="Tạo kế hoạch ngày" class="oe_highlight"/>
+                        <button name="update_plan_date" type="object" string="Update kế hoạch ngày" class="oe_highlight"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="year"/>
+                            <field name="month"/>
+                            <field name="company"/>
+                            <field name="amount"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Search-->
+        <record id="plan_revenue_detail_view_search" model="ir.ui.view">
+            <field name="name">plan_revenue_view_form_search</field>
+            <field name="model">annual.plan.revenue.detail</field>
+            <field name="arch" type="xml">
+                <search string="Asset Account">
+                    <group expand="0" string="Group By...">
+                        <filter string="Nhóm theo kế hoạch năm" name="revenue" domain="[]" context="{'group_by':'plan_revenue_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <!--Action-->
+        <record id="plan_revenue_detail_action" model="ir.actions.act_window">
+            <field name="name">Kế hoạch chi tiết</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">annual.plan.revenue.detail</field>
+            <field name="context">{'search_default_revenue': True}</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <data>
+       <record id="account_account_equivalent_form_view" model="ir.ui.view">
+            <field name="name">account.account.equivalent.form</field>
+            <field name="model">account.account.equivalent</field>
+            <field name="arch" type="xml">
+                <form string="Tài khoản tương đương">
+                    <sheet>
+                        <group>
+                            <field name="account_sci_id"
+                                   domain="[('company_id.x_is_corporation', '=', True)]"/>
+                            <field name="account_equivalent_ids" widget="many2many_tags"
+                                   domain="[('company_id.x_is_corporation', '=', False)]"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="account_account_equivalent_tree_view" model="ir.ui.view">
+            <field name="name">account.account.equivalent.tree</field>
+            <field name="model">account.account.equivalent</field>
+            <field name="arch" type="xml">
+                <tree string="Tài khoản tương đương">
+                    <field name="account_sci_id"/>
+                    <field name="account_equivalent_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="account_account_equivalent_action" model="ir.actions.act_window">
+            <field name="name">Tài khoản tương đương</field>
+            <field name="res_model">account.account.equivalent</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                  Click to add a new account account equivalent.
+              </p>
+            </field>
+        </record>
+
+       <menuitem
+               id="account_account_equivalent_menu"
+               name="Tài khoản tương đương"
+               parent="account.menu_analytic_accounting"
+               action="crm_account_analytic.account_account_equivalent_action"
+               groups="analytic.group_analytic_accounting"/>
+    </data>
+</odoo>

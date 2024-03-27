@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="loyalty_code_card_form" model="ir.ui.view">
+            <field name="name">Loyalty code card</field>
+            <field name="model">crm.loyalty.code.card</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="stage"/>
+                            <field name="brand_id"/>
+                            <field name="loyalty_id"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="loyalty_code_card_tree" model="ir.ui.view">
+            <field name="name">Loyalty code card</field>
+            <field name="model">crm.loyalty.code.card</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="stage"/>
+                    <field name="brand_id"/>
+                    <field name="loyalty_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_open_code_card" model="ir.actions.act_window">
+            <field name="name">Loyalty code card</field>
+            <field name="res_model">crm.loyalty.code.card</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem
+                id="loyalty_menu_code_card"
+                name="Code card"
+                action="action_open_code_card"
+                parent="loyalty.config_loyalty_menu_root"
+                sequence="5"/>
+
+        <record id="loyalty_history_rank_form" model="ir.ui.view">
+            <field name="name">Loyalty history rank</field>
+            <field name="model">crm.loyalty.history.rank</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="rank_new"/>
+                            <field name="rank_old"/>
+                            <field name="reason"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="loyalty_history_rank_tree" model="ir.ui.view">
+            <field name="name">Loyalty history rank</field>
+            <field name="model">crm.loyalty.history.rank</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="rank_new"/>
+                    <field name="rank_old"/>
+                    <field name="reason"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_open_history_rank" model="ir.actions.act_window">
+            <field name="name">Loyalty history rank</field>
+            <field name="res_model">crm.loyalty.history.rank</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem
+                id="loyalty_menu_history_rank"
+                name="Loyalty history rank"
+                action="action_open_history_rank"
+                parent="loyalty.config_loyalty_menu_root"
+                sequence="6"/>
+
+
+    </data>
+</odoo>

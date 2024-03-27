@@ -1,0 +1,30 @@
+<odoo>
+    <data>
+        <record id="crm_guarantee_reason_tree_view" model="ir.ui.view">
+            <field name="name">crm.guarantee.reason.tree.view</field>
+            <field name="model">crm.guarantee.reason</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="default_code"/>
+                    <field name="name"/>
+                    <field name="perc"/>
+                    <field name="not_totality"/>
+                    <field name="totality"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="crm_guarantee_reason_action" model="ir.actions.act_window">
+            <field name="name">Lí do bảo hành</field>
+            <field name="res_model">crm.guarantee.reason</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="menu_crm_guarantee_reason"
+                  name="Lí do bảo hành"
+                  parent="crm.menu_crm_config_lead"
+                  sequence="3"
+                  action="crm_guarantee_reason_action"/>
+
+    </data>
+</odoo>

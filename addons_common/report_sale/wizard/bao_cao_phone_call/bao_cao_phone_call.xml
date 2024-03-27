@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bao_cao_phone_call_form">
+            <field name="name">Báo cáo Phone Call</field>
+            <field name="model">report.phone.call</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo Booking">
+                    <group>
+                        <field name="report_type" required="True"/>
+                        <field name="start_date" required="True" string="Từ ngày:"/>
+                        <field name="end_date" required="True" string="Đến ngày:"/>
+                        <field name="brand_id" string="Thương hiệu"  options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('report_type', '!=', 'brand')], 'required': [('report_type', '=', 'brand')]}"/>
+                        <field name="company_id" string="Chi nhánh"  options="{'no_create': True, 'no_open': True}" attrs="{'invisible': [('report_type', '!=', 'company')], 'required': [('report_type', '=', 'company')]}"/>
+                    </group>
+                    <footer>
+                        <button name="report" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_phone_call_act">
+            <field name="name">Báo cáo Phone Call</field>
+            <field name="res_model">report.phone.call</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_phone_call_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_phone_call_menu"
+                  name="Báo cáo Phone Call"
+                  parent="report_sale.menu_report_van_hanh"
+                  sequence="4"
+                  action="report_sale.bao_cao_phone_call_act"
+        />
+
+        <record id="bao_cao_phone_call_attachment" model="ir.attachment">
+            <field name="name">Báo cáo Phone Call</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_phone_call.xlsx"/>
+            <field name="store_fname">bao_cao_phone_call.xls</field>
+        </record>
+
+    </data>
+</odoo>

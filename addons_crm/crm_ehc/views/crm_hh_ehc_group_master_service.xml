@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_group_master_service_act" model="ir.actions.act_window">
+			<field name="name">Group master service EHC</field>
+			<field name="view_mode">tree,form</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.hh.ehc.group.master.service</field>
+			<field name="domain">[]</field>
+		</record>
+		
+		<menuitem id="menu_group_master_service_ehc"
+				  name="Nhóm dịch vụ EHC"
+				  parent="crm_ehc.crm_hh_ehc_root_menu"
+				  action="crm_ehc.crm_hh_ehc_group_master_service_act"
+		/>
+		
+		<record id="crm_hh_ehc_group_master_service_tree" model="ir.ui.view">
+			<field name="name">Group master service EHC tree</field>
+			<field name="model">crm.hh.ehc.group.master.service</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="group_master_id"/>
+					<field name="name"/>
+					<field name="group_master_code"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_group_master_service_form" model="ir.ui.view">
+			<field name="name">Group master service EHC form</field>
+			<field name="model">crm.hh.ehc.group.master.service</field>
+			<field name="arch" type="xml">
+				<form>
+					<header>
+						<field name="stage" widget="statusbar" statusbar_visible="0,1"/>
+					</header>
+					<group>
+						<field name="name"/>
+						<field name="group_master_id"/>
+						<field name="group_master_code"/>
+					</group>
+				</form>
+			</field>
+		</record>
+	
+	</data>
+</odoo>

@@ -1,0 +1,124 @@
+<odoo>
+    <data>
+
+<!--        &lt;!&ndash; Thêm trường tag vào nguồn&ndash;&gt;-->
+<!--         <record id="inherit_utm_source_view_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">utm.source</field>-->
+<!--            <field name="model">utm.source</field>-->
+<!--			<field name="inherit_id" ref="utm.utm_source_view_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--				<xpath expr="//field[@name='code']" position="after">-->
+<!--					<field name="is_collaborator"/>-->
+<!--					<field name="tag"/>-->
+<!--					<field name="note"/>-->
+<!--				</xpath>-->
+<!--            </field>-->
+<!--         </record>-->
+
+        <!--    Hiển thị trong module collaborator -->
+        <record id="utm_source_view_collaborator_form" model="ir.ui.view">
+            <field name="name">Nguồn</field>
+            <field name="model">utm.source</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <group string="Thông tin">
+                            <group>
+                                <field name="code"/>
+                                <field name="name"/>
+                                <field name="is_collaborator"/>
+                                <field name="tag"/>
+                                <field name="note"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="utm_source_view_collaborator_tree" model="ir.ui.view">
+            <field name="name">utm.source.view.tree</field>
+            <field name="model">utm.source</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="is_collaborator"/>
+                    <field name="tag"/>
+                    <field name="note"/>
+<!--                    <field name="active"/>-->
+                </tree>
+            </field>
+        </record>
+
+<!--        <record id="collaborator_bank_config_view_search" model="ir.ui.view">-->
+<!--            <field name="name">collaborator.bank.config.view.search</field>-->
+<!--            <field name="model">collaborator.bank.config</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <search string="state Search">-->
+<!--                    <field name="code"/>-->
+<!--                    <field name="name"/>-->
+<!--                    <group>-->
+<!--&lt;!&ndash;                        <filter string="Trạng Thái" name="group_state" context="{'group_by': 'state'}"/>&ndash;&gt;-->
+<!--                    </group>-->
+<!--                </search>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="utm_source_action" model="ir.actions.act_window">
+            <field name="name">Nguồn</field>
+            <field name="res_model">utm.source</field>
+            <field name="view_mode">tree,form</field>
+<!--            <field name="view_id" ref="utm_source_view_tree"/>-->
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('ct_utm.utm_source_tree_inherit')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('utm.utm_source_view_form')})]"/>
+        </record>
+
+        <record id="utm_source_collaborator_action" model="ir.actions.act_window">
+            <field name="name">Nguồn</field>
+            <field name="res_model">utm.source</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('collaborator.utm_source_view_collaborator_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('collaborator.utm_source_view_collaborator_form')})]"/>
+        </record>
+
+        <menuitem id="crm_menu_ctg_source"
+              name="Nguồn"
+              parent="crm.menu_crm_config_lead"
+              action="collaborator.utm_source_action"
+              groups="base.group_system"
+              sequence="16"
+              />
+
+        <menuitem id="menu_ctg_source"
+              name="Nguồn"
+              parent="utm.marketing_utm"
+              action="collaborator.utm_source_action"
+              groups="base.group_no_one"
+              sequence="9"
+              />
+
+        <!-- Ẩn view nguồn crm-->
+        <record model="ir.ui.menu" id="crm_base.crm_menu_source">
+            <field name="name">Hidden Source Menu</field>
+            <field name="parent_id" ref="crm.menu_crm_config_lead"/>
+            <field name="sequence" eval="16"/>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="active" eval="False"/>
+        </record>
+
+<!--        Ẩn view nguồn trong thiết lập-->
+        <record model="ir.ui.menu" id="utm.menu_utm_source">
+            <field name="name">Hidden Source Menu</field>
+            <field name="parent_id" ref="utm.marketing_utm"/>
+            <field name="sequence" eval="16"/>
+            <field name="groups_id" eval="[(6, 0, [])]"/>
+            <field name="active" eval="False"/>
+        </record>
+    </data>
+</odoo>

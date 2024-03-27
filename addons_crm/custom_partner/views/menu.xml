@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="open_view_type_relative">
+            <field name="name">Type relative</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">type.relative</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+        </record>
+        <record model="ir.actions.act_window" id="open_view_relation_partner">
+            <field name="name">Relation partner</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">relation.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem
+                id="customer_persona"
+                name="Customer Persona"
+                parent="contacts.res_partner_menu_config"
+                sequence="20"/>
+
+        <menuitem
+                id="type_relative_menu"
+                name="Type relative"
+                parent="customer_persona"
+                action="open_view_type_relative"
+                sequence="1"/>
+
+        <menuitem
+                id="relation_partner_menu"
+                name="Relation partner"
+                parent="customer_persona"
+                action="open_view_relation_partner"
+                sequence="5"/>
+
+        <delete model="ir.ui.menu" id="purchase.menu_procurement_management_supplier_name"/>
+        <menuitem
+                id="purchase.menu_procurement_management_supplier_name"
+                name="Nhà cung cấp"
+                parent="purchase.menu_procurement_management"
+                groups="custom_partner.manage_res_partner_ncc_group"
+                action="account.res_partner_action_supplier" sequence="15"/>
+
+        <delete model="ir.ui.menu" id="account.menu_account_supplier"/>
+        <menuitem
+                id="account.menu_account_supplier"
+                name="Nhà cung cấp"
+                parent="account.menu_finance_payables"
+                groups="custom_partner.manage_res_partner_ncc_group"
+                action="base.action_partner_supplier_form" sequence="200"/>
+    </data>
+</odoo>

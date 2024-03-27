@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="cost_driver_account_account_view_form" model="ir.ui.view">
+        <field name="name">cost.driver.account.account.view.form.inherit</field>
+        <field name="model">account.account</field>
+        <field name="inherit_id" ref="account.view_account_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='internal_group']" position="after">
+                 <field name="is_154_erp"/>
+                 <field name="is_154_cl"/>
+                 <field name="is_632"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_base_search_res_company_filter" model="ir.ui.view">
+            <field name="name">Công ty</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <search string="Search">
+                    <field name="name" string="Tên công ty"/>
+                    <separator/>
+                    <filter string="Lưu trữ" name="inactive" domain="[('active', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Thương hiệu" name="Brand" context="{'group_by':'brand_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_form_company_with_brand" model="ir.ui.view">
+            <field name="name">res.company.with.brand</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="brand_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

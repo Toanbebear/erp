@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_phieu_thu_chi" model="ir.ui.view">
+            <field name="name">View phiếu thu/chi</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <tree create="true">
+                    <field name="date" string="Ngày hóa đơn"/>
+                    <field name="name"/>
+                    <field name="ref"/>
+                    <field name="lydo"/>
+                    <field name="journal_id" optional="hide"/>
+                    <field name="amount_total"/>
+                    <field name="currency_id" optional="hide"/>
+                    <field name="nguoi_nhan" optional="hide"/>
+                    <field name="nguoi_nhan_char" optional="hide"/>
+                    <field name="treasurer_id" optional="hide"/>
+                    <field name="accountant_id" optional="hide"/>
+                    <field name="manager_id" optional="hide"/>
+                    <field name="state"/>
+                    <field name="company_id"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="account_move_tree_inherit">
+            <field name="name">Account move</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date']" position="after">
+                    <field name="tas_type" optional="show"/>
+                    <field name="lydo" optional="show"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_total_signed']" position="attributes">
+                    <attribute name="widget">monetary</attribute>
+                    <attribute name="options">{'currency_field': 'company_currency_id'}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount_total_signed']" position="after">
+                    <field name="company_currency_id" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="tas_payment_phieu_thu_form">
+            <field name="name">Phiếu thu</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="tas_type"/>
+                    <field name="payment_id"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="tas_payment_phieu_thu_act">
+            <field name="name">Phiếu Thu</field>
+            <field name="res_model">account.move</field>
+            <field name="domain">[('tas_type','=','inbound')]</field>
+            <field name="context">{'default_tas_type': 'inbound'}</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Tạo Phiếu Thu
+                </p>
+            </field>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_phieu_thu_chi')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('account.view_move_form')})]"/>
+        </record>
+
+
+    </data>
+</odoo>

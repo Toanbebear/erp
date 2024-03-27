@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="danh_sach_dich_vu_phau_thuat_report_attachment" model="ir.attachment">
+            <field name="name">Danh sách dịch vụ phẫu thuật</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/danh_sach_dich_vu_phau_thuat.xlsx"/>
+            <field name="store_fname">danh_sach_dich_vu_phau_thuat.xlsx</field>
+        </record>
+
+        <record model="ir.ui.view" id="danh_sach_dich_vu_phau_thuat_form">
+            <field name="name">report.surgical.service.list.form</field>
+            <field name="model">report.surgical.service.list</field>
+            <field name="arch" type="xml">
+                <form string="Danh sách dịch vụ phẫu thuật">
+                    <group>
+                        <field name="start_date" required="1"/>
+                        <field name="end_date" required="1"/>
+                        <field name="company_id" required="1" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_danh_sach_dich_vu_phau_thuat" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="danh_sach_dich_vu_phau_thuat_act">
+            <field name="name">Danh sách dịch vụ phẫu thuật</field>
+            <field name="res_model">report.surgical.service.list</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="danh_sach_dich_vu_phau_thuat_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="danh_sach_dich_vu_phau_thuat"
+                  name="Danh sách dịch vụ phẫu thuật"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="danh_sach_dich_vu_phau_thuat_act"
+                  sequence="11"
+                  groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_stock_user"/>
+
+    </data>
+</odoo>

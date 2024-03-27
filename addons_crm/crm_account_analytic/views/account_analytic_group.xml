@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <data>
+        <record id="view_form_crm_account_analytic_group" model="ir.ui.view">
+            <field name="name">Account Analytic Group</field>
+            <field name="model">account.analytic.group</field>
+            <field name="inherit_id" ref="analytic.account_analytic_group_form_view"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//sheet/group" position="before">-->
+<!--                    <header>-->
+<!--                        <button name="update_rate" class="oe_highlight" string="Cập nhật tỉ lệ phân bổ" type="object"/>-->
+<!--                    </header>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='company_id']" position="before">
+                    <field name="brand_id"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="tag_id"/>
+                </xpath>
+                <xpath expr="//group[2]" position="after">
+                    <group>
+                        <button name="update_rate" string="Cập nhật tỉ lệ phân bổ" type="object" icon="fa-refresh"/>
+                    </group>
+                    <field name="children_ids" mode="tree" context="{'default_parent_id':active_id}" >
+                        <tree create="false" delete="false" editable="top" options="{'no_open':True,'no_create':True}">
+                            <field name="name"/>
+                            <field name="brand_id"/>
+                            <field name="company_id"/>
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                            <field name="percentage"/>
+                            <field name="note"/>
+<!--                                <field name="company_id" groups="base.group_multi_company"/>-->
+                        </tree>
+                    </field>
+                </xpath>
+<!--                <xpath expr="//header//button[@name='cancel']" position="before">-->
+<!--                    <button name="update_payment_list" string="Cập nhật phiếu" type="object"-->
+<!--                            class="oe_highlight oe_edit_only"-->
+<!--                            attrs="{'invisible':[('state','not in',['draft'])]}"-->
+<!--                            groups="shealth_all_in_one.group_sh_medical_accountant"/>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+    </data>
+</odoo>

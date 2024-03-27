@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="crm_lead_form_booking_add_button_create_survey" model="ir.ui.view">
+        <field name="name">crm.lead.form.booking.add.button.create.survey</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='medium_id']" position="after">
+                <field name="survey_id"
+                       string="Phiếu khảo sát"
+                       attrs="{'invisible': [('customer_come', '=', 'no')]}"
+                       domain="[('company_id', '=', company_id)]"/>
+            </xpath>
+            <xpath expr="//button[@name='create_phone_call_info']" position="after">
+                <button name="action_start_survey" class="btn-info" string="Start survey" type="object"
+                        attrs="{'invisible': [('survey_id', '=', False)]}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

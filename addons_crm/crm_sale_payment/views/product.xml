@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="view_form_product_sale_inherit" model="ir.ui.view">
+        <field name="name">product.sale.inherit</field>
+        <field name="model">product.template</field>
+        <field name="inherit_id" ref="product.product_template_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='sales']" position="inside">
+                <group string="Commission Policy" name="commission_policy">
+                    <label for="commission_percentage"/>
+                    <div class="o_row">
+                        <field name="commission_percentage"/><span>%%</span>
+                    </div>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

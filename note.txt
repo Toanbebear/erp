@@ -1,0 +1,12 @@
+- Tạo nhánh erp
+- Tạo nhanh prod
+
+- 03/10/2023, Update lần lượt
+    custom_partner
+    crm_base
+    customer_company_sms
+    customer_company
+    custom_partner_extend
+    stock_intercompany_transfer
+
+- 04/10/2023 cài qrcodes, update crm_collaborators, crm_lead_qr_code, crm_voucher, customer_partner, loyalty, partner_qr_code

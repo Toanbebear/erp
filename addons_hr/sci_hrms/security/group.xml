@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="hr_employee_area_rule" model="ir.rule">
+        <field name="name">Employee Area rule</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="global" eval="True"/>
+         <field name="groups" eval="[(4, ref('hr.group_hr_user'))]"/>
+        <field name="domain_force">[('area', 'in', [user.employee_ids.area])]</field>
+    </record>
+
+    <record id="hr_employee_area_rule_manager" model="ir.rule">
+        <field name="name">Employee Area rule manager</field>
+        <field name="model_id" ref="model_hr_employee"/>
+        <field name="global" eval="True"/>
+         <field name="groups" eval="[(4, ref('hr.group_hr_manager'))]"/>
+        <field name="domain_force">[(1, '=', 1)]</field>
+    </record>
+
+    <record model="ir.module.category" id="module_type_user_position">
+            <field name="name">Position user</field>
+            <field name="sequence">0</field>
+            <field name="visible" eval="0"/>
+        </record>
+
+<!--    #quyền Lễ tân tư vấn-->
+    <record id="group_user_receptionists" model="res.groups">
+        <field name="name">Receptionists user</field>
+        <field name="category_id" ref="module_type_user_position"/>
+        <field name="implied_ids" eval="[(4, ref('shealth_all_in_one.group_sh_medical_receptionist')), (4, ref('crm_base.receptionist_crm'))]"/>
+    </record>
+
+<!--    quyền thu ngân-->
+    <record id="group_user_cashier" model="res.groups">
+        <field name="name">Cashier user</field>
+        <field name="category_id" ref="module_type_user_position"/>
+        <field name="implied_ids" eval="[(4, ref('shealth_all_in_one.group_sh_medical_accountant'))]"/>
+    </record>
+
+<!--    Quyền bác sĩ, điều dưỡng-->
+    <record id="group_user_doctor" model="res.groups">
+        <field name="name">Doctor user</field>
+        <field name="category_id" ref="module_type_user_position"/>
+        <field name="implied_ids" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician'))]"/>
+    </record>
+
+<!--    Quyền trợ thủ-->
+    <record id="group_user_assistant" model="res.groups">
+        <field name="name">Assistant user</field>
+        <field name="category_id" ref="module_type_user_position"/>
+        <field name="implied_ids" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician_odontology'))]"/>
+    </record>
+
+    <!--    Quyền S&M-->
+    <record id="group_user_mkt" model="res.groups">
+        <field name="name">Marketing user</field>
+        <field name="category_id" ref="module_type_user_position"/>
+    </record>
+
+<!--    Quyền giám đốc chi nhánh-->
+    <record id="group_user_branch_manager" model="res.groups">
+        <field name="name">Branch manager user</field>
+        <field name="category_id" ref="module_type_user_position"/>
+        <field name="implied_ids" eval="[(4, ref('shealth_all_in_one.group_sh_medical_physician')),
+                                         (4, ref('shealth_all_in_one.group_sh_medical_physician_odontology')),
+                                         (4, ref('shealth_all_in_one.group_sh_medical_physician_spa'))]"/>
+    </record>
+
+    <!--    Quyền viewer-->
+    <record id="group_user_viewer" model="res.groups">
+        <field name="name">Viewer</field>
+        <field name="category_id" ref="module_type_user_position"/>
+    </record>
+
+    <!--    Quyền reporter -->
+    <record id="group_user_reporter" model="res.groups">
+        <field name="name">Reporter</field>
+        <field name="category_id" ref="module_type_user_position"/>
+        <field name="comment">Người dùng sẽ có thể xuất dữ liệu trên hệ thống Báo cáo.
+            Sau khi thêm quyền vào người dùng, khi hệ thống xuất báo cáo được đồng bộ, người dùng sẽ có quyền xuất dữ liệu trên báo cáo</field>
+    </record>
+</odoo>

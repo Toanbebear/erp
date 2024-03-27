@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <record id="report_tnkh_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO TRẢI NGHIỆM KHÁCH HÀNG</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_report/static/xls/bao_cao_trai_nghiem_khach_hang.xlsx"/>
+            <field name="store_fname">bao_cao_tnkh.xlsx</field>
+        </record>
+
+        <record model="ir.ui.view" id="report_tnkh_form">
+            <field name="name">report.tnkh.form</field>
+            <field name="model">report.tnkh</field>
+            <field name="arch" type="xml">
+                <form string="Report TNKH">
+                    <div>
+                        <span class="oe_inline mr-4">Thời gian bắt đầu: </span>
+                        <field name="start_year" class="oe_inline" required="1"/>
+                        <field name="start_month" class="oe_inline" required="1"/>
+                    </div>
+
+                    <div>
+                        <span class="oe_inline mr-4">Thời gian kết thúc:</span>
+                        <field name="end_year" class="oe_inline" required="1"/>
+                        <field name="end_month" class="oe_inline" required="1"/>
+                    </div>
+                    <group>
+<!--                        <field name="end_date"/>-->
+                        <field name="brand_id" required="1"/>
+                        <field name="fetch_all"/>
+                        <field name="company_ids" string="Chi nhánh" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="report_1" type="object" string="Báo cáo" class="oe_highlight"/>
+                        <button string="Hủy bỏ" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_tnkh_act">
+            <field name="name">Báo cáo trải nghiệm khách hàng</field>
+            <field name="res_model">report.tnkh</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_tnkh_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="report_tnkh_menu"
+                  name="Báo cáo trải nghiệm khách hàng"
+                  parent="crm_report.menu_crm_report"
+                  action="report_tnkh_act"
+                  groups="crm_report.security_crm_report"
+                  sequence="13"/>
+</odoo>

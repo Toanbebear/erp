@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <data>
+       <record id="view_tree_account_move_in_search" model="ir.ui.view">
+           <field name="name">Account account Tree</field>
+           <field name="model">account.account</field>
+           <field name="arch" type="xml">
+               <tree>
+                   <field name="code"/>
+                   <field name="name"/>
+                   <field name="user_type_id" optional="hide"/>
+                   <field name="currency_id" optional="hide"/>
+                   <field name="company_id" groups="base.group_multi_company" optional="show"/>
+               </tree>
+           </field>
+       </record>
+
+        <record id="view_form_account_move_add_button" model="ir.ui.view">
+            <field name="name">Account Move Form</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='ref']" position="after">
+                    <field name="stock_picking_id" readonly="1" attrs="{'invisible' : [('stock_picking_id', '=', False)]}"/>
+                </xpath>
+                 <xpath expr="//button[@name='open_reconcile_view']" position="after">
+                     <button name="cost_allocation" type="object" class="oe_stat_button" icon="fa-list">
+                         <div class="o_field_widget o_stat_info">
+                             <span class="o_stat_value">
+                                    <field name="cost_allocation_count" widget="statinfo"/>
+                             </span>
+                                <span class="o_stat_text"> </span>
+                         </div>
+                     </button>
+                 </xpath>
+                <xpath expr="//field[@name='line_ids']//tree//field[@name='account_id']" position="attributes">
+                    <attribute name="options">{'no_create': True, 'no_create_edit': True}</attribute>
+                    <attribute name="context">{'tree_view_ref': 'crm_account_analytic.view_tree_account_move_in_search'}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+
+
+   </data>
+</odoo>

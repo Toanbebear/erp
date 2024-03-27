@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <delete model="ir.ui.menu" id="account.menu_action_account_moves_all"/>
+        <menuitem
+            id="account.menu_action_account_moves_all"
+            name="Bút toán phát sinh chi tiết"
+            action="account.action_account_moves_all"
+            parent="account.menu_finance_entries_accounting_miscellaneous"
+            groups="account.group_account_user"
+            sequence="10"/>
+    </data>
+</odoo>

@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Consultation ticket assets  -->
+        <template id="consultation_assets" name="Consultation ticket assets">
+            <script type="text/javascript" src="/crm_consultation_tickets/static/src/js/custom.js"/>
+            <link rel="stylesheet" type="text/scss" href="/crm_consultation_tickets/static/src/css/style_kn.css"/>
+            <link rel="stylesheet" type="text/scss" href="/crm_consultation_tickets/static/src/css/style_da.css"/>
+            <link rel="stylesheet" type="text/scss" href="/crm_consultation_tickets/static/src/css/style_pr.css"/>
+        </template>
+
+        <!-- Consultation layout -->
+        <template id="consultation_layout" name="Consultation Layout" inherit_id="web.frontend_layout"
+                  primary="True">
+            <xpath expr="//head" position="after">
+                <t t-call-assets="crm_consultation_tickets.consultation_assets" lazy_load="True"/>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+
+            <xpath expr="//footer" position="replace">
+            </xpath>
+
+            <xpath expr="//nav[@id='oe_main_menu_navbar']" position="replace">
+            </xpath>
+
+            <xpath expr="//header[@id='top']" position="replace">
+            </xpath>
+
+            <xpath expr="//main" position="replace">
+                <body>
+                    <div class="text-center">
+
+                    </div>
+                    <!--                    <div id="wrap" class="oe_structure oe_empty"/>-->
+                    <main class="o_consultation_main">
+                        <t t-raw="0"/>
+                    </main>
+                </body>
+            </xpath>
+        </template>
+
+        <template id="consultation_ticket" name="Consultation Tickets">
+            <t t-call="crm_consultation_tickets.consultation_layout">
+                <input id="data_service" name="data_service" type="hidden" t-att-value="json_service"></input>
+                <div t-att-class="'wrap wrap1' + booking.brand_id.code + ' ' + brand_code">
+                    <div class="container-fluid">
+                        <div>
+                            <form role="form" method="post" class=""
+                                  t-att-action="'/phieu-tu-van-submit/%s' % (booking.id)"
+                                  t-att-data-submit="'/phieu-tu-van-submit/%s' % (booking.id)">
+
+                                <div class="d-flex flex-row">
+                                  <div class="p-2 logo"></div>
+                                  <div class="p-2 title">
+                                      <h1 class="text-center text-uppercase">Phiếu Tư Vấn</h1>
+                                  </div>
+
+                                </div>
+
+                                <div class="content">
+                                    <div class="info" >
+                                        <h2 class="text-uppercase">I. Thông tin cá nhân</h2>
+                                        <ul class="list-info">
+<!--                                            <li>-->
+<!--                                                <label>Booking:</label>-->
+<!--                                                <span t-field="booking.name"/>-->
+<!--                                            </li>-->
+                                            <li>
+                                                <label>1. Tiền sử dị ứng:</label>
+                                                <span t-field="booking.partner_id.allergy_history"/>
+                                            </li>
+
+                                            <li class="d-flex justify-content-between">
+                                                <div>
+                                                    <label>2. Họ và tên:</label>
+                                                    <strong t-field="booking.partner_id.name"/>
+                                                </div>
+
+                                                <div>
+                                                    <label>Mã khách hàng:</label>
+                                                    <strong t-field="booking.partner_id.code_customer"/>
+                                                </div>
+
+                                                <div style="margin-right:10px">
+                                                    <label>Giới tính:</label>
+                                                    <strong t-field="booking.partner_id.gender"/>
+                                                </div>
+
+                                            </li>
+
+                                            <li>
+                                                <label>3. Ngày/tháng/năm sinh:</label>
+                                                <strong t-field="booking.partner_id.birth_date"/>
+                                            </li>
+
+                                            <li>
+                                                <label>4. Số CMTND/CCCD/Hộ chiếu:</label>
+                                                <strong class="number_id" t-field="booking.partner_id.pass_port"/>
+
+                                                <label>Ngày cấp:</label>
+                                                <strong t-field="booking.partner_id.pass_port_date"/>
+
+                                            </li>
+
+                                        </ul>
+
+                                        <h2 class="text-uppercase">II. Thông tin liên hệ</h2>
+                                        <ul class="contact">
+                                            <li>
+                                                <label>Nơi cư trú hiện tại:</label>
+                                                <span t-field="booking.partner_id.pass_port_address"/>
+                                            </li>
+<!--                                            <li>-->
+<!--                                                <label>Số điện thoại:</label>-->
+<!--                                                <strong t-field="booking.partner_id.phone"/>-->
+<!--                                            </li>-->
+<!--                                            <li>-->
+<!--                                                <label>Số điện thoại khẩn cấp:</label>-->
+<!--                                                <strong t-field="booking.partner_id.emergency_phone"/>-->
+<!--                                            </li>-->
+                                            <li>
+                                                <label>Email:</label>
+                                                <strong t-field="booking.partner_id.email"/>
+                                            </li>
+
+                                            <li>
+                                                <label>Nguồn biết đến:</label>
+                                                <div class="source row">
+                                                    <t t-foreach="know_source" t-as="source">
+                                                        <div class="col-3">
+                                                          <input name="know_source" class="know-source" type="checkbox" t-att-value="source[0]" t-att-id="'source' + source[0]"/>
+                                                          <label class="form-check-label" t-att-for="'source' + source[0]">
+                                                            <t t-esc="source[1]"></t>
+                                                          </label>
+                                                        </div>
+                                                    </t>
+                                                </div>
+                                            </li>
+
+
+                                        </ul>
+
+<!--                                        <div class="form-group">Bác sĩ tư vấn:-->
+<!--                                            <select name="consulting_doctor" id="consulting_doctor"-->
+<!--                                                    placeholder="Bác sĩ tư vấn:">-->
+<!--                                                <option disabled="1" selected="1"/>-->
+<!--                                                <t t-foreach='consulting_doctor' t-as='consulting_doctor'>-->
+<!--                                                    <option t-att-name="'%s' % consulting_doctor.id"-->
+<!--                                                            t-att-value="'%s' % consulting_doctor.id">-->
+<!--                                                        <span t-esc='consulting_doctor.name'/>-->
+<!--                                                    </option>-->
+<!--                                                </t>-->
+<!--                                            </select>-->
+<!--                                        </div>-->
+                                    </div>
+                                    <br/>
+
+                                    <div class="col-sm-12">
+                                        <h2 class="text-uppercase">III. Thông tin tư vấn</h2>
+
+                                        <div class="d-flex flex-row">
+<!--                                        <div class="d-flex flex-row">-->
+<!--                                          <div class="p-2">-->
+<!--                                              <label style="padding:5px">Bác sĩ tư vấn:</label>-->
+<!--                                          </div>-->
+<!--                                          <div class="p-2 title">-->
+<!--                                              <select style="width: 100%;padding:5px" name="consulting_doctor" id="consulting_doctor"-->
+<!--                                                    placeholder="Bác sĩ tư vấn:">-->
+<!--                                                    <option disabled="1" selected="1"/>-->
+<!--                                                <t t-foreach='consulting_doctor' t-as='consulting_doctor'>-->
+<!--                                                    <option t-att-name="'%s' % consulting_doctor.id"-->
+<!--                                                            t-att-value="'%s' % consulting_doctor.id">-->
+<!--                                                        <span t-esc='consulting_doctor.name'/>-->
+<!--                                                    </option>-->
+<!--                                                </t>-->
+<!--                                            </select>-->
+<!--                                          </div>-->
+
+<!--                                        </div>-->
+
+                                        <div class="d-flex flex-row">
+                                          <div class="p-2">
+                                              <label style="padding:5px">Nguồn ghi nhận:</label>
+                                          </div>
+                                          <div class="p-2 title">
+                                              <select style="width: 100%;padding:5px" name="source_id" id="source_id"
+                                                    placeholder="Nguồn ghi nhận:">
+                                                    <option disabled="1" selected="1"/>
+                                                <t t-foreach='source_id' t-as='source_id'>
+                                                    <option t-att-name="'%s' % source_id.id"
+                                                            t-att-value="'%s' % source_id.id">
+                                                        <span t-esc='source_id.name'/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                          </div>
+
+                                        </div>
+                                        </div>
+
+
+
+
+
+<!--                                        <div class="doctors row">-->
+<!--                                            <t t-foreach="consulting_doctor" t-as="doctor">-->
+<!--                                                <div class="col-3">-->
+<!--                                                  <input class="consulting-doctor" type="checkbox" t-att-value="doctor.id" t-att-id="'doctor' + str(doctor.id)"/>-->
+<!--                                                  <label class="form-check-label" t-att-for="'doctor' + str(doctor.id)">-->
+<!--                                                    <t t-esc="doctor.name"></t>-->
+<!--                                                  </label>-->
+<!--                                                </div>-->
+<!--                                            </t>-->
+<!--                                        </div>-->
+
+                                        <t t-call="crm_consultation_tickets.consultation_info">
+                                            <t t-set="lines" t-value="crm_line_ids"/>
+                                        </t>
+
+<!--                                        <div class="form_consultation_tickets">-->
+<!--                                            <div class="form-group">-->
+<!--                                                <input id="data_service" name="data_service" type="hidden"-->
+<!--                                                   t-att-value="json_service"></input>-->
+<!--                                                <table class="table table-bordered form-group" id="tbl_crm_consultation_tickets_row">-->
+<!--                                                    <thead>-->
+<!--                                                        <th class="form_table_infor_consultation" style="text-align: center;">Dịch vụ tư vấn</th>-->
+<!--                                                        <th class="form_table_infor_consultation" style=" text-align: center;">Mong muốn của khách hàng-->
+<!--                                                        </th>-->
+<!--                                                        <th class="form_table_infor_consultation" style=" text-align: center;">Tình trạng-->
+<!--                                                        </th>-->
+<!--                                                        <th class="form_table_infor_consultation" style="text-align: center;">Mức độ cải thiện-->
+<!--                                                        </th>-->
+<!--                                                        <th class="form_table_infor_consultation" style="text-align: center;">Lịch trình</th>-->
+
+<!--                                                        <th class="form_table_infor_consultation" style="text-align: center;">Sản phẩm sử dụng tại nhà</th>-->
+<!--                                                        <th class="form_table_infor_consultation" style="text-align: center;">Ghi chú</th>-->
+<!--                                                        <th class="form_table_infor_consultation" style="text-align: center;">Xác nhận thực hiện</th>-->
+<!--                                                        <th class="form_table_infor_consultation" style="width: 3%"></th>-->
+<!--                                                    </thead>-->
+<!--                                                    <tbody>-->
+<!--                                                        <tr id="tr_delete_service__0"-->
+<!--                                                            class="crm_consultation_tickets_row" data-id="0">-->
+<!--                                                            <th style="vertical-align: middle;">-->
+<!--                                                                <select name="service__0" data-id="0"-->
+<!--                                                                        class="sl_service js-data-example-ajax"-->
+<!--                                                                        style="width: 100%">-->
+<!--                                                                    <option disabled="1" selected="1"/>-->
+<!--                                                                    <t t-foreach='service' t-as='service'>-->
+<!--                                                                        <option t-att-name="'%s' % service.id"-->
+<!--                                                                                t-att-value="'%s' % service.id">-->
+<!--                                                                            <span t-esc='service.name'/>-->
+<!--                                                                        </option>-->
+<!--                                                                    </t>-->
+<!--                                                                </select>-->
+<!--                                                            </th>-->
+<!--                                                            <th>-->
+<!--                                                                <textarea type="text" name="desire__0"-->
+<!--                                                                       style="width: 100%"/>-->
+<!--                                                            </th>-->
+<!--                                                            <th>-->
+<!--                                                                <textarea type="text"-->
+<!--                                                                       name="health_status__0" style="width: 100%"/>-->
+<!--                                                            </th>-->
+<!--                                                            <th>-->
+<!--                                                                <textarea type="text"-->
+<!--                                                                       name="level_of_improvement__0" style="width: 100%"-->
+<!--                                                                />-->
+<!--                                                            </th>-->
+<!--                                                            <th>-->
+<!--                                                                <textarea type="text"-->
+<!--                                                                       name="schedule__0" style="width: 100%"-->
+<!--                                                                />-->
+<!--                                                            </th>-->
+<!--                                                            <th>-->
+<!--                                                                <textarea type="text"-->
+<!--                                                                       name="products_home_use__0" style="width: 100%"-->
+<!--                                                                />-->
+<!--                                                            </th>-->
+<!--                                                            <th>-->
+<!--                                                                <textarea type="text"-->
+<!--                                                                       name="note__0" style="width: 100%"-->
+<!--                                                                />-->
+<!--                                                            </th>-->
+<!--                                                            <th>-->
+<!--                                                                <textarea type="checkbox"-->
+<!--                                                                       name="confirm__0" style="width: 100%"-->
+<!--                                                                />-->
+<!--                                                            </th>-->
+<!--                                                            <td style="vertical-align: middle;">-->
+<!--                                                                <button data-id="0" name="btn_delete_service__0"-->
+<!--                                                                        id="btn_delete_service__0" type="button"-->
+<!--                                                                        class="button_delete_service fa fa-trash" >-->
+<!--                                                                </button>-->
+<!--                                                            </td>-->
+<!--                                                        </tr>-->
+<!--&lt;!&ndash;                                                        <th>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                            <button id="btn_add_service" type="button"&ndash;&gt;-->
+<!--&lt;!&ndash;                                                                    class="button_add_service">Thêm một dòng...&ndash;&gt;-->
+<!--&lt;!&ndash;                                                            </button>&ndash;&gt;-->
+<!--&lt;!&ndash;                                                        </th>&ndash;&gt;-->
+<!--                                                    </tbody>-->
+<!--                                                </table>-->
+<!--                                                <a class="btn btn-success"><i class="fa fa-plus"/><span> Thêm dịch vụ tư vấn</span></a>-->
+<!--                                                <button id="btn_add_service" type="button"-->
+<!--                                                        class="button_add_service">Thêm một dòng...-->
+<!--                                                </button>-->
+<!--                                                <br/>-->
+<!--                                            </div>-->
+<!--                                        </div>-->
+                                    </div>
+                                </div>
+                                <div class="footer text-center">
+                                    <button type="submit" id="submit_consultation" class="btn btn btn-lg btn-submit"
+                                            name="button_start" value="start">Hoàn thành
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+
+                    </div>
+                </div>
+
+            </t>
+        </template>
+
+        <template id="consultation_service" name="Consultation service">
+            <div>Dịch vụ</div>
+
+        </template>
+        <template id="consultation_info" name="Consultation Info">
+            <table class="table table-bordered">
+                <thead>
+                    <th width="32px" class="text-center" style="padding-left: 0;padding-right: 0;">STT</th>
+                    <th width="220px">Dịch vụ tư vấn</th>
+                    <th>Thông tin</th>
+                    <th width="70px" class="text-center" style="padding-left: 0;padding-right: 0;"><span title="Xác nhận thực hiện">Xác nhận</span></th>
+                </thead>
+                <tbody class="content-body">
+                    <t t-set="sequence" t-value="1"></t>
+
+                    <t t-foreach="lines" t-as="line">
+                        <t t-call="crm_consultation_tickets.row_info">
+                            <t t-set="line" t-value="line"/>
+                            <t t-set="sequence" t-value="sequence"/>
+                        </t>
+                        <t t-set="sequence" t-value="sequence + 1"></t>
+                    </t>
+<!--                    <tr t-foreach="lines" t-as="line">-->
+<!--                        <td class="text-center"><t t-esc="sequence"></t></td>-->
+<!--                        <td><strong><t t-esc="line.service_id.name"></t></strong></td>-->
+<!--                        <td>-->
+<!--                            <div>-->
+<!--                                <div>-->
+<!--                                    <label style="width:100%"><i class="fa fa-heart-o"/> Mong muốn</label>-->
+<!--                                    <textarea rows="4" style="width:100%" type="text" name="note__0"></textarea>-->
+<!--                                </div>-->
+
+<!--                                <div class="pt-3">-->
+<!--                                    <label  style="width:100%"><i class="fa fa-dashboard"/> Tình trạng</label>-->
+<!--                                    <textarea rows="4" style="width:100%" type="text" name="note__0"></textarea>-->
+<!--                                </div>-->
+
+<!--                                <div class="pt-3">-->
+<!--                                    <label style="width:100%"><i class="fa fa-check-square-o"/> Mức độ cải thiện</label>-->
+<!--                                    <textarea style="width:100%" type="text" name="note__0"></textarea>-->
+<!--                                </div>-->
+
+<!--                                <div class="pt-3">-->
+<!--                                    <label style="width:100%"><i class="fa fa-calendar"/> Lịch trình</label>-->
+<!--                                    <textarea style="width:100%" type="text" name="note__0"></textarea>-->
+
+<!--                                </div>-->
+
+<!--                                <div class="pt-3">-->
+<!--                                    <label style="width:100%"><i class="fa fa-home"/> Sản phẩm sử dụng tại nhà</label>-->
+<!--                                    <textarea style="width:100%" type="text" name="note__0"></textarea>-->
+<!--                                </div>-->
+
+<!--                                <div class="pt-3">-->
+<!--                                    <label style="width:100%">-->
+<!--                                        <i class="fa fa-pencil"/> Ghi chú</label>-->
+<!--                                    <textarea  rows="4" style="width:100%" type="text" name="note__0"></textarea>-->
+<!--                                </div>-->
+<!--                            </div>-->
+
+<!--                        </td>-->
+<!--                        <td class="text-center"><input class="confirm text-center" type="checkbox" value="" id=""/></td>-->
+
+<!--                        <t t-set="sequence" t-value="sequence + 1"></t>-->
+
+<!--                    </tr>-->
+                </tbody>
+            </table>
+            <a class="btn btn-success add-service"><i class="fa fa-plus"/><span> Thêm dịch vụ tư vấn</span></a>
+        </template>
+
+        <template t-name="crm_consultation_tickets.row_info">
+            <tr t-att-id="'row_info__' + str(sequence)">
+                <td class="text-center"><t t-esc="sequence"></t></td>
+                <td>
+                    <input t-att-name="'service__' + str(sequence)" type="hidden" t-att-value="line.service_id.id"></input>
+                    <strong><t t-esc="line.service_id.name"></t></strong></td>
+                <td>
+                    <div>
+                        <div>
+                            <label style="width:100%"><i class="fa fa-heart-o"/> Mong muốn</label>
+                            <textarea rows="4" style="width:100%" type="text" t-att-name="'desire__' + str(sequence)"></textarea>
+                        </div>
+
+                        <div class="pt-3">
+                            <label  style="width:100%"><i class="fa fa-dashboard"/> Tình trạng</label>
+                            <textarea rows="4" style="width:100%" type="text" t-att-name="'health_status__' + str(sequence)"></textarea>
+                        </div>
+
+<!--                        <div class="pt-3">-->
+<!--                            <label style="width:100%"><i class="fa fa-check-square-o"/> Mức độ cải thiện</label>-->
+<!--                            <textarea style="width:100%" type="text" t-att-name="'level_of_improvement__' + str(sequence)"></textarea>-->
+<!--                        </div>-->
+
+<!--                        <div class="pt-3">-->
+<!--                            <label style="width:100%"><i class="fa fa-calendar"/> Lịch trình</label>-->
+<!--                            <textarea style="width:100%" type="text" t-att-name="'schedule__' + str(sequence)"></textarea>-->
+
+<!--                        </div>-->
+
+<!--                        <div class="pt-3">-->
+<!--                            <label style="width:100%"><i class="fa fa-calendar"/> Chế độ bảo hành</label>-->
+<!--                            <textarea style="width:100%" type="text" t-att-name="'warranty__' + str(sequence)"></textarea>-->
+
+<!--                        </div>-->
+
+<!--                        <div class="pt-3">-->
+<!--                            <label style="width:100%"><i class="fa fa-home"/> Sản phẩm sử dụng tại nhà</label>-->
+<!--                            <textarea style="width:100%" type="text" t-att-name="'product_for_home_use__' + str(sequence)"></textarea>-->
+<!--                        </div>-->
+                        <div class="pt-3">
+                            <label style="width:100%">
+                                <i class="fa fa-pencil"/> Tư vấn</label>
+                            <textarea  rows="4" style="width:100%" type="text" t-att-name="'consultation__' + str(sequence)"></textarea>
+                        </div>
+
+                        <div class="pt-3">
+                            <label style="width:100%">
+                                <i class="fa fa-pencil"/> Kết luận</label>
+                            <textarea  rows="4" style="width:100%" type="text" t-att-name="'note__' + str(sequence)"></textarea>
+                        </div>
+                    </div>
+
+                </td>
+                <td class="text-center">
+                    <div class="text-center" style="display:none;">
+                        <input class="confirm text-center" t-att-name="'confirm_service' + str(sequence)" type="checkbox"/>
+                    </div>
+
+                    <div class="text-center">
+                        <a class="text-danger remove-service" t-att-data-id="sequence" style="margin-top:10px"><i class="fa fa-trash-o"/></a>
+                    </div>
+                </td>
+
+
+
+            </tr>
+        </template>
+<!--        <template id="consultation_info" name="Consultation Info">-->
+<!--            <table class="table table-bordered">-->
+<!--                <thead>-->
+<!--                    <th width="48px">STT</th>-->
+<!--                    <th>Dịch vụ tư vấn</th>-->
+<!--                    <th>Mong muốn</th>-->
+<!--                    <th>Tình trạng</th>-->
+<!--                    <th>Mức độ cải thiện</th>-->
+<!--                    <th>Lịch trình</th>-->
+<!--                    <th>Sản phẩm sử dụng tại nhà</th>-->
+<!--                    <th>Ghi chú</th>-->
+<!--                    <th width="48px">Xác nhận thực hiện</th>-->
+<!--                </thead>-->
+<!--                <tbody>-->
+<!--                    <t t-set="sequence" t-value="1"></t>-->
+<!--                    <tr t-foreach="lines" t-as="line">-->
+<!--                        <td><t t-esc="sequence"></t></td>-->
+<!--                        <td><textarea type="text" name="note__0" style="width: 100%"-->
+<!--                                                                /></td>-->
+<!--                        <td><t t-esc="line.name"></t></td>-->
+<!--                        <td><t t-esc="line.name"></t></td>-->
+<!--                        <td><t t-esc="line.name"></t></td>-->
+<!--                        <td><t t-esc="line.name"></t></td>-->
+<!--                        <td><t t-esc="line.name"></t></td>-->
+<!--                        <td><t t-esc="line.name"></t></td>-->
+<!--                        <td><input class="confirm" type="checkbox" value="" id=""/></td>-->
+
+<!--                        <t t-set="sequence" t-value="sequence + 1"></t>-->
+
+<!--                    </tr>-->
+<!--                </tbody>-->
+<!--            </table>-->
+<!--        </template>-->
+        <template id="sfinished" name="Finished">
+            <t t-call="crm_consultation_tickets.consultation_layout">
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <h1 class="text-center" style="color: #007ac1;">Cảm ơn bạn đã dành thời gian thực hiện tư vấn
+                </h1>
+                <br/>
+            </t>
+        </template>
+    </data>
+</odoo>

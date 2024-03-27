@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="module_category_group_loyalty" model="ir.module.category">
+            <field name="name">Loyalty</field>
+            <field name="description">Loyalty</field>
+            <field name="sequence">9</field>
+        </record>
+
+        <record id="user_loyalty" model="res.groups">
+            <field name="name">User loyalty</field>
+            <field name="category_id" ref="module_category_group_loyalty"/>
+        </record>
+
+        <record id="sys_loyalty" model="res.groups">
+            <field name="name">System loyalty</field>
+            <field name="category_id" ref="module_category_group_loyalty"/>
+            <field name="implied_ids" eval="[(4, ref('user_loyalty'))]"/>
+        </record>
+
+        <record id="loyalty_rule_rank" model="ir.rule">
+            <field name="name">loyalty rule rank brand</field>
+            <field ref="model_crm_loyalty_rank" name="model_id"/>
+            <field name="domain_force">[('brand_id', 'in',user.company_ids.brand_id.ids)]</field>
+        </record>
+
+        <record id="loyalty_rule_reward" model="ir.rule">
+            <field name="name">loyalty rule reward brand</field>
+            <field ref="model_crm_loyalty_line_reward" name="model_id"/>
+            <field name="domain_force">[('brand_id','in',user.company_ids.brand_id.ids)]</field>
+        </record>
+
+    </data>
+</odoo>

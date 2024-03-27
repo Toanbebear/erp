@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <!-- Actions -->
+        <record id="cs_api_action" model="ir.actions.act_window">
+            <field name="name">API CareSoft</field>
+            <field name="res_model">custom.field.cs</field>
+            <field name='view_mode'>tree,form</field>
+        </record>
+
+        <!-- Menus -->
+        <menuitem
+                id="cs_api_root_menu"
+                name="API CareSoft"
+                parent="base.menu_custom"/>
+
+        <menuitem
+                id="custom_field_api_cs_menu"
+                name="Custom field"
+                parent="cs_api_root_menu"
+                action="restful.cs_api_action"/>
+
+        <!-- Views -->
+        <record id="custom_field_cs_view_form" model="ir.ui.view">
+            <field name="name">custom.field.cs</field>
+            <field name="model">custom.field.cs</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="custom_field_id" readonly="1"/>
+                            <field name="custom_field_lable" readonly="1"/>
+                            <field name="brand_id" readonly="1"/>
+                            <field name="code_custom_field"/>
+                            <field name="type" readonly="1"/>
+                        </group>
+                        <notebook>
+                            <page string="Value">
+                                <field name="values" context="{'default_custom_field_cs_id':id}" mode="tree">
+                                    <tree>
+                                        <field name="id_value" readonly="1"/>
+                                        <field name="lable_value" readonly="1"/>
+                                        <field name="code_value"/>
+                                    </tree>
+                                    <form>
+                                        <group>
+                                            <field name="id_value" readonly="1"/>
+                                            <field name="lable_value" readonly="1"/>
+                                            <field name="code_value"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="custom_field_cs_view_tree" model="ir.ui.view">
+            <field name="name">custom.field.cs</field>
+            <field name="model">custom.field.cs</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="custom_field_id" readonly="1"/>
+                    <field name="custom_field_lable" readonly="1"/>
+                    <field name="brand_id" readonly="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- Cron job -->
+        <record id="get_custom_field_cs_cron" model="ir.cron">
+            <field name="name">Get custom field caresoft</field>
+            <field name="model_id" ref="model_custom_field_cs"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_get_custom_field()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=20, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="vnpay_view_account_payment_form_inherited" model="ir.ui.view">
+            <field name="name">vnpay.account.payment.form.inherited</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="crm_base.view_form_payment_crm" />
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='post']" position="after">
+                    <button name="generate_vnpay_qr_code" class="oe_highlight" string="Tạo mã thanh toán VNPAY-QR"
+                            attrs="{'invisible': ['|', ('payment_method', '!=', 'vdt'), ('state', '!=', 'draft')]}"
+                            type="object"/>
+                    <button name="check_transaction" class="oe_highlight" string="Check thanh toán VNPAY-QR"
+                            attrs="{'invisible': [('payment_method', '!=', 'vdt')]}"
+                            type="object"/>
+                    <button name="%(payment_vnpay.action_report_payment_vnpay)d"
+                            icon="fa-print"
+                            string="In phiếu VNPAY-QR"
+                            attrs="{'invisible': ['|', '|', ('qr_code_data', '=', False), ('state', '!=', 'draft'), ('payment_method', '!=', 'vdt')]}"
+                            type="action"/>
+
+                </xpath>
+
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="qr_code_data" invisible="1"/>
+                    <div attrs="{'invisible': ['|', '|', ('qr_code_data', '=', False), ('state', '!=', 'draft'), ('payment_method', '!=', 'vdt')]}">
+                        <i class="fa fa-credit-card"></i>
+                        <span> Thanh toán qua ứng dụng Mobile Banking</span>
+                        <br/>
+                        <div class="text-center"><i>Quét mã VNPAY QR</i></div>
+                        <br/>
+                        <div class="text-center">
+                            <field name="qr_code_image" widget="image" style="width:200px" class="oe_qrcode"
+                                   options='{"zoom": true, "preview_image":"qr_code_image"}' readonly="1"/>
+                        </div>
+                    </div>
+
+                </xpath>
+
+                <xpath expr="//button[@name='post']" position="attributes">
+                    <!-- Add your fields or attributes here -->
+                    <attribute name="attrs">{'invisible': ['|', ('payment_method', '=', 'vdt'), ('state', '!=', 'draft')]}</attribute>
+                    <attribute name="states"></attribute>
+                </xpath>
+                <xpath expr="//field[@name='payment_token_id']" position="attributes">
+                    <!-- Add your fields or attributes here -->
+                    <attribute name="force_save">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='journal_id']" position="attributes">
+                    <!-- Add your fields or attributes here -->
+                    <attribute name="attrs">{'readonly': [('payment_method', '=', 'vdt')]}</attribute>
+                    <attribute name="force_save">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+</odoo>

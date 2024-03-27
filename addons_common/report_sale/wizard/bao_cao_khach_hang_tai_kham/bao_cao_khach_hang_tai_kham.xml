@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="report_khach_hang_tai_kham_form">
+            <field name="name">Báo cáo khách hàng tái khám</field>
+            <field name="model">report.customer.evaluation</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo khách hàng tái khám">
+                    <group>
+                        <field name="start_date" required="True" string="Từ"/>
+                        <field name="end_date" required="True" string="Đến"/>
+                        <field name="company_id" required="True" string="Đơn vị" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_customer_evaluation" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_khach_hang_tai_kham_act">
+            <field name="name">Báo cáo khách hàng tái khám</field>
+            <field name="res_model">report.customer.evaluation</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_khach_hang_tai_kham_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="report_paris_khach_hang_tai_kham_menu"
+                  name="C.I.3 Báo cáo khách hàng tái khám"
+                  parent="report_sale.menu_report_brand_paris_van_hanh_cham_soc_khach_hang"
+                  action="report_khach_hang_tai_kham_act"
+        />
+
+        <menuitem id="report_kangnam_khach_hang_tai_kham_menu"
+                  name="C.I.3 Báo cáo khách hàng tái khám"
+                  parent="report_sale.menu_report_brand_kangnam_van_hanh_cham_soc_khach_hang"
+                  action="report_khach_hang_tai_kham_act"
+        />
+
+        <menuitem id="report_donga_khach_hang_tai_kham_menu"
+                  name="C.I.3 Báo cáo khách hàng tái khám"
+                  parent="report_sale.menu_report_brand_donga_van_hanh_cham_soc_khach_hang"
+                  action="report_khach_hang_tai_kham_act"
+        />
+
+        <record id="report_khach_hang_tai_kham_attachment" model="ir.attachment">
+            <field name="name">Báo cáo khách hàng tái khám</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_khach_hang_tai_kham.xlsx"/>
+            <field name="store_fname">bao_cao_khach_hang_tai_kham.xlsx</field>
+        </record>
+
+    </data>
+</odoo>

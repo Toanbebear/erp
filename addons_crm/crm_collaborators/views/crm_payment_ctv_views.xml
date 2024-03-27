@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tree_log_transaction_so" model="ir.ui.view">
+            <field name="name">crm.payment.ctv</field>
+            <field name="model">crm.payment.ctv</field>
+            <field name="arch" type="xml">
+                <tree create="false" default_order="create_date desc">
+                    <field name="collaborators_id"/>
+                    <field name="contract_id"/>
+                    <field name="company_id"/>
+                    <field name="amount_total" widget="monetary"/>
+                    <field name="amount_used" widget="monetary"/>
+                    <field name="amount_remain" widget="monetary"/>
+                    <field name="create_date" string="Ngày Tạo"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_form_log_transaction_so" model="ir.ui.view">
+            <field name="name">crm.payment.ctv</field>
+            <field name="model">crm.payment.ctv</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                    </header>
+                    <sheet>
+                        <group string="Thông tin">
+                            <group>
+                                <field name="collaborators_id" readonly="True"/>
+                                <field name="contract_id" readonly="True"/>
+                                <field name="company_id" readonly="True"/>
+                                <field name="amount_total" widget="monetary" readonly="True"/>
+                                <field name="amount_used" widget="monetary" readonly="True"/>
+                                <field name="amount_remain" widget="monetary" readonly="True"/>
+                                <field name="create_date" string="Ngày Tạo" readonly="True"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="log_transaction_so_search" model="ir.ui.view">
+            <field name="name">log transaction so Search</field>
+            <field name="model">crm.payment.ctv</field>
+            <field name="arch" type="xml">
+                <search string="Stage Search">
+                     <group>
+                        <filter string="Tên cộng tác viên" domain="[]" name="group_name" context="{'group_by': 'collaborators_id'}"/>
+                        <filter string="Công ty" domain="[]" name="group_company_id" context="{'group_by': 'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_open_view_log_transaction_so" model="ir.actions.act_window">
+            <field name="name">Lịch sử cộng tiền</field>
+            <field name="res_model">crm.payment.ctv</field>
+            <field name="view_mode">tree,form</field>
+<!--            <field name="context">{'search_default_group_name':True, 'search_default_group_company_id':True}</field>-->
+        </record>
+
+    </data>
+</odoo>

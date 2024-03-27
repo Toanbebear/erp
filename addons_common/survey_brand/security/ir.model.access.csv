@@ -1,0 +1,9 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_survey_survey_type_all,survey.survey.type.all,model_survey_survey_type,,1,0,0,0
+access_survey_survey_type_user,survey.survey.survey.type.user,model_survey_survey_type,survey.group_survey_user,1,0,0,0
+access_survey_survey_type_manager,survey.survey.survey.type.manager,model_survey_survey_type,survey.group_survey_manager,1,1,1,1
+access_survey_user_input_all,survey.user_input.all,model_survey_user_input,,1,0,0,0
+access_survey_brand_config_manager,survey.brand.config.manager,model_survey_brand_config,survey.group_survey_manager,1,1,1,1
+access_survey_brand_config_all,survey.brand.config.all,model_survey_brand_config,,1,0,0,0
+access_survey_survey_rule_sms_manager,survey.survey.rule.sms.manager,model_survey_survey_rule_sms,survey.group_survey_manager,1,1,1,1
+access_survey_send_mail_sms_manager,survey.send.mail.sms.manager,model_survey_send_mail_sms,survey.group_survey_manager,1,1,1,1

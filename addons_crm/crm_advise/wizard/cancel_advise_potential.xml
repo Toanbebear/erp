@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_cancel_crm_advise_potential">
+            <field name="name">Cancel Service Potential</field>
+            <field name="model">crm.advise.cancel.potential</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="crm_advise_id" readonly="True" invisible="1"/>
+                            <field name="reason" required="1"/>
+                            <field name="note"/>
+                        </group>
+                    </group>
+                    <footer class="text-center">
+                        <button name="confirm_cancel" type="object" string="Hủy tiềm năng" class="btn-danger"/>
+                        <button string="Đóng" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_advise_desire_line_action2" model="ir.actions.act_window">
+            <field name="name">Mong muốn</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.advise.desire.line</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

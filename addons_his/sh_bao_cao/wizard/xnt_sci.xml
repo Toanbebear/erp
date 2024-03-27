@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bao_cao_xnt_sci_form">
+            <field name="name">Báo cáo xuất nhập tồn (SCI)</field>
+            <field name="model">bc.xnt.sci</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo ">
+                    <group>
+<!--                        <field name="company_id" required="1" options="{'no_open':True,'no_create':True}" domain="[('id', 'in', allowed_company_ids)]"/>-->
+                        <field name="company" invisible="1" required="1"/>
+                        <field name="location" required="1" domain="[('id', 'in', [1256,1257])]" options="{'no_open':True,'no_create':True}"/>
+                        <field name="start_date" required="1"/>
+                        <field name="end_date" required="1"/>
+<!--                        <field name="currency_id" invisible="1"/>-->
+<!--                        <field name="chi_khac" widget="monetary_format"/>-->
+<!--                        <field name="thu_khac" widget="monetary_format"/>-->
+<!--                        <field name="preview" widget="boolean_toggle"/>-->
+                    </group>
+                    <footer>
+<!--                        <button name="create_report" type="object" string="Báo cáo" class="oe_highlight"/>-->
+<!--                        <button name="create_report_valuation_layer" type="object" string="Báo cáo" class="oe_highlight"/>-->
+                        <button name="create_report_new" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_xnt_sci_act">
+            <field name="name">Báo cáo XNT SCI</field>
+            <field name="res_model">bc.xnt.sci</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_xnt_sci_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="bao_cao_xnt_sci_attachment" model="ir.attachment">
+            <field name="name">Báo cáo xuất nhập tồn SCI</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="sh_bao_cao/static/xls/bc_xnt_sci.xlsx"/>
+            <field name="store_fname">bao_cao_xnt_sci.xlsx</field>
+        </record>
+    </data>
+</odoo>

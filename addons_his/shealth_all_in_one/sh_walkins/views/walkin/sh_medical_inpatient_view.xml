@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inheriting admissions screen to display walkin reference -->
+        <record id="sh_medical_inpatient_walkin_view" model="ir.ui.view">
+            <field name="name">Inpatient Admissions</field>
+            <field name="model">sh.medical.inpatient</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_inpatient_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='services']" position="replace">
+                    <field name="services_domain" invisible="1"/>
+                    <field name="services" string="Dịch vụ" required="1" force_save="1"
+                                       widget="many2many_tags" options="{'no_create': True}"
+                                       domain="[('id','in',services_domain)]"
+                                       attrs="{'readonly': [('state','not in',['Draft'])]}"/>
+                </xpath>
+                <xpath expr="//field[@name='patient']" position="before">
+                    <field name="walkin" attrs="{'readonly':[('walkin','!=',False)]}" force_save="1" options="{'no_create': True}" required="1"/>
+                </xpath>
+                <xpath expr="//field[@name='institution']" position="replace">
+                    <field name="allow_institutions" invisible="1"/>
+                    <field name="institution" domain="[('id', 'in', allow_institutions)]"
+                           options="{'no_create': True,'no_open':True}" force_save="1" required="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

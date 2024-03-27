@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_cancel_booking">
+            <field name="name">Cancel booking</field>
+            <field name="model">cancel.booking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="type_action" required="True"/>
+                            <field name="reason_out_sold"  attrs="{'invisible':['|',('type_action','=','cancel'),('type_action','=', False)], 'required':[('type_action','=','out_sold')]}"/>
+                            <field name="reason_cancel_booking" attrs="{'invisible':['|',('type_action','=','out_sold'),('type_action','=', False)], 'required':[('type_action','=','cancel')]}"/>
+                            <field name="reason_line_cancel" attrs="{'invisible':['|',('type_action','=','out_sold'),('type_action','=', False)], 'required':[('type_action','=','cancel')]}"/>
+
+                            <field name="booking_id" invisible="True"/>
+                            <field name="customer_come" invisible="True"/>
+                            <field name="reason_out_sold" invisible="True"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="name" attrs="{'invisible':['|',('type_action','=','out_sold'),('type_action','=', False)]}"/>
+                    </group>
+                    <footer class="text-center">
+                        <button name="set_cancel" type="object" string="Hủy Booking" class="btn-danger"
+                                attrs="{'invisible':['|',('type_action','=','out_sold'),('type_action','=', False)]}"/>
+                        <button name="set_out_sold" type="object" string="Out sold" class="btn-info"
+                                attrs="{'invisible':['|',('type_action','=','cancel'),('type_action','=', False)]}"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_form_cancel_crm_line">
+            <field name="name">Cancel Line Service</field>
+            <field name="model">crm.line.cancel</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="crm_line_id" readonly="True"/>
+                            <field name="reason_line_cancel" required="True"/>
+                            <field name="name"/>
+                        </group>
+                    </group>
+                    <footer class="text-center">
+                        <button name="cancel_crm_line" type="object" string="Hủy dịch vụ" class="btn-danger"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+
+
+</odoo>

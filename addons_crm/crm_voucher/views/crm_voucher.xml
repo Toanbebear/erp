@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="voucher_form" model="ir.ui.view">
+            <field name="name">Voucher</field>
+            <field name="model">crm.voucher</field>
+            <field name="arch" type="xml">
+                <form duplicate="0" create="false" delete="false" edit="false">
+                    <header>
+                        <field name="stage_voucher" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="active" groups="base.group_erp_manager"/>
+                            <field name="name" widget="copy_char"/>
+                            <field name="voucher_program_id"/>
+                            <field name="crm_id" attrs="{'invisible':[('crm_id','=',False)]}"/>
+                            <field name="booking_company" string="Chi nhánh áp dụng" attrs="{'invisible':[('booking_company','=',False)]}"/>
+                            <field name="brand_id" invisible="True"/>
+                            <field name="order_id" attrs="{'invisible':[('order_id','=',False)]}"/>
+                            <field name="partner_id" attrs="{'invisible':[('partner_id','=',False)]}"/>
+                            <field name="partner2_id" attrs="{'invisible':[('partner2_id','=',False)]}"/>
+                            <field name="start_date" invisible="1"/>
+                            <field name="end_date" invisible="1"/>
+
+                            <field name="qr_code" widget="image"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="voucher_tree" model="ir.ui.view">
+            <field name="name">Voucher</field>
+            <field name="model">crm.voucher</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc" create="false"
+                      decoration-muted="stage_voucher in ['used','expire']">
+                    <field name="name"/>
+                    <field name="voucher_program_id"/>
+                    <field name="partner_id"/>
+                    <field name="partner2_id"/>
+                    <field name="booking_company" string="Chi nhánh áp dụng"/>
+                    <field name="stage_voucher"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_voucher" model="ir.actions.act_window">
+            <field name="name">Voucher</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.voucher</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <menuitem id="menu_crm_voucher"
+                  name="Voucher"
+                  parent="tab_voucher_program"
+                  sequence="3"
+                  action="open_voucher"
+                  groups="crm_base.promotion_user,crm_base.receptionist_crm"/>
+    </data>
+</odoo>

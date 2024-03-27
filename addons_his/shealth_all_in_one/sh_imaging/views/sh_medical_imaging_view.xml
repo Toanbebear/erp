@@ -1,0 +1,341 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <odoo>
+        <data>
+            <!-- Imaging Test Types group Management -->
+            <record model="ir.ui.view" id="sh_medical_imaging_group_types_form">
+                <field name="name">Nhóm CĐHA</field>
+                <field name="model">sh.medical.imaging.group.type</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Nhóm CĐHA">
+                        <sheet>
+                            <group>
+                                <field name="name" string="Tên"/>
+                                <field name="info" string="Mô tả"/>
+                                <field name="type" string="Loại"/>
+                            </group>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_imaging_group_type_tree">
+                <field name="name">Nhóm CĐHA</field>
+                <field name="model">sh.medical.imaging.group.type</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Nhóm CĐHA' editable="bottom">
+                        <field name="name" string="Tên"/>
+                        <field name="info" string="Mô tả"/>
+                        <field name="type" string="Loại"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="sh_medical_imaging_group_type_action_tree" model="ir.actions.act_window">
+                    <field name="name">Nhóm CĐHA</field>
+                    <field name="res_model">sh.medical.imaging.group.type</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new imaging group type.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_imaging_group_type_action_tree" id="sh_medical_imaging_group_type_conf_list" parent="sh_medical_imaging_conf_menu" sequence="11"/>
+
+            <!-- Imaging Test Types Management -->
+
+            <record id="view_sh_medical_imaging_test_type_filter" model="ir.ui.view">
+                <field name="name">Imaging Test Types</field>
+                <field name="model">sh.medical.imaging.test.type</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Imaging Test Types">
+                        <separator orientation="vertical"/>
+                            <field name="name" select="1"/>
+                            <field name="default_code" select="1"/>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_imaging_test_types_form">
+                <field name="name">Imaging Test Types</field>
+                <field name="model">sh.medical.imaging.test.type</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Imaging Test Types">
+                        <sheet>
+                            <label class="oe_edit_only" for="name"/>
+                            <h1><field name="name"/></h1>
+                            <group>
+                                <group string="Thông tin">
+                                    <field name="default_code" required="1" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                                    <field name="group_type" string="Nhóm"/>
+                                    <field name="perform_room" string="Phòng thực hiện" options="{'no_create':True,'no_open':True}"/>
+                                    <field name="list_price" widget="monetary" options="{'currency_field': 'currency_id'}" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                                    <field name="currency_id" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                                </group>
+                                <group string="Mẫu kết quả">
+                                    <field name="analysis"/>
+                                    <field name="conclusion"/>
+                                </group>
+                            </group>
+                            <notebook>
+                                <page string="Materials Information" invisible="1">
+				        			<field name="material_ids" nolable="1">
+				        				<tree editable="bottom">
+				        					<field name="sequence"/>
+				        					<field name="product_id" required="1"/>
+				        					<field name="quantity" required="1"/>
+				        					<field name="uom_id"  required="1"/>
+				        				</tree>
+				        			</field>
+                                </page>
+                                <page string="Extra Info">
+                                    <group>
+                                        <field name="info"/>
+                                    </group>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_imaging_test_type_tree">
+                <field name="name">Imaging Test Types</field>
+                <field name="model">sh.medical.imaging.test.type</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree string='Imaging Test Types'>
+                        <field name="default_code"/>
+                        <field name="name"/>
+                        <field name="list_price"/>
+                        <field name="currency_id"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record id="sh_medical_imaging_test_type_action_tree" model="ir.actions.act_window">
+                    <field name="name">Imaging Test Types</field>
+                    <field name="res_model">sh.medical.imaging.test.type</field>
+                    <field name="view_mode">tree,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new imaging test type.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_imaging_test_type_action_tree" id="sh_medical_imaging_test_type_conf_list" parent="sh_medical_imaging_conf_menu" sequence="10"/>
+
+            <!-- Imaging Tests -->
+            <record id="view_sh_medical_imaging_test_filter" model="ir.ui.view">
+                <field name="name">Imaging Tests</field>
+                <field name="model">sh.medical.imaging</field>
+                <field name="type">search</field>
+                <field name="arch" type="xml">
+                    <search string="Search Tests">
+                        <separator orientation="vertical"/>
+                            <field name="name" select="1"/>
+                            <field name="analysis" select="1"/>
+                            <field name="conclusion" select="1"/>
+                            <field name="doctor_note" select="1"/>
+                            <field name="group_type" string="Nhóm" select="1"/>
+                        <newline/>
+                        <filter string="Not completed" name="filter_not_completed" domain="[('state','!=','Completed')]" context="{}"/>
+                        <filter string="Ngày yêu cầu" name="date_requested" date="date_requested"/>
+                        <filter string="Ngày phân tích" name="date_analysis" date="date_analysis"/>
+                        <newline/>
+                        <group expand="0" string="Group By..." colspan="11" col="11">
+                            <filter name="group_date_analysis" string="Ngày phân tích" icon="terp-personal" domain="[]" context="{'group_by':'date_analysis:day'}"/>
+                            <filter name="group_patient" string="Patient" icon="terp-personal" domain="[]" context="{'group_by':'patient'}"/>
+                            <filter name="group_walkin" string="Walkin" icon="terp-personal" domain="[]" context="{'group_by':'walkin'}"/>
+                            <filter name="group_doctor" string="Doctor" icon="terp-personal" domain="[]" context="{'group_by':'requestor'}"/>
+                            <filter name="group_test_types" string="Test Types" icon="terp-personal" domain="[]" context="{'group_by':'test_type'}"/>
+                            <filter name="group_state" string="State" icon="terp-personal" domain="[]" context="{'group_by':'state'}"/>
+                        </group>
+                    </search>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_imaging_test_tree">
+                <field name="name">Imaging Tests</field>
+                <field name="model">sh.medical.imaging</field>
+                <field name="type">tree</field>
+                <field name="arch" type="xml">
+                    <tree default_order="date_analysis desc" string='Imaging Tests' class="sh_has_icon" create="false" decoration-info="state=='Draft'" decoration-success="state=='Completed'" decoration-danger="state=='Test In Progress'">
+                        <field name="name" invisible="1"/>
+                        <field name="walkin" invisible="1"/>
+                        <field name="patient" class="text-uppercase"/>
+                        <field name="perform_room"/>
+                        <field name="test_type"/>
+                        <field name="institution" invisible="1"/>
+                        <field name="requestor"/>
+                        <field name="pathologist"/>
+                        <field name="date_requested"/>
+                        <field name="date_analysis"/>
+                        <field name="doctor_note"/>
+                        <field name="state"/>
+                    </tree>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_imaging_test_form">
+                <field name="name">Imaging Tests</field>
+                <field name="model">sh.medical.imaging</field>
+                <field name="type">form</field>
+                <field name="arch" type="xml">
+                    <form string="Imaging Tests" create="false" duplicate="false" edit_expr="state not in ['Completed']" delete_expr="state not in ['Completed']">
+                        <header>
+                            <button confirm="Are you sure you want to start the test?" name="set_to_test_start" states="Draft" string="Start Test" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician_subclinical_imaging,shealth_all_in_one.group_sh_medical_manager"/>
+                            <button confirm="Are you sure you want to complete the test?" name="set_to_test_complete" states="Test In Progress" string="Complete Test" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician_subclinical_imaging,shealth_all_in_one.group_sh_medical_manager"/>
+                            <button confirm="Are you sure you want to draft the test (Only Admin)?" name="set_to_test_draft" states="Test In Progress" string="Draft Test (Admin)" type="object" class="btn-warning" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                            <button confirm="Are you sure you want to set in progress this test (Only Admin)?" name="set_to_test_start" attrs="{'invisible':['|', ('check_current_company', '!=', True), ('state', 'not in', ('Completed'))]}" string="Set In progress Test (Admin)" type="object" class="btn-warning" groups="shealth_all_in_one.group_sh_medical_manager"/>
+                            <button name="print_patient_imaging" states="Completed,Invoiced" string="Print Imaging Test" type="object" class="oe_highlight" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical_imaging,shealth_all_in_one.group_sh_medical_manager"/>
+                            <field name="check_current_company" invisible="1"/>
+                            <field name="state" widget="statusbar" statusbar_visible="Draft,Test In Progress,Completed" statusbar_colors='{"Draft":"blue","Test In Progress":"red","Completed":"green","Cancelled":"grey"}'/>
+                        </header>
+                        <sheet>
+                            <div class="oe_title">
+                                <label class="oe_edit_only" for="name"/>
+                                <h1><field name="name" class="oe_inline"/></h1>
+                            </div>
+                            <group>
+                                <group>
+                                    <field name="institution" required="1" options="{'no_create': True,'no_open': True}" attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                    <field name="test_type" options="{'no_create': True}" attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                    <field name="group_type" string="Nhóm" readonly="1" force_save="1" options="{'no_create': True}"/>
+                                    <field name="supply_domain" invisible="1"/>
+                                </group>
+                                <group>
+                                    <field name="department" required="1" options="{'no_create': True,'no_open':True}" attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                    <field name="perform_room" required="1" options="{'no_create': True,'no_open': True}" force_save="1"/>
+                                    <field name="doctor_note"/>
+                                </group>
+                            </group>
+                            <group>
+                                <group>
+                                    <field name="patient" class="text-uppercase" options="{'no_create': True}" attrs="{'readonly':['|',('state','in',['Completed']),('patient','!=',False)]}" force_save="1"/>
+                                    <field name="requestor" options="{'no_create': True,'no_open': True}" attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                    <field name="date_requested"/>
+                                </group>
+                                <group>
+                                    <field name="pathologist" options="{'no_create': True,'no_open': True}" domain="[('department','in',department)]"/>
+                                    <field name="date_analysis"/>
+                                    <field name="date_done"/>
+                                </group>
+                            </group>
+                            <notebook>
+                                <page string="Images" attrs="{'invisible':[('state','=','Draft')]}">
+                                    <group>
+                                        <group>
+                                            <field name="image1" widget="image" options='{"size": [150, 150]}'/>
+                                            <field name="image3" widget="image" options='{"size": [150, 150]}'/>
+                                            <field name="image5" widget="image" options='{"size": [150, 150]}'/>
+                                        </group>
+                                        <group>
+                                            <field name="image2" widget="image" options='{"size": [150, 150]}'/>
+                                            <field name="image4" widget="image" options='{"size": [150, 150]}'/>
+                                            <field name="image6" widget="image" options='{"size": [150, 150]}'/>
+                                        </group>
+                                    </group>
+                                </page>
+                                <page string="Information" attrs="{'invisible':[('state','=','Draft')]}">
+                                    <group>
+                                        <field name="analysis" attrs="{'required':[('state','=','Test In Progress')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="conclusion" attrs="{'required':[('state','=','Test In Progress')]}"/>
+                                    </group>
+                                </page>
+                                <page string="Materials Information">
+				        			<field name="imaging_material_ids" nolable="1" force_save="1" attrs="{'readonly':[('state','in',['Draft','Completed'])]}">
+				        				<tree editable="bottom">
+				        					<field name="sequence"/>
+				        					<field name="product_id" domain="[('id', 'in', parent.supply_domain)]" required="1" force_save="1" attrs="{'readonly': [('is_init','=',True)]}" options="{'no_create': True,'no_open': True}"/>
+                                            <field name="init_quantity" force_save="1" invisible="1"/>
+                                            <field name="is_init" invisible="1" force_save="1"/>
+				        					<field name="quantity" required="1" force_save="1"/>
+				        					<field name="uom_id" readonly="1" force_save="1" required="1" options="{'no_create':True,'no_open': True}"/>
+                                            <field name="location_id" invisible="1" force_save="1"/>
+				        				</tree>
+				        			</field>
+                                </page>
+                            </notebook>
+                        </sheet>
+                    </form>
+                </field>
+            </record>
+
+            <record model="ir.ui.view" id="sh_medical_imaging_kanban_view">
+                <field name="name">Imaging Tests</field>
+                <field name="model">sh.medical.imaging</field>
+                <field name="arch" type="xml">
+                    <kanban default_group_by="state" class="oe_notes" create="false" quick_create="false" group_create="false">
+                        <templates>
+                            <t t-name="kanban-box">
+                                <div class="sh_medical_vignette oe_semantic_html_override">
+                                    <div class="sh_medical_details">
+                                        <h4>
+                                            <a type="open"><field name="patient" class="text-uppercase"/></a>
+                                        </h4>
+                                        <ul>
+                                            <li t-if="record.walkin.raw_value"><b>Walkin:</b> <i><field name="walkin"/></i></li>
+                                            <li t-if="record.institution.raw_value"><b>Institution:</b> <i><field name="institution"/></i></li>
+                                            <li t-if="record.test_type.raw_value"><b>Test type:</b> <i><field name="test_type"/></i></li>
+                                            <li t-if="record.name.raw_value"><b>Test #:</b> <i><field name="name"/></i></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </t>
+                        </templates>
+                    </kanban>
+                </field>
+            </record>
+
+            <record id="sh_medical_imaging_test_action_tree" model="ir.actions.act_window">
+                    <field name="name">Imaging Tests</field>
+                    <field name="res_model">sh.medical.imaging</field>
+                    <field name="view_mode">tree,kanban,form</field>
+                    <field name="domain" eval="[]"/>
+                    <field name="context">{'search_default_group_date_analysis': True, 'search_default_group_patient': True, 'search_default_group_walkin': True}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new imaging test.
+                      </p>
+                    </field>
+            </record>
+
+            <record id="action_imaging_department_view" model="ir.actions.act_window">
+                    <field name="name">Imaging Test</field>
+                    <field name="res_model">sh.medical.imaging</field>
+                    <field name="view_mode">tree,kanban,form</field>
+                    <field name="domain">[]</field>
+                    <field name="context">{'search_default_group_patient': True,'search_default_group_walkin': True,
+                        'search_default_filter_not_completed_and_my_institution':True,
+                        'default_department': active_id}</field>
+                    <field name="view_id" eval="False"/>
+                    <field name="help" type="html">
+                      <p class="o_view_nocontent_smiling_face">
+                        Click to add a new patient for walkins.
+                      </p>
+                    </field>
+            </record>
+
+            <menuitem action="sh_medical_imaging_test_action_tree" id="sh_medical_imaging_test_conf_list" parent="sh_medical_lab_and_img_menu" sequence="2"/>
+            <record id="sh_medical_imaging_test_conf_list" model="ir.ui.menu">
+				<field name="web_icon_class">fa fa-picture-o</field>
+			</record>
+
+        </data>
+    </odoo>

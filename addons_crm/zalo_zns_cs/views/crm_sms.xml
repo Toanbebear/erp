@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_sms_cs_add_type">
+            <field name="name">view_form_sms_cs_add_type</field>
+            <field name="model">crm.sms</field>
+            <field name="inherit_id" ref="crm_base.view_form_crm_sms"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="type"  readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

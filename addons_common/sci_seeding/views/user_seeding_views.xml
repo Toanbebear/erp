@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="user_seeding_tree_view" model="ir.ui.view">
+            <field name="name">seeding.user.tree</field>
+            <field name="model">seeding.user</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách người dùng">
+                    <field name="code_user"/>
+                    <field name="name"/>
+                    <field name="phone"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="user_seeding_form_view" model="ir.ui.view">
+            <field name="name">seeding.user.form</field>
+            <field name="model">seeding.user</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="code_user"/>
+                            <field name="name"/>
+                            <field name="phone"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

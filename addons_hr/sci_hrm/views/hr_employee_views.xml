@@ -1,0 +1,446 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sci_hrm_hr_employee_view_tree" model="ir.ui.view">
+            <field name="name">sci.hrm.hr.employee.view.tree</field>
+            <field name="model">hr.employee</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Nhân viên" default_order="create_date desc">
+                    <!--                    <field name="employee_id" invisible="1"/>-->
+                    <field name="employee_code" string="Mã nhân viên"/>
+                    <field name="name"/>
+                    <field name="work_email"/>
+                    <field name="birthday" optional="hide"/>
+                    <field name="work_phone" optional="hide"/>
+                    <field name="department_id"/>
+                    <field name="job_id"/>
+                    <field name="company_id" groups="base.group_multi_company"/>
+                    <field name="parent_id" optional="hide"/>
+                    <field name="user_id"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="write_date" optional="hide"/>
+                    <field name="write_uid" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="sci_hrm_hr_employee_view_form" model="ir.ui.view">
+            <field name="name">sci.hrm.hr.employee.view.form</field>
+            <field name="model">hr.employee</field>
+            <field eval="1" name="priority"/>
+            <!--            <field name="inherit_id" ref="hr.view_employee_form"/>-->
+            <field name="arch" type="xml">
+                <form string="Nhân viên">
+                    <field name="active" invisible="1"/>
+                    <!--	<field name="user_partner_id" invisible="1" can_create="true" can_write="true" modifiers="{'invisible':true,'readonly':true}"/>-->
+                    <field name="hr_presence_state" invisible="1" modifiers="{'invisible':true,'readonly':true}"/>
+                    <field name="user_id" invisible="1"/>
+                    <field name="company_id" invisible="1"/>
+
+                    <sheet modifiers="{}">
+                        <div name="button_box" class="oe_button_box" modifiers="{}">
+                            <button string="Phân quyền" type="object" name="sci_create"
+                                    groups="base.group_erp_manager"
+                                    class="oe_stat_button" icon="fa-edit"
+                                    attrs="{'invisible': [('user_id', '=', False)]}"/>
+                            <button string="Tạo tài khoản" type="object" name="sci_create"
+                                    groups="base.group_erp_manager"
+                                    class="oe_stat_button" icon="fa-user"
+                                    attrs="{'invisible': [('user_id', '!=', False)]}"/>
+                            <!--			<button string="Phân quyền" type="object" name="sci_create" class="oe_stat_button" icon="fa-edit" attrs="{'invisible': [('user_id', '=', False)]}" modifiers="{'invisible':[['user_id','=',false]]}" options="{}"/>-->
+
+                            <!--			<button invisible="1" id="hr_presence_button" class="oe_stat_button" disabled="1" attrs="-->
+                            <!--                    {'invisible': ['|', '|', '|',-->
+                            <!--                        ('is_absent', '=', True),-->
+                            <!--                        ('hr_presence_state', '=', 'absent'),-->
+                            <!--                        ('attendance_state', '=', 'checked_in'),-->
+                            <!--                        ('id', '=', False),-->
+                            <!--                    ]}-->
+                            <!--                " modifiers="{'invisible':true}" options="{}">-->
+                            <!--				<div role="img" class="fa fa-fw fa-circle text-success o_button_icon" attrs="{'invisible': [('hr_presence_state', '!=', 'present')]}" aria-label="Khả dụng" title="Khả dụng" modifiers="{'invisible':[['hr_presence_state','!=','present']]}"/>-->
+                            <!--				<div role="img" class="fa fa-fw fa-circle text-warning o_button_icon" attrs="{'invisible': [('hr_presence_state', '!=', 'to_define')]}" aria-label="Away" title="Away" modifiers="{'invisible':[['hr_presence_state','!=','to_define']]}"/>-->
+                            <!--				<div role="img" class="fa fa-fw fa-circle text-danger o_button_icon" attrs="{'invisible': [('hr_presence_state', '!=', 'absent')]}" aria-label="Không tồn tại" title="Không tồn tại" modifiers="{'invisible':[['hr_presence_state','!=','absent']]}"/>-->
+                            <!--				<div class="o_stat_info" attrs="{'invisible': [('hr_presence_state', '=', 'present')]}" modifiers="{'invisible':[['hr_presence_state','=','present']]}">-->
+                            <!--					<span class="o_stat_text" modifiers="{}">-->
+
+                            <!--                                        Not Connected-->
+
+                            <!--					</span>-->
+                            <!--				</div>-->
+                            <!--				<div class="o_stat_info" attrs="{'invisible': [('hr_presence_state', '!=', 'present')]}" modifiers="{'invisible':[['hr_presence_state','!=','present']]}">-->
+                            <!--					<span class="o_stat_value" attrs="{'invisible': [('last_activity_time', '=', False)]}" modifiers="{'invisible':[['last_activity_time','=',false]]}">-->
+                            <!--						<field name="last_activity_time" modifiers="{'readonly':true}"/>-->
+                            <!--					</span>-->
+                            <!--					<span class="o_stat_value" attrs="{'invisible': [('last_activity_time', '!=', False)]}" modifiers="{'invisible':[['last_activity_time','!=',false]]}">-->
+                            <!--						<field name="last_activity" modifiers="{'readonly':true}"/>-->
+                            <!--					</span>-->
+                            <!--					<span class="o_stat_text" modifiers="{}">-->
+                            <!--						Present Since-->
+                            <!--					</span>-->
+                            <!--				</div>-->
+                            <!--			</button>-->
+
+                            <!--			<field name="current_leave_id" invisible="1" can_create="true" can_write="true" modifiers="{'invisible':true,'readonly':true}"/>-->
+                            <!--			<field name="show_leaves" invisible="1" modifiers="{'invisible':true,'readonly':true}"/>-->
+                            <!--			<field name="is_absent" invisible="1" modifiers="{'invisible':true,'readonly':true}"/>-->
+                            <!--			<button disabled="1" class="oe_stat_button" context="{'search_default_employee_id': active_id}" attrs="{'invisible': [('is_absent', '=', False)]}" modifiers="{'invisible':[['is_absent','=',false]]}" options="{}">-->
+                            <!--				<div role="img" class="fa fa-fw fa-plane o_button_icon text-danger" aria-label="Off Till" title="Off Till" modifiers="{}"/>-->
+                            <!--				<div class="o_field_widget o_stat_info" modifiers="{}">-->
+                            <!--					<span class="o_stat_value" modifiers="{}">-->
+                            <!--						<field name="leave_date_to" modifiers="{'readonly':true}"/>-->
+                            <!--					</span>-->
+                            <!--					<span class="o_stat_text" modifiers="{}">-->
+
+                            <!--                            Off Till-->
+
+                            <!--					</span>-->
+                            <!--				</div>-->
+                            <!--			</button>-->
+
+
+                            <!--			<field name="attendance_state" invisible="1" modifiers="{'invisible':true,'readonly':true}"/>-->
+
+                        </div>
+                        <widget name="web_ribbon" text="Archived" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"
+                                modifiers="{'invisible':[['active','=',true]]}"/>
+                        <field name="image_1920" widget="image" class="oe_avatar"
+                               options="{'zoom': true, 'preview_image':'image_128'}" modifiers="{}"/>
+                        <div class="oe_title" style="width:70%" modifiers="{}">
+                            <label for="name" class="oe_edit_only" modifiers="{}"/>
+                            <h1 modifiers="{}">
+                                <field name="name" placeholder="Tên nhân viên" required="True"
+                                       modifiers="{'required':true}"/>
+                            </h1>
+                            <div modifiers="{}">
+                                <div style="width: 50%;float: right;" invisible="1" modifiers="{'invisible':true}">
+                                    <label for="employee_id" modifiers="{}"/>
+                                    <h3 modifiers="{}">
+                                        <field name="employee_id" modifiers="{'invisible':true,'readonly':true}"
+                                               style="width:50%" readonly="1" force_save="1" invisible="1"/>
+                                    </h3>
+                                </div>
+                                <div modifiers="{}">
+                                    <label for="employee_code" modifiers="{}" string="Mã nhân viên"/>
+                                    <h3 modifiers="{}">
+                                        <field name="employee_code" modifiers="{'readonly':true}" style="width:50%"
+                                               readonly="1" force_save="1"/>
+                                    </h3>
+                                </div>
+                            </div>
+                            <!--			<button string="Nhắn tin" class="btn btn-primary o_employee_chat_btn" attrs="{'invisible': [('user_id','=', False)]}" modifiers="{'invisible':[['user_id','=',false]]}" options="{}"/>-->
+<!--                            <field name="category_ids" widget="many2many_tags"-->
+<!--                                   options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tag"-->
+<!--                                   can_create="true" can_write="true" modifiers="{}"/>-->
+                        </div>
+
+                        <notebook modifiers="{}">
+                            <!--			<page name="hr_employee_info" string="Thông tin nhân sự">-->
+                            <!--				<group modifiers="{}">-->
+                            <!--						<group string="Thông tin cá nhân">-->
+                            <!--							<field name="email" modifiers="{}"/>-->
+                            <!--							<field name="mobile_phone"  modifiers="{}"/>-->
+                            <!--							<field name="birthday" required="1" modifiers="{'required':true}"/>-->
+                            <!--						</group>-->
+                            <!--						<group string="Thiết lập nhân lực">-->
+                            <!--							<field name="user_id" string="TK dùng liên kết" on_change="1" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--							<field name="joining_date" on_change="1" modifiers="{}"/>-->
+                            <!--							<field name="work_duration" string="Thâm niên" modifiers="{'readonly':true}"/>-->
+                            <!--							<field name="barcode" string="Mã chấm công" modifiers="{}"/>-->
+                            <!--						</group>-->
+                            <!--						<group string="Thông tin công việc">-->
+                            <!--							<field name="work_phone" widget="phone" modifiers="{}"/>-->
+                            <!--							<field name="hr_user_id" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--							<field name="work_email" widget="email" modifiers="{}"/>-->
+                            <!--							<field name="work_location" modifiers="{}"/>-->
+                            <!--							<field name="company_id" on_change="1" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--							<field name="root_department" can_create="true" can_write="true" modifiers="{'readonly':true}"/>-->
+                            <!--							<field name="area" modifiers="{}"/>-->
+                            <!--						</group>-->
+                            <!--						<group string="Thông tin chức vụ">-->
+                            <!--							<field name="department_id" position="attributes" on_change="1" can_create="true" can_write="true" modifiers="{}">-->
+                            <!--								<attribute name="context">-->
+                            <!--									{'tree_view_ref': 'view_hr_department_hide_all'}-->
+                            <!--								</attribute>-->
+                            <!--							</field>-->
+                            <!--							<field name="team_id" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--							<field name="sector_id" can_create="true" can_write="true" modifiers="{'readonly':true}"/>-->
+                            <!--							<field name="job_id" on_change="1" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--							<field name="job_title" modifiers="{}"/>-->
+                            <!--							<field name="job_ids" widget="many2many_tags" options="{'color_field': 'color'}" on_change="1" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--							<field name="group_job" can_create="true" can_write="true" modifiers="{'readonly':true}"/>-->
+                            <!--							<field name="staff_level" modifiers="{}"/>-->
+                            <!--							<field name="parent_id" position="attributes" on_change="1" can_create="true" can_write="true" modifiers="{}">-->
+                            <!--								<attribute name="context">-->
+                            <!--									{'tree_view_ref': 'view_hr_employee_hide_all'}-->
+                            <!--								</attribute>-->
+                            <!--							</field>-->
+                            <!--						</group>-->
+                            <!--				</group>-->
+                            <!--			</page>-->
+
+                            <page name="hr_employee_info" string="Thông tin nhân sự">
+                                <group modifiers="{}">
+                                    <group string="Thông tin cá nhân">
+                                        <field name="work_email" widget="email" modifiers="{}"/>
+                                        <field name="mobile_phone" modifiers="{}"/>
+                                        <field name="birthday" required="1" modifiers="{'required':true}"/>
+                                        <field name="gender" modifiers="{}"/>
+                                        <field name="identification_id" modifiers="{}"/>
+                                        <field name="emergency_address" modifiers="{}"/>
+                                        <field name="joining_date" on_change="1" modifiers="{}"/>
+                                        <field name="work_duration" string="Thâm niên" modifiers="{'readonly':true}"/>
+                                    </group>
+                                    <group string="Thông tin chức vụ">
+                                        <field name="company_id" options='{"no_open": True, "no_create": True}'
+                                               modifiers="{'readonly':true}"/>
+                                        <field name="sector_id" can_create="true" can_write="true"
+                                               modifiers="{'readonly':true}"/>
+                                        <field name="department_id" position="attributes" on_change="1"
+                                               can_create="true" can_write="true" modifiers="{}">
+                                            <attribute name="context">
+                                                {'tree_view_ref': 'view_hr_department_hide_all'}
+                                            </attribute>
+                                        </field>
+                                        <field name="group_job" can_create="true" can_write="true"
+                                               modifiers="{'readonly':true}"/>
+                                        <field name="team_id" can_create="true" can_write="true" modifiers="{}"/>
+                                        <field name="job_id" on_change="1" can_create="true" can_write="true"
+                                               modifiers="{}"/>
+                                        <field name="job_ids" widget="many2many_tags" options="{'color_field': 'color'}"
+                                               on_change="1" can_create="true" can_write="true" modifiers="{}"/>
+                                        <field name="parent_id" position="attributes" on_change="1" can_create="true"
+                                               can_write="true" modifiers="{}">
+                                            <attribute name="context">
+                                                {'tree_view_ref': 'view_hr_employee_hide_all'}
+                                            </attribute>
+                                        </field>
+                                    </group>
+                                </group>
+                            </page>
+                            <!--			<page name="public" string="Thông tin công việc">-->
+                            <!--				<div id="o_work_employee_container" modifiers="{}">-->
+                            <!--					<div id="o_work_employee_main" modifiers="{}">-->
+                            <!--						<group string="Địa điểm" modifiers="{}">-->
+                            <!--							<field name="address_id" context="{'show_address': 1}" options="{'always_reload': True, 'highlight_first_line': True}" invisible="1" on_change="1" can_create="true" can_write="true" modifiers="{'invisible':true}"/>-->
+                            <!--						</group>-->
+                            <!--						<group name="managers" string="Trách nhiệm" modifiers="{}">-->
+                            <!--							<field name="coach_id" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--							<field name="leave_manager_id" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--						</group>-->
+                            <!--						<group name="departure" string="Departure" attrs="{'invisible': [('active', '=', True)]}" modifiers="{'invisible':[['active','=',true]]}">-->
+                            <!--							<field name="departure_reason" modifiers="{}"/>-->
+                            <!--							<field name="departure_description" modifiers="{}"/>-->
+                            <!--						</group>-->
+                            <!--						<group string="Ấn định (thời gian)" modifiers="{}">-->
+                            <!--							<field name="calendar_mismatch" invisible="1" modifiers="{'invisible':true,'readonly':true}"/>-->
+                            <!--							<label for="resource_calendar_id" modifiers="{}"/>-->
+                            <!--							<div modifiers="{}">-->
+                            <!--								<field name="resource_calendar_id" required="1" nolabel="1" on_change="1" can_create="true" can_write="true" modifiers="{'required':true}"/>-->
+                            <!--								<span attrs="{'invisible': [('calendar_mismatch', '=', False)]}" class="fa fa-exclamation-triangle text-danger o_calendar_warning pl-3" modifiers="{'invisible':[['calendar_mismatch','=',false]]}"/>-->
+                            <!--								<span class="o_calendar_warning_tooltip text-danger" modifiers="{}">-->
+
+                            <!--                                Calendar Mismatch : The employee's calendar does not match its current contract calendar. This could lead to unexpected behaviors.-->
+
+                            <!--								</span>-->
+                            <!--							</div>-->
+                            <!--							<field name="tz" invisible="1" modifiers="{'invisible':true,'required':true}"/>-->
+                            <!--						</group>-->
+                            <!--					</div>-->
+                            <!--					<div id="o_employee_right" modifiers="{}">-->
+                            <!--						<h4 class="o_org_chart_title mb16 mt0" modifiers="{}">-->
+                            <!--							Sơ đồ Tổ chức-->
+                            <!--						</h4>-->
+                            <!--						<field name="child_ids" widget="hr_org_chart" modifiers="{}"/>-->
+                            <!--					</div>-->
+                            <!--				</div>-->
+                            <!--			</page>-->
+                            <!--			<page string="Huy chương đã nhận" invisible="1" attrs="{'invisible': [('user_id', '=', False)]}" modifiers="{'invisible':true}">-->
+                            <!--				<field name="has_badges" invisible="1" modifiers="{'invisible':true,'readonly':true}"/>-->
+                            <!--				<button string="Trao một Huy chương" type="action" name="238" modifiers="{}" options="{}"/>-->
+                            <!--				 để trao tặng cho nhân viên này vì một hành động tốt-->
+
+                            <!--				<div class="o_field_nocontent" attrs="{'invisible': [('has_badges', '=', True)]}" modifiers="{'invisible':[['has_badges','=',true]]}">-->
+                            <!--					<p modifiers="{}">-->
+
+                            <!--                            Grant this employee his first badge-->
+
+                            <!--					</p>-->
+                            <!--					<p class="oe_grey" modifiers="{}">-->
+
+                            <!--                            Huy chương là phần thưởng của công việc. Hãy trao chúng cho những người mà bạn cho rằng xứng đáng với nó.-->
+
+                            <!--					</p>-->
+                            <!--				</div>-->
+                            <!--				<field name="badge_ids" mode="kanban" widget="many2many" modifiers="{'readonly':true}"/>-->
+                            <!--			</page>-->
+                            <!--			<page name="public" string="Sơ yếu lý lịch" modifiers="{}">-->
+                            <!--				<div class="row" modifiers="{}">-->
+                            <!--					<div class="o_hr_skills_group o_group_resume col-lg-5 d-flex flex-column" modifiers="{}">-->
+                            <!--						<separator string="Hồ sơ" modifiers="{}"/>-->
+                            <!--						<field mode="tree" nolabel="1" name="resume_line_ids" widget="hr_resume" modifiers="{}"/>-->
+                            <!--					</div>-->
+                            <!--					<div class="o_hr_skills_group o_group_skills col-lg-5 d-flex flex-column" modifiers="{}">-->
+                            <!--						<separator string="Các kĩ năng" modifiers="{}"/>-->
+                            <!--						<field mode="tree" nolabel="1" name="employee_skill_ids" widget="hr_skills" modifiers="{}"/>-->
+                            <!--					</div>-->
+                            <!--				</div>-->
+                            <!--			</page>-->
+                            <!--			<page name="personal_information" string="Thông tin Riêng tư" modifiers="{}">-->
+                            <!--				<group modifiers="{}">-->
+                            <!--					<group string="Thông tin liên hệ" modifiers="{}">-->
+                            <!--						<field name="address_home_id" context="{                                                 'show_address': 1,                                                 'default_type': 'private',                                                 'form_view_ref': 'base.res_partner_view_form_private'}" options="{'always_reload': True, 'highlight_first_line': True}" invisible="1" on_change="1" can_create="true" can_write="true" modifiers="{'invisible':true}"/>-->
+                            <!--						<field name="private_email" string="Tên đăng nhập / Email" invisible="1" modifiers="{'invisible':true,'readonly':true}"/>-->
+                            <!--						<field name="phone" string="Điện thoại" invisible="1" modifiers="{'invisible':true,'readonly':true}"/>-->
+                            <!--						<field name="bank_account_id" context="{'display_partner':True}" attrs="{'invisible' : [('address_home_id', '=', False)]}" can_create="true" can_write="true" modifiers="{'invisible':[['address_home_id','=',false]]}"/>-->
+                            <!--						<field name="km_home_work" modifiers="{}"/>-->
+                            <!--						<field name="emergency_contact" string="Hộ khẩu" modifiers="{}"/>-->
+                            <!--						<field name="emergency_address" modifiers="{}"/>-->
+                            <!--						<field name="emergency_phone" modifiers="{}"/>-->
+                            <!--					</group>-->
+                            <!--					<group string="Quốc tịch &amp; Thông tin khác" modifiers="{}">-->
+                            <!--						<field name="country_id" options="{'no_open': True, 'no_create': True}" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--						<field name="identification_id" modifiers="{}"/>-->
+                            <!--						<field name="id_issue_date" string="Ngày cấp" modifiers="{}"/>-->
+                            <!--						<field name="id_issue_place" string="Nơi cấp" modifiers="{}"/>-->
+                            <!--						<field name="mst_account_id" modifiers="{}"/>-->
+                            <!--						<field name="passport_id" modifiers="{}"/>-->
+                            <!--						<field name="gender" modifiers="{}"/>-->
+                            <!--						<field name="birthday" invisible="1" modifiers="{'invisible':true}"/>-->
+                            <!--						<field name="place_of_birth" modifiers="{}"/>-->
+                            <!--						<field name="country_of_birth" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--					</group>-->
+                            <!--					<group string="Tình trạng hôn nhân" modifiers="{}">-->
+                            <!--						<field name="marital" modifiers="{}"/>-->
+                            <!--						<field name="children" modifiers="{}"/>-->
+                            <!--						<field name="spouse_complete_name" attrs="{'invisible': [('marital', 'not in', ['married', 'cohabitant'])]}" modifiers="{'invisible':[['marital','not in',['married','cohabitant']]]}"/>-->
+                            <!--						<field name="spouse_birthdate" attrs="{'invisible': [('marital', 'not in', ['married', 'cohabitant'])]}" modifiers="{'invisible':[['marital','not in',['married','cohabitant']]]}"/>-->
+                            <!--					</group>-->
+                            <!--					<group string="Giấy phép LĐ" name="work_permit" modifiers="{}">-->
+                            <!--						<field name="visa_no" modifiers="{}"/>-->
+                            <!--						<field name="permit_no" modifiers="{}"/>-->
+                            <!--						<field name="visa_expire" modifiers="{}"/>-->
+                            <!--					</group>-->
+                            <!--					<group string="Trình độ" modifiers="{}">-->
+                            <!--						<field name="certificate" modifiers="{}"/>-->
+                            <!--						<field name="study_field" modifiers="{}"/>-->
+                            <!--						<field name="study_school" modifiers="{}"/>-->
+                            <!--						<field name="graduation_year" modifiers="{}"/>-->
+                            <!--						<field name="classification" modifiers="{}"/>-->
+                            <!--					</group>-->
+                            <!--				</group>-->
+                            <!--			</page>-->
+
+                            <!--			<page name="hr_settings" string="Thiết lập Nhân lực" modifiers="{}">-->
+                            <!--				<group modifiers="{}">-->
+                            <!--					<group string="Trạng thái" name="active_group" modifiers="{}">-->
+                            <!--						<field name="user_id" string="TK dùng liên kết" on_change="1" can_create="true" can_write="true" modifiers="{}"/>-->
+                            <!--						<field name="joining_date" on_change="1" modifiers="{}"/>-->
+                            <!--						<field name="work_duration" string="Thâm niên" modifiers="{'readonly':true}"/>-->
+                            <!--						<field name="barcode" string="Mã chấm công" modifiers="{}"/>-->
+                            <!--						<field name="resign_date" attrs="{'invisible': [('active', '!=', False)]}" on_change="1" modifiers="{'invisible':[['active','!=',false]],'readonly':true}"/>-->
+                            <!--						<field name="reason_resign" attrs="{'invisible': [('active', '!=', False)]}" modifiers="{'invisible':[['active','!=',false]],'readonly':true}"/>-->
+                            <!--					</group>-->
+                            <!--					<group string="Điểm danh" name="identification_group" invisible="1" modifiers="{'invisible':true}">-->
+                            <!--						<field name="pin" string="PIN Code" invisible="1" modifiers="{'invisible':true}"/>-->
+                            <!--						<label for="barcode" modifiers="{}"/>-->
+                            <!--						<div class="o_row" modifiers="{}">-->
+                            <!--							<field name="barcode" modifiers="{}"/>-->
+                            <!--							<button string="Tạo" class="btn btn-link" type="object" name="generate_random_barcode" attrs="{'invisible': [('barcode', '!=', False)]}" modifiers="{'invisible':[['barcode','!=',false]]}" options="{}"/>-->
+                            <!--							<button name="188" string="In Thẻ" class="btn btn-link" type="action" attrs="{'invisible': [('barcode', '=', False)]}" modifiers="{'invisible':[['barcode','=',false]]}" options="{}"/>-->
+                            <!--						</div>-->
+                            <!--					</group>-->
+                            <!--					<group modifiers="{}">-->
+                            <!--						<group col="4" modifiers="{}"/>-->
+                            <!--						<group col="8" modifiers="{}">-->
+                            <!--							<div id="o_employee_right" modifiers="{}">-->
+                            <!--								<h4 class="o_org_chart_title mb16 mt0" modifiers="{}">-->
+                            <!--									Sơ đồ tổ chức-->
+                            <!--								</h4>-->
+                            <!--								<field name="child_ids" widget="hr_org_chart" modifiers="{}"/>-->
+                            <!--							</div>-->
+                            <!--						</group>-->
+                            <!--					</group>-->
+                            <!--				</group>-->
+                            <!--				<group modifiers="{}">-->
+                            <!--					<group string="Chấm công" name="timesheet" invisible="1" modifiers="{'invisible':true}">-->
+                            <!--						<label for="timesheet_cost" modifiers="{}"/>-->
+                            <!--						<div modifiers="{}">-->
+                            <!--							<field name="timesheet_cost" class="oe_inline" modifiers="{}"/>-->
+                            <!--							 mỗi giờ-->
+
+                            <!--							<field name="currency_id" invisible="1" can_create="true" can_write="true" modifiers="{'invisible':true,'readonly':true}"/>-->
+                            <!--						</div>-->
+                            <!--					</group>-->
+                            <!--				</group>-->
+                            <!--			</page>-->
+                            <!--			<page name="gosi_info" string="Thông tin lương - Bảo hiểm" modifiers="{}">-->
+                            <!--				<group name="salary_and_advantages" col="12" modifiers="{}">-->
+                            <!--					<group name="salary" string="Lương thực tế" colspan="4" modifiers="{}">-->
+                            <!--						<field name="basic_salary" string="Lương cơ bản" widget="monetary_format" readonly="1" modifiers="{'readonly':true}"/>-->
+                            <!--						<field name="allowance" string="Lương phụ cấp" widget="monetary_format" readonly="1" modifiers="{'readonly':true}"/>-->
+                            <!--						<field name="KPI_salary" widget="monetary_format" readonly="1" attrs="{'invisible' : [('salary_kd', '=', True)]}" modifiers="{'invisible':[['salary_kd','=',true]],'readonly':true}"/>-->
+                            <!--						<field name="wage" widget="monetary_format" readonly="1" modifiers="{'readonly':true}"/>-->
+                            <!--						<field name="salary_kd" modifiers="{}"/>-->
+                            <!--					</group>-->
+                            <!--					<group name="kq" string="Ký quỹ" colspan="4" modifiers="{}">-->
+                            <!--						<field name="check_kq" modifiers="{'readonly':true}"/>-->
+                            <!--						<field name="deposit" attrs="{'readonly':[('check_kq','=',True)]}" widget="monetary_format" on_change="1" modifiers="{'readonly':[['check_kq','=',true]]}"/>-->
+                            <!--						<field name="payment_term" attrs="{'readonly':[('check_kq','=',True)]}" on_change="1" modifiers="{'readonly':[['check_kq','=',true]]}"/>-->
+                            <!--						<field name="money_per_month" string="Mỗi tháng đóng" widget="monetary_format" modifiers="{'readonly':true}"/>-->
+                            <!--						<field name="limit" readonly="1" modifiers="{'readonly':true}"/>-->
+                            <!--					</group>-->
+                            <!--					<group name="bh" string="Trích BHXH" colspan="4" modifiers="{}">-->
+                            <!--						<field name="deposit_bh" readonly="1" widget="monetary_format" modifiers="{'readonly':true}"/>-->
+                            <!--						<field name="payment_term_bh" readonly="1" modifiers="{'readonly':true}"/>-->
+                            <!--						<field name="money_per_month_bh" readonly="1" string="Trích BHXH" widget="monetary_format" modifiers="{'readonly':true}"/>-->
+                            <!--						<field name="check_bh" modifiers="{}"/>-->
+                            <!--					</group>-->
+                            <!--				</group>-->
+                            <!--				<group string="Theo dõi điều chỉnh lương" modifiers="{}">-->
+                            <!--					<field name="salary_history" nolabel="1" context="{'default_employee_id': active_id}" on_change="1" modifiers="{}"/>-->
+                            <!--				</group>-->
+                            <!--				<group string="Theo dõi BHXH" modifiers="{}">-->
+                            <!--					<field name="insurance_history" nolabel="1" context="{'default_employee_id': active_id}" on_change="1" modifiers="{}"/>-->
+                            <!--				</group>-->
+                            <!--			</page>-->
+                            <!--			<page name="history" string="Quá trình hợp đồng" modifiers="{}">-->
+                            <!--				<group modifiers="{}">-->
+                            <!--					<field name="contract_ids" nolabel="1" widget="one2many_list" readonly="1" modifiers="{'readonly':true}"/>-->
+                            <!--				</group>-->
+                            <!--			</page>-->
+                            <!--			<page name="family_info" string="Thông tin người phụ thuộc" modifiers="{}">-->
+                            <!--				<group string="Gia đình" modifiers="{}">-->
+                            <!--					<field name="fam_ids" nolabel="1" modifiers="{}"/>-->
+                            <!--				</group>-->
+                            <!--			</page>-->
+                        </notebook>
+
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="sci_hrm_hr_employee_action" model="ir.actions.act_window">
+            <field name="name">Nhân viên</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">tree,form</field>
+            <!--            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>-->
+            <field name="context">{}</field>
+            <!--            <field name="view_id" ref="sci_hrm_hr_employee_view_tree"/>-->
+            <!--			<field name="search_view_id" ref="collaborator_collaborator_view_search"/>-->
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('sci_hrm_hr_employee_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('sci_hrm_hr_employee_view_form')})]"/>
+        </record>
+    </data>
+</odoo>

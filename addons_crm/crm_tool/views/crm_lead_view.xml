@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="crm_lead_tool_view" model="ir.ui.view">
+        <field name="name">crm.lead.tool.view</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+        <field name="arch" type="xml">
+            <!--            <xpath expr="//button[@name='create_phone_call_info']" position="after">-->
+            <!--                <button name="%(crm_lead_change_phone_action)d" type="action"-->
+            <!--                        string="Đổi số điện thoại" class="btn-info"-->
+            <!--                        groups="base.group_erp_manager"/>-->
+            <!--            </xpath>-->
+            <xpath expr="//button[@name='cancel_line']" position="after">
+                <button name="update_unit_price" type="object"
+                        string="Cập nhật đơn giá" class="btn-info" groups="crm_tool.update_unit_price_crm_line"
+                        optional="hide"/>
+            </xpath>
+            <xpath expr="//header" position="inside">
+                <button name="tao_so_am" type="object" string="Tạo SO âm" class="btn-danger"
+                        groups="crm_tool.tao_so_am"/>
+                <button name="update_line_consultant" type="object" string="Cập nhật Tư vấn viên" class="btn-danger"/>
+            </xpath>
+        </field>
+    </record>
+
+    <act_window id="crm_lead_act_window_update_booking"
+                name="Cập nhật Booking"
+                binding_model="crm.lead"
+                res_model="crm.update.booking"
+                binding_views="form,list"
+                view_mode="form"
+                groups="base.group_user"
+                target="new"
+                context="{
+            'default_booking_id': active_id,
+            'default_type_action': 'won',
+        }"
+    />
+
+    <!--    <act_window id="crm_lead_act_window_won_booking"-->
+    <!--                name="Hoàn thành Booking tạo Bảo hành"-->
+    <!--                binding_model="crm.lead"-->
+    <!--                res_model="crm.update.booking"-->
+    <!--                binding_views="form,list"-->
+    <!--                view_mode="form"-->
+    <!--                target="new"-->
+    <!--                context="{-->
+    <!--            'default_booking_id': active_id,-->
+    <!--            'default_type_action': 'won',-->
+    <!--        }"-->
+    <!--    />-->
+</odoo>

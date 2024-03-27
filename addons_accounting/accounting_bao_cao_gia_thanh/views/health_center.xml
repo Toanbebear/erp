@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="tas_sh_medical_health_center-ot_view_form_inherit" model="ir.ui.view">
+        <field name="name">sh.medical.health.center.ot.view.form.inherit.cost.driver</field>
+        <field name="model">sh.medical.health.center.ot</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_healthcenters_ot_view"/>
+        <field name="arch" type="xml">
+             <xpath expr="//field[@name='room_number']" position="after">
+                    <field name="work_center_id"/>
+                    <field name="analytic_account_id"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

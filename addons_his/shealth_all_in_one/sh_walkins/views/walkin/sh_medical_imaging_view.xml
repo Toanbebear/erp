@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inheriting imaging tests screen to display walkin reference -->
+        <record id="sh_medical_imaging_test_walkin_view" model="ir.ui.view">
+            <field name="name">Imaging Tests</field>
+            <field name="model">sh.medical.imaging</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_imaging_test_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='patient']" position="after">
+                    <field name="walkin" readonly="1" force_save="1" options="{'no_open': True}"/>
+                </xpath>
+                <xpath expr="//field[@name='institution']" position="replace">
+                    <field name="allow_institutions" invisible="1"/>
+                    <field name="institution" domain="[('id', 'in', allow_institutions)]" required="1"
+                           options="{'no_create': True,'no_open': True}"
+                           attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

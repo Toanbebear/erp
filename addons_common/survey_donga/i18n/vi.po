@@ -1,0 +1,628 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* sci_survey
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 12.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-11-13 09:56+0000\n"
+"PO-Revision-Date: 2020-11-13 16:57+0700\n"
+"Last-Translator: <>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: \n"
+"Language: vi\n"
+"X-Generator: Poedit 2.4.1\n"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_user_input_line__answer
+msgid "Answer"
+msgstr "Trả lời"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_label__icon
+msgid "Biểu tượng"
+msgstr ""
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.online_survey_page
+msgid "Bắt đầu khảo sát"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_page__department_page_ids
+#: model:ir.model.fields,field_description:sci_survey.field_survey_question__department_page_id
+#: model:ir.model.fields,field_description:sci_survey.field_survey_user_input_line__department_page_id
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_line_inherit
+msgid "Bộ phận"
+msgstr ""
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.view_open_sign
+msgid "Cancel"
+msgstr "Hủy"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_label__value
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_question_form_inherit
+msgid "Choices"
+msgstr "Các lựa chọn"
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_res_company
+msgid "Companies"
+msgstr "Công ty"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "Completed"
+msgstr "Hoàn thành"
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_res_config_settings
+msgid "Config Settings"
+msgstr "Cấu hình thiết lập"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.view_open_sign
+msgid "Confirm"
+msgstr "Xác nhận"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_question_form_inherit
+msgid "Constraints"
+msgstr "Các ràng buộc"
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_res_partner
+msgid "Contact"
+msgstr "Liên hệ"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_department__create_uid
+#: model:ir.model.fields,field_description:sci_survey.field_survey_page_department__create_uid
+#: model:ir.model.fields,field_description:sci_survey.field_survey_sign__create_uid
+msgid "Created by"
+msgstr "Được tạo bởi"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_department__create_date
+#: model:ir.model.fields,field_description:sci_survey.field_survey_page_department__create_date
+#: model:ir.model.fields,field_description:sci_survey.field_survey_sign__create_date
+msgid "Created on"
+msgstr "Thời điểm tạo"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_user_input__survey_creator
+msgid "Creator"
+msgstr "Người tạo"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_user_input__partner_id
+#: model:ir.model.fields,field_description:sci_survey.field_survey_user_input_line__partner_id
+msgid "Customer"
+msgstr "Khách hàng"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_line_inherit
+msgid "Câu trả lời với chữ tự do"
+msgstr ""
+
+#. module: sci_survey
+#: selection:survey.question,type:0
+msgid "Date"
+msgstr "Ngày"
+
+#. module: sci_survey
+#: model:ir.actions.act_window,name:sci_survey.act_open_survey_department_view
+#: model:ir.model.fields,field_description:sci_survey.field_survey_question__department_ids
+#: model:ir.ui.menu,name:sci_survey.menu_survey_department_form
+msgid "Department"
+msgstr "Phòng ban"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_department__name
+#: model:ir.model.fields,field_description:sci_survey.field_survey_page_department__name
+msgid "Department Name"
+msgstr "Tên phòng/ban"
+
+#. module: sci_survey
+#: model:ir.ui.menu,name:sci_survey.menu_survey_statics_department
+msgid "Department Page Statics"
+msgstr "Thống kê theo phòng ban"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_survey__description
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_survey_form_inherit
+msgid "Description"
+msgstr "Miêu tả"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_question__display_mode
+msgid "Display Mode"
+msgstr "Chế độ hiển thị"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_report_sci_survey_survey_qr_template__display_name
+#: model:ir.model.fields,field_description:sci_survey.field_survey_department__display_name
+#: model:ir.model.fields,field_description:sci_survey.field_survey_page_department__display_name
+#: model:ir.model.fields,field_description:sci_survey.field_survey_sign__display_name
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_question__display_mode_matrix
+#: model:ir.model.fields,field_description:sci_survey.field_survey_question__display_mode_multiple_choice
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_question_form_inherit
+msgid "Display mode"
+msgstr "Chế độ hiển thị"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_label__email
+#: model:ir.model.fields,field_description:sci_survey.field_survey_question__email
+msgid "Email"
+msgstr ""
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_question_form_inherit
+msgid "Format"
+msgstr "Định dạng"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_line_inherit
+msgid "Group By"
+msgstr "Nhóm theo"
+
+#. module: sci_survey
+#: selection:survey.user_input,status:0
+msgid "Hài lòng"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_report_sci_survey_survey_qr_template__id
+#: model:ir.model.fields,field_description:sci_survey.field_survey_department__id
+#: model:ir.model.fields,field_description:sci_survey.field_survey_page_department__id
+#: model:ir.model.fields,field_description:sci_survey.field_survey_sign__id
+msgid "ID"
+msgstr ""
+
+#. module: sci_survey
+#: selection:survey.question,display_mode:0
+#: selection:survey.question,display_mode_matrix:0
+#: selection:survey.question,display_mode_multiple_choice:0
+msgid "Icon"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_question__validation_phone_number
+msgid "Input must be a phone number"
+msgstr "Dữ liệu phải là một số điện thoại hợp lệ"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_mail_mail__is_survey
+msgid "Is Survey"
+msgstr ""
+
+#. module: sci_survey
+#: selection:survey.user_input,status:0
+msgid "Không hài lòng"
+msgstr ""
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.detail_rank_inherit
+msgid "Khảo sát Hà Nội"
+msgstr ""
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.detail_rank_inherit
+msgid "Khảo sát Hồ Chí Minh"
+msgstr ""
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.sfinished_inherit
+msgid "Ký"
+msgstr ""
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.sfinished_inherit
+msgid "Kết thúc"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_report_sci_survey_survey_qr_template____last_update
+#: model:ir.model.fields,field_description:sci_survey.field_survey_department____last_update
+#: model:ir.model.fields,field_description:sci_survey.field_survey_page_department____last_update
+#: model:ir.model.fields,field_description:sci_survey.field_survey_sign____last_update
+msgid "Last Modified on"
+msgstr "Sửa lần cuối vào"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "Last Month"
+msgstr "Tháng trước"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_department__write_uid
+#: model:ir.model.fields,field_description:sci_survey.field_survey_page_department__write_uid
+#: model:ir.model.fields,field_description:sci_survey.field_survey_sign__write_uid
+msgid "Last Updated by"
+msgstr "Cập nhật lần cuối bởi"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_department__write_date
+#: model:ir.model.fields,field_description:sci_survey.field_survey_page_department__write_date
+#: model:ir.model.fields,field_description:sci_survey.field_survey_sign__write_date
+msgid "Last Updated on"
+msgstr "Cập nhật lần cuối vào"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "Last Year"
+msgstr "Năm trước"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "Last week"
+msgstr "Tuần trước"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.res_config_settings_view_form
+msgid "Loyalty"
+msgstr "Thẻ thành viên"
+
+#. module: sci_survey
+#: model:ir.actions.server,name:sci_survey.send_email_ir_actions_server
+#: model:ir.cron,cron_name:sci_survey.send_email
+#: model:ir.cron,name:sci_survey.send_email
+msgid "Mail: Send survey feedback mails"
+msgstr "Mail: Gửi mail phản hồi"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_question_form_inherit
+msgid "Mandatory Answer"
+msgstr "Câu trả lời bắt buộc"
+
+#. module: sci_survey
+#: selection:survey.question,type:0
+msgid "Matrix"
+msgstr "Ma trận"
+
+#. module: sci_survey
+#: selection:survey.question,type:0
+msgid "Multiple Lines Text Box"
+msgstr "Hộp văn bản nhiều dòng"
+
+#. module: sci_survey
+#: selection:survey.question,type:0
+msgid "Multiple choice: multiple answers allowed"
+msgstr "Đa lựa chọn: cho phép nhiều câu trả lời"
+
+#. module: sci_survey
+#: selection:survey.question,type:0
+msgid "Multiple choice: only one answer"
+msgstr "Đa lựa chọn: một câu trả lời duy nhất"
+
+#. module: sci_survey
+#: model:ir.actions.report,name:sci_survey.res_partner_qr_template
+msgid "Mã QR khảo sát khách hàng"
+msgstr ""
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "New"
+msgstr "Mới"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_label__is_warning
+msgid "Nhận phản hồi?"
+msgstr ""
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_question_form_inherit
+msgid "Number of columns"
+msgstr "Số cột/mục"
+
+#. module: sci_survey
+#: selection:survey.question,type:0
+msgid "Numerical Value"
+msgstr "Giá trị kiểu số"
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_mail_mail
+msgid "Outgoing Mails"
+msgstr "Thư gửi đi"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_user_input_line__page_id
+msgid "Page"
+msgstr "Trang"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "Partially Completed"
+msgstr "Đã hoàn thiện một phần"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_label__department_id
+msgid "Phòng ban"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_question__is_picture_view
+msgid "Picture View"
+msgstr "Dạng hình ảnh"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_survey_form_inherit
+msgid "Print QR"
+msgstr "In mã QR"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_res_partner__survey_qr
+#: model:ir.model.fields,field_description:sci_survey.field_res_users__survey_qr
+#: model:ir.model.fields,field_description:sci_survey.field_survey_survey__qr
+msgid "QR Code"
+msgstr "Mã QR"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.view_partner_inherit_survey
+msgid "QR Khảo sát"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_loyalty_card__image_survey
+msgid "QR khảo sát"
+msgstr ""
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_line_inherit
+msgid "Question"
+msgstr "Câu hỏi"
+
+#. module: sci_survey
+#: selection:survey.question,display_mode:0
+#: selection:survey.question,display_mode_matrix:0
+#: selection:survey.question,display_mode_multiple_choice:0
+msgid "Radio Buttons"
+msgstr "Nút radio"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_user_input__status
+msgid "Result"
+msgstr "Kết quả"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_question_form_inherit
+msgid "Rows"
+msgstr "Các hàng"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_line_inherit
+msgid "Search User input lines"
+msgstr "Kiếm các dòng mà người dùng nhập"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.res_config_settings_view_form
+msgid "Select the Survey to Configure"
+msgstr "Chọn khảo sát để cấu hình"
+
+#. module: sci_survey
+#: selection:survey.question,display_mode:0
+#: selection:survey.question,display_mode_multiple_choice:0
+msgid "Selection Box"
+msgstr "Hộp lựa chọn"
+
+#. module: sci_survey
+#: model:ir.actions.act_window,name:sci_survey.action_open_survey_sign
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_form_inherit
+msgid "Sign"
+msgstr "Ký"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_sign__signature
+#: model:ir.model.fields,field_description:sci_survey.field_survey_user_input__signature
+msgid "Signature"
+msgstr "Chữ ký"
+
+#. module: sci_survey
+#: selection:survey.question,type:0
+msgid "Single Line Text Box"
+msgstr "Hộp văn bản 1 dòng"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.page_inherit
+msgid "Submit survey"
+msgstr "Hoàn thành khảo sát"
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_survey_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+#: model:website.menu,name:sci_survey.website_menu_survey_menu
+msgid "Survey"
+msgstr "Khảo sát"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_tree_line_inherit
+msgid "Survey Answer Line"
+msgstr "Dòng trả lời khảo sát"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.loyalty_card_form_view_inherit
+#: model_terms:ir.ui.view,arch_db:sci_survey.view_partner_inherit_survey
+msgid "Survey HCM"
+msgstr "Khảo sát HCM"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.loyalty_card_form_view_inherit
+#: model_terms:ir.ui.view,arch_db:sci_survey.view_partner_inherit_survey
+msgid "Survey HN"
+msgstr "Khảo sát HN"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_res_company__survey_hcm_id
+#: model:ir.model.fields,field_description:sci_survey.field_res_config_settings__survey_hcm_id
+#: model_terms:ir.ui.view,arch_db:sci_survey.res_config_settings_view_form
+msgid "Survey Kangnam HCM"
+msgstr "Khảo sát Kangnam HCM"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_res_company__survey_id
+#: model:ir.model.fields,field_description:sci_survey.field_res_config_settings__survey_id
+#: model_terms:ir.ui.view,arch_db:sci_survey.res_config_settings_view_form
+msgid "Survey Kangnam HN"
+msgstr "Khảo sát Kangnam HN"
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_survey_label
+msgid "Survey Label"
+msgstr "Nhãn Khảo sát"
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_survey_page
+msgid "Survey Page"
+msgstr "Trang Khảo sát"
+
+#. module: sci_survey
+#: model:ir.actions.report,name:sci_survey.print_qr
+msgid "Survey QR"
+msgstr "QR khảo sát"
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_survey_question
+msgid "Survey Question"
+msgstr "Câu hỏi Khảo sát"
+
+#. module: sci_survey
+#: model:ir.ui.menu,name:sci_survey.menu_survey_statics_survey
+msgid "Survey Statics"
+msgstr "Thống kê theo khảo sát"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_res_partner__survey_url
+#: model:ir.model.fields,field_description:sci_survey.field_res_users__survey_url
+msgid "Survey URL"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_survey_user_input
+msgid "Survey User Input"
+msgstr "Dữ liệu người dùng nhập vào Khảo sát"
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_survey_user_input_line
+msgid "Survey User Input Line"
+msgstr "Các dòng nhập liệu của người dùng khảo sát"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_tree_inherit
+msgid "Survey User inputs"
+msgstr "Nhập liệu của người dùng khảo sát"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_survey_form_inherit
+msgid "Test Survey"
+msgstr "Kiểm thử khảo sát"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "This Month"
+msgstr "Tháng này"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "This Week"
+msgstr "Tuần này"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "This Year"
+msgstr "Năm nay"
+
+#. module: sci_survey
+#: code:addons/sci_survey/models/survey.py:214
+#, python-format
+msgid "This answer must be a phone number"
+msgstr "Câu trả lời phải là một số điện thoại"
+
+#. module: sci_survey
+#: code:addons/sci_survey/models/survey.py:211
+#, python-format
+msgid "This answer must be an email address"
+msgstr "Câu trả lời phải là một địa chỉ email"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "Today"
+msgstr "Hôm nay"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_question__type
+msgid "Type of Question"
+msgstr "Kiểu câu hỏi"
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_sign__user_input_id
+msgid "User Input"
+msgstr "Nhập liệu của người dùng"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_form_line_inherit
+msgid "User input line details"
+msgstr "Nhập liệu các dòng của người dùng"
+
+#. module: sci_survey
+#: model_terms:ir.ui.view,arch_db:sci_survey.survey_user_input_search_inherit
+msgid "Yesterday"
+msgstr "Hôm qua"
+
+#. module: sci_survey
+#: code:addons/sci_survey/models/survey.py:116
+#, python-format
+msgid "You can not delete this page. Survey already have answers!"
+msgstr "Bạn không thể xóa trang. Khảo sát đã được trả lời!"
+
+#. module: sci_survey
+#: code:addons/sci_survey/models/survey.py:226
+#, python-format
+msgid "You can not delete this question. Survey already have answers!"
+msgstr "Bạn không thể xóa câu hỏi. Khảo sát đã được trả lời!"
+
+#. module: sci_survey
+#: code:addons/sci_survey/models/survey.py:70
+#, python-format
+msgid "You can not delete this survey. Survey already have answers!"
+msgstr "Bạn không thể xóa khảo sát. Khảo sát đã được trả lời!"
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_loyalty_card
+msgid "loyalty.card"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_report_sci_survey_survey_qr_template
+msgid "report.sci_survey.survey_qr_template"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_survey_department
+msgid "survey.department"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_survey_page_department
+msgid "survey.page.department"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model,name:sci_survey.model_survey_sign
+msgid "survey.sign"
+msgstr ""
+
+#. module: sci_survey
+#: model:ir.model.fields,field_description:sci_survey.field_survey_label__picture
+msgid "Ảnh"
+msgstr ""

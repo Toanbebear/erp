@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="crm_check_in_list_act">
+            <field name="name">Danh sách khách hàng check in</field>
+            <!--            <field name="search_view_id" ref="brand_ip_phone_view_search"/>-->
+            <field name="res_model">crm.check.in</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('check_type', '=', 'co_so')]</field>
+            <field name="context">{'search_default_date_today': 1, 'default_check_type': 'co_so'}</field>
+        </record>
+
+        <record id="checkin_search" model="ir.ui.view">
+            <field name="name">Checkin: Search</field>
+            <field name="model">crm.check.in</field>
+            <field name="arch" type="xml">
+                <search string="state Search">
+                    <field name="name" string="Khách hàng"
+                           filter_domain="['|', '|', ('name','ilike', self), ('phone','ilike', self), ('partner','ilike', self)]"/>
+                    <separator/>
+                    <filter string="Checkin hôm nay" name="date_today"
+                            domain="[('create_date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),('create_date', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="crm_check_in_list_tree_view" model="ir.ui.view">
+            <field name="name">crm_check_in_list_tree_view</field>
+            <field name="model">crm.check.in</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc"
+                      decoration-success="stage=='hoan_thanh'"
+                      decoration-danger="stage=='dang_tu_van'"
+                      decoration-muted="stage=='huy'" delete="false" edit="false" duplicate="false">
+                    <field name="create_date" string="Thời gian checkin" width="5%"/>
+                    <field name="name" width="10%"/>
+                    <field name="partner" optional="hide"/>
+                    <field name="phone" width="10%" widget="phone_tree"/>
+<!--                    <field name="date_of_birth" width="5%" optional="hide"/>-->
+                    <field name="desire" optional="show" string="Mong muốn" width="5%"/>
+                    <field name="service_category_ids" widget="many2many_tags" width="15%" optional="show"/>
+                    <field name="company_id" optional="hide" string="Chi nhánh check in"/>
+                    <field name="booking_company"  width="10%" string="Chi nhánh booking"/>
+                    <field name="booking" optional="hide"/>
+                    <field name="know" optional="hide" string="Biết đến ..."/>
+                    <field name="printed" invisible="1"/>
+                    <field name="stage" invisible="1"/>
+                    <button name="print_checkin" string="In phiếu" type="object" class="btn-primary" attrs="{'invisible':[('printed','!=',False)]}"/>
+                    <button name="print_checkin" string="In phiếu" type="object" class="btn-secondary" attrs="{'invisible':[('printed','!=',True)]}"/>
+                    <button name="set_dang_tu_van" string="Đang tư vấn"
+                            attrs="{'invisible':[('stage','!=','cho_tu_van')]}" type="object" class="btn-danger"/>
+                    <button name="create_booking" string="Tạo Booking"
+                            attrs="{'invisible':['|',('booking','!=',False),('stage','!=','dang_tu_van')]}"
+                            type="object" class="btn-success"/>
+                    <button name="set_hoan_thanh" string="Hoàn thành"
+                            attrs="{'invisible':[('stage','not in',['dang_tu_van'])]}" type="object"
+                            class="btn-success"/>
+                    <button name="set_cho_tu_van" string="Chờ tư vấn"
+                            attrs="{'invisible':[('stage','not in',['huy'])]}" type="object" class="btn-info"/>
+<!--                    <button name="set_huy" string="Hủy" type="object" attrs="{'invisible':[('stage','in',['huy'])]}"/>-->
+                    <button name="view_booking" string="Xem Booking" attrs="{'invisible':[('booking','=',False)]}"
+                            type="object"/>
+                    <button name="view_information_partner" string="Xem khách hàng" attrs="{'invisible':[('partner','=',False)]}"
+                            type="object"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_check_in_list_form_view" model="ir.ui.view">
+            <field name="name">crm_check_in_list_form_view</field>
+            <field name="model">crm.check.in</field>
+            <field name="arch" type="xml">
+                <form create="false" delete="false" edit="true" duplicate="false">
+                    <header>
+                        <button name="print_checkin" string="In phiếu" type="object" class="btn-primary"/>
+                        <button name="set_dang_tu_van" string="Đang tư vấn"
+                                attrs="{'invisible':[('stage','!=','cho_tu_van')]}" type="object" class="btn-danger"/>
+                        <button name="create_booking" string="Tạo Booking"
+                                attrs="{'invisible':['|',('booking','!=',False),('stage','!=','dang_tu_van')]}"
+                                type="object" class="btn-success"/>
+                        <button name="set_hoan_thanh" string="Hoàn thành"
+                                attrs="{'invisible':[('stage','not in',['dang_tu_van'])]}" type="object"
+                                class="btn-success"/>
+                        <button name="set_cho_tu_van" string="Chờ tư vấn"
+                                attrs="{'invisible':[('stage','not in',['huy'])]}" type="object" class="btn-info"/>
+<!--                        <button name="set_huy" string="Hủy" type="object"-->
+<!--                                attrs="{'invisible':[('stage','in',['huy'])]}"/>-->
+                        <button name="view_booking" string="Xem Booking" attrs="{'invisible':[('booking','=',False)]}"
+                                type="object"/>
+                        <field name="stage" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <!--                        <widget name="web_ribbon" title="LÀM LUÔN" text="LÀM LUÔN" bg_color="bg-danger" attrs="{'invisible': [('desire', '!=', 'lam_luon')]}"/>-->
+                        <!--                        <widget name="web_ribbon" title="TƯ VẤN" text="TƯ VẤN" bg_color="bg-warning" attrs="{'invisible': [('desire', '!=', 'tu_van')]}"/>-->
+                        <div class="row">
+                            <div class="col-7">
+                                <label for="selection_type" string="Bạn muốn nhập gì?" attrs="{'invisible':[('id', '!=', False)]}"/>
+                                <field name="selection_type" attrs="{'invisible':[('id', '!=', False)], 'required':[('id', '=', False)]}" widget="radio"/>
+                                <br/>
+                                <label for="phone" string="Số điện thoại" attrs="{'invisible':[('selection_type', '!=', 'phone'), ('phone', '=', False)]}"/>
+                                <field name="phone" force_save="1" widget="phone" attrs="{'readonly':['|', ('phone','!=',False), ('id', '!=', False)], 'invisible':[('selection_type', '!=', 'phone'), ('phone', '=', False)], 'required':[('selection_type', '=', 'phone')]}"/>
+                                <br/>
+                                <label for="code_partner" string="Mã khách hàng" attrs="{'invisible':[('selection_type', '!=', 'code')]}"/>
+                                <field name="code_partner" attrs="{'readonly':[('code_partner','!=',False), ('id', '!=', False)], 'invisible':[('selection_type', '!=', 'code')], 'required':[('selection_type', '=', 'code')]}"/>
+                                <br/>
+                                <label for="code_booking" string="Mã Booking" attrs="{'invisible':[('id', '!=', False), '|',('selection_type', '!=', 'booking'), ('booking','!=',False)]}"/>
+                                <field name="code_booking" attrs="{'invisible':[('id', '!=', False), '|', ('selection_type', '!=', 'booking'), ('booking','!=',False)], 'required':[('selection_type', '=', 'booking'), ('booking','=',False)]}"/>
+                            </div>
+                            <div class="col-5"/>
+                        </div>
+                        <br/>
+                        <group>
+                            <field name="name" attrs="{'readonly':[('name','!=',False)]}" force_save="1"/>
+                            <field name="printed" invisible="0"/>
+                            <field name="company_id" required="1" invisible="1"/>
+                            <field name="create_date" invisible="1"/>
+                            <field name="partner" invisible="1"/>
+                            <field name="booking" attrs="{'invisible':[('booking','=',False)]}" context="{'name_crm_lead_checkin': True,}" options="{'no_create':True}"/>
+                            <field name="booking_company" attrs="{'invisible':[('booking','=',False)]}"/>
+                            <field name="booking_brand_id" attrs="{'invisible':[('booking','=',False)]}"/>
+                            <field name="desire" widget="radio" required="1"/>
+                            <field name="know" string="Biết đến ..."/>
+                            <field name="service_category_ids" widget="many2many_tags"
+                                   options="{'no_create':True,'no_open':True}"/>
+<!--                            <field name="check_ctv" invisible="1"/>-->
+<!--                            <field name="qr_checkin" widget="image" style="width:160px; height:160px;"/>-->
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,67 @@
+.kn .title{
+    flex:1;
+}
+.kn .logo{
+    width: 196px;
+    height: 59px;
+    margin-left: 15px;
+    background: url('../img/logo_kn.png');
+}
+.kn h1{
+    color: #003471;
+    font-weight:bold;
+    font-size: 28pt;
+}
+
+.kn .content{
+    margin-top: 20px;
+}
+
+.kn .content .info{
+    margin-top: 10px;
+}
+
+.kn h2{
+    color: #003471;
+    font-weight:bold;
+    font-size: 16pt;
+}
+
+.kn ul.list-info{
+    list-style-type: none;
+    padding-left: 25px;
+}
+
+.kn ul.contact{
+    list-style-type: decimal;
+}
+
+.kn ul li label{
+    font-weight:normal;
+}
+
+.kn ul li .number_id{
+    margin-right: 20px;
+}
+
+.kn .footer{
+    margin-bottom:20px;
+}
+
+.kn textarea{
+    padding:3px 5px;
+}
+.kn .add-service i,
+.kn .add-service span{
+    color: #ffffff;
+}
+
+.kn .btn-success {
+
+}
+
+.kn .btn-submit{
+    color: #ffffff;
+    background-color: #003471;
+    border-color: #003471;
+}

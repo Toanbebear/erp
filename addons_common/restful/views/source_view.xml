@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="utm_source_add_id_caresoft" model="ir.ui.view">
+            <field name="model">utm.source</field>
+            <field name="inherit_id" ref="crm_base.view_form_utm_source_crm"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='extend_source']" position="after">
+                    <field name="id_kn" groups="base.group_no_one"/>
+                    <field name="id_da" groups="base.group_no_one"/>
+                    <field name="id_hh" groups="base.group_no_one"/>
+                    <field name="id_pr" groups="base.group_no_one"/>
+                    <field name="id_hv" groups="base.group_no_one"/>
+                    <field name="id_rh" groups="base.group_no_one"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_apply_discount">
+            <field name="name">Apply discount</field>
+            <field name="model">crm.apply.voucher</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group class="mw200">
+                            <field name="crm_id" invisible="True"/>
+                            <field name="brand_id" invisible="True"/>
+                            <field name="is_code_voucher"/>
+                            <field name="name"
+                                   attrs="{'invisible': [('is_code_voucher', '=', False)],'required': [('is_code_voucher', '=', True)]}"/>
+                            <field name="voucher_program_id"
+                                   attrs="{'required': [('is_code_voucher', '=', False)],'readonly': [('is_code_voucher', '=', True)]}" options="{'no_open':True,'no_create':True}" force_save="1"/>
+                            <field name="partner_id" invisible="True"/>
+                            <field name="voucher_prg_type" invisible="True"/>
+                            <field name="apply_for" invisible="True"/>
+                            <field name="line_ids" widget="many2many_tags" options="{'no_open':True,'no_create':True}" attrs="{'invisible':[('apply_for','!=','service')]}"/>
+                            <field name="line_product_ids" widget="many2many_tags" options="{'no_open':True,'no_create':True}" attrs="{'invisible':[('apply_for','!=','product')]}"/>
+                        </group>
+                        <footer class="text-center">
+                            <button name="check_code_voucher" type="object" string="Áp dụng voucher" class="btn-info"
+                                    attrs="{'invisible': [('is_code_voucher', '=', False)],'required': [('is_code_voucher', '=', True)]}"/>
+                            <button name="apply_voucher_program" type="object" string="Check voucher" class="btn-info"
+                                    attrs="{'invisible': [('is_code_voucher', '=', True)],'required': [('is_code_voucher', '=', False)]}"/>
+                            <button string="Cancel" class="btn-danger" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_apply_voucher_finish" model="ir.ui.view">
+            <field name="name">Apply success</field>
+            <field name="model">crm.apply.voucher</field>
+            <field name="arch" type="xml">
+                <form>
+                    <separator
+                            string="Voucher đã áp dụng thành công!!"/>
+                    <footer class="text-center">
+                        <button string="Ok" class="oe_highlight" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_apply_success_wizard" model="ir.actions.act_window">
+            <field name="name">Apply success</field>
+            <field name="res_model">crm.apply.voucher</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_apply_voucher_finish"/>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

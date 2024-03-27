@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="quick_add_stock_scrap_form">
+            <field name="name">quick.add.stock.scrap.form</field>
+            <field name="model">quick.add.stock.scrap</field>
+            <field name="arch" type="xml">
+                <form string="Thêm nhanh Xuất sử dụng phòng/Tiêu hủy">
+                    <group>
+                        <field name="type" invisible="1" required="1" groups="shealth_all_in_one.group_sh_medical_stock_manager"/>
+                        <field name="date_done" required="1"/>
+<!--                        <field name="room" options="{'no_create':True,'no_open':True}" force_save="1" attrs="{'required': [('type','=','room_use')],'readonly': [('type','=','scrap')]}"/>-->
+                        <field name="room" options="{'no_create':True,'no_open':True}" force_save="1" required="1"/>
+                        <field name="scrap_location" invisible="1"/>
+                        <field name="note" invisible="1"/>
+                        <field name="room_type" invisible="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Chi tiết">
+                            <field name="scrap_product_line" nolabel="1" widget="one2many" context="{'view_only_name':True, 'default_sci_date_done': date_done,'default_note': note,'default_room_use': room,'default_scrap_location_id': scrap_location,'type_stock_scrap': type}">
+                                <tree editable="bottom" decoration-warning="is_warning_location == True and state == 'draft'">
+                                    <field name="name" invisible="1"/>
+                                    <field name="is_warning_location" invisible="1"/>
+                                    <field name="company_id" invisible="1"/>
+                                    <field name="product_uom_category_id" invisible="1"/>
+                                    <field name="date_done" invisible="1"/>
+                                    <field name="sci_date_done" readonly="1" force_save="1" optional="hide"/>
+                                    <field name="product_id" options="{'no_create':True,'no_open':True}" width="300"/>
+                                    <field name="scrap_qty" width="50"/>
+                                    <field name="product_uom_id" readonly="1" force_save="1" width="50"/>
+                                    <field name="location_id" readonly="1" force_save="1" optional="hide" context="{'view_only_name':True}"/>
+                                    <field name="room_use" readonly="1" force_save="1" optional="hide"/>
+                                    <field name="note" readonly="1" force_save="1" optional="hide"/>
+                                    <field name="qty_in_loc" readonly="1" force_save="1" width="100"/>
+                                    <field name="lot_id" invisible="1" options="{'no_create':True,'no_open':True}" string="Lô hàng" attrs="{'invisible': ['|',('product_id', '=', False),('tracking', '=', 'none')], 'required': [('tracking', '!=', 'none')]}" groups="stock.group_production_lot"/>
+                                    <field name="tracking" invisible="1"/>
+                                    <field name="scrap_location_id" readonly="1" force_save="1" optional="hide" context="{'view_only_name':True}"/>
+                                    <field name="state" readonly="1" force_save="1" optional="hide"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                    <footer>
+                        <button name="quick_add" type="object" string="Lưu" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="quick_add_room_use_act">
+            <field name="name">Thêm nhanh Xuất sử dụng phòng</field>
+            <field name="res_model">quick.add.stock.scrap</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="quick_add_stock_scrap_form"/>
+            <field name="context">{'view_for':'picking_scrap_room_use','type_stock_scrap': 'room_use','default_type': 'room_use'}</field>
+            <field name="target">new</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="quick_add_stock_scrap_act">
+            <field name="name">Thêm nhanh Tiêu hủy</field>
+            <field name="res_model">quick.add.stock.scrap</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="quick_add_stock_scrap_form"/>
+            <field name="context">{'view_for':'picking_scrap','type_stock_scrap': 'scrap','default_type': 'scrap'}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="quick_add_room_use_menu"
+                    name="Thêm nhanh Xuất SDP"
+                    parent="shealth_all_in_one.sci_menu_stock_operations"
+                    action="quick_add_room_use_act"
+                    sequence="4"/>
+        <menuitem id="quick_add_stock_scrap_menu"
+                    name="Thêm nhanh Tiêu hủy"
+                    parent="shealth_all_in_one.sci_menu_stock_operations"
+                    action="quick_add_stock_scrap_act"
+                    groups="base.group_user"
+                    sequence="4"/>
+        <record id="quick_add_room_use_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-plus</field>
+        </record>
+        <record id="quick_add_stock_scrap_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-plus</field>
+        </record>
+    </data>
+</odoo>

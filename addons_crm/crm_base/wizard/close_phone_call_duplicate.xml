@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_close_phone_call_duplicate">
+            <field name="name">Đóng trùng phone call</field>
+            <field name="model">close.phone.call.duplicate</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="reason" required="True"/>
+                            <field name="phone_call_ids" invisible="1" />
+                        </group>
+                        <footer class="text-center">
+                            <button name="popup_close_phone_call_duplicate" type="object" string="Xác nhận"
+                                    class="btn-primary"/>
+                            <button string="Hủy" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_close_phone_call_duplicate_wizard" model="ir.actions.act_window">
+            <field name="name">Đóng trùng phone call</field>
+            <field name="res_model">close.phone.call.duplicate</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_close_phone_call_duplicate"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

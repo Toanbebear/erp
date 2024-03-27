@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+
+    <record id="view_account_asset_form_account_asset_custom" model="ir.ui.view">
+        <field name="name">view.account.asset.form.account_asset_custom</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='validate']" position="after">
+                <button name="action_transfer" type="object" string="Điều chuyển CTY Khác"
+                    attrs="{'invisible': [('state', 'in', ['model', 'draft', 'close'])]}" />
+            </xpath>
+
+            <xpath expr="//field[@name='company_id']" position="after">
+                <field name="asset_model_id" options="{'no_create': True, 'no_create_edit': True, 'no_open': True}"/>
+            </xpath>
+
+            <xpath expr="//sheet/group[1]" position="before">
+                <label for="x_code" name="x_code" class="oe_edit_only"
+                    attrs="{'invisible': [('state', '=', 'model')]}" />
+                <field name="x_code" attrs="{'invisible': [('state', '=', 'model')]}" />
+            </xpath>
+            <xpath expr="//sheet/group[1]" position="inside">
+                <group name="other_info" string="Thông tin khác" attrs="{'invisible': [('state', '=', 'model')]}">
+                    <label for="x_qty" string="To" />
+                    <div>
+                        <field name="x_qty" class="oe_inline" />
+                        <field name="x_uom_id" options="{'no_create': True, 'no_open': True}" />
+                    </div>
+                    <field name="x_employee_id" />
+                    <field name="x_specification" />
+                    <field name="x_info_invoice" />
+                    <field name="x_date_invoice" />
+                    <field name="company_name" readonly="True" />
+                </group>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="view_account_asset_tree_account_asset_custom" model="ir.ui.view">
+        <field name="name">view.account.asset.tree.account_asset_custom</field>
+        <field name="model">account.asset</field>
+        <field name="inherit_id" ref="account_asset.view_account_asset_purchase_tree" />
+        <field name="arch" type="xml">
+            
+
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="x_code" />
+                <field name="account_analytic_id" />
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="account_asset_action_server_confirm" model="ir.actions.server">
+        <field name="name">Xác nhận</field>
+        <field name="model_id" ref="account_asset_custom.model_account_asset"/>
+        <field name="binding_model_id" ref="account_asset_custom.model_account_asset"/>
+        <field name="state">code</field>
+        <field name="code">
+            if records:
+                action = records.action_validate_asset()
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!--SEQUENCE SINH MÃ THUỐC/VẬT TƯ-->
+        <record id="seq_sh_medical_medicines" model="ir.sequence">
+            <field name="name">Mã Thuốc</field>
+            <field name="code">HIS.TH</field>
+            <field name="prefix">TH</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_sh_medical_supplies" model="ir.sequence">
+            <field name="name">Mã Vật tư</field>
+            <field name="code">HIS.VT</field>
+            <field name="prefix">VT</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_sh_medical_chemistry" model="ir.sequence">
+            <field name="name">Mã Hóa chất</field>
+            <field name="code">HIS.HC</field>
+            <field name="prefix">HC</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_sh_medical_cosmetics" model="ir.sequence">
+            <field name="name">Mã Mỹ phẩm</field>
+            <field name="code">HIS.MP</field>
+            <field name="prefix">MP</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_sh_medical_goods" model="ir.sequence">
+            <field name="name">Mã Hàng hóa</field>
+            <field name="code">HIS.HH</field>
+            <field name="prefix">HH</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_sh_medical_cost" model="ir.sequence">
+            <field name="name">Mã Chi phí</field>
+            <field name="code">HIS.CP</field>
+            <field name="prefix">CP</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_sh_medical_biology" model="ir.sequence">
+            <field name="name">Mã Sinh phẩm</field>
+            <field name="code">HIS.SP</field>
+            <field name="prefix">SP</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="seq_sh_medical_functional_foods" model="ir.sequence">
+            <field name="name">Mã Thực phẩm chức năng</field>
+            <field name="code">HIS.TP</field>
+            <field name="prefix">TP</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,8 @@
+<odoo>
+    <record id="group_permit_export_button" model="res.groups">
+            <field name="name">Export Button Permission</field>
+            <field name="category_id" ref="base.module_category_hidden"/>
+            <field name="implied_ids" eval="[(4, ref('base.user_root'))]"/>
+    </record>
+
+</odoo>

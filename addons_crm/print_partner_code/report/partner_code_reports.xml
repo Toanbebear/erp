@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+     <record id="partner_code_paper_format_165x155" model="report.paperformat">
+        <field name="name">165mm X 155mm</field>
+        <field name="default" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">165</field>
+        <field name="page_width">155</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">4</field>
+        <field name="margin_bottom">4</field>
+        <field name="margin_left">3</field>
+        <field name="margin_right">3</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report
+        id="report_partner_code_165x155"
+        string="Tem mã khách hàng 165x155mm"
+        model="print.partner.code"
+        report_type="qweb-pdf"
+        paperformat="partner_code_paper_format_165x155"
+        name="print_partner_code.report_product_label_165x155_template"
+        file="print_partner_code.report_product_label_165x155_template"
+    />
+</odoo>

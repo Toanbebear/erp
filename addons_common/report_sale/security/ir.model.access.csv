@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+id_report_phone_call_source,name_report_phone_call_source,model_report_phone_call_source,,1,1,1,1
+id_report_phone_call_source_spa,name_report_phone_call_source_spa,model_report_phone_call_source_spa,,1,1,1,1
+id_report_phone_call_source_laser,name_report_phone_call_source_laser,model_report_phone_call_source_laser,,1,1,1,1
+id_report_phone_call_source_surgery,name_report_phone_call_source_surgery,model_report_phone_call_source_surgery,,1,1,1,1
+id_report_phone_call_source_odontology,name_report_phone_call_source_odontology,model_report_phone_call_source_odontology,,1,1,1,1
+

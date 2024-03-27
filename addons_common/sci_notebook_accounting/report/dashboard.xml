@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="view_synthesis_sales_by_source_pivot">
+            <field name="name">Báo cáo tổng hợp doanh số</field>
+            <field name="model">sales.by.source</field>
+            <field name="arch" type="xml">
+                <pivot string="Báo cáo tổng hợp doanh số">
+                    <field name="company_id" type="row"/>
+                    <field name="date" type="col"/>
+                    <field name="amount_subtotal_source" type="measure"/>
+                    <field name="amount_subtotal_service" type="measure"/>
+                    <field name="amount_subtotal_revenue" type="measure"/>
+                    <field name="amount_subtotal_cost" type="measure"/>
+                </pivot>
+            </field>
+        </record>
+
+        <record id="synthesis_sales_by_source_report_graph" model="ir.ui.view">
+            <field name="name">sales.by.source.report.graph</field>
+            <field name="model">sales.by.source</field>
+            <field name="arch" type="xml">
+                <graph string="Biểu đồ doanh số" type="line">
+                    <field name="date" type="row" interval="day"/>
+                    <field name="brand_id" type="row"/>
+                    <field name="amount_subtotal_source" type="measure"/>
+                    <field name="amount_subtotal_service" type="measure"/>
+                    <field name="amount_subtotal_revenue" type="measure"/>
+                    <field name="amount_subtotal_cost" type="measure"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="synthesis_sales_by_source_dashboard_view" model="ir.ui.view">
+            <field name="name">sales.by.source.dashboard.view</field>
+            <field name="model">sales.by.source</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <dashboard>
+                    <group>
+                        <group>
+                            <view type="graph" ref="sci_notebook_accounting.synthesis_sales_by_source_report_graph"/>
+                        </group>
+                        <group col="4">
+                            <widget name="pie_chart" title="Biểu đồ doanh số theo thương hiệu" attrs="{'groupby': 'brand_id'}"/>
+                        </group>
+                    </group>
+                    <view type="pivot" ref="sci_notebook_accounting.view_synthesis_sales_by_source_pivot"/>
+                </dashboard>
+            </field>
+        </record>
+
+        <record id="synthesis_sales_by_source_dashboard_act_window" model="ir.actions.act_window">
+            <field name="name">Báo cáo tổng hợp doanh số</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sales.by.source</field>
+            <field name="view_mode">dashboard</field>
+            <field name="view_id" ref="synthesis_sales_by_source_dashboard_view"/>
+            <field name="domain">[('state', '=', 'posted'), ('company_id', '!=', None)]</field>
+        </record>
+    </data>
+</odoo>

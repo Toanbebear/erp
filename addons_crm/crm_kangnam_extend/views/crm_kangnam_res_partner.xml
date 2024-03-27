@@ -1,0 +1,1447 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_kangnam_res_partner_view_tree" model="ir.ui.view">
+            <field name="name">crm_kangnam.res.partner.view.tree</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <tree create="0" export_xlsx="0" delete="false">
+                    <field name="display_name"/>
+                    <field name="phone" widget="phone"/>
+                    <field name="code_customer"/>
+                    <field name="city"/>
+                    <field name="state_id"/>
+                    <field name="country_id"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="write_uid" optional="hide"/>
+                    <field name="write_date" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+        <record id="crm_kangnam_res_partner_view_form" model="ir.ui.view">
+            <field name="name">crm.kangnam.res.partner.view.form</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <form string="Đối tác " create="0" delete="false">
+                    <header>
+                        <button name="create_collaborator" string="Cộng tác viên" type="object"
+                                class="btn-success fa fa-plus"/>
+                        <!--                        <button name="view_crm_advise_potential" string="Dịch vụ tiềm năng" type="object"-->
+                        <!--                                class="btn-info fa fa-list"/>-->
+                        <!--                        <button name="open_form_get_history_phone_call" string="Lịch sử Phone Call" type="object"-->
+                        <!--                                class="btn-info fa fa-list"/>-->
+                        <button name="view_customer_persona" class="btn-info fa fa-user"
+                                string="Xem chân dung khách hàng" type="object"/>
+                        <button name="open_image_customer" class="btn-info fa fa-image"
+                                string="Xem hình ảnh khách hàng" type="object"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" text="Archived" bg_color="bg-danger"
+                                attrs="{'invisible': [('active', '=', True)]}"/>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="oe_title" style="background-color:#e6f2ff;">
+                                    <field name="is_company" invisible="1"/>
+                                    <field name="commercial_partner_id" invisible="1"/>
+                                    <field name="active" invisible="1"/>
+                                    <field name="company_type" widget="radio" class="oe_edit_only"
+                                           options="{'horizontal': true}" invisible="1"/>
+                                    <div class="row">
+                                        <div class="col-1">
+                                            <img src="crm_kangnam_extend/static/img/avatar.png"
+                                                 class="oe_avatar oe_read_only" width="100%"
+                                                 height="auto"
+                                                 alt="Avatar"
+                                                 attrs="{'invisible': [('image_1920', '!=', False)]}"/>
+                                            <field name="image_1920" widget="image" class="oe_avatar" width="100%" height="auto"
+                                                   attrs="{'invisible': [('image_1920', '=', False)]}"/>
+                                            <field name="image_1920" widget="image" class="oe_avatar oe_edit_only" width="100%" height="auto"
+                                                   attrs="{'invisible': [('image_1920', '!=', False)]}"/>
+                                        </div>
+                                        <div class="col-3 mt-3">
+                                            <h5>
+                                                <field name="name" options="{'no_open':False,'no_create':True}"
+                                                       readonly="True"
+                                                       force_save="True"/>
+                                                <button name="button_show_qr" type="object" class="fa fa-qrcode"
+                                                        optional="show"
+                                                        title="Hiển thị QR Booking"
+                                                        style="font-size:20px; margin-top:-1.2rem;"/>
+                                                <br/>
+                                                <field name="code_customer" options="{'no_open':False,'no_create':True}"
+                                                       readonly="True"
+                                                       force_save="True"/>
+                                                <br/>
+                                                <field name="phone" widget="phone"
+                                                       attrs="{'readonly': [('id', '!=', False)]}"/>
+                                            </h5>
+                                        </div>
+                                        <div class="col-2 mt-3">
+                                            <label for="birth_date" string="NGÀY SINH:"/>
+                                            <h5>
+                                                <field name="birth_date"/>
+                                                <field name="year_of_birth" invisible="1"/>
+                                            </h5>
+                                            <label for="age" string="TUỔI:"/>
+                                            <h5>
+                                                <field name="age" readonly="1"/>
+                                            </h5>
+                                        </div>
+                                        <div class="col-2 mt-3">
+                                            <label for="gender" string="GIỚI TÍNH:"/>
+                                            <h5>
+                                                <field name="gender"/>
+                                            </h5>
+                                            <label for="career" string="NGHỀ NGHIỆP"/>
+                                            <h5>
+                                                <field name="career"/>
+                                            </h5>
+                                        </div>
+                                        <div class="col-4 mt-3">
+                                            <label for="address" string="ĐỊA CHỈ:"/>
+                                            <h5>
+                                                <div class="row ml-1">
+                                                    <field name="street" placeholder="Số nhà, tên đường" style="max-width:90% !important;"/>
+                                                    <label for="street" string=", "
+                                                           attrs="{'invisible': [('street', '=', False)]}" class="oe_read_only"/>
+                                                    <field name="district_id" placeholder="Quận/Huyện"/>
+                                                    <label for="district_id" string=", "
+                                                           attrs="{'invisible': [('district_id', '=', False)]}" class="oe_read_only"/>
+                                                    <field name="state_id" placeholder="Tỉnh/Thành"/>
+                                                    <label for="state_id" string=", "
+                                                           attrs="{'invisible': [('state_id', '=', False)]}" class="oe_read_only"/>
+                                                    <field name="country_id" placeholder="Quốc gia"/>
+                                                </div>
+                                            </h5>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 o_group_col_12 text-info show_normal_exam"
+                                         style="cursor: pointer;"
+                                         title="XEM THÊM THÔNG TIN KHÁCH HÀNG"
+                                         onclick="(function(){$('.show_normal_exam i').toggle();$('.normal_exam').slideToggle();})()">
+                                        <i class="fa fa-minus p-2" style="display:none;"></i>
+                                        <i class="fa fa-plus p-2"></i>
+                                        <b>XEM THÊM THÔNG TIN KHÁCH HÀNG</b>
+                                    </div>
+                                    <group class="normal_exam col-12 o_group_col_12" style="display:none;">
+                                        <group>
+                                            <field name="aliases" icon="fa fa-user"/>
+                                            <field name="mobile" widget="phone" string="Điện thoại 2"
+                                                   icon="fa fa-mobile"/>
+                                            <field name="phone_no_3" widget="phone" icon="fa fa-mobile"/>
+                                            <field name="email" icon="fa fa-envelope" string="Email"/>
+                                            <field name="pass_port" string="CMTND/CCCD" icon="fa fa-id-card"/>
+                                            <field name="pass_port_date" string="Ngày cấp" icon="fa fa-calendar"/>
+                                            <field name="pass_port_issue_by" string="Nơi cấp" icon="fa fa-map"/>
+                                        </group>
+                                    </group>
+                                </div>
+                                <notebook>
+                                    <page name="customer_persona_page" string="ĐIỂM ĐAU/MONG MUỐN">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <label for="desires" string="Mong muốn"
+                                                       style="color: #2ecc71;font-size: 25px;"
+                                                       class="fa fa-smile-o"/>
+                                                <br/>
+                                                <field name="desires"
+                                                       context="{'default_partner_id':id, 'default_type':'desires'}"
+                                                       mode="kanban">
+                                                    <kanban string="Mong muốn" default_order="create_on desc" limit="3">
+                                                        <field name="name"/>
+                                                        <field name="create_on"/>
+                                                        <field name="create_by"/>
+                                                        <field name="create_by_department"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click"
+                                                                     style="border-radius:10px;background-color:#e6f2ff;">
+                                                                    <div class="oe_kanban_details">
+                                                                        <div>
+                                                                            <span>Mô tả</span>
+                                                                            <br/>
+                                                                            <div style="border:1px;background-color: #ffffcc;">
+                                                                                <b t-if="record.name"
+                                                                                   t-esc="record.name.value"
+                                                                                   size="14px"/>
+                                                                            </div>
+                                                                            <br/>
+                                                                            <span>Thời điểm tạo</span>
+                                                                            <b t-if="record.create_on"
+                                                                               t-esc="record.create_on.value"
+                                                                               size="14px"/>
+                                                                            <br/>
+                                                                            <span>Người tạo</span>
+                                                                            <b t-if="record.create_by"
+                                                                               t-esc="record.create_by.value"
+                                                                               size="14px"/>
+                                                                            <br/>
+                                                                            <span>Phòng ban người tạo</span>
+                                                                            <b t-if="record.create_by_department"
+                                                                               t-esc="record.create_by_department.value"
+                                                                               size="14px"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                    <form>
+                                                        <sheet>
+                                                            <group>
+                                                                <field name="name" required="1"/>
+                                                                <field name="partner_id" invisible="1"/>
+                                                                <field name="type" invisible="1"/>
+                                                                <field name="create_on" attrs="{'invisible' :[('id', '!=', False)]}"/>
+                                                                <field name="create_by" attrs="{'invisible' :[('id', '!=', False)]}"/>
+                                                                <field name="create_by_department" attrs="{'invisible' :[('id', '!=', False)]}"/>
+                                                            </group>
+                                                        </sheet>
+                                                    </form>
+                                                </field>
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="pain_point" string="Điểm đau"
+                                                       style="color: #d35400;font-size: 25px;"
+                                                       class="fa fa-frown-o" limit="3"/>
+                                                <field name="pain_point"
+                                                       context="{'default_partner_id':id, 'default_type':'pain_point'}"
+                                                       mode="kanban">
+                                                    <kanban string="Điểm đau" default_order="create_on desc" limit="3">
+                                                        <field name="name"/>
+                                                        <field name="solution"/>
+                                                        <field name="create_on"/>
+                                                        <field name="create_by"/>
+                                                        <field name="create_by_department"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click"
+                                                                     style="border-radius:10px;background-color:#e6f2ff;">
+                                                                    <div class="oe_kanban_details">
+                                                                        <div>
+                                                                            <span>Mô tả</span>
+                                                                            <br/>
+                                                                            <div style="border:1px;background-color: #ffffcc;">
+                                                                                <b t-if="record.name"
+                                                                                   t-esc="record.name.value"
+                                                                                   size="14px"/>
+                                                                            </div>
+                                                                            <br/>
+                                                                            <span>Hướng xử lý</span>
+                                                                            <br/>
+                                                                            <div style="border:1px;background-color: #ffffcc;">
+                                                                                <b t-if="record.solution"
+                                                                                   t-esc="record.solution.value"
+                                                                                   size="14px"/>
+                                                                            </div>
+                                                                            <br/>
+                                                                            <span>Thời điểm tạo</span>
+                                                                            <b t-if="record.create_on"
+                                                                               t-esc="record.create_on.value"
+                                                                               size="14px"/>
+                                                                            <br/>
+                                                                            <span>Người tạo</span>
+                                                                            <b t-if="record.create_by"
+                                                                               t-esc="record.create_by.value"
+                                                                               size="14px"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                    <form>
+                                                        <sheet>
+                                                            <group>
+                                                                <field name="name" required="1"/>
+                                                                <field name="partner_id" invisible="1"/>
+                                                                <field name="type" invisible="1"/>
+                                                                <field name="solution" required="1"/>
+                                                                <field name="create_on" attrs="{'invisible' :[('id', '!=', False)]}"/>
+                                                                <field name="create_by" attrs="{'invisible' :[('id', '!=', False)]}"/>
+                                                                <field name="create_by_department" attrs="{'invisible' :[('id', '!=', False)]}"/>
+                                                            </group>
+                                                        </sheet>
+                                                    </form>
+                                                </field>
+                                            </div>
+                                            <div class="col-4">
+                                                <label for="persona" string="Thông tin khác"
+                                                       style="color: #2ecc71;font-size: 25px;"/>
+                                                <br/>
+                                                <field name="persona"
+                                                       context="{'default_partner_id':id}">
+                                                    <kanban string="Thông tin khác" default_order="create_on desc"
+                                                            limit="3"
+                                                            mode="kanban">
+                                                        <field name="type_2"/>
+                                                        <field name="description"/>
+                                                        <field name="create_on"/>
+                                                        <field name="create_uid"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click"
+                                                                     style="border-radius:10px;background-color:#e6f2ff;">
+                                                                    <div class="oe_kanban_details">
+                                                                        <div>
+                                                                            <span>Loại</span>
+                                                                            <b t-if="record.type_2"
+                                                                               t-esc="record.type_2.value"
+                                                                               size="14px"/>
+                                                                            <br/>
+                                                                            <span>Mô tả</span>
+                                                                            <br/>
+                                                                            <div style="border:1px;background-color: #ffffcc;">
+                                                                                <b t-if="record.description"
+                                                                                   t-esc="record.description.value"
+                                                                                   size="14px"/>
+                                                                            </div>
+                                                                            <br/>
+                                                                            <span>Thời điểm tạo</span>
+                                                                            <b t-if="record.create_on"
+                                                                               t-esc="record.create_on.value"
+                                                                               size="14px"/>
+                                                                            <br/>
+                                                                            <span>Người tạo</span>
+                                                                            <b t-if="record.create_uid"
+                                                                               t-esc="record.create_uid.value"
+                                                                               size="14px"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                    <form>
+                                                        <sheet>
+                                                            <group>
+                                                                <field name="type_2" required="1"/>
+                                                                <field name="description" required="1"/>
+                                                                <field name="create_on" attrs="{'invisible' :[('id', '!=', False)]}"/>
+                                                                <field name="create_uid" attrs="{'invisible' :[('id', '!=', False)]}"/>
+                                                            </group>
+                                                        </sheet>
+                                                    </form>
+                                                </field>
+                                            </div>
+                                        </div>
+                                    </page>
+                                    <page string="CRM">
+                                        <notebook>
+                                            <page string="BOOKING" icon="fa fa-calendar">
+                                                <h2>
+                                                    <div style="text-align: center;color:#ff0000"
+                                                         attrs="{'invisible' :[('booking_ids', '!=', [])]}">
+                                                        KHÔNG CÓ DỮ LIỆU
+                                                    </div>
+                                                </h2>
+                                                <field name="booking_ids" mode="kanban">
+                                                    <kanban string="BOOKING"
+                                                            options="{'no_create': True, 'no_edit': True}"
+                                                            default_order="booking_date desc" limit="5">
+                                                        <field name="name"/>
+                                                        <field name="stage_id"/>
+                                                        <field name="company_id"/>
+                                                        <field name="booking_date"/>
+                                                        <field name="arrival_date"/>
+                                                        <field name="create_uid"/>
+                                                        <field name="crm_line_ids"/>
+                                                        <field name="note"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click"
+                                                                     style="width:1000px !important;border-radius:10px;background-color:#e6f2ff;">
+                                                                    <div class="oe_kanban_details">
+                                                                        <div class="row">
+                                                                            <div class="col-2" style="max-width:10%;">
+                                                                                <span>Mã Booking</span>
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <b t-if="record.name"
+                                                                                   t-esc="record.name.value"
+                                                                                   size="12px"/>
+                                                                            </div>
+                                                                            <div class="col-2" style="max-width:12%;">
+                                                                                <span>Trạng thái</span>
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <b t-if="record.stage_id"
+                                                                                   t-esc="record.stage_id.value"
+                                                                                   size="12px"/>
+                                                                            </div>
+                                                                            <div class="col-2" style="max-width:10%;">
+                                                                                <span>Chi nhánh</span>
+                                                                            </div>
+                                                                            <div class="col-4" style="max-width:30%;">
+                                                                                <b t-if="record.company_id"
+                                                                                   t-esc="record.company_id.value"
+                                                                                   size="12px"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-2" style="max-width:10%;">
+                                                                                <span>Hẹn lịch</span>
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <b t-if="record.booking_date"
+                                                                                   t-esc="record.booking_date.value"
+                                                                                   size="12px"
+                                                                                />
+                                                                            </div>
+                                                                            <div class="col-2" style="max-width:12%;">
+                                                                                <span>Ngày đến cửa</span>
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <b t-if="record.arrival_date"
+                                                                                   t-esc="record.arrival_date.value"
+                                                                                   size="12px"/>
+                                                                            </div>
+                                                                            <div class="col-2" style="max-width:10%;">
+                                                                                <span>Người tạo</span>
+                                                                            </div>
+                                                                            <div class="col-4" style="max-width:30%;">
+                                                                                <b t-if="record.create_uid"
+                                                                                   t-esc="record.create_uid.value"
+                                                                                   size="12px"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div>
+                                                                            <span>Dịch vụ thực hiện</span>
+                                                                            <br/>
+                                                                            <div class="d-flex flex-wrap"
+                                                                                 style="font-size:11px;">
+                                                                                <t t-foreach="record.crm_line_ids.raw_value"
+                                                                                   t-as="o">
+                                                                                    <span style="border:1px; border-radius:10px;background-color:#d9d9d9"
+                                                                                          class="p-2 mr-1">
+                                                                                        <t t-if="o.service_id"
+                                                                                           t-esc="o.service_id[1]">
+                                                                                        </t>
+                                                                                        -
+                                                                                        <t t-if="o.stage == 'chotuvan'">
+                                                                                            <span style="color:#ffff00">
+                                                                                                Chờ tư vấn
+                                                                                            </span>
+                                                                                        </t>
+                                                                                        <t t-elif="o.stage == 'new'">
+                                                                                            <span style="color:#00bfff">
+                                                                                                Được sử dụng
+                                                                                            </span>
+                                                                                        </t>
+                                                                                        <t t-elif="o.stage == 'processing'">
+                                                                                            <span style="color:#cc9900">
+                                                                                                Đang xử trí
+                                                                                            </span>
+                                                                                        </t>
+                                                                                        <t t-elif="o.stage == 'done'">
+                                                                                            <span style="color:#00cc33">
+                                                                                                Kết thúc
+                                                                                            </span>
+                                                                                        </t>
+                                                                                        <t t-elif="o.stage == 'waiting'">
+                                                                                            <span style="color:#ffbf00">
+                                                                                                Chờ phê duyệt
+                                                                                            </span>
+                                                                                        </t>
+                                                                                        <t t-elif="o.stage == 'cancel'">
+                                                                                            <span style="color:#ff0000">
+                                                                                                Hủy
+                                                                                            </span>
+                                                                                        </t>
+                                                                                        <t t-else="">
+                                                                                        </t>
+                                                                                    </span>
+                                                                                </t>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div style="text-align: right">
+                                                                            <button name="open_booking_new"
+                                                                                    string="Xem chi tiết BK"
+                                                                                    type="object"
+                                                                                    class="btn-warning fa fa-external-link"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                </field>
+                                            </page>
+                                            <page string="SẢN PHẨM BÁN" icon="fa fa-list">
+                                                <h2>
+                                                    <div style="text-align: center;color:#ff0000"
+                                                         attrs="{'invisible' :[('sale_order_ids', '!=', [])]}">
+                                                        KHÔNG CÓ DỮ LIỆU
+                                                    </div>
+                                                </h2>
+                                                <field name="sale_order_ids" mode="kanban">
+                                                    <kanban string="SẢN PHẨM BÁN"
+                                                            options="{'no_create': True, 'no_edit': True}"
+                                                            default_order="date_order desc" limit="5">
+                                                        <field name="name"/>
+                                                        <field name="date_order"/>
+                                                        <field name="order_line"/>
+                                                        <field name="sh_room_id"/>
+                                                        <field name="state"/>
+                                                        <field name="pricelist_type"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click"
+                                                                     style="width:1000px !important;border-radius:10px;background-color:#e6f2ff;">
+                                                                    <div class="oe_kanban_details">
+                                                                        <div class="row">
+                                                                            <div class="col-2" style="max-width:12%;">
+                                                                                <span>Mã SO</span>
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <strong t-if="record.name"
+                                                                                        t-esc="record.name.value"/>
+                                                                            </div>
+                                                                            <div class="col-2" style="max-width:14%;">
+                                                                                <span>Ngày đặt hàng</span>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <strong t-if="record.date_order"
+                                                                                        t-esc="record.date_order.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-2" style="max-width:12%;">
+                                                                                <span>Trạng thái</span>
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <strong t-if="record.state"
+                                                                                        t-esc="record.state.value"/>
+                                                                            </div>
+                                                                            <div class="col-2" style="max-width:14%;">
+                                                                                <span>Phòng xuất hàng</span>
+                                                                            </div>
+                                                                            <div class="col-4">
+                                                                                <strong t-if="record.sh_room_id"
+                                                                                        t-esc="record.sh_room_id.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <table>
+                                                                            <div class="row">
+                                                                                <div class="col-6"
+                                                                                     style="max-width: 42.5%;">
+                                                                                    <b>Sản phẩm</b>
+                                                                                </div>
+                                                                                <div class="col-1">
+                                                                                    <b>Số lượng</b>
+                                                                                </div>
+                                                                                <div class="col-1">
+                                                                                    <b>Đơn vị</b>
+                                                                                </div>
+                                                                                <div class="col-2"
+                                                                                     style="max-width:12%">
+                                                                                    <b>Đơn giá</b>
+                                                                                </div>
+                                                                                <div class="col-2">
+                                                                                    <b>Thành tiền</b>
+                                                                                </div>
+                                                                            </div>
+                                                                            <t t-foreach="record.order_line.raw_value"
+                                                                               t-as="o">
+                                                                                <div class="row">
+                                                                                    <div class="col-6"
+                                                                                         style="max-width: 42.5%;">
+                                                                                        <t t-if="o.product_id"
+                                                                                           t-esc="o.product_id[1]">
+
+                                                                                        </t>
+                                                                                    </div>
+                                                                                    <div class="col-1 text-center">
+                                                                                        <t t-esc="o.product_uom_qty">
+                                                                                        </t>
+                                                                                    </div>
+                                                                                    <div class="col-1">
+                                                                                        <t t-if="o.product_uom"
+                                                                                           t-esc="o.product_uom[1]">
+                                                                                        </t>
+                                                                                    </div>
+                                                                                    <div class="col-2"
+                                                                                         style="max-width:12%">
+                                                                                        <t t-esc="o.price_unit">
+                                                                                        </t>
+                                                                                    </div>
+                                                                                    <div class="col-2">
+                                                                                        <t t-esc="o.price_subtotal">
+                                                                                        </t>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </t>
+                                                                        </table>
+                                                                        <div style="text-align: right">
+                                                                            <button name="open_sale_order_view"
+                                                                                    string="Xem chi tiết đơn hàng"
+                                                                                    type="object"
+                                                                                    class="btn-warning fa fa-external-link"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                </field>
+                                            </page>
+                                            <page string="DỊCH VỤ TIỀM NĂNG" icon="fa fa-line-chart">
+                                                <h2>
+                                                    <div style="text-align: center;color:#ff0000"
+                                                         attrs="{'invisible' :[('advice_ids', '!=', [])]}">
+                                                        KHÔNG CÓ DỮ LIỆU
+                                                    </div>
+                                                </h2>
+                                                <field name="advice_ids" mode="kanban">
+                                                    <kanban string="DỊCH VỤ TIỀM NĂNG"
+                                                            options="{'no_create': True, 'no_edit': True}"
+                                                            default_order="create_date desc" limit="5">
+                                                        <field name="service"/>
+                                                        <field name="create_date"/>
+                                                        <field name="desire_ids"/>
+                                                        <field name="pain_point_ids"/>
+                                                        <field name="state_ids"/>
+                                                        <field name="information"/>
+                                                        <field name="stage_potential"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click"
+                                                                     style="width:500px !important;border-radius:10px;background-color:#e6f2ff;">
+                                                                    <div class="oe_kanban_details">
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td class="col-8">
+                                                                                    <span>Dịch vụ tư vấn</span>
+                                                                                    <strong t-if="record.service"
+                                                                                            t-esc="record.service.value"
+                                                                                            class="ml-3"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td class="col-4">
+                                                                                    <span>Mong muốn</span>
+                                                                                    <div class="service_partner">
+                                                                                        <field name="desire_ids"
+                                                                                               widget="kanban.many2many_tags"
+                                                                                               class="ml-3"/>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td class="col-4">
+                                                                                    <span>Điểm đau</span>
+                                                                                    <div class="service_partner">
+                                                                                        <field name="pain_point_ids"
+                                                                                               widget="kanban.many2many_tags"
+                                                                                               class="ml-3"/>
+                                                                                    </div>
+                                                                                </td>
+                                                                            </tr>
+                                                                            <tr>
+                                                                                <td class="col-4">
+                                                                                    <span>Tình trạng</span>
+                                                                                    <div class="service_partner">
+                                                                                        <field name="state_ids"
+                                                                                               widget="kanban.many2many_tags"
+                                                                                               class="ml-3"/>
+                                                                                    </div>
+                                                                                </td>
+                                                                                <td class="col-4">
+                                                                                    <span>Trạng thái</span>
+                                                                                    <strong t-if="record.stage_potential"
+                                                                                            t-esc="record.stage_potential.value"
+                                                                                            class="ml-3"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <table>
+                                                                            <tr>
+                                                                                <td class="col-4">
+                                                                                    <span>Ngày tạo</span>
+                                                                                    <strong t-if="record.create_date"
+                                                                                            t-esc="record.create_date.value"
+                                                                                            class="ml-3"/>
+                                                                                </td>
+                                                                            </tr>
+                                                                        </table>
+                                                                        <div style="border:1px;background-color: #ffffcc;"
+                                                                             class="ml-3">
+                                                                            <b>Thông tin tư vấn</b>
+                                                                            <br/>
+                                                                            <span t-if="record.information"
+                                                                                  t-esc="record.information.value"
+                                                                            />
+                                                                        </div>
+
+                                                                        <div style="text-align: right">
+                                                                            <button name="open_advise_line"
+                                                                                    string="Xem dịch vụ tiềm năng chi tiết"
+                                                                                    type="object"
+                                                                                    class="btn-warning fa fa-external-link"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                </field>
+                                            </page>
+                                        </notebook>
+                                    </page>
+                                    <page string="BỆNH VIỆN">
+                                        <notebook>
+                                            <page string="PHIẾU KHÁM" icon="fa fa-medkit">
+                                                <h2>
+                                                    <div style="text-align: center;color:#ff0000"
+                                                         attrs="{'invisible' :[('walkin_ids', '!=', [])]}">
+                                                        KHÔNG CÓ DỮ LIỆU
+                                                    </div>
+                                                </h2>
+                                                <field name="walkin_ids" mode="kanban">
+                                                    <kanban string="PHIẾU KHÁM"
+                                                            options="{'no_create': True, 'no_edit': True}"
+                                                            default_order="date desc" limit="5">
+                                                        <field name="name"/>
+                                                        <field name="service_room"/>
+                                                        <field name="state"/>
+                                                        <field name="booking_id"/>
+                                                        <field name="date"/>
+                                                        <field name="service_date_start"/>
+                                                        <field name="service"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click"
+                                                                     style="width:1000px !important;border-radius:10px;background-color:#e6f2ff;">
+                                                                    <div class="oe_kanban_details">
+                                                                        <div class="row">
+                                                                            <div class="col-3" style="max-width:12%;">
+                                                                                <span>Mã phiếu</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.name"
+                                                                                        t-esc="record.name.value"/>
+                                                                            </div>
+                                                                            <div class="col-3" style="max-width:14%;">
+                                                                                <span>Phòng khám</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.service_room"
+                                                                                        t-esc="record.service_room.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-3" style="max-width:12%;">
+                                                                                <span>Trạng thái</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.state"
+                                                                                        t-esc="record.state.value"/>
+                                                                            </div>
+                                                                            <div class="col-3" style="max-width:14%;">
+                                                                                <span>Booking</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.booking_id"
+                                                                                        t-esc="record.booking_id.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-3" style="max-width:12%;">
+                                                                                <span>Ngày khám</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.date"
+                                                                                        t-esc="record.date.value"/>
+                                                                            </div>
+                                                                            <div class="col-3" style="max-width:14%;">
+                                                                                <span>Ngày làm dịch vụ</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.service_date_start"
+                                                                                        t-esc="record.service_date_start.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-12">
+                                                                                <span>Dịch vụ</span>
+                                                                                <div class="service_partner">
+                                                                                    <field name="service"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div style="text-align: right">
+                                                                            <button name="open_walkin"
+                                                                                    string="Xem phiếu khám chi tiết"
+                                                                                    type="object"
+                                                                                    class="btn-warning fa fa-external-link"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                </field>
+                                            </page>
+                                            <page string="PHIẾU PT-TT" icon="fa fa-heart">
+                                                <h2>
+                                                    <div style="text-align: center;color:#ff0000"
+                                                         attrs="{'invisible' :[('surgery_ids', '!=', [])]}">
+                                                        KHÔNG CÓ DỮ LIỆU
+                                                    </div>
+                                                </h2>
+                                                <field name="surgery_ids" mode="kanban">
+                                                    <kanban string="PHIẾU PT-TT"
+                                                            options="{'no_create': True, 'no_edit': True}"
+                                                            default_order="date_requested desc" limit="5">
+                                                        <field name="name"/>
+                                                        <field name="operating_room"/>
+                                                        <field name="state"/>
+                                                        <field name="booking_id"/>
+                                                        <field name="date_requested"/>
+                                                        <field name="surgery_team"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click"
+                                                                     style="width:1000px !important;border-radius:10px;background-color:#e6f2ff;">
+                                                                    <div class="oe_kanban_details">
+                                                                        <div class="row">
+                                                                            <div class="col-3" style="max-width:12%;">
+                                                                                <span>Mã phiếu</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.name"
+                                                                                        t-esc="record.name.value"/>
+                                                                            </div>
+                                                                            <div class="col-3" style="max-width:14%;">
+                                                                                <span>Phòng khám</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.operating_room"
+                                                                                        t-esc="record.operating_room.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-3" style="max-width:12%;">
+                                                                                <span>Trạng thái</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.state"
+                                                                                        t-esc="record.state.value"/>
+                                                                            </div>
+                                                                            <div class="col-3" style="max-width:14%;">
+                                                                                <span>Booking</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.booking_id"
+                                                                                        t-esc="record.booking_id.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-3" style="max-width:12%;">
+                                                                                <span>Ngày khám</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.date_requested"
+                                                                                        t-esc="record.date_requested.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-5">
+                                                                                <b>Thành viên</b>
+                                                                            </div>
+                                                                            <div class="col-5">
+                                                                                <b>Dịch vụ</b>
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <b>Vai trò</b>
+                                                                            </div>
+                                                                        </div>
+                                                                        <t t-foreach="record.surgery_team.raw_value"
+                                                                           t-as="o">
+                                                                            <t t-if="o.is_doctor">
+                                                                                <div class="row">
+                                                                                    <div class="col-5">
+                                                                                        <t t-if="o.team_member"
+                                                                                           t-esc="o.team_member[1]">
+                                                                                        </t>
+                                                                                    </div>
+                                                                                    <div class="col-5">
+                                                                                        <t t-esc="o.service_text">
+                                                                                        </t>
+                                                                                    </div>
+                                                                                    <div class="col-2">
+                                                                                        <t t-if="o.role"
+                                                                                           t-esc="o.role[1]">
+                                                                                        </t>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </t>
+                                                                        </t>
+                                                                        <div style="text-align: right">
+                                                                            <button name="open_surgery"
+                                                                                    string="Xem phiếu phẫu thuật chi tiết"
+                                                                                    type="object"
+                                                                                    class="btn-warning fa fa-external-link"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                </field>
+                                            </page>
+                                            <page string="PHIẾU CHUYÊN KHOA" icon="fa fa-user-md">
+                                                <h2>
+                                                    <div style="text-align: center;color:#ff0000"
+                                                         attrs="{'invisible' :[('specialty_ids', '!=', [])]}">
+                                                        KHÔNG CÓ DỮ LIỆU
+                                                    </div>
+                                                </h2>
+                                                <field name="specialty_ids" mode="kanban">
+                                                    <kanban string="PHIẾU CHUYÊN KHOA"
+                                                            options="{'no_create': True, 'no_edit': True}"
+                                                            default_order="date_requested desc" limit="5">
+                                                        <field name="name"/>
+                                                        <field name="perform_room"/>
+                                                        <field name="state"/>
+                                                        <field name="booking_id"/>
+                                                        <field name="date_requested"/>
+                                                        <field name="specialty_team"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click"
+                                                                     style="width:1000px !important;border-radius:10px;background-color:#e6f2ff;">
+                                                                    <div class="oe_kanban_details">
+                                                                        <div class="row">
+                                                                            <div class="col-3" style="max-width:12%;">
+                                                                                <span>Mã phiếu</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.name"
+                                                                                        t-esc="record.name.value"/>
+                                                                            </div>
+                                                                            <div class="col-3" style="max-width:14%;">
+                                                                                <span>Phòng khám</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.perform_room"
+                                                                                        t-esc="record.perform_room.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-3" style="max-width:12%;">
+                                                                                <span>Trạng thái</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.state"
+                                                                                        t-esc="record.state.value"/>
+                                                                            </div>
+                                                                            <div class="col-3" style="max-width:14%;">
+                                                                                <span>Booking</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.booking_id"
+                                                                                        t-esc="record.booking_id.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-3" style="max-width:12%;">
+                                                                                <span>Ngày khám</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.date_requested"
+                                                                                        t-esc="record.date_requested.value"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-5">
+                                                                                <b>Thành viên</b>
+                                                                            </div>
+                                                                            <div class="col-5">
+                                                                                <b>Dịch vụ</b>
+                                                                            </div>
+                                                                            <div class="col-2">
+                                                                                <b>Vai trò</b>
+                                                                            </div>
+                                                                        </div>
+                                                                        <t t-foreach="record.specialty_team.raw_value"
+                                                                           t-as="o">
+                                                                            <t t-if="o.is_doctor">
+                                                                                <div class="row">
+                                                                                    <div class="col-5">
+                                                                                        <t t-if="o.team_member"
+                                                                                           t-esc="o.team_member[1]">
+                                                                                        </t>
+                                                                                    </div>
+                                                                                    <div class="col-5">
+                                                                                        <t t-esc="o.service_text">
+                                                                                        </t>
+                                                                                    </div>
+                                                                                    <div class="col-2">
+                                                                                        <t t-if="o.role"
+                                                                                           t-esc="o.role[1]">
+                                                                                        </t>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </t>
+                                                                        </t>
+                                                                        <div style="text-align: right">
+                                                                            <button name="open_specialty"
+                                                                                    string="Xem phiếu chuyên khoa chi tiết"
+                                                                                    type="object"
+                                                                                    class="btn-warning fa fa-external-link"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                </field>
+                                            </page>
+                                            <page string="TÁI KHÁM" icon="fa fa-thermometer-three-quarters">
+                                                <h2>
+                                                    <div style="text-align: center;color:#ff0000"
+                                                         attrs="{'invisible' :[('evaluation_ids', '!=', [])]}">
+                                                        KHÔNG CÓ DỮ LIỆU
+                                                    </div>
+                                                </h2>
+                                                <field name="evaluation_ids" mode="kanban">
+                                                    <kanban string="TÁI KHÁM"
+                                                            options="{'no_create': True, 'no_edit': True}"
+                                                            default_order="evaluation_start_date desc" limit="5">
+                                                        <field name="name"/>
+                                                        <field name="evaluation_start_date"/>
+                                                        <field name="evaluation_services"/>
+                                                        <field name="services"/>
+                                                        <field name="doctor"/>
+                                                        <field name="notes_complaint"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click"
+                                                                     style="width:1000px !important;border-radius:10px;background-color:#e6f2ff;">
+                                                                    <div class="oe_kanban_details">
+                                                                        <div class="row">
+                                                                            <div class="col-2" style="max-width:12%;">
+                                                                                <span>Ngày tái khám</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.evaluation_start_date"
+                                                                                        t-esc="record.evaluation_start_date.value"/>
+                                                                            </div>
+                                                                            <div class="col-2" style="max-width:14%;">
+                                                                                <span>Bác sĩ tái khám</span>
+                                                                            </div>
+                                                                            <div class="col-5">
+                                                                                <strong t-if="record.doctor"
+                                                                                        t-esc="record.doctor.value"
+                                                                                        style="font-size:14px"/>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="row">
+                                                                            <div class="col-2" style="max-width:12%;">
+                                                                                <span>Mã phiếu</span>
+                                                                            </div>
+                                                                            <div class="col-3">
+                                                                                <strong t-if="record.name"
+                                                                                        t-esc="record.name.value"/>
+                                                                            </div>
+                                                                            <div class="col-2" style="max-width:14%;">
+                                                                                <span>Loại tái khám</span>
+                                                                            </div>
+                                                                            <div class="col-5">
+                                                                                <div class="service_partner">
+                                                                                    <field name="evaluation_services"
+                                                                                           widget="kanban.many2many_tags"/>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <span>Dịch vụ</span>
+                                                                        <div class="service_partner">
+                                                                            <field name="services"
+                                                                                   widget="kanban.many2many_tags"/>
+                                                                        </div>
+                                                                        <span>Tóm tắt tái khám</span>
+                                                                        <br/>
+                                                                        <div style="border:1px;background-color: #ffffcc;">
+                                                                            <strong t-if="record.notes_complaint"
+                                                                                    t-esc="record.notes_complaint.value"/>
+                                                                        </div>
+                                                                        <div style="text-align: right">
+                                                                            <button name="open_evaluation"
+                                                                                    string="Xem phiếu tái khám chi tiết"
+                                                                                    type="object"
+                                                                                    class="btn-warning fa fa-external-link"/>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                </field>
+                                            </page>
+                                        </notebook>
+                                    </page>
+                                    <page string="THANH TOÁN">
+                                        <notebook>
+                                            <page string="PHIẾU THU" icon="fa fa-money">
+                                                <h2>
+                                                    <div style="text-align: center;color:#ff0000"
+                                                         attrs="{'invisible' :[('payment_ids', '!=', [])]}">
+                                                        KHÔNG CÓ DỮ LIỆU
+                                                    </div>
+                                                </h2>
+                                                <field name="payment_ids"
+                                                       attrs="{'invisible' :[('payment_ids', '=', [])]}">
+                                                    <tree create="false" default_order="create_date desc">
+                                                        <field name="create_date" string="Ngày tạo"/>
+                                                        <field name="name"/>
+                                                        <field name="payment_type"/>
+                                                        <field name="amount" sum="Tổng tiền khách trả"/>
+                                                        <!--                                                        <field name="currency_id"/>-->
+                                                        <field name="state"/>
+                                                    </tree>
+                                                </field>
+                                            </page>
+                                            <page string="KẾ TOÁN" icon="fa fa-calculator">
+                                                <group string="Bút toán kế toán" name="accounting_entries"
+                                                       groups="account.group_account_invoice">
+                                                    <field name="currency_id" invisible="1"/>
+                                                    <field name="property_account_receivable_id"/>
+                                                    <field name="property_account_payable_id"/>
+                                                </group>
+                                            </page>
+                                        </notebook>
+                                    </page>
+                                </notebook>
+                            </div>
+                            <div class="col-4">
+                                <notebook>
+                                    <page string="Phone Call" icon="fa fa-volume-control-phone">
+                                        <notebook>
+                                            <page string="Lịch sử">
+                                                <h2>
+                                                    <div style="text-align: center;color:#ff0000"
+                                                         attrs="{'invisible' :[('phone_call_ids', '!=', [])]}">
+                                                        KHÔNG CÓ DỮ LIỆU
+                                                    </div>
+                                                </h2>
+                                                <field name="phone_call_ids" mode="kanban">
+                                                    <kanban string="Phone Call"
+                                                            options="{'no_create': True, 'no_edit': True}"
+                                                            default_order="call_date desc" limit="5">
+                                                        <field name="name"/>
+                                                        <field name="call_date"/>
+                                                        <field name="state"/>
+                                                        <field name="medical_id"/>
+                                                        <field name="service_id"/>
+                                                        <field name="type_crm_id"/>
+                                                        <field name="note"/>
+                                                        <field name="desc"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click">
+                                                                    <div class="oe_kanban_details">
+                                                                        <ul>
+                                                                            <li style="overflow: hidden;text-overflow: ellipsis;height:16px">
+                                                                                <div class="row">
+                                                                                    <div class="col-8">
+                                                                                        <strong t-if="record.name"
+                                                                                                t-esc="record.name.value"
+                                                                                                style="line-height:16px"/>
+                                                                                    </div>
+                                                                                    <div class="col-4"
+                                                                                         style="text-align: right">
+                                                                                        <strong t-if="record.call_date"
+                                                                                                t-esc="record.call_date.value"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="mt-2">
+                                                                                <div class="row">
+                                                                                    <div class="col-7">
+                                                                                        <i t-if="record.state"
+                                                                                           t-esc="record.state.value"/>
+                                                                                        <span>|</span>
+                                                                                        <i t-if="record.type_crm_id"
+                                                                                           t-esc="record.type_crm_id.value"/>
+                                                                                    </div>
+                                                                                    <div class="col-5"
+                                                                                         style="text-align: right">
+                                                                                        <strong t-if="record.medical_id"
+                                                                                                t-esc="record.medical_id.value"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="mt-2">
+                                                                                <h6 style="color:#00bfff">Dịch vụ</h6>
+                                                                                <div class="service_partner">
+                                                                                    <field name="service_id"
+                                                                                           widget="kanban.many2many_tags"/>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="mt-2">
+                                                                                <h6 style="color:#ffbf00">Nội dung</h6>
+                                                                                <div style="border:1px;background-color: #ffffcc;">
+                                                                                    <strong t-if="record.note"
+                                                                                            t-esc="record.note.value"/>
+                                                                                </div>
+                                                                            </li>
+                                                                              <li class="mt-2">
+                                                                                <h6 style="color:#ffbf00">Mô tả</h6>
+                                                                                <div style="border:1px;background-color: #ffffcc;">
+                                                                                    <strong t-if="record.desc"
+                                                                                            t-esc="record.desc.value"/>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                </field>
+                                            </page>
+                                            <page string="Tương lai">
+                                                <h2>
+                                                    <div style="text-align: center;color:#ff0000"
+                                                         attrs="{'invisible' :[('phone_call_ids_new', '!=', [])]}">
+                                                        KHÔNG CÓ DỮ LIỆU
+                                                    </div>
+                                                </h2>
+                                                <field name="phone_call_ids_new" mode="kanban">
+                                                    <kanban string="Phone Call"
+                                                            options="{'no_create': True, 'no_edit': True}"
+                                                            default_order="call_date asc" limit="5">
+                                                        <field name="name"/>
+                                                        <field name="call_date"/>
+                                                        <field name="state"/>
+                                                        <field name="medical_id"/>
+                                                        <field name="service_id"/>
+                                                        <field name="type_crm_id"/>
+                                                        <field name="note"/>
+                                                        <field name="desc"/>
+                                                        <templates>
+                                                            <t t-name="kanban-box">
+                                                                <div class="oe_kanban_global_click">
+                                                                    <div class="oe_kanban_details">
+                                                                        <ul>
+                                                                            <li style="overflow: hidden;text-overflow: ellipsis;height:16px">
+                                                                                <div class="row">
+                                                                                    <div class="col-8">
+                                                                                        <strong t-if="record.name"
+                                                                                                t-esc="record.name.value"
+                                                                                                style="line-height:16px"/>
+                                                                                    </div>
+                                                                                    <div class="col-4"
+                                                                                         style="text-align: right">
+                                                                                        <strong t-if="record.call_date"
+                                                                                                t-esc="record.call_date.value"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="mt-2">
+                                                                                <div class="row">
+                                                                                    <div class="col-7">
+                                                                                        <i t-if="record.state"
+                                                                                           t-esc="record.state.value"/>
+                                                                                        <span>|</span>
+                                                                                        <i t-if="record.type_crm_id"
+                                                                                           t-esc="record.type_crm_id.value"/>
+                                                                                    </div>
+                                                                                    <div class="col-5"
+                                                                                         style="text-align: right">
+                                                                                        <strong t-if="record.medical_id"
+                                                                                                t-esc="record.medical_id.value"/>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="mt-2">
+                                                                                <h6 style="color:#00bfff">Dịch vụ</h6>
+                                                                                <div class="service_partner">
+                                                                                    <field name="service_id"
+                                                                                           widget="kanban.many2many_tags"/>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="mt-2">
+                                                                                <h6 style="color:#ffbf00">Nội dung</h6>
+                                                                                <div style="border:1px;background-color: #ffffcc;">
+                                                                                    <strong t-if="record.note"
+                                                                                            t-esc="record.note.value"/>
+                                                                                </div>
+                                                                            </li>
+                                                                            <li class="mt-2">
+                                                                                <h6 style="color:#ffbf00">Mô tả</h6>
+                                                                                <div style="border:1px;background-color: #ffffcc;">
+                                                                                    <strong t-if="record.desc"
+                                                                                            t-esc="record.desc.value"/>
+                                                                                </div>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </t>
+                                                        </templates>
+                                                    </kanban>
+                                                </field>
+                                            </page>
+                                        </notebook>
+                                    </page>
+                                    <page string="Khiếu nại" icon="fa fa-exclamation-triangle">
+                                        <h2>
+                                            <div style="text-align: center;color:#ff0000"
+                                                 attrs="{'invisible' :[('content_complain_ids', '!=', [])]}">
+                                                KHÔNG CÓ DỮ LIỆU
+                                            </div>
+                                        </h2>
+                                        <field name="content_complain_ids" mode="kanban">
+                                            <kanban string="Khiếu nại" options="{'no_create': True, 'no_edit': True}"
+                                                    default_order="create_date desc" limit="1">
+                                                <field name="crm_case" invisible="True"/>
+                                                <field name="complain_group_id"/>
+                                                <field name="complain_id"/>
+                                                <field name="receive_source"/>
+                                                <field name="product_ids"/>
+                                                <field name="department_ids"/>
+                                                <field name="priority"/>
+                                                <field name="desc" required="True"/>
+                                                <field name="solution" required="True"/>
+                                                <field name="stage" required="True"/>
+                                                <field name="brand_sla" invisible="True"/>
+                                                <field name="cskh_sla" invisible="True"/>
+                                                <field name="branch_sla" invisible="True"/>
+                                                <field name="note"/>
+                                                <templates>
+                                                    <t t-name="kanban-box">
+                                                        <div class="oe_kanban_global_click">
+                                                            <div class="oe_kanban_details">
+                                                                <ul style="font-size:12px">
+                                                                    <li style="overflow: hidden;text-overflow: ellipsis;height:16px">
+                                                                        <div class="row">
+                                                                            <div class="col-8">
+                                                                                <field name="complain_id"/>
+                                                                            </div>
+                                                                            <div class="col-4"
+                                                                                 style="text-align: right">
+                                                                                <field name="create_date"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="mt-2">
+                                                                        <div class="row">
+                                                                            <div class="col-8">
+                                                                                <field name="stage"/>
+                                                                                |
+                                                                                <field name="priority"/>
+                                                                            </div>
+                                                                            <div class="col-4"
+                                                                                 style="text-align: right">
+                                                                                <field name="code_crm_case"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="mt-2">
+                                                                        <h6 style="color:#00bfff">Dịch vụ</h6>
+                                                                        <div class="service_partner">
+                                                                            <field name="product_ids"
+                                                                                   widget="kanban.many2many_tags"/>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="mt-2">
+                                                                        <b>Phản ánh khách hàng:</b>
+                                                                        <field name="desc" widget="html"/>
+                                                                    </li>
+                                                                    <li class="mt-2">
+                                                                        <b>Giải pháp:</b>
+                                                                        <field name="solution" widget="html"/>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </t>
+                                                </templates>
+                                            </kanban>
+                                        </field>
+                                    </page>
+                                    <page string="SMS" icon="fa fa-comments">
+                                        <h2>
+                                            <div style="text-align: center;color:#ff0000"
+                                                 attrs="{'invisible' :[('sms_ids', '!=', [])]}">
+                                                KHÔNG CÓ DỮ LIỆU
+                                            </div>
+                                        </h2>
+                                        <field name="sms_ids" mode="kanban">
+                                            <kanban string="SMS" options="{'no_create': True, 'no_edit': True}"
+                                                    default_order="send_date desc" limit="5">
+                                                <field name="name"/>
+                                                <field name="send_date"/>
+                                                <field name="desc"/>
+                                                <templates>
+                                                    <t t-name="kanban-box">
+                                                        <div class="oe_kanban_global_click">
+                                                            <div class="oe_kanban_details">
+                                                                <ul>
+                                                                    <li style="overflow: hidden;text-overflow: ellipsis;height:16px">
+                                                                        <div class="row">
+                                                                            <div class="col-8">
+                                                                                <field name="name"/>
+                                                                            </div>
+                                                                            <div class="col-4"
+                                                                                 style="text-align: right">
+                                                                                <field name="send_date"/>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                    <li class="mt-2">
+                                                                        <b>Nội dung</b>
+                                                                        <div style="border:1px;background-color: #ffffcc;">
+                                                                            <field name="desc"/>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </t>
+                                                </templates>
+                                            </kanban>
+                                        </field>
+                                    </page>
+                                </notebook>
+                            </div>
+                        </div>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_crm_kangnam_res_partner_filter" model="ir.ui.view">
+            <field name="name">res.partner.select.kangnam</field>
+            <field name="model">res.partner</field>
+            <field name="arch" type="xml">
+                <search string="Search Partner">
+                    <field name="name"
+                           filter_domain="['|', '|', ('display_name', 'ilike', self), ('ref', '=', self), ('email', 'ilike', self)]"/>
+                    <field name="phone" filter_domain="['|', ('phone', 'ilike', self), ('mobile', '=', self)]"/>
+                    <group expand="0" name="group_by" string="Group By">
+                        <filter name="group_create_date" string="Thời điểm tạo" context="{'group_by': 'create_date'}"/>
+                        <filter name="group_country" string="Country" context="{'group_by': 'country_id'}"/>
+                        <filter name="group_source_id" string="Nguồn ban đầu" context="{'group_by': 'source_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="crm_kangnam_res_partner_action" model="ir.actions.act_window">
+            <field name="name">Khách hàng</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="crm_kangnam_extend.view_crm_kangnam_res_partner_filter"/>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('crm_kangnam_extend.crm_kangnam_res_partner_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('crm_kangnam_extend.crm_kangnam_res_partner_view_form')})]"/>
+        </record>
+    </data>
+</odoo>

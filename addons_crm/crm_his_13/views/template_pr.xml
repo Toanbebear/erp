@@ -1,0 +1,913 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="template_orthodontic_sheet">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:21px;">
+
+                    <div class="oe_structure"/>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <!--                            <img src="/report_custom/static/images/logo_lac_viet.png" width="150" height="auto"/><br/>-->
+                            <img src="/crm_his_13/static/description/logo_pr.jpg" width="150" height="auto"/>
+                            <br/>
+                            <i style="font-size:15px;">Nụ cười mới - Cuộc sống mới</i>
+                        </div>
+                        <div class="col-9 text-center">
+                            <div style="font-family:Times New Roman;font-weight:bolder;font-size: 36px;">PHIẾU THÔNG TIN
+                                KHÁCH HÀNG
+                            </div>
+                            <div class="text-center">
+                                <span>Mã Booking:</span>
+                                <b>
+                                    <i t-field="o.name"/>
+                                </b>
+                            </div>
+                        </div>
+
+                    </div>
+                    <br/>
+                    <div class="text-right">
+                        <i>
+                            <span>Giờ khách đến:</span>
+                            <!--<t t-if="o.arrival_date">-->
+                            <!--    <t t-esc="o.arrival_date.strftime('%d / %m / %Y')"/>-->
+                            <!--</t>-->
+                            <!--<t t-else="">-->
+                            <!--    ...........................-->
+                            <!--</t>-->
+                            <span>......../........../20.....</span>
+                            <br/>
+                            <span>Giờ làm dịch vụ:</span>......../........../20.....
+                        </i>
+                    </div>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">A - THÔNG TIN KHÁCH HÀNG</div>
+                    <br/>
+                    <style>.indent-1-7{padding-left: 1.7em }</style>
+                    <style>.indent-3-4{padding-left: 3.4em }</style>
+                    <div class="row">
+                        <div class="col-7 indent-1-7">
+                            Khách hàng :
+                            <strong>
+                                <span t-field="o.partner_id.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-5">
+                            <t t-if="o.partner_id.birth_date">Ngày sinh:
+                                <span t-esc="o.partner_id.birth_date.strftime('%d/%m/%Y')"/>
+                            </t>
+                            <t t-elif="o.partner_id.year_of_birth">Năm sinh:
+                                <span t-esc="o.partner_id.year_of_birth"/>
+                            </t>
+                            <t t-else="">
+                                Ngày sinh : ......................
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-7 indent-1-7">
+                            Điện thoại :
+                            <t t-esc="str(o.partner_id.phone).replace(o.partner_id.phone[3:7], 'xxxx')"/>
+                        </div>
+                        <div class="col-5">
+                            <t t-if="o.partner_id.email">Email:
+                                <span t-field="o.partner_id.email"/>
+                            </t>
+                            <t t-else="">
+                                Email : ..............................
+                            </t>
+                        </div>
+                    </div>
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col-7 indent-1-7">-->
+                    <!--                            <t t-if="o.partner_id.email">Email:-->
+                    <!--                                <strong>-->
+                    <!--                                    <span t-field="o.partner_id.email"/>-->
+                    <!--                                </strong>-->
+                    <!--                            </t>-->
+                    <!--                            <t t-else="">-->
+                    <!--                                Email : ..............................-->
+                    <!--                            </t>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-5"/>-->
+                    <!--                    </div>-->
+                    <div class="row">
+                        <div class="col-12 indent-1-7">
+                            Địa chỉ :
+                            <t t-if="o.pass_port_address">
+                                <span t-field="o.pass_port_address"/>
+                            </t>
+                            <t t-else="">
+                                <span t-field="o.street"/>,
+                                <span t-field="o.district_id.name"/>,
+                                <span t-field="o.state_id.name"/>,
+                                <span t-field="o.country_id.name"/>
+                            </t>
+                        </div>
+                    </div>
+                    <br/>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">Quý khách biết đến Nha khoa Paris qua
+                        đâu ?
+                    </div>
+                    <div class="row indent-1-7">
+                        <div class="col-2">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Facebook
+                        </div>
+                        <div class="col-2">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Website
+                        </div>
+                        <div class="col-2">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Giới thiệu
+                        </div>
+                        <div class="col-2">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Bảng biển
+                        </div>
+                        <div class="col-2">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Khác:......
+                        </div>
+                    </div>
+                    <br/>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">B - TỔNG QUAN TÌNH TRẠNG KHÁM</div>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">I - Tình trạng răng tổng quát</div>
+                    <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                        <ul type="circle">
+                            <li>
+                                <div>
+                                    <t t-esc="'Cao răng, viêm lợi:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Răng lệch lạc:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Răng 8:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Mất răng:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Sâu răng:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Tủy răng (viêm tủy,...):' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Răng nhiễm màu:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Khác:' + '.'*200"/>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">II - Tình trạng liên quan đến nắn chỉnh
+                        răng
+                    </div>
+                    <div class="row indent-1-7">
+                        <div class="col-4">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Hô
+                        </div>
+                        <div class="col-4">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Thưa
+                        </div>
+                        <div class="col-4">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Móm
+                        </div>
+                    </div>
+                    <div class="row indent-1-7">
+                        <div class="col-4">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Khấp khểnh
+                        </div>
+                        <div class="col-4">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Chen chúc
+                        </div>
+                        <div class="col-4">
+                            <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                            Khớp cắn:.....................
+                        </div>
+                    </div>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">III - Mong muốn của khách hàng</div>
+                    <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+
+                    </div>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">IV - Phương án điều trị</div>
+                    <div>
+                        <div style="font-family:Times New Roman;font-weight:bolder;">1/ Niềng răng mắc cài</div>
+                        <div class="row indent-1-7">
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Mắc cài kim loại thường
+                            </div>
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Mắc cài kim loại thường (độ khó)
+                            </div>
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Mắc cài kim loại tự buộc
+                            </div>
+                        </div>
+                        <div class="row indent-3-4">
+                            <div class="col-6">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Mắc cài sứ thường
+                            </div>
+                            <div class="col-6">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Mắc cài sứ tự buộc
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-family:Times New Roman;font-weight:bolder;">2/ Niềng răng trong suốt Invisalign
+                        </div>
+                        <div class="row indent-1-7">
+                            <div class="col-6">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Invisalign mức 4
+                            </div>
+                            <div class="col-6">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Invisalign mức 5
+                            </div>
+                        </div>
+                        <div class="row indent-1-7">
+                            <div class="col-6">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Invisalign mức 6
+                            </div>
+                            <div class="col-6">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Invisalign mức 7 (răng lệch lạc nhiều)
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <br/>
+                    <div>
+                        <div style="font-family:Times New Roman;font-weight:bolder;">3/ Các khí cụ chỉnh nha hỗ trợ
+                        </div>
+                        <div class="row indent-1-7">
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Vít (..........cái)
+                            </div>
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Nong hàm(.........cái)
+                            </div>
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Twin Block thuận (.......cái)
+                            </div>
+                        </div>
+                        <div class="row indent-1-7">
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Twin Block ngược(......cái)
+                            </div>
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Khí cụ khác: .........
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <div style="font-family:Times New Roman;font-weight:bolder;">4/ Kế hoạch chỉnh nha dự kiến</div>
+                        <div class="row indent-1-7">
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Nhổ răng (.............cái)
+                            </div>
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Cắt kẽ
+                            </div>
+                            <div class="col-4">
+                                <span style="height:20px; width:20px; border: 1px black solid; display: inline-block;border-radius:50%;"/>
+                                Di xa
+                            </div>
+                        </div>
+                        <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                            <div>
+                                <t t-esc="'.'*200"/>
+                            </div>
+                            <div>
+                                <t t-esc="'.'*200"/>
+                            </div>
+                            <div>
+                                <t t-esc="'.'*200"/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <br/>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">Thời gian điều trị tính từ ........ đến
+                        ......... tháng
+                    </div>
+                    <div>Tôi đồng ý với kế hoạch điều trị trên!</div>
+                    <div class="row">
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 22px;">Khách hàng đồng ý ký tên</strong>
+                            <div>
+                                <i>(Ký, ghi rõ họ tên)</i>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 22px;">
+                                <!--                                Ngày ..... tháng ..... năm .........-->
+                                <i t-esc="datetime.datetime.now().strftime('Ngày %d tháng %m năm %Y')"/>
+                            </strong>
+                            <br/>
+                            Bác sĩ phụ trách: ..........................................
+                            <br/>
+                            Y tá phụ trách: ..........................................
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+        <template id="orthodontic_sheet">
+            <t t-call="web.html_container">
+                <t t-if="docs">
+                    <t t-call="crm_his_13.template_orthodontic_sheet" t-lang="docs[0].partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+                string="PHIẾU THÔNG TIN KHÁCH HÀNG CHỈNH NHA (PR)"
+                id="action_orthodontic_sheet"
+                model="crm.lead"
+                report_type="qweb-pdf"
+                name="crm_his_13.orthodontic_sheet"
+                file="crm_his_13.orthodontic_sheet"
+                paperformat="crm_his_13.crm_paperformat_template"
+                menu="True"
+        />
+
+        <template id="template_dentistry_sheet">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:21px;">
+
+                    <div class="oe_structure"/>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <!--                            <img src="/report_custom/static/images/logo_lac_viet.png" width="150" height="auto"/><br/>-->
+                            <img src="/crm_his_13/static/description/logo_pr.jpg" width="150" height="auto"/>
+                            <br/>
+                            <i style="font-size:15px;">Nụ cười mới - Cuộc sống mới</i>
+                        </div>
+                        <div class="col-9 text-center">
+                            <div style="font-family:Times New Roman;font-weight:bolder;font-size: 36px;">PHIẾU THÔNG TIN
+                                KHÁCH HÀNG
+                            </div>
+                            <div class="text-center">
+                                <span>Mã Booking:</span>
+                                <b>
+                                    <i t-field="o.name"/>
+                                </b>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="text-right">
+                        <i>
+                            <span>Giờ khách đến:</span>
+                            <!--<t t-if="o.arrival_date">-->
+                            <!--    <t t-esc="o.arrival_date.strftime('%d / %m / %Y')"/>-->
+                            <!--</t>-->
+                            <!--<t t-else="">-->
+                            <!--    ...........................-->
+                            <span>......../........../20.....</span>
+                            <!--</t>-->
+                            <br/>
+                            <span>Giờ làm dịch vụ:</span>......../........../20.....
+                        </i>
+                    </div>
+                    <br/>
+                    <style>.indent-1-7{padding-left: 1.7em }</style>
+                    <style>.indent-3-4{padding-left: 3.4em }</style>
+                    <div class="row">
+                        <div class="col-7 indent-1-7">
+                            Khách hàng :
+                            <strong>
+                                <span t-field="o.partner_id.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-5">
+                            <t t-if="o.partner_id.birth_date">Ngày sinh:
+                                <span t-esc="o.partner_id.birth_date.strftime('%d/%m/%Y')"/>
+                            </t>
+                            <t t-elif="o.partner_id.year_of_birth">Năm sinh:
+                                <span t-esc="o.partner_id.year_of_birth"/>
+                            </t>
+                            <t t-else="">
+                                Ngày sinh : ......................
+                            </t>
+                        </div>
+                    </div>
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col-7 indent-1-7">-->
+                    <!--                            Điện thoại :-->
+                    <!--                            <strong>-->
+                    <!--                                <span t-field="o.partner_id.phone"/>-->
+                    <!--                            </strong>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-5">-->
+                    <!--                            <t t-if="o.partner_id.email">Email:-->
+                    <!--                                <strong>-->
+                    <!--                                    <span t-field="o.partner_id.email"/>-->
+                    <!--                                </strong>-->
+                    <!--                            </t>-->
+                    <!--                            <t t-else="">-->
+                    <!--                                Email : ..............................-->
+                    <!--                            </t>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <div class="row">
+                        <div class="col-7 indent-1-7">
+                            Điện thoại :
+                            <t t-esc="str(o.partner_id.phone).replace(o.partner_id.phone[3:7], 'xxxx')"/>
+                        </div>
+                        <div class="col-5">
+                            <t t-if="o.partner_id.email">Email:
+                                <span t-field="o.partner_id.email"/>
+                            </t>
+                            <t t-else="">
+                                Email : ..............................
+                            </t>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 indent-1-7">
+                            Địa chỉ :
+                            <t t-if="o.pass_port_address">
+                                <span t-field="o.pass_port_address"/>
+                            </t>
+                            <t t-else="">
+                                <span t-field="o.street"/>,
+                                <span t-field="o.district_id.name"/>,
+                                <span t-field="o.state_id.name"/>,
+                                <span t-field="o.country_id.name"/>
+                            </t>
+                        </div>
+                    </div>
+                    <br/>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">I - TÊN DỊCH VỤ</div>
+                    <!--                    <div class="col-12" style="white-space: nowrap;-->
+                    <!--                                              width: auto;-->
+                    <!--                                              overflow: hidden;-->
+                    <!--                                              text-overflow: ellipsis;">-->
+                    <!--                        <div>-->
+                    <!--                            <t t-esc="'.'*200"/>-->
+                    <!--                        </div>-->
+                    <!--                        <div>-->
+                    <!--                            <t t-esc="'.'*200"/>-->
+                    <!--                        </div>-->
+                    <!--                        <div>-->
+                    <!--                            <t t-esc="'.'*200"/>-->
+                    <!--                        </div>-->
+                    <!--                        <div>-->
+                    <!--                            <t t-esc="'.'*200"/>-->
+                    <!--                        </div>-->
+
+                    <!--                    </div>-->
+                    <div style="font-family:Times New Roman;" class="indent-1-7">
+                        <t t-set="service" t-value="o.crm_line_ids.mapped('service_id')"/>
+                        <t t-esc="', '.join(service.mapped('name'))"/>
+                    </div>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">II - Tiền sử, tình trạng toàn thân
+                    </div>
+                    <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+
+                    </div>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">III - CHẨN ĐOÁN</div>
+                    <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                        <ul type="circle">
+                            <li>
+                                <div>
+                                    <t t-esc="'Cao răng, viêm lợi:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Răng lệch lạc:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Răng 8:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Mất răng:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Sâu răng:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Tủy răng (viêm tủy,...):' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Răng nhiễm màu:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Tình trạng toàn thân:' + '.'*200"/>
+                                </div>
+                            </li>
+                            <li>
+                                <div>
+                                    <t t-esc="'Khác:' + '.'*200"/>
+                                </div>
+                            </li>
+                        </ul>
+
+                    </div>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">IV - Điều trị (Kế hoạch)</div>
+                    <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*200"/>
+                        </div>
+
+                    </div>
+
+                    <br/>
+                    <div class="row">
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 22px;">Khách hàng</strong>
+                            <div>
+                                <i>(Ký, ghi rõ họ tên)</i>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 22px;">
+                                <!--                                Ngày ..... tháng ..... năm 20......-->
+                                <i t-esc="datetime.datetime.now().strftime('Ngày %d tháng %m năm %Y')"/>
+                            </strong>
+                            <br/>
+                            <strong style="font-size: 22px;">Bác sĩ ký</strong>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+        <template id="dentistry_sheet">
+            <t t-call="web.html_container">
+                <t t-if="docs">
+                    <t t-call="crm_his_13.template_dentistry_sheet" t-lang="docs[0].partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+                string="PHIẾU THÔNG TIN KHÁCH HÀNG CHUNG (PR)"
+                id="action_dentistry_sheet"
+                model="crm.lead"
+                report_type="qweb-pdf"
+                name="crm_his_13.dentistry_sheet"
+                file="crm_his_13.dentistry_sheet"
+                paperformat="crm_his_13.crm_paperformat_template"
+                menu="True"
+        />
+
+        <template id="template_dentistry_sheet_new">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:21px;">
+
+                    <div class="oe_structure"/>
+                    <div class="row">
+                        <div class="col-3 text-center">
+                            <img src="/crm_his_13/static/description/logo_pr.jpg" width="150" height="auto"/>
+                            <br/>
+                            <i style="font-size:15px;">Nụ cười mới - Cuộc sống mới</i>
+                        </div>
+                        <div class="col-5 text-center">
+                        </div>
+                        <div class="col-4 text-center">
+                            <div style="font-family:Times New Roman;font-weight:bolder;font-size: 24px;">
+                                MH:04-006.01/MB-PR
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center" style="font-family:Times New Roman;font-weight:bolder;font-size: 36px;">
+                        PHIẾU THÔNG TIN KHÁCH HÀNG
+                    </div>
+                    <div class="text-center" style="font-family:Times New Roman;font-size: 30px;">
+                        <span>Mã Booking:</span>
+                        <b>
+                            <i t-field="o.name"/>
+                        </b>
+                    </div>
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-6">
+                            <i>
+                            <span>Giờ khách đến:</span>
+                            <t t-if="o.arrival_date">
+                                <t t-esc="(o.arrival_date + relativedelta(hours=7)).hour"/>h
+                                <t t-esc="(o.arrival_date + relativedelta(hours=7)).minute"/>,
+                                <t t-esc="(o.arrival_date + relativedelta(hours=7)).strftime('%d/%m/%Y')"/>
+                            </t>
+                            <t t-else="">
+                                <span>...h ..., ...../...../20.....</span>
+                            </t>
+                            <br/>
+                            <span>Giờ làm dịch vụ: </span>...h ..., ...../...../20.....
+                            </i>
+                        </div>
+
+                    </div>
+                    <br/>
+                    <style>.indent-1-7{padding-left: 1.7em }</style>
+                    <style>.indent-3-4{padding-left: 3.4em }</style>
+                    <div class="row">
+                        <div class="col-7 indent-1-7">
+                            Khách hàng :
+                            <strong>
+                                <span t-field="o.partner_id.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-5 indent-1-7">
+                            <t t-if="o.partner_id.birth_date">Ngày sinh:
+                                <span t-esc="o.partner_id.birth_date.strftime('%d/%m/%Y')"/>
+                            </t>
+                            <t t-elif="o.partner_id.year_of_birth">Năm sinh:
+                                <span t-esc="o.partner_id.year_of_birth"/>
+                            </t>
+                            <t t-else="">
+                                Ngày sinh : ....../....../..........
+                            </t>
+                        </div>
+                    </div>
+                    <!--                    <div class="row">-->
+                    <!--                        <div class="col-7 indent-1-7">-->
+                    <!--                            Điện thoại :-->
+                    <!--                            <strong>-->
+                    <!--                                <span t-field="o.partner_id.phone"/>-->
+                    <!--                            </strong>-->
+                    <!--                        </div>-->
+                    <!--                        <div class="col-5">-->
+                    <!--                            <t t-if="o.partner_id.email">Email:-->
+                    <!--                                <strong>-->
+                    <!--                                    <span t-field="o.partner_id.email"/>-->
+                    <!--                                </strong>-->
+                    <!--                            </t>-->
+                    <!--                            <t t-else="">-->
+                    <!--                                Email : ..............................-->
+                    <!--                            </t>-->
+                    <!--                        </div>-->
+                    <!--                    </div>-->
+                    <div class="row">
+                        <div class="col-12 indent-1-7">
+                            Điện thoại :
+                            <t t-esc="str(o.partner_id.phone).replace(o.partner_id.phone[3:7], 'xxxx')"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 indent-1-7">
+                            Địa chỉ :
+                            <t t-if="o.pass_port_address">
+                                <span t-field="o.pass_port_address"/>
+                            </t>
+                            <t t-else="">
+                                <span t-field="o.street"/>,
+                                <span t-field="o.district_id.name"/>,
+                                <span t-field="o.state_id.name"/>,
+                                <span t-field="o.country_id.name"/>
+                            </t>
+                        </div>
+                    </div>
+                    <div class="mt16" style="font-family:Times New Roman;font-weight:bolder;">I. Bạn biết đến Nha khoa Paris từ:</div>
+                    <div style="font-family:Times New Roman;" class="indent-1-7 row mt16 p-0">
+                        <div class="col-8 indent-1-7" style="white-space: nowrap;
+                                                      width: auto;
+                                                      overflow: hidden;
+                                                      text-overflow: ellipsis;">
+                            Người giới thiệu:
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div class="col-4 indent-1-7" style="white-space: nowrap;
+                                                      width: auto;
+                                                      overflow: hidden;
+                                                      padding-right:0;
+                                                      text-overflow: ellipsis;">
+                            SĐT:
+                            <t t-esc="'.'*200"/>
+                        </div>
+                    </div>
+                    <div style="font-family:Times New Roman;font-weight:bolder;font-size: 24px;" class="row indent-1-7 mt16">
+                        <div class="col-4 indent-1-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Facebook
+                        </div>
+                        <div class="col-4 indent-1-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Google
+                        </div>
+                        <div class="col-4 indent-1-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Web
+                        </div>
+                    </div>
+                    <div class="row p-0">
+                        <div style="font-family:Times New Roman;white-space: nowrap;
+                                                      width: auto;
+                                                      overflow: hidden;
+                                                      text-overflow: ellipsis;" class="col-12 indent-1-7 mt24 ">
+                        Nguồn khác:
+                        <t t-esc="'.'*200"/>
+                    </div>
+                    </div>
+
+                    <br/>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">II. Yêu cầu khám
+                    </div>
+                    <div style="font-family:Times New Roman;font-size: 20px;" class="row indent-1-7 mt16">
+                        <div class="col-6 indent-1-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Khám tổng quát
+                        </div>
+                        <div class="col-6 indent-1-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Nhổ răng
+                        </div>
+                    </div>
+                    <div style="font-family:Times New Roman;font-size: 20px;" class="row indent-1-7 mt16">
+                        <div class="col-6 indent-1-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Niềng răng
+                        </div>
+                        <div class="col-6 indent-1-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Răng sứ thẩm mỹ
+                        </div>
+                    </div>
+                    <div style="font-family:Times New Roman;font-size: 20px;" class="row indent-1-7 mt16">
+                        <div class="col-6 indent-1-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Hàn răng
+                        </div>
+                        <div class="col-6 indent-1-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Làm răng giả (Implant)
+                        </div>
+                    </div>
+                    <div style="font-family:Times New Roman;font-size: 20px;" class="row indent-1-7 mt16">
+                        <div class="col-6 indent-1-7">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Lấy cao răng
+                        </div>
+                    </div>
+                    <div class="row mt24">
+                        <div style="font-family:Times New Roman;white-space: nowrap;
+                                                          width: auto;
+                                                          overflow: hidden;
+                                                          text-overflow: ellipsis;" class="col-12 indent-1-7">
+                            Yêu cầu khác:
+                            <t t-esc="'.'*200"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div style="font-family:Times New Roman;font-weight:bolder;">III. Lịch hẹn</div>
+                    <div style="white-space: nowrap;
+                              width: auto;
+                              overflow: hidden;
+                              text-overflow: ellipsis;margin-left: 20px">
+                        <div class="row indent-1-7 mt16">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Tôi có lịch hẹn trước lúc
+                            <t t-esc="'.'*200"/>
+                        </div>
+                        <div class="row indent-1-7 mt16">
+                            <img src="/crm_his_13/static/checkbox.png" width="40px" height="40px"/>
+                            Tôi chưa đặt hẹn và muốn đặt lịch chờ khám
+                            <t t-esc="'.'*200"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row">
+                        <div class="col-6 text-center">
+                        </div>
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 22px;">Khách hàng</strong>
+                            <div>
+                                <i>(Ký, ghi rõ họ tên)</i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+        <template id="dentistry_sheet_new">
+            <t t-call="web.html_container">
+                <t t-if="docs">
+                    <t t-call="crm_his_13.template_dentistry_sheet_new" t-lang="docs[0].partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+                string="PHIẾU THÔNG TIN KHÁCH HÀNG (PR)"
+                id="action_dentistry_sheet_new"
+                model="crm.lead"
+                report_type="qweb-pdf"
+                name="crm_his_13.dentistry_sheet_new"
+                file="crm_his_13.dentistry_sheet_new"
+                paperformat="crm_his_13.crm_paperformat_template"
+                menu="True"
+        />
+    </data>
+</odoo>

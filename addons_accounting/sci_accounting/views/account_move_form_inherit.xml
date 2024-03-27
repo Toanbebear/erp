@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="account_view_move_form_inherit" model="ir.ui.view">
+            <field name="name">Phiếu hạch toán</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="mode">primary</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header/field[@name='state']" position="attributes">
+                    <attribute name="statusbar_visible">draft,sent,posted</attribute>
+                </xpath>
+                <xpath expr="//field[@name='line_ids']/tree//field[@name='account_id']" position="after">
+                    <field name="is_sci_lock" invisible="1"/>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree//field[@name='account_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_sci_lock', '=', True)]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree//field[@name='partner_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_sci_lock', '=', True)]}</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='line_ids']/tree//field[@name='credit']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('is_sci_lock', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sci_accounting_filter" model="ir.ui.view">
+            <field name="name">account.voucher.select.inherit</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_account_move_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='by_date']" position="before">
+                    <filter string="Day" name="by_day" context="{'group_by':'date:day'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sci_accounting_action_account_move_line" model="ir.actions.act_window">
+            <field name="name">Danh sách phiếu hạch toán</field>
+            <field name="res_model">account.move</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('account.view_move_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('account_view_move_form_inherit')})]"/>
+            <field name="search_view_id" ref="account.view_account_move_filter"/>
+            <field name="context">{'search_default_by_day': True, 'default_create=': False,}</field>
+            <field name="domain">[('company2_id', '!=', None), ('company2_id', '!=', allowed_company_ids[0])]</field>
+        </record>
+
+
+    </data>
+</odoo>

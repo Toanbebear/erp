@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="account_analytic_group_update_rate_view" model="ir.ui.view">
+            <field name="name">Cập nhật tỉ lệ phân bổ</field>
+            <field name="model">account.analytic.group.update.rate.wizard</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="start_date" required="1"/>
+                            </group>
+                            <group>
+                                <field name="end_date" required="1"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button name="update_rate" string="Cập nhật" type="object" class="btn-primary"/>
+                            <button special="cancel" string="Huỷ" type="object" class="btn-secondary"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_account_analytic_group_update_rate" model="ir.actions.act_window">
+            <field name="name">Cập nhật tỉ lệ phân bổ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.analytic.group.update.rate.wizard</field>
+            <field name="view_id" ref="account_analytic_group_update_rate_view"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+    </data>
+</odoo>

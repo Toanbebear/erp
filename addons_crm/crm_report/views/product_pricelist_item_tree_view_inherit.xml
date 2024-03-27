@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="product_pricelist_item_tree_inherit" model="ir.ui.view">
+            <field name="name">product_pricelist_item_tree_inherit</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_tree_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="target_sale_marketing"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="product_pricelist_item_form_inherit" model="ir.ui.view">
+            <field name="name">product_pricelist_item_form_inherit</field>
+            <field name="model">product.pricelist.item</field>
+            <field name="inherit_id" ref="product.product_pricelist_item_form_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="target_sale_marketing"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

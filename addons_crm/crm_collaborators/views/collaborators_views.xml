@@ -1,0 +1,183 @@
+<odoo>
+    <data>
+        <record id="view_form_collaborators" model="ir.ui.view">
+            <field name="name">Cộng tác viên</field>
+            <field name="model">crm.collaborators</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header/>
+                    <sheet>
+                        <field name="active" invisible="True"/>
+                        <field name="qr_id" widget="image" class="oe_avatar" style="padding-right:20px"/>
+                        <div class="oe_title" style="width:40%">
+                            <label for="name" string="Tên" style="width:50%"/>
+                            <h1>
+                                <field name="name" placeholder="Describe the lead..." force_save="True"
+                                       style="width:100%" readonly="True" required="True"/>
+                            </h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="code_collaborators" readonly="True"/>
+                                <field name="phone" required="True"/>
+                                <field name="collaborators" placeholder="Nhập tên cộng tác viên " required="True"/>
+                                <field name="mobile"/>
+                                <field name="sex" required="True"/>
+                                <field name="year_of_birth"/>
+
+                            </group>
+                            <group>
+                                <field name="pass_port"/>
+                                <field name="pass_port_date"/>
+                                <field name="pass_port_issue_by"/>
+                                <field name="documents" filename="document_name"/>
+                                <field name="document_name" invisible="True"/>
+                                <field name="email"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="booking_id" string="Booking" icon="fa fa-user-circle">
+                                <field name="only_booking" readonly="True" icon="fa fa-user-circle">
+                                    <tree create="false">
+                                        <field name="partner_id"/>
+                                        <field name="name"/>
+                                        <field name="company_id"/>
+                                        <field name="stage_id"/>
+                                        <field name="create_on"/>
+                                        <field name="create_uid"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                    <div class="crm_lead_box_change_infor">
+                        <div class="col-lg-12">
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm tạo:
+                                <strong>
+                                    <field name="create_date" readonly="True" force_save="True"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Tạo bởi:
+                                <strong>
+                                    <field name="create_uid" readonly="True" force_save="True"
+                                           options="{'no_open':True,}"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm cập nhật:
+                                <strong>
+                                    <field name="write_date"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Cập nhật bởi:
+                                <strong>
+                                    <field name="write_uid"/>
+                                </strong>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record id="view_tree_collaborators" model="ir.ui.view">
+            <field name="name">Cộng tác viên</field>
+            <field name="model">crm.collaborators</field>
+            <field name="arch" type="xml">
+                <tree
+                        default_order="create_date desc">
+                    <field name="code_collaborators"/>
+                    <field name="collaborators"/>
+                    <field name="pass_port"/>
+                    <field name="email"/>
+                    <field name="phone"/>
+                </tree>
+            </field>
+        </record>
+        <record id="source_collaborators_search" model="ir.ui.view">
+            <field name="name">collaborators - Search</field>
+            <field name="model">crm.collaborators</field>
+            <field name="arch" type="xml">
+                <search string="state Search">
+                    <field name="collaborators" string="Tên cộng tác viên"
+                           filter_domain="['|', '|', ('collaborators','ilike', self), ('code_collaborators','ilike', self), ('phone','ilike', self)]"/>
+                    <field name="code_collaborators" string="Mã cộng tác viên"/>
+                    <field name="pass_port" string="CMTND/CCCD"/>
+                    <field name="phone" string="phone"/>
+                    <field name="email" string="Email"/>
+                </search>
+            </field>
+        </record>
+        <record id="action_open_view_collaborators" model="ir.actions.act_window">
+            <field name="name">Cộng tác viên</field>
+            <field name="res_model">crm.collaborators</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="source_collaborators_search"/>
+        </record>
+
+        <act_window id="crm_ctv_act_window_cancel"
+                    name="Hủy"
+                    binding_model="crm.collaborators"
+                    res_model="cancel.collaborators"
+                    binding_views="form"
+                    view_mode="form,list"
+                    target="new"
+                    context="{'default_crm_collaborators': active_id,
+        }"
+        />
+
+        <!--Thêm trường Cộng tác viên vào lead-->
+        <record id="form_crm_lead_inherit" model="ir.ui.view">
+            <field name="name">Form crm lead</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.form_crm_lead"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='source_id']" position="after">
+                    <field name="collaborators_id" options="{'no_create':True}" force_save="True"
+                           attrs="{'invisible': [('brand_id', 'not in', [4])], 'readonly':['|',('re_open', '=', True),('stage_id','=',%(crm_base.crm_stage_booking)d)]}"/>
+                    <!--                    <field name="collaborators_id" options="{'no_create':True}"  force_save="True"-->
+                    <!--                           attrs="{'readonly':['|',('re_open', '=', True),('stage_id','=',%(crm_base.crm_stage_booking)d)], 'required':[('check_ctv','=',True )]}"/>-->
+                    <field name="check_ctv" readonly="True" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Thêm trường Cộng tác viên vào booking-->
+        <record id="form_crm_booking_inherit" model="ir.ui.view">
+            <field name="name">Form crm booking</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='source_id']" position="after">
+                    <!--Chỉ hiển thị cho HH              -->
+                    <field name="collaborators_id" options="{'no_create':True}"
+                           attrs="{'invisible':[('brand_id','!=',4)]}" readonly="True" force_save="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_base_view_crm_inherit_leads_filter" model="ir.ui.view">
+            <field name="name">crm.lead.search.lead</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_leads_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='create_by_department']" position="after">
+                    <field name="collaborators_id" string="Cộng tác viên"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

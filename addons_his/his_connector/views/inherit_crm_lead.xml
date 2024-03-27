@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <record id="view_action_sync_his_83__crm_lead" model="ir.ui.view">
+            <field name="name">Buttom Action Sync His 83</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+               <xpath expr="//header" position="inside">
+                    <button name="action_sync_his_83" class="btn-info" string="Tạo hồ sơ 83" type="object" groups="his_connector.group_his_83"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_lead_view_83_tree_booking" model="ir.ui.view">
+            <field name="name">Tree Booking</field>
+            <field name="model">crm.lead</field>
+            <field name="priority" eval="100"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//tree" position="replace">-->
+                    <tree duplicate="false" create="false" decoration-muted="effect =='expire'">
+                        <field name="customer_classification" widget="label_selection" optional="show"
+                               string="Phân loại"
+                               options="{'classes': {'1': 'success', '2': 'info', '3': 'warning', '4': 'danger','5': 'danger'}}"/>
+                        <field name="name" optional="show" string="Mã Booking"/>
+                        <field name="arrival_date" optional="show"/>
+                        <field name="contact_name" optional="show"/>
+                        <field name="birth_date"  optional="show"/>
+                        <field name="gender" optional="show"/>
+                        <field name="career" optional="show"/>
+                        <field name="street" optional="show"/>
+                        <field name="crm_line_ids" optional="show" widget="many2many_tags" string="Dịch vụ"/>
+                        <field name="stage_id" optional="show" string="Trạng thái"/>
+                        <field name="effect" widget="label_selection" optional="show" string="Hiệu lực" options="{'classes': {'effect': 'success', 'expire': 'danger'}}"/>
+                        <field name="create_on" optional="hide"/>
+                        <field name="create_by" optional="hide"/>
+                        <button name="action_sync_his_83" type="object" string="Tạo hồ sơ 83" class="btn-success" groups="his_connector.group_his_83"/>
+                    </tree>
+<!--                </xpath>-->
+            </field>
+        </record>
+
+        <record id="search_booking_83_inherit" model="ir.ui.view">
+            <field name="name">Booking tái chăm sóc</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.view_crm_case_opportunities_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='bk_date']" position="before">
+                     <filter string="Ngày đến cửa: hôm nay" name="bk_arrival_date"
+                                domain="[('arrival_date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),('arrival_date', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crm_lead_action_83">
+            <field name="name">Booking 83</field>
+            <field name="view_mode">tree,form</field>
+            <field name="res_model">crm.lead</field>
+            <field name="context" eval="{
+                    'search_default_bk_arrival_date':1,
+                    }"
+            />
+<!--            <field name="view_ids" eval="[(5, 0, 0),-->
+<!--                (0, 0, {'view_mode': 'tree', 'view_id': ref('his_connector.crm_lead_view_83_tree_booking')})]"/>-->
+        </record>
+        <record id="crm_lead_action_83_1" model="ir.actions.act_window.view">
+            <field eval="2" name="sequence"/>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="his_connector.crm_lead_view_83_tree_booking"/>
+            <field name="act_window_id" ref="crm_lead_action_83"/>
+        </record>
+
+        <menuitem id="crm_menu_booking_83"
+          name="Booking 83"
+          parent="crm.crm_menu_root"
+          action="his_connector.crm_lead_action_83"
+          sequence="2"
+            groups="his_connector.group_his_83"/>
+        <record id="crm_menu_booking_83" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-calendar-check-o</field>
+        </record>
+    </data>
+</odoo>

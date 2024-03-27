@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="create_booking_form_view" model="ir.ui.view">
+            <field name="name">Checkin: Tạo Booking</field>
+            <field name="model">create.booking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="row">
+                            <div class="col-7">
+                                <label for="name" string="Khách hàng"/>
+                                <field name="name" required="1" attrs="{'readonly': [('partner_id','!=',False)]}"/>
+                            </div>
+                            <div class="col-5"/>
+                        </div>
+                        <br/>
+                        <group>
+                            <field name="brand_id" invisible="1"/>
+                            <field name="company_id" required="1" readonly="1" force_save="1"/>
+                            <field name="partner_id" invisible="1"/>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="phone" attrs="{'readonly': [('partner_id','!=',False)]}" required="1"/>
+                                <field name="mobile" attrs="{'readonly': [('partner_id','!=',False)]}"/>
+                                <field name="phone_no_3" attrs="{'readonly': [('partner_id','!=',False)]}"/>
+                                <field name="gender" attrs="{'readonly': ['|',('partner_id','!=',False)]}" required="1"/>
+                                <field name="birth_date" attrs="{'readonly': [('partner_id','!=',False)]}"/>
+                                <field name="year_of_birth" attrs="{'readonly': [('partner_id','!=',False)]}"/>
+                            </group>
+                            <group>
+                                <field name="booking_date" required="True"/>
+                                <field name="pricelist_id" options="{'no_create':True,'no_open':True}" required="1"/>
+                                <field name="source_id" options="{'no_create':True,'no_open':True}" required="1" domain="[('original_source','=',True)]"/>
+                                <field name="category_source_id" invisible="1"/>
+                                <field name="collaborator_id" attrs="{'invisible': [('source_id', 'not in', (73, 74, 77, 130, 167, 168, 203, 206, 211, 214, 218))], 'required': [('source_id', 'in', (73, 74, 77, 130, 167, 168, 203, 206, 211, 214, 218)), ('brand_id', '=', 1)]}" options="{'no_create':True,'no_open':True}"/>
+                                <field name="campaign_id" options="{'no_create':True,'no_open':True}"/>
+                            </group>
+                        </group>
+                        <group>
+                            <label for="street" string="Địa chỉ"/>
+                                <div name="address">
+                                    <div class="o_address_format" name="div_address">
+                                        <field name="country_id" class="o_address_state o_address_country_1" options="{'no_open':True,'no_create':True}" required="True" attrs="{'readonly': [('partner_id','!=',False)]}"/>
+                                        <field name="state_id" class="o_address_state" options="{'no_open':True,'no_create':True}" domain="[('country_id','=',country_id)]" attrs="{'readonly': [('partner_id','!=',False)]}"/>
+                                        <field name="district_id" string="Quận/huyện" options="{'no_open':True,'no_create':True}" class="o_address_state" attrs="{'readonly': [('partner_id','!=',False)]}"/>
+                                        <field name="street" class="o_address_street" string="Địa chỉ chi tiết" attrs="{'readonly': [('partner_id','!=',False)]}"/>
+                                    </div>
+                                </div>
+                        </group>
+                        <div class="row">
+                            <div class="col-12">
+                                <label for="note" string="Ghi chú"/>
+                                <field name="note"/>
+                            </div>
+                        </div>
+                        <footer>
+                            <button name="create_booking" string="Tạo Booking" type="object" class="btn-info"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

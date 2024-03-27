@@ -1,0 +1,14 @@
+<odoo>
+    <data>
+        <record id="voucher_program_form_accesstrade_view" model="ir.ui.view">
+            <field name="name">voucher.program.form.accesstrade.view</field>
+            <field name="model">crm.voucher.program</field>
+            <field name="inherit_id" ref="crm_voucher.voucher_program_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='loyalty_active']" position="after">
+                    <field name="is_accesstrade"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

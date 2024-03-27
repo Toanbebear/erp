@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_hh_ehc_contract_group_exam_tree_view" model="ir.ui.view">
+            <field name="name">crm.hh.ehc.contract.group.exam.tree.view</field>
+            <field name="model">crm.hh.ehc.contract.group.exam</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách hợp đồng EHC">
+                    <field name="contract_code"/>
+                    <field name="name"/>
+                    <field name="company_name"/>
+                    <field name="address" optional="hide"/>
+                    <field name="source_code" optional="hide"/>
+                    <field name="start_date" optional="hide"/>
+                    <field name="end_date" optional="hide"/>
+                    <field name="invoice_method" optional="hide"/>
+                    <field name="stage"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_hh_ehc_contract_group_exam_form_view" model="ir.ui.view">
+            <field name="name">crm.hh.ehc.contract.group.exam.form.view</field>
+            <field name="model">crm.hh.ehc.contract.group.exam</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="contract_code" readonly="0" string="Mã hợp đồng"/>
+                            <field name="name" readonly="1" string="Tên hợp đồng"/>
+                            <field name="company_name" string="Tên công ty"/>
+                            <field name="address" string="Địa chỉ"/>
+                            <field name="source_code" string="Mã người giới thiệu"/>
+                            <field name="start_date" string="Ngày bắt đầu"/>
+                            <field name="end_date" string="Ngày kết thúc"/>
+                            <field name="invoice_method" string="Hính thức thu tiền"/>
+                            <field name="stage" string="Trạng thái"/>
+                        </group>
+                        <notebook>
+                            <page name="booking_ids" string="Danh sach booking">
+                                <field name="crm_ids">
+                                    <tree>
+                                        <field name="name"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crm_hh_ehc_contract_group_exam_act">
+            <field name="name">Hợp đồng khám đoàn</field>
+            <field name="res_model">crm.hh.ehc.contract.group.exam</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="crm_hh_ehc_contract_group_exam_sub_menu"
+                  name="Hợp đồng khám đoàn"
+                  parent="crm_ehc.crm_hh_ehc_root_menu"
+                  action="crm_hh_ehc_contract_group_exam_act"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="survey_assets" name="account assets" inherit_id="survey.survey_assets">
+            <xpath expr="." position="inside">
+                <link href="/survey_base/static/src/css/survey.css" rel="stylesheet"/>
+                <link href="/survey_base/static/src/css/survey_result.css" rel="stylesheet"/>
+                <script type="text/javascript" src="/survey_base/static/src/js/survey.js"/>
+            </xpath>
+        </template>
+
+        <!-- outside layout -->
+        <template id="layout_no_footer" name="Survey Layout" inherit_id="web.frontend_layout" primary="True">
+            <xpath expr="//head/t[@t-call-assets][last()]" position="after">
+                <t t-call-assets="survey.survey_assets" lazy_load="True"/>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+            </xpath>
+            <xpath expr="//nav[@id='oe_main_menu_navbar']" position="replace">
+            </xpath>
+            <xpath expr="//header[@id='top']" position="replace">
+            </xpath>
+        </template>
+
+
+        <!-- new layout for surveys -->
+        <template id="survey.layout" name="Survey Layout" inherit_id="web.frontend_layout" primary="True">
+            <xpath expr="//header" position="before">
+                <t t-set="no_header" t-value="no_header or survey.certificate"/>
+                <t t-set="no_footer" t-value="no_footer or survey.certificate"/>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+            <xpath expr="//head/t[@t-call-assets][last()]" position="after">
+                <t t-call-assets="survey.survey_assets" lazy_load="True"/>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+            </xpath>
+            <xpath expr="//nav[@id='oe_main_menu_navbar']" position="replace">
+            </xpath>
+            <xpath expr="//header[@id='top']" position="replace">
+            </xpath>
+            <xpath expr="//main" position="replace">
+                <body style="margin:0px;background-image: url('/survey_base/static/src/img/bg_survey_da.png'); background-repeat: round;background-attachment: fixed;">
+                    <div id="wrap" class="oe_structure oe_empty"/>
+                    <main>
+                        <t t-raw="0"/>
+                    </main>
+                </body>
+            </xpath>
+        </template>
+
+        <template id="online_survey_page" name="Survey Main View">
+            <t t-call="survey_base.layout_no_footer">
+                <div class="container mt32">
+                    <hr class="row"/>
+                    <div class="row">
+                        <t t-foreach="surveys" t-as="survey">
+                            <div class="col-md-4 col-sm-4">
+                                <div class="feature">
+                                    <div class="card card-body bg-primary-light well1 mb-4"
+                                         style="border-radius: 10px;">
+                                        <div class="feature-content-box">
+                                            <center>
+                                                <h3 class="feature_title">
+                                                    <span t-esc="survey.title"/>
+                                                </h3>
+                                            </center>
+                                            <hr/>
+                                            <div>
+                                                <center>
+                                                    <a class="btn btn-primary btn-lg"
+                                                       t-att-href="'/survey/start/%s' %(survey.access_token)">Bắt đầu
+                                                        khảo sát
+                                                    </a>
+                                                </center>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="survey_init" name="Survey">
+            <t t-call="survey.layout">
+                <div class="wrap">
+                    <div class="oe_structure" id="oe_structure_survey_init_1"/>
+                    <div class="container-fluid">
+                        <div class='mt32 text-center'
+                             style="font-weight: bold;">
+                            <h3 t-field='survey.title'/>
+                            <div t-field='survey.description' class="oe_no_empty"/>
+                            <form role="form" method="post" class="js_surveyform"
+                                  t-att-action="'/survey/fill/%s/%s' % (survey.access_token, answer.token)"
+                                  t-att-data-submit="'/survey/submit-creator/%s/%s' % (survey.access_token, answer.token)">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div>
+                                    <br/>
+                                    <span style="text-transform: uppercase;">Người làm khảo sát</span>
+                                    <br/>
+                                    <select name="user" id="user" style="width: 400px;">
+                                        <option disabled="1" selected="1"/>
+                                        <t t-foreach='user_ids' t-as='user'>
+                                            <option t-att-name="'%s' % user.id"
+                                                    t-att-value="'%s' % user.id">
+                                                <span t-esc='user.name'/>
+                                            </option>
+                                        </t>
+                                    </select>
+                                </div>
+                                <br/>
+                                <div t-if="not exit_partner">
+                                    <span style="text-transform: uppercase;">Số điện thoại</span>
+                                    <br/>
+                                    <input type="text"
+                                           id="customer_phone"
+                                           name="customer_phone" required="1"
+                                           style="width: 400px;" t-att-value="'%s' % customer_phone"/>
+                                </div>
+                                <div t-if="not exit_partner">
+                                    <span style="text-transform: uppercase;">Tên khách hàng</span>
+                                    <br/>
+                                    <input type="text" name="customer_name" id="customer_name" required="1"
+                                           style="width: 400px;" t-att-value="'%s' % customer_name"/>
+                                </div>
+                                <t t-if="user_ids">
+                                    <button type="submit" id="submit_user" class="btn btn btn-lg"
+                                            style="margin-top:20px;"
+                                            name="button_start" value="start">Start Survey
+                                    </button>
+                                </t>
+                                <t t-else="">
+                                    <button type="submit" class="btn btn btn-lg"
+                                            style="margin-top:20px;background-color: #fe5931;color: #f6e6db;"
+                                            name="button_start" value="start">Start Survey
+                                    </button>
+                                </t>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="oe_structure" id="oe_structure_survey_init_2"/>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="survey.simple_choice" name="Simple choice">
+            <div t-if="question.display_mode == 'dropdown' and answer.token" class="js_drop row">
+                <div class="col-lg-12">
+                    <select class="form-control" t-att-name="prefix">
+                        <option disabled="1" selected="1" value="">Choose...</option>
+                        <t t-foreach='question.labels_ids' t-as='label'>
+                            <option t-att-value='label.id'>
+                                <t t-esc='label.value'/>
+                            </option>
+                        </t>
+                        <t t-if='question.comments_allowed and question.comment_count_as_answer'>
+                            <option class="js_other_option" value="-1">
+                                <span t-esc="question.comments_message"/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+                <div t-if='question.comments_allowed and question.comment_count_as_answer' class="col-lg-6">
+                    <input type="text" class="form-control" t-att-name="'%s_%s' % (prefix, 'comment')"
+                           data-oe-survey-othert="1"/>
+                </div>
+                <div t-if='question.comments_allowed and not question.comment_count_as_answer' class="col-lg-12 mt16">
+                    <span t-field="question.comments_message"/>
+                    <input type="text" class="form-control" t-att-name="'%s_%s' % (prefix, 'comment')"/>
+                </div>
+            </div>
+            <div t-if="question.display_mode == 'icon' or not answer.token" class="row js_radio question-icon">
+                <div t-foreach="question.labels_ids" t-as="label" class="item-question" style="display: flex;"
+                     t-attf-class="col-lg-#{question.column_nb} cc-selector multi-matrix">
+                    <label t-att-class="' bg-success ' if quizz_correction and label.answer_score > 0.0 else None" style="text-align: center">
+                        <input type="radio" t-att-name="prefix" t-att-value='label.id'
+                               style="text-align-:center" t-att-id="'%s' % (label.id)"/>
+                        <label class="drinkcard-cc" t-att-for="'%s' % (label.id)">
+<!--                            <img t-if="label.icon" t-att-src="'data:image/png;base64,%s' % to_text(label.icon.decode('utf-8'))"-->
+<!--                                 class="img img-responsive" style="width:92px;height:92px"/>-->
+                            <img t-if="label.icon" t-att-src="'/web/image?' + 'model=survey.label&amp;id=' + str(label.id) + '&amp;field=icon'"
+                                 class="img img-responsive" style="width:50px;height:50px;display:block;margin:0 auto"/>
+                        </label>
+                        <br/>
+                        <span t-field='label.value' style="font-size: 14px;"/>
+                    </label>
+                </div>
+                <div t-if='question.comments_allowed and question.comment_count_as_answer'
+                     class="js_comments col-lg-12">
+                    <label>
+                        <input type="radio" t-att-name="prefix" value="-1"/>
+                        <span t-field="question.comments_message"/>
+                    </label>
+                    <input type="text" class="form-control" t-att-name="'%s_%s' % (prefix, 'comment')"/>
+                </div>
+                <div t-if='question.comments_allowed and not question.comment_count_as_answer' class="col-lg-12">
+                    <span t-field="question.comments_message"/>
+                    <input type="text" class="form-control" t-att-name="'%s_%s' % (prefix, 'comment')"
+                           data-oe-survey-othert="1"/>
+                </div>
+            </div>
+            <div t-if="question.display_mode == 'columns' or not answer.token" class="row js_radio">
+                <t t-if="question.column_nb != '10'">
+                    <div t-foreach='question.labels_ids' t-as='label' t-attf-class="col-lg-#{question.column_nb}">
+                        <label t-att-class="' bg-success ' if quizz_correction and label.answer_score > 0.0 else None">
+                            <input type="radio" t-att-name="prefix" t-att-value='label.id'/>
+                            <span t-field='label.value' style="font-size: 16px"/>
+                            <p t-if='question.has_description and label.value_description'
+                               style="font-size: 15px;font-weight: normal">
+                                <i t-field='label.value_description' style="font-size: 15px;font-weight: normal"></i>
+                            </p>
+                            <input t-if="question.has_note" type="text" class="form-control"
+                                   t-att-name="'%s_%s' % (label.id, 'comment')"/>
+                        </label>
+                    </div>
+                    <div t-if='question.comments_allowed and question.comment_count_as_answer'
+                         class="js_comments col-lg-12">
+                        <label>
+                            <input type="radio" t-att-name="prefix" value="-1"/>
+                            <span t-field="question.comments_message"/>
+                        </label>
+                        <input type="text" class="form-control" t-att-name="'%s_%s' % (prefix, 'comment')"/>
+                    </div>
+                    <div t-if='question.comments_allowed and not question.comment_count_as_answer' class="col-lg-12">
+                        <span t-field="question.comments_message"/>
+                        <input type="text" class="form-control" t-att-name="'%s_%s' % (prefix, 'comment')"
+                               data-oe-survey-othert="1"/>
+                    </div>
+                </t>
+                <t t-else="">
+                    <xpath expr="." position="inside">
+                        <link rel="stylesheet" href="/survey_base/static/src/css/survey.css"/>
+                    </xpath>
+                    <div class="d-flex justify-content-between pr-5 questionNumbers" style="width:100%;">
+                        <div t-foreach='question.labels_ids' t-as='label' class="question-checkbox">
+                            <label t-att-class="' bg-success ' if quizz_correction and label.answer_score > 0.0 else None">
+                                <div style="width: 40px; padding: 6px 0px; text-align: center; border: 1px solid #ccc; cursor: pointer">
+                                    <input type="radio" t-att-name="prefix" t-att-value='label.id' class="question-radio"/>
+                                    <span t-field='label.value' style="font-size: 16px"/>
+                                </div>
+                                <p t-if='question.has_description and label.value_description'
+                                   style="font-size: 15px;font-weight: normal">
+                                    <i t-field='label.value_description'
+                                        style="font-size: 15px;font-weight: normal"></i>
+                                </p>
+                                <input t-if="question.has_note" type="text" class="form-control"
+                                       t-att-name="'%s_%s' % (label.id, 'comment')"/>
+                            </label>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-between pr-5 mt-3 question-numbers" style="width:100%; align-items: center;">
+                        <span style="color: #e94c36;"><b>Không bao giờ</b></span>
+                        <p style="background: linear-gradient(90deg,#e94c36,#f59d00,#fbca43,#bbdb5b,#58d357); height: 2px; margin: 0; width: 80%;"></p>
+                        <span style="color: #58d357;"><b>Rất sẵn sàng</b></span>
+                    </div>
+                    <div t-if='question.comments_allowed and question.comment_count_as_answer'
+                         class="js_comments col-lg-12">
+                        <label>
+                            <input type="radio" t-att-name="prefix" value="-1"/>
+                            <span t-field="question.comments_message"/>
+                        </label>
+                        <input type="text" class="form-control" t-att-name="'%s_%s' % (prefix, 'comment')"/>
+                    </div>
+                    <div t-if='question.comments_allowed and not question.comment_count_as_answer'
+                         class="col-lg-12">
+                        <span t-field="question.comments_message"/>
+                        <input type="text" class="form-control" t-att-name="'%s_%s' % (prefix, 'comment')"
+                               data-oe-survey-othert="1"/>
+                    </div>
+                </t>
+            </div>
+        </template>
+
+        <template id="question" name="Question">
+            <t t-set="prefix" t-value="'%s_%s' % (survey.id, question.id)"/>
+            <div class="js_question-wrapper" t-att-id="prefix">
+                <h4>
+                    <span t-field='question.question'/>
+                    <span t-if="question.constr_mandatory" class="text-danger">*</span>
+                </h4>
+                <div t-field='question.description' class="text-muted oe_no_empty"/>
+                <t t-if="question.question_type == 'free_text'">
+                    <t t-call="survey.free_text"/>
+                </t>
+                <t t-if="question.question_type == 'textbox'">
+                    <t t-call="survey.textbox"/>
+                </t>
+                <t t-if="question.question_type == 'numerical_box'">
+                    <t t-call="survey.numerical_box"/>
+                </t>
+                <t t-if="question.question_type == 'date'">
+                    <t t-call="survey.date"/>
+                </t>
+                <t t-if="question.question_type == 'datetime'">
+                    <t t-call="survey.datetime"/>
+                </t>
+                <t t-if="question.question_type == 'simple_choice'">
+                    <t t-call="survey.simple_choice"/>
+                </t>
+                <t t-if="question.question_type == 'multiple_choice'">
+                    <t t-call="survey.multiple_choice"/>
+                </t>
+                <t t-if="question.question_type == 'matrix'">
+                    <t t-call="survey.matrix"/>
+                </t>
+                <div class="js_errzone alert alert-danger" style="display:none;" role="alert"></div>
+            </div>
+        </template>
+
+    </data>
+</odoo>

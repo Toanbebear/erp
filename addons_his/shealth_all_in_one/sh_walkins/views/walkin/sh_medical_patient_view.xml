@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inheriting Patient screen to display patient's walkin -->
+        <record id="sh_medical_patient_walkin_view" model="ir.ui.view">
+            <field name="name">Patient</field>
+            <field name="model">sh.medical.patient</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_patient_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[3]" position="after">
+                    <page string="Registers of walkin"
+                          groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager">
+                        <field name="walkin">
+                            <tree create="0" delete="0" string="Chi tiết phiếu khám"
+                                  decoration-info="state=='Scheduled'" decoration-bf="state=='WaitPayment'"
+                                  decoration-it="state=='Payment'" decoration-success="state=='Completed'"
+                                  decoration-danger="state=='InProgress'" default_order="date desc">
+                                <field name="name"/>
+                                <field name="patient_level" widget="label_selection" options="{'classes': {'1': 'success', '2': 'info', '3': 'warning', '4': 'danger'}}"/>
+                                <field name="date" widget="date"/>
+                                <field name="index_by_day" optional="hide"/>
+                                <field name="booking_id" optional="show"/>
+                                <field name="name" optional="show"/>
+                                <field name="patient" class="text-uppercase" optional="show"/>
+                                <field name="dob" optional="hide"/>
+                                <field name="sex" optional="show"/>
+                                <field name="institution" optional="hide"/>
+                                <field name="service_room" optional="show"/>
+                                <field name="reason_check" optional="hide"/>
+                                <field name="service" widget="many2many_tags" optional="show"/>
+                                <field name="doctor" optional="hide"/>
+                                <field name="state" optional="hide"/>
+                                <field name="note" optional="hide"/>
+                                <field name="write_uid" optional="hide"/>
+                                <field name="write_date" optional="hide"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//sheet//div[hasclass('oe_button_box')]//button[last()]" position="before">
+                    <button invisible="1"
+                            groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager"
+                            type="action" class="oe_stat_button" name="%(sh_medical_register_for_walkin_action_tree)d"
+                            context="{'search_default_patient': active_id,'default_patient': active_id}" icon="fa-list">
+                        <field string="Registers of walkin" name="walkin_count" widget="statinfo"/>
+                    </button>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

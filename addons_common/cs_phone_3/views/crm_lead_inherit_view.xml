@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_form_crm_lead_lead_cs_inherit_add_phone_3" model="ir.ui.view">
+            <field name="name">view_form_crm_lead_cs_inherit_add_phone_3</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.form_crm_lead"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mobile']" position="after">
+                    <field name="phone_no_3" widget="phone"
+                           attrs="{'readonly':['|', ('stage_id','=',%(crm_base.crm_stage_booking)d), ('is_clone','=',True), ('phone_no_3', '!=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="phone_3_inherit" model="ir.ui.view">
+            <field name="name">Phone 3</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_base_view_crm_booking_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="filter_domain">['|','|','|','|','|','|',('name', 'ilike', self),('phone', 'ilike',
+                        self),('mobile', 'ilike', self),('phone_no_3', 'ilike', self), ('contact_name', 'ilike', self),
+                        ('code_customer','ilike',self), ('pass_port','ilike',self)]
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_form_crm_lead_booking_cs_inherit_add_phone_3" model="ir.ui.view">
+            <field name="name">view_form_crm_lead_booking_cs_inherit_add_phone_3</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='mobile']" position="after">
+                    <field name="phone_no_3" widget="phone"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

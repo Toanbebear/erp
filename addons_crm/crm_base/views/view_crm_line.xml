@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="form_change_consultants" model="ir.ui.view">
+            <field name="name">Thay đổi thông tin tư vấn</field>
+            <field name="model">crm.line</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <group>
+                            <field name="product_id" readonly="1"/>
+                            <field name="product_id" readonly="1"/>
+                            <field name="consultants_1"/>
+                            <field name="consulting_role_1"/>
+                            <field name="consultants_2"/>
+                            <field name="consulting_role_2"/>
+                            <field name="consultants_3"/>
+                            <field name="consulting_role_3"/>
+                        </group>
+                        <footer>
+                            <button class="btn-primary" name="update_consulting" type="object" string="Cập nhật"/>
+                            <button string="Hủy" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="form_change_consultants_paris" model="ir.ui.view">
+            <field name="name">Thay đổi thông tin tư vấn Paris</field>
+            <field name="model">crm.line</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <group>
+                            <field name="crm_information_ids" required="1">
+                                <tree editable="bottom">
+                                    <field name="role" required="1"/>
+                                    <field name="user_id" required="1" context="{'name_code_employee_of_user': True,}" string="Tư vấn viên"/>
+                                 </tree>
+                            </field>
+                        </group>
+                        <footer>
+                            <button class="btn-primary" name="update_consulting" type="object" string="Cập nhật"/>
+                            <button string="Hủy" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="form_crm_line" model="ir.ui.view">
+            <field name="name">Form crm line</field>
+            <field name="model">crm.line</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <group>
+                            <field name="crm_id"/>
+                            <field name="cancel" groups="base.group_system"/>
+                            <field name="stage"/>
+                            <field name="company_id"/>
+                            <field name="brand_id"/>
+                            <field name="company_shared" groups="base.group_system"/>
+                            <field name="name"/>
+                            <field name="type"/>
+                            <field name="order_id"/>
+                            <field name="sale_order_line_id"/>
+                            <field name="product_id"/>
+                            <field name="price_list_id"/>
+                            <field name="currency_id"/>
+                            <field name="quantity"/>
+                            <field name="uom_price"/>
+                            <field name="unit_price"/>
+                            <field name="discount_percent"/>
+                            <field name="discount_cash"/>
+                            <field name="sale_to"/>
+                            <field name="other_discount"/>
+                            <field name="total_before_discount"/>
+                            <field name="total"/>
+                            <field name="number_used"/>
+                            <field name="history_discount_ids" widget="many2many_tags" groups="base.group_system"/>
+                            <field name="source_extend_id"/>
+                            <field name="extensive_source_classification"/>
+                            <field name="discount_review_id"/>
+                            <field name="line_special"/>
+                            <field name="prg_ids" widget="many2many_tags"/>
+                            <field name="consultants_1"/>
+                            <field name="consulting_role_1"/>
+                            <field name="consultants_2"/>
+                            <field name="consulting_role_2"/>
+                            <field name="consultants_3"/>
+                            <field name="consulting_role_3"/>
+                            <field name="ho_tro"/>
+                        </group>
+                        <group string="Dịch vụ bảo hành">
+                            <field name="type_pricelist"/>
+                            <field name="initial_product_id"/>
+                            <field name="type_guarantee"/>
+                        </group>
+                        <group string = "Thông tin tư vấn" attrs="{'invisible':[('brand_id','!=',3)]}">
+                            <field name="crm_information_ids" required="1">
+                                <tree editable="bottom">
+                                    <field name="role" required="1"/>
+                                    <field name="user_id" required="1" context="{'name_code_employee_of_user': True,}" string="Tư vấn viên"/>
+                                 </tree>
+                            </field>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"
+                                   options="{'post_refresh': 'recipients'}"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="tree_crm_line" model="ir.ui.view">
+            <field name="name">Tree crm line</field>
+            <field name="model">crm.line</field>
+            <field name="arch" type="xml">
+                <tree create="true">
+                    <field name="product_id" optional="show"/>
+                    <field name="quantity" optional="show"/>
+                    <field name="number_used" optional="show"/>
+                    <field name="company_id" optional="show"/>
+                    <field name="crm_id" optional="show"/>
+                    <field name="stage"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_line_view_filter" model="ir.ui.view">
+            <field name="name">crm.line.search</field>
+            <field name="model">crm.line</field>
+            <field name="arch" type="xml">
+                <search string="Search line">
+                    <field name="crm_id" filter_domain="[('crm_id.name','ilike',self)]" string="Booking"/>
+                    <field name="product_id" filter_domain="[('product_id','ilike',self)]" string="Dịch vụ"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="open_crm_line" model="ir.actions.act_window">
+            <field name="name">CRM line</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.line</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="search_view_id" ref="crm_line_view_filter"/>
+        </record>
+
+        <menuitem id="menu_crm_line"
+                  name="Dòng dịch vụ"
+                  parent="crm.menu_crm_config_lead"
+                  action="open_crm_line"
+                  sequence="10"
+                  groups="base.group_erp_manager"/>
+
+        <!--  REMOVE ME LATER   Thêm hành động chuyển trạng thái crm_line thành Hoàn thành (done)  -->
+<!--        <record id="ir_actions_server_set_crm_line_done" model="ir.actions.server">-->
+<!--            <field name="name">SET DONE (Kết thúc để tạo booking bảo hành)</field>-->
+<!--            <field name="model_id" ref="crm_base.model_crm_line"/>-->
+<!--            <field name="binding_model_id" ref="crm_base.model_crm_line"/>-->
+<!--            <field name="binding_view_types">list,form</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="groups_id" eval="[(4, ref('base.group_erp_manager'))]"/>-->
+<!--            <field name="code">records.write({'stage': 'done'})</field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

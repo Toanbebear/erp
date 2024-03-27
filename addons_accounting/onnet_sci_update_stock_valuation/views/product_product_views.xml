@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="product_product_value_form_view_inherit" model="ir.ui.view">
+            <field name="name">product.product.value.form.view.inherit</field>
+            <field name="model">product.product</field>
+            <field name="priority">1</field>
+            <field name="inherit_id" ref="stock.product_form_view_procurement_button"/>
+            <field name="arch" type="xml">
+                <data>
+                    <button name="action_update_quantity_on_hand" position="before">
+                        <button string="Update Valuation" type="object"
+                            groups="stock.group_stock_manager"
+                            name="update_stock_valuation"
+                            attrs="{'invisible': [('type', '!=', 'product')]}"/>
+
+                    </button>
+                    <button name="action_open_quants" position="before">
+                        <button class="oe_stat_button" name="action_view_svl"
+                                type="object" icon="fa-usd"
+                                attrs="{'invisible': [('type', '!=', 'product')]}"
+                                help="Stock Valuation Layer">
+                            <div class="o_field_widget o_stat_info">
+                                <span class="o_stat_value">
+                                    <field name="stock_value" widget="statinfo" nolabel="1" class="mr4"/>
+                                </span>
+                                <span class="o_stat_text">Value</span>
+                            </div>
+                        </button>
+                    </button>
+
+                </data>
+            </field>
+        </record>
+
+        <record id="action_mass_update_stock_valuation_layer" model="ir.actions.server">
+            <field name="name">Update Value</field>
+            <field name="model_id" ref="model_product_product"/>
+            <field name="binding_model_id" ref="model_product_product"/>
+            <field name="binding_view_types">list</field>
+            <field name="state">code</field>
+            <field name="code">action = records.action_update_stock_valuation_layers()</field>
+        </record>
+
+    </data>
+</odoo>

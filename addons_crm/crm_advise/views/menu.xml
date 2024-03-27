@@ -1,0 +1,27 @@
+<odoo>
+    <data>
+        <menuitem id="crm_config_advise"
+                  name="Phiếu tư vấn"
+                  parent="crm.crm_menu_config"
+                  groups="base.group_system"
+                  sequence="6"/>
+        <menuitem id="crm_advise_desire_menu"
+                  name="Mong muốn"
+                  parent="crm_config_advise"
+                  action="crm_advise.crm_advise_desire_action"
+                  groups="base.group_system"
+                  sequence="3"/>
+        <menuitem id="crm_advise_state_menu"
+                  name="Tình trạng"
+                  parent="crm_config_advise"
+                  action="crm_advise.crm_advise_state_action"
+                  groups="base.group_system"
+                  sequence="1"/>
+        <menuitem id="crm_advise_painpoint_menu"
+                  name="Điểm đau"
+                  parent="crm_config_advise"
+                  action="crm_advise.crm_advise_painpoint_action"
+                  groups="base.group_system"
+                  sequence="2"/>
+    </data>
+</odoo>

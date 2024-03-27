@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="inherit_survey_form" model="ir.ui.view">
+        <field name="name">inherit.survey.form</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey_base.inherit_survey_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='thank_you_message']" position="replace">
+                <field name="thank_you_title" invisible="1"/>
+                <field name="thank_you_message"/>
+            </xpath>
+            <xpath expr="//field[@name='company_id']" position="replace">
+                <group name="config_brand">
+                    <field name="brand_id"/>
+<!--                    <field name="brand_ids" widget="many2many_tags"/>-->
+                </group>
+                <group name="config_company">
+                    <field name="company_id" invisible="1"/>
+                    <field name="company_ids" widget="many2many_tags"/>
+                </group>
+            </xpath>
+            <xpath expr="//group[@name='scoring']" position="after">
+                <group name="filter">
+                    <field name="group_service_ids" widget="many2many_tags"/>
+                    <field name="survey_time_ids" widget="many2many_tags"/>
+                </group>
+            </xpath>
+
+            <xpath expr="//field[@name='is_time_limited']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='time_limit']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='users_can_go_back']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//label[@for='is_time_limited']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='questions_selection']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//group[@name='scoring']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//group[@name='candidates']" position='attributes'>
+                <attribute name="invisible">1</attribute>
+            </xpath>
+
+            <xpath expr="//field[@name='question_and_page_ids']" position="replace">
+                <field name="question_and_page_ids" nolabel="1" widget="question_page_one2many" context="{'default_survey_id': active_id, 'default_questions_selection': questions_selection}">
+                    <tree decoration-bf="is_page" editable="bottom">
+                        <field name="sequence" widget="handle"/>
+                        <field name="title" string="Câu hỏi"/>
+                        <field name="question_type" />
+                        <field name="is_page" invisible="1"/>
+                        <field name="questions_selection" invisible="1"/>
+                        <field name="random_questions_count" attrs="{'column_invisible': [('parent.questions_selection', '=', 'all')], 'invisible': [('is_page', '=', False)]}" />
+                        <control>
+                            <create name="add_section_control" string="Add a section" context="{'default_is_page': True, 'default_questions_selection': 'all'}"/>
+                            <create name="add_question_control" string="Add a question"/>
+                        </control>
+                    </tree>
+                </field>
+            </xpath>
+        </field>
+    </record>
+    <record id="inherit_survey_search" model="ir.ui.view">
+        <field name="name">inherit.survey.search</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_survey_view_search"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="after">
+                <searchpanel>
+<!--                    <field name="group_service_ids" expand="0" enable_counters="1" select="multi" icon="fa-tag"/>-->
+<!--                    <field name="survey_time_ids" select="multi" icon="fa-tag"/>-->
+<!--                    <field name="brand_ids" select="multi" icon="fa-tag"/>-->
+                    <field name="brand_id" icon="fa-tag" string="Thương hiệu"/>
+                    <field name="company_id"/>
+<!--                    <field name="res_model" select="multi" string="Attached To" icon="fa-file-text" color="#338FFC"/>-->
+                </searchpanel>
+            </xpath>
+
+            <xpath expr="//filter[@name='certificate']" position="replace">
+                <filter string="Nháp" name="state_draft" domain="[('state', '=', 'draft')]"/>
+                <filter string="Đang thực hiện" name="state_open" domain="[('state', '=', 'open')]"/>
+            </xpath>
+
+            <xpath expr="//filter[@name='groupby_category']" position="before">
+                    <filter name="by_brand" string="Thương hiệu" domain="[]" context="{'group_by': 'brand_id'}"/>
+                    <filter name="by_company" string="Công ty" domain="[]" context="{'group_by': 'company_id'}"/>
+                    <filter name="owner" string="Người tạo" domain="[]" context="{'group_by':'create_uid'}"/>
+                    <filter name="creation_month" string="Creation Date" domain="[]" context="{'group_by':'create_date'}"/>
+            </xpath>
+
+        </field>
+    </record>
+
+    <record id="inherit_survey_tree" model="ir.ui.view">
+        <field name="name">inherit.survey.tree</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="replace">
+                <tree string="Survey">
+                    <field name="title"/>
+                    <field name="state" string="Trạng thái"/>
+                    <field name="answer_count" string="SL khảo sát"/>
+                    <field name="answer_done_count" string="SL hoàn thành"/>
+                    <field name="company_id"/>
+                    <field name="brand_id"/>
+                </tree>
+            </xpath>
+
+        </field>
+    </record>
+
+</odoo>

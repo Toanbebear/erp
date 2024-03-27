@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="config_source_revenue_tree_view" model="ir.ui.view">
+            <field name="name">config.source.revenue.tree</field>
+            <field name="model">config.source.revenue</field>
+            <field name="arch" type="xml">
+                <tree string="Cấu hình nguồn doanh thu" editable="bottom">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="config_source_revenue_act_window" model="ir.actions.act_window">
+            <field name="name">Cấu hình nguồn bán</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">config.source.revenue</field>
+            <field name="view_mode">tree</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    There is no examples click here to add new ModelTitle.
+                </p>
+            </field>
+        </record>
+
+
+
+    </data>
+</odoo>

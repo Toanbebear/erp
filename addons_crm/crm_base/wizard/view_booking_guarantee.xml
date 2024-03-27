@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_create_booking_guarantee">
+            <field name="name">Tạo Booking bảo hành</field>
+            <field name="model">crm.create.guarantee</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="crm_id" readonly="True" force_save="True" options="{'no_open':True}"/>
+                        <field name="partner_id" readonly="True" force_save="True" options="{'no_open':True}"/>
+                        <field name="brand_id" readonly="True" force_save="True" options="{'no_open':True}"/>
+                        <field name="date_guarantee" required="True" string="Ngày bảo hành"/>
+                        <field name="price_list_guarantee" required="True" options="{'no_open':True,'no_create':True}"/>
+                        <field name="price_list" required="True" options="{'no_open':True,'no_create':True}"/>
+                        <field name="source_id" options="{'no_open':True,'no_create':True}" placeholder="Đây là nguồn của dịch vụ trong Booking BH, mặc định hệ thống sẽ lấy theo nguồn của Booking ban đầu"/>
+                        <field name="note" required="True"/>
+                    </group>
+                    <group string="Quy đổi dịch vụ bảo hành">
+                        <div>
+                            <field name="convert_service_guarantee_ids" context="{'default_crm_create_guarantee_id':id,}" mode="tree">
+                                <tree editable="bottom">
+                                    <field name="crm_create_guarantee_id" optional="hide"/>
+                                    <field name="crm_id" optional="hide"/>
+                                    <field name="type_guarantee" optional="show" width="20" attrs="{'readonly': [('crm_line_guarantee', '=', False)], 'required': [('crm_line_guarantee', '!=', False)]}"/>
+                                    <field name="crm_line_guarantee" optional="show" width="40" options="{'no_open':True, 'no_create':True}"/>
+                                    <field name="product_incurred" optional="show" width="40" options="{'no_open':True, 'no_create':True}"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                    <footer class="text-center">
+                        <button name="confirm" type="object" string="Create booking guarantee" class="btn-info"/>
+                        <button string="Cancel" special="cancel" class="btn-danger"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

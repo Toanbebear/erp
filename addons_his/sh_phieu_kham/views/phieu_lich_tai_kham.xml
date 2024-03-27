@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		<record id="phieu_lich_tai_kham_tree" model="ir.ui.view">
+			<field name="name">Lịch tái khám</field>
+			<field name="model">sh.medical.reexam</field>
+			<field name="type">tree</field>
+			<field name="priority">100</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="id" invisible="1"/>
+					<field name="name" readonly="1" force_save="1"/>
+					<field name="walkin" force_save="1" optional="hide" readonly="1"/>
+					<field name="company" required="True" options="{'no_create': True,'no_open': True}"/>
+					<field name="date" required="1" attrs="{'readonly': [('id','!=',False)]}" force_save="1"/>
+					<field name="date_out" required="1" attrs="{'readonly': [('id','!=',False)]}" force_save="1"/>
+					<field name="patient" class="text-uppercase" readonly="1" force_save="1"/>
+					<field name="services" required="1" options="{'no_create': True,'no_open': True}"
+						   widget="many2many_tags" attrs="{'readonly': [('id','!=',False)]}"
+						   domain="[('id', 'in', parent.service)]" force_save="1"/>
+					<field name="state"/>
+					<field name="end_service"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="phieu_lich_tai_kham_action" model="ir.actions.act_window">
+			<field name="name">Hướng dẫn- Lịch tái khám</field>
+			<field name="res_model">sh.medical.reexam</field>
+			<field name="view_mode">tree,form</field>
+			<field name="domain">[]</field>
+			<field name="context">{}</field>
+			<field name="view_ids"
+				   eval="[(5, 0, 0),
+				   			(0, 0, {'view_mode': 'tree', 'view_id': ref('phieu_lich_tai_kham_tree')})]"/>
+			<field name="help" type="html">
+				<p class="o_view_nocontent_smiling_face">
+					Lịch tái khám
+				</p>
+			</field>
+		</record>
+	</data>
+</odoo>

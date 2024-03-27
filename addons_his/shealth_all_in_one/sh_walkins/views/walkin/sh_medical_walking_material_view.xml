@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--            MATERIALS OF WALKIN-->
+        <record id="view_sh_medical_walkin_material_filter" model="ir.ui.view">
+            <field name="name">Material of walkin Search</field>
+            <field name="model">sh.medical.walkin.material</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search Material of walkin ">
+                    <separator orientation="vertical"/>
+                    <field name="product_id" string="Sản phẩm" select="1"/>
+                    <field name="patient" string="Bệnh nhân" select="1"/>
+                    <field name="services" string="Dịch vụ thực hiện" select="1"/>
+                    <field name="walkin" string="Phiếu khám" select="1"/>
+                    <field name="institution" string="Institution" select="1"/>
+                    <field name="department" string="Department" select="1"/>
+                    <newline/>
+                    <filter string="Có phiếu khám" name="has_walkin" domain="[('walkin', '!=', False)]"/>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter name="group_walkin" string="Phiếu khám" context="{'group_by':'walkin'}"/>
+                        <filter name="group_patient" string="Bệnh nhân" context="{'group_by':'patient'}"/>
+                        <filter name="group_institution" string="Institution" context="{'group_by':'institution'}"/>
+                        <filter name="group_department" string="Department" context="{'group_by':'department'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_materials_of_walkin_tree">
+            <field name="name">Materials of Walkins</field>
+            <field name="model">sh.medical.walkin.material</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string="Materials of walkin Details" create='false' delete="false" editable="top">
+                    <field name="sequence" widget="handle" invisible="1"/>
+                    <field name="walkin" optional="show"/>
+                    <field name="ref_id" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1" optional="show"/>
+                    <field name="patient" optional="show"/>
+                    <field name="product_id" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1" optional="show"/>
+                    <field name="institution" invisible="1" attrs="{'readonly': [('is_readonly','=',True)]}"
+                           force_save="1" optional="hide"/>
+                    <field name="department" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1" optional="show"/>
+                    <field name="init_quantity" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1"
+                           optional="hide"/>
+                    <field name="quantity" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1" optional="show"/>
+                    <field name="uom_id" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1" optional="show"/>
+                    <field name="note" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1" optional="hide"/>
+                    <field name="picking_id" string="Phiếu điều chuyển" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1" optional="show"/>
+                    <field name="location_id" string="Tủ xuất" attrs="{'readonly': [('is_readonly','=',True)]}" optional="hide"
+                           context="{'view_only_name': True}" force_save="1"/>
+                    <field name="interner_note" attrs="{'readonly': [('is_readonly','=',True)]}" force_save="1" optional="show"/>
+                    <field name="services" widget="many2many_tags" attrs="{'readonly': [('is_readonly','=',True)]}"
+                           force_save="1" optional="show"/>
+                    <field name="is_readonly" invisible="1"/>
+                    <field name="date_out" readonly="1" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_materials_of_walkin_tree_view" model="ir.actions.act_window">
+            <field name="name">VTTH theo phiếu khám</field>
+            <field name="res_model">sh.medical.walkin.material</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('institution.his_company', 'in', allowed_company_ids)]</field>
+            <field name="context">{'search_default_group_department': True,'search_default_has_walkin':True}</field>
+            <field name="view_id" eval="sh_medical_materials_of_walkin_tree"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Chưa có dữ liệu
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="action_materials_of_walkin_tree_view" parent="sci_menu_stock_root"
+                  id="shealth_material_of_walkin_menu" sequence="2"
+                  groups="group_sh_medical_physician,group_sh_medical_physician_subclinical,group_sh_medical_stock_manager"/>
+        <record id="shealth_material_of_walkin_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-cubes</field>
+        </record>
+    </data>
+</odoo>

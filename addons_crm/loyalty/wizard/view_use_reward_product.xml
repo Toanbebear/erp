@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="use_reward_form" model="ir.ui.view">
+            <field name="name">Use reward</field>
+            <field name="model">crm.loyalty.use.reward</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="loyalty_id" readonly="True" force_save="True"/>
+                            <field name="brand_id" readonly="True" force_save="True"/>
+                            <field name="partner_id" readonly="True" force_save="True"/>
+                            <field name="reward_id" readonly="True" force_save="True" options="{'no_create':True, 'no_open':True}"/>
+                            <field name="type" readonly="True" force_save="True"/>
+                            <field name="product_ids" readonly="True" invisible="True"/>
+                            <field name="pricelist_id" required="1" options="{'no_create':True, 'no_open':True}" domain="[('brand_id', '=', brand_id), ('type', '!=', 'guarantee')]"/>
+                            <field name="booking_id" required="True" options="{'no_create':True}" domain="[('type','=','opportunity'), ('brand_id','=', brand_id)]"/>
+                            <field name="product_id" required="True" options="{'no_create':True}"
+                                   attrs="{'invisible': [('type', 'not in', ['prd','service'])]}"/>
+                        </group>
+                        <footer class="text-center">
+                            <button name="confirm" type="object" string="Xác nhận" class="btn-info"/>
+                            <button string="Cancel" class="btn-danger" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

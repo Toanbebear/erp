@@ -1,0 +1,4 @@
+.crm_sale_payment_service_width_special table thead > tr > th:nth-child(2){
+    width: 35rem !important;
+    max-width: none !important;
+}

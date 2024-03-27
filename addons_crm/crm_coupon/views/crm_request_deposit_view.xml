@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_request_deposit_form" model="ir.ui.view">
+            <field name="name">inherit_request_deposit_form</field>
+            <field name="model">crm.request.deposit</field>
+            <field name="inherit_id" ref="crm_base.form_request_deposit"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='convert_payment']" position="before">
+                     <field name="status" widget="statusbar"/>
+                </xpath>
+                <xpath expr="//field[@name='coupon_id']" position="replace">
+                    <field name="campaign_id" domain="[('campaign_status', '=', '2')]"/>
+                    <field name="used" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+        <record id="inherit_request_deposit_wizard" model="ir.ui.view">
+            <field name="name">inherit_request_deposit_wizard</field>
+            <field name="model">crm.request.deposit</field>
+            <field name="inherit_id" ref="crm_base.form_request_deposit_wizard"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='coupon_id']" position="replace">
+                    <field name="campaign_id" domain="[('campaign_status', '=', '2'), ('brand_id', '=', brand_id)]" options="{'no_open':True,'no_create':True}" attrs="{'invisible':[('payment_type','!=','inbound')],'required':[('payment_type','=','inbound')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

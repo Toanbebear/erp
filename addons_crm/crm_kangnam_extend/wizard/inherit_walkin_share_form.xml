@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="walkin_share_form_extend" model="ir.ui.view">
+            <field name="name">walkin.share.form.extend</field>
+            <field name="model">create.walkin.share</field>
+            <field name="inherit_id" ref="crm_booking_share.walkin_share_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="create_walkin_share" type="object" string="Tạo" class="btn-primary btn-lg fa fa-check"/>
+                        <button string="Hủy thao tác" class="btn-secondary btn-lg fa fa-times" special="cancel"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="crm_check_in_service_category_act">
+            <field name="name">Checkin: Nhóm dịch vụ</field>
+            <field name="res_model">crm.check.in.service.category</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <record id="crm_check_in_service_category_tree_view" model="ir.ui.view">
+            <field name="name">Checkin: Nhóm dịch vụ</field>
+            <field name="model">crm.check.in.service.category</field>
+            <field name="arch" type="xml">
+                <tree editable='bottom' delete="false">
+                    <field name="name" required="True"/>
+                </tree>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_category_property_form_inherit" model="ir.ui.view">
+            <field name="name">view_category_property_form_inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="account.view_category_property_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='property_account_expense_categ_id']" position="after">
+                    <field name="property_category_account_analytic_id" groups="analytic.group_analytic_accounting"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="web_monetary_format_backend" name="web_monetary_format assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript"
+                    src="/web_monetary_format/static/src/js/monetary_format.js"></script>
+        </xpath>
+    </template>
+</odoo>
+

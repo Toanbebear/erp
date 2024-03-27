@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_booking_loyalty_form" model="ir.ui.view">
+            <field name="name">Loyalty booking</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+<!--                    <div class="row">-->
+<!--                        <label for="loyalty_id" string="Thẻ thành viên"/>-->
+<!--                        <div class="col-7">-->
+<!--                            <field name="loyalty_id" readonly="True" force_save="True"/>-->
+<!--                            <button name="show_reward" type="object" string="Ưu đãi thẻ" class="btn-info"/>-->
+<!--                        </div>-->
+<!--                    </div>-->
+                    <field name="loyalty_id" readonly="True" force_save="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_sale_order_loyalty_form" model="ir.ui.view">
+            <field name="name">Loyalty sale order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="loyalty_id" readonly="True" force_save="True" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

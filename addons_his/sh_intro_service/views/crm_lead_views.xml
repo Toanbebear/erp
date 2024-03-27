@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_lead_form_booking_add_field" model="ir.ui.view">
+            <field name="name">crm_lead_form_booking_add_field</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='service']/field[@name='product_id']" position="after">
+                    <field name="x_company_do_service_id" options="{'no_open':True,'no_create':True}"
+                        attrs="{'readonly':['|',('prg_ids','!=', []), ('stage','!=','new')]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

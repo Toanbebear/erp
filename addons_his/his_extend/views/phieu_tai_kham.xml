@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="sh_medical_evaluation_tree_view_extend">
+            <field name="name">Tái khám</field>
+            <field name="model">sh.medical.evaluation</field>
+            <field name="arch" type="xml">
+                <tree string='Tái khám' decoration-danger="state=='Inprogress'" decoration-success="state=='Completed'"
+                      default_order="evaluation_start_date desc" delete="false">
+                    <field name="name"/>
+                    <field name="patient" class="text-uppercase"/>
+                    <field name="doctor"/>
+                    <field name="appointment" invisible="1"/>
+                    <field name="chief_complaint" optional="hide"/>
+                    <field name="evaluation_start_date"/>
+                    <field name="indication" optional="hide"/>
+                    <field name="bmi" invisible="1"/>
+                    <field name="evaluation_type" invisible="1"/>
+                    <field name="customer_reviews" optional="hide"/>
+                    <field name="info_diagnosis" optional="hide" string="Chẩn đoán"/>
+                    <field name="directions" optional="hide" string="Kế hoạch điều trị"/>
+                    <field name="notes" optional="hide" string="Thông tin thêm"/>
+                    <field name="next_appointment_date" optional="hide" string="Ngày hẹn TK tiếp theo"/>
+                    <field name="doctor_bh" optional="hide" string="BS chỉ định BH"/>
+                    <field name="warranty_appointment_date" optional="hide" string="Ngày hẹn BH"/>
+                    <field name="state" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_evaluation_form_view_extend">
+            <field name="name">Evaluations</field>
+            <field name="model">sh.medical.evaluation</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Evaluation" duplicate="false" edit_expr="state not in ['Completed']"
+                      delete_expr="state not in ['Completed']">
+                    <header>
+                        <button confirm="Bạn có chắc muốn đánh dấu phiếu tái khám này là Đã hoàn thành?"
+                                name="set_to_completed"
+                                attrs="{'invisible': ['|',('name','=','/'),('state','=','Completed')]}"
+                                string="Đánh dấu đã hoàn thành" type="object" class="btn-warning fa fa-step-forward"
+                                context="{'ignore_expired': evaluation_start_date}" title="Hoàn thành phiếu tái khám"
+                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Bạn có chắc muốn đánh dấu phiếu tái khám này là Đang thực hiện?"
+                                title="Chuyển phiếu tái khám về trạng thái 'Đang thực hiện"
+                                name="set_to_inprogress" states="Completed" string="Đang thực hiện" type="object"
+                                class="btn-warning fa fa-step-forward"
+                                groups="shealth_all_in_one.group_sh_medical_manager"
+                                attrs="{'invisible':['|', ('check_current_company', '!=', True), ('state', 'not in', ('Completed'))]}"/>
+                        <button name="update_notes_complaint" states="Completed" string="Cập nhật Tóm tắt tái khám"
+                                type="object" title="Cập nhật tóm tắt tái khám"
+                                class="btn-warning fa fa-pencil-square-o"
+                                attrs="{'invisible':['|', ('check_current_company', '!=', True), ('state', 'not in', ('Completed'))]}"/>
+                        <button name="view_evaluations" string="Lịch sử tái khám" type="object"
+                                title="Xem lịch sử tái khám của bệnh nhân"
+                                class="btn-info fa fa-history"/>
+                        <field name="state" widget="statusbar"
+                               statusbar_colors='{"InProgress":"red","Completed":"green"}'/>
+                    </header>
+                    <sheet>
+                        <div class="row">
+                            <div class="oe_title col-2">
+                                <label for="name" string="Mã phiếu:"/>
+                                <h2>
+                                    <field name="name" class="oe_inline" widget="copy_char"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-2">
+                                <label for="partner_id" string="Tên khách hàng:"/>
+                                <h2>
+                                    <field name="partner_id"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-1">
+                                <label for="dob" string="Ngày sinh:"/>
+                                <h2>
+                                    <field name="dob" force_save="1" readonly="1"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-5">
+                                <label for="address" string="Địa chỉ:"/>
+                                <h2>
+                                    <field name="address" style="white-space: unset;overflow:unset"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-2">
+                                <label for="name" string="Phiếu khám liên quan:"/>
+                                <h2>
+                                    <field name="walkin"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page string="Thông tin chung" name="information" icon="fa fa-info">
+                                <group>
+                                    <group class="col-4">
+                                        <field name="patient" class="text-uppercase" readonly="1" force_save="1"
+                                               icon="fa fa-user"/>
+                                        <field name="services" required="1" force_save="1" widget="many2many_tags"
+                                               icon="fa fa-list-ul"
+                                               options="{'no_create': True,'no_open':True}"/>
+                                        <field name="allow_institutions" options="{'no_create': True,'no_open':True}"
+                                               force_save="1" icon="fa fa-building"
+                                               widget="many2many_tags" readonly="1"/>
+                                        <field name="institution" options="{'no_create': True,'no_open':True}"
+                                               force_save="1" icon="fa fa-building"
+                                               required="1" readonly="1"/>
+                                        <field name="ward" options="{'no_create': True,'no_open':True}"
+                                               icon="fa fa-building-o"
+                                               domain="[('type','not in',['Examination','Laboratory']), ('institution', '=', institution)]"
+                                               force_save="1"
+                                               required="1"/>
+                                        <field name="room" options="{'no_create': True,'no_open':True}"
+                                               icon="fa fa-building-o"
+                                               domain="[('department','=',ward)]" force_save="1" required="1"/>
+                                        <field name="chief_complaint" icon="fa fa-sticky-note-o"/>
+                                        <field name="supply_domain" invisible="1"/>
+                                        <field name="check_current_company" invisible="1" readonly="1"/>
+                                        <field name="department_type" invisible="1"/>
+                                    </group>
+                                    <group class="col-4">
+                                        <field name="doctor_order" options="{'no_create': True,'no_open':True}"
+                                               icon="fa fa-user"
+                                               string="Trưởng ekip phẫu thuật"/>
+                                        <field name="doctor" options="{'no_create': True}" string="Bác sĩ tái khám"
+                                               icon="fa fa-user"
+                                               attrs="{'readonly':[('state','=','Completed')]}"
+                                               domain="[('is_pharmacist', '=', False),('speciality', 'not in', [%(shealth_all_in_one.33)d,%(shealth_all_in_one.5)d]),('department','in', ward)]"
+                                               force_save="1" required="0"/>
+                                        <field name="evaluation_type" attrs="{'readonly':[('state','=','Completed')]}"
+                                               force_save="1" invisible="1"/>
+                                        <field name="evaluation_services" icon="fa fa-list-ul"
+                                               attrs="{'readonly':[('state','=','Completed')]}"
+                                               force_save="1" widget="many2many_tags" required="1"
+                                               options="{'no_create': True,'no_open':True}"/>
+                                        <field name="brand_id" invisible="1"/>
+                                        <field name="evaluation_start_date" icon="fa fa-calendar"/>
+                                        <field name="evaluation_end_date" icon="fa fa-calendar"/>
+                                        <field name="region" invisible="1"/>
+                                        <field name="customer_reviews" icon="fa fa-sticky-note-o"/>
+                                    </group>
+                                    <group class="col-4">
+                                        <field name="next_appointment_date" icon="fa fa-calendar"
+                                               attrs="{'readonly':[('has_pc_next_appointment','=',True)]}"/>
+                                        <button name="action_create_next_appointment_pc"
+                                                attrs="{'invisible': ['|',('has_pc_next_appointment','=',True),('next_appointment_date','=',False)]}"
+                                                string="Tạo phonecall TK" type="object"
+                                                class="btn-info mr-5 oe_read_only"/>
+                                        <field name="has_pc_next_appointment" invisible="1"/>
+                                        <field name="doctor_bh" options="{'no_create': True}"
+                                               string="Bác sĩ chỉ định BH" icon="fa fa-user"
+                                               attrs="{'readonly':[('state','=','Completed')]}"
+                                               domain="[('is_pharmacist', '=', False),('speciality', 'not in', [%(shealth_all_in_one.33)d,%(shealth_all_in_one.5)d]),('department','in', ward)]"
+                                               force_save="1" required="0"/>
+                                        <field name="warranty_appointment_date" icon="fa fa-calendar"
+                                               attrs="{'readonly':[('has_pc_warranty_appointment','=',True)]}"/>
+                                        <button name="action_create_warranty_appointment_pc"
+                                                attrs="{'invisible': ['|',('has_pc_warranty_appointment','=',True),('warranty_appointment_date','=',False)]}"
+                                                string="Tạo phonecall BH" type="object"
+                                                class="btn-info mr-5 oe_read_only"/>
+                                        <field name="has_pc_warranty_appointment" invisible="1"/>
+                                    </group>
+                                </group>
+                                <group string="Tóm tắt tái khám">
+                                    <field name="notes_complaint" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Bác sĩ phẫu thuật" name="surgery_history" icon="fa fa-users"
+                                  attrs="{'invisible': [('department_type', '!=', 'Surgery')]}">
+                                <field name="surgery_history_ids" readonly="1" force_save="1" nolabel="1">
+                                    <tree editable="top">
+                                        <field name="name" required="1" invisible="1"/>
+                                        <field name="service_performances" required="1"/>
+                                        <field name="main_doctor" widget="many2many_tags"/>
+                                        <field name="sub_doctor" widget="many2many_tags"/>
+                                        <field name="surgery_date"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Khảo sát sau phẫu thuật" name="surgery_history_survey"
+                                  icon="fa fa-question-circle"
+                                  attrs="{'invisible': [('department_type', '!=', 'Surgery')]}">
+                                <field name="surgery_history_survey_ids" nolabel="1"
+                                       context="{'default_sh_evaluation_surgery_id':id}">
+                                    <tree editable="bottom" class="tree_no_open">
+                                        <field name="name" required="1" invisible="1"/>
+                                        <field name="sh_evaluation_surgery_id" invisible="1"/>
+                                        <field name="service_performances" required="1"
+                                               options='{"no_open": True, "no_create": True}'/>
+                                        <field name="main_doctor" widget="many2many_tags"
+                                               options='{"no_open": True, "no_create": True}'/>
+                                        <field name="sub_doctor" widget="many2many_tags"
+                                               options='{"no_open": True, "no_create": True}'/>
+                                        <field name="surgery_date"/>
+                                        <field name="satisfaction_level" required="True"/>
+                                        <field name="doctor_attitude" required="True"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Dấu hiệu" name="signs" icon="fa fa-list">
+                                <group string="Các dấu hiệu sống">
+                                    <group>
+                                        <field name="temperature"/>
+                                        <field name="diastolic"/>
+                                        <field name="respiratory_rate"/>
+                                    </group>
+                                    <group>
+                                        <field name="systolic"/>
+                                        <field name="bpm"/>
+                                        <field name="osat"/>
+                                    </group>
+                                </group>
+
+                                <group string="Nhân trắc học">
+                                    <group>
+                                        <field name="weight" on_change="onchange_height_weight(height,weight)"/>
+                                        <field name="abdominal_circ"/>
+                                        <field name="bmi"/>
+                                    </group>
+                                    <group>
+                                        <field name="height" on_change="onchange_height_weight(height,weight)"/>
+                                        <field name="head_circumference"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Chẩn đoán" name="diagnosis" icon="fa fa-list">
+                                <group>
+                                    <field name="indication" string="Mã bệnh ICD10" options="{'no_create': True}"/>
+                                </group>
+                                <group string="Chẩn đoán">
+                                    <field name="info_diagnosis" nolabel="1"/>
+                                </group>
+                                <group string="Hướng điều trị tiếp theo">
+                                    <field name="directions" nolabel="1"/>
+                                </group>
+                            </page>
+                            <page string="Vật tư tiêu hao" name="material" attrs="{'invisible': [('name', '=', '/')]}"
+                                  icon="fa fa-list">
+                                <group>
+                                    <group>
+                                        <field name="other_bom" string="CHỌN BOM" widget="many2many_tags"
+                                               domain="[('service_id', 'in', services),('region', '=', region),('type', '=', 'Evaluation')]"
+                                               options="{'no_create': True}"
+                                               attrs="{'readonly': [('state','in',['Completed'])]}" force_save="1"/>
+                                        <div class="sh-box-control-print">
+                                            <button name="reset_all_supply"
+                                                    confirm="Bạn có chắc chắn muốn reset toàn bộ Thuốc/VTTH đã kê bên dưới?"
+                                                    string="Xóa tất cả VTTH" type="object"
+                                                    class="btn-warning fa fa-trash mr-5 oe_edit_only"
+                                                    groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+                                        </div>
+                                    </group>
+                                    <group string="Lưu ý:">
+                                        <ul class="text-info">
+                                            <li>
+                                                <i><i class="text-warning">Màu vàng</i>: Vật tư/Thuốc <b>vượt quá định
+                                                    mức
+                                                </b> hoặc <b>không có trong BOM</b>.
+                                                </i>
+                                            </li>
+                                            <li>
+                                                <i><i class="text-danger">Màu đỏ</i>: Vật tư/Thuốc <b>hết toàn viện</b>.
+                                                </i>
+                                            </li>
+                                            <li>
+                                                <i><i class="fa fa-warning text-warning"/>: Vật tư/Thuốc <b>hết tại khoa
+                                                    phòng</b>.
+                                                </i>
+                                            </li>
+                                        </ul>
+                                    </group>
+                                </group>
+                                <group string="Vật tư">
+                                    <field name="supplies" nolabel="1"
+                                           context="{'view_only_name': True, 'ignore_expired': evaluation_start_date}"
+                                           attrs="{'readonly': [('state','in',['Inprogress'])]}" force_save="1">
+                                        <tree string="Supplies" editable="bottom" limit="200" class="tree_no_open"
+                                              decoration-danger="parent.state in ['In Progress'] and qty_used > qty_avail"
+                                              decoration-warning="qty_used > qty">
+                                            <field name="sequence" widget="handle"/>
+                                            <field name="medicament_type"/>
+                                            <field name="supply" domain="[('id', 'in', parent.supply_domain)]"
+                                                   options="{'no_create': True,'no_open': True}"
+                                                   attrs="{'readonly': [('qty','>',0)]}" force_save="1"/>
+                                            <field name="qty" readonly="1" force_save="1" optional="hide"/>
+                                            <field name="qty_avail" optional="hide" readonly="1" force_save="1"
+                                                   attrs="{'column_invisible':[('parent.state', 'in', ['Completed'])]}"
+                                                   groups="shealth_all_in_one.group_sh_medical_manager"/>
+                                            <field name="qty_in_loc" optional="hide" readonly="1" force_save="1"/>
+                                            <field name="is_warning_location" invisible="1" readonly="1"
+                                                   force_save="1"/>
+                                            <field name="qty_used"/>
+                                            <field name="uom_id" readonly="1" force_save="1"
+                                                   options="{'no_create': True,'no_open': True}" required="1"/>
+                                            <field name="services" required="1" domain="[('id', 'in', parent.services)]"
+                                                   widget="many2many_tags"
+                                                   options="{'no_create': True,'no_open':True}"/>
+                                            <field name="service_related" invisible="1"/>
+                                            <field name="location_id" readonly="1" force_save="1" optional="hide"
+                                                   required="1" options="{'no_create': True,'no_open': True}"
+                                                   context="{'view_only_name': True}" domain="[('name','ilike','Tủ')]"/>
+                                            <field name="notes" attrs="{'required':[('is_diff_bom', '=', True)]}"/>
+                                            <field name="is_diff_bom" invisible="1"/>
+                                            <button readonly="True" icon="fa-warning text-warning"
+                                                    title="Tủ trực không đủ số lượng"
+                                                    attrs="{'invisible': ['|',('is_warning_location', '=', False),('parent.state','in',['Completed'])]}"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="Thành viên tham gia" name="team_member" icon="fa fa-users">
+                                <field name="evaluation_team" nolabel="1"
+                                       context="{'default_service_performances': services}">
+                                    <tree string="Team Members" editable="bottom" class="tree_no_open">
+                                        <!--                                        <field name="team_member" options="{'no_create': True}" domain="[('is_pharmacist', '=', False), ('company_id', 'in', allowed_company_ids)]"/>-->
+                                        <field name="team_member" options="{'no_create': True}"
+                                               domain="[('is_pharmacist', '=', False)]"/>
+                                        <field name="role" options="{'no_create': True}" required="1"/>
+                                        <field name="notes" optional="hide"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Thông tin thêm" name="extra_information" icon="fa fa-info">
+                                <field name="notes" nolabel="1"/>
+                            </page>
+                            <page string="Bệnh nhân lưu" name="inpatient" icon="fa fa-h-square"
+                                  groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse">
+                                <field name="inpatients"
+                                       context="{'default_institution': institution,'default_walkin': walkin,'default_admission_type':'Elective','default_patient':patient,'default_evaluation':id,'default_is_new_request':True}"
+                                       domain="[('walkin', '=', active_id)]">
+                                    <tree class="sh_has_icon tree_no_open" delete="false" string="Inpatient Admission"
+                                          decoration-info="state=='Draft'" decoration-danger="state=='Hospitalized'"
+                                          decoration-success="state=='Discharged'" decoration-muted="state=='Cancelled'"
+                                          editable="bottom">
+                                        <field name="walkin" optional="hide" readonly="1" force_save="1"/>
+                                        <field name="id" invisible="1"/>
+                                        <field name="name"/>
+                                        <field name="patient" class="text-uppercase" readonly="1" force_save="1"/>
+                                        <field name="admission_type" invisible="1"/>
+                                        <field name="institution" required="1"
+                                               domain="[('id', 'in', parent.allow_institutions)]"
+                                               options="{'no_create': True,'no_open': True}"/>
+                                        <field name="ward" required="1" options="{'no_create': True,'no_open': True}"/>
+                                        <field string="Phòng" name="room" required="1"
+                                               options="{'no_create': True,'no_open':True}"
+                                               attrs="{'readonly':[('state','!=','Draft')]}"/>
+                                        <field name="bed" options="{'no_create': True,'no_open': True}"
+                                               domain="[('state','=','Free'),('room','=',room)]"/>
+                                        <field name="services" options="{'no_create': True,'no_open': True}"
+                                               required="1" widget="many2many_tags"
+                                               attrs="{'readonly': [('state','in',['Invoiced','Discharged','Cancelled'])]}"
+                                               domain="[('id', 'in', parent.services)]" force_save="1"/>
+                                        <field name="admission_date" required="1"/>
+                                        <field name="discharge_date"/>
+                                        <field name="state" readonly="1" force_save="1"/>
+
+                                        <button name="view_detail_inpatient"
+                                                groups="shealth_all_in_one.group_sh_medical_physician_surgery"
+                                                type="object" icon="fa-file-text-o" title="Chi tiết"/>
+                                        <button attrs="{'invisible': ['|',('state','!=','Draft'),('id','=',False)]}"
+                                                class="oe_edit_only" name="unlink" type="object" icon="fa-trash-o"
+                                                title="Xóa" style="font-size: 20px;color:#000;"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sh_medical_evaluation_action_extend" model="ir.actions.act_window">
+            <field name="name">Tái khám</field>
+            <field name="res_model">sh.medical.evaluation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('his_extend.sh_medical_evaluation_tree_view_extend')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('his_extend.sh_medical_evaluation_form_view_extend')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new evaluation.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

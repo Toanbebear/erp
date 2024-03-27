@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="res_partner_crm_line_crm_line_potential" model="ir.ui.view">
+            <field name="name">res.partner.crm.line.crm.line.potential</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='open_form_get_history_phone_call']" position="before">
+                    <button name="view_crm_advise_potential" string="Dịch vụ tiềm năng"
+                                type="object" class="btn-info"/>
+                </xpath>
+                <xpath expr="//page[@name='CRM']" position="replace">
+                    <page name="partner_lead" string="Lead" icon="fa fa-list">
+                        <field name="lead_ids" domain="[('type', '=', 'lead')]"  context="{'form_view_ref': 'crm.crm_lead_view_form'}">
+                            <tree create="0">
+                                <field name="contact_name" string="Khách hàng"/>
+                                <field name="phone" string="Điện thoại"/>
+                                <field name="state_id" string="Tỉnh/TP"/>
+                                <field name="source_id" string="Nguồn"/>
+                                <field name="company_id" string="Chi nhánh"/>
+                                <field name="stage_id" string="Trạng thái"/>
+                                <field name="create_by" string="Người tạo"/>
+                                <field name="create_on" string="Ngày tạo"/>
+                            </tree>
+                        </field>
+                    </page>
+
+                    <page name="partner_booking" string="Booking" icon="fa fa-calendar-check-o">
+                        <field name="booking_ids" domain="[('type', '!=', 'lead')]"  context="{'form_view_ref': 'crm_base.crm_lead_form_booking'}">
+                            <tree create="0">
+                                <field name="booking_date" string="Ngày hẹn lịch"/>
+                                <field name="arrival_date" string="Ngày đến cửa"/>
+                                <field name="name"/>
+                                <field name="partner_id" string="Tên liên hệ"/>
+                                <field name="company_id" string="Chi nhánh"/>
+                                <field name="stage_id" string="Trạng thái"/>
+                                <field name="create_on"/>
+                                <field name="create_uid" string="Người tạo"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_form_cancel_crm_line_potential" model="ir.ui.view">
+            <field name="name">view.form.cancel.crm.line.potential</field>
+            <field name="model">crm.line.cancel</field>
+            <field name="inherit_id" ref="crm_base.view_form_cancel_crm_line"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                      <field name="is_potential" required="True" widget="selection_badge"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

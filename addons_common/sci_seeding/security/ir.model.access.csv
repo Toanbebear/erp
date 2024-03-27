@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_seeding_user_name,access_seeding_user_id,model_seeding_user,,1,1,1,1
+access_seeding_booking_name,access_seeding_booking_id,model_seeding_booking,,1,1,1,1

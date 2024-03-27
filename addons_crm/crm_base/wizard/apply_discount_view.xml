@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+       <record model="ir.ui.view" id="view_add_amount_paid_crm">
+            <field name="name">Chỉnh tiền khách trả</field>
+            <field name="model">crm.lead.paid</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="crm_id" invisible="True"/>
+                            <field name="add_amount_paid_crm" required="1" widget="monetary_format"/>
+                            <field name="amount_paid_crm_text" required="1" readonly="1"/>
+                        </group>
+
+                        <footer class="text-center">
+                            <button name="add_amount_paid_crm_pay" type="object"
+                                    string="Cập nhật"
+                                    class="btn-info"/>
+                            <button string="Cancel" class="btn-danger" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_apply_discount_prg">
+            <field name="name">Apply discount program</field>
+            <field name="model">crm.apply.discount.program</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="campaign_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="type_action" required="True"/>
+                            <field name="program_discount_id" options="{'no_open':True,'no_create':True}"
+                                   required="True"/>
+                            <field name="description" attrs="{'invisible': [('type_action', '=', 'apply')]}"/>
+                            <field name="crm_id" invisible="True"/>
+                            <field name="partner_id" invisible="True"/>
+                        </group>
+                        <footer class="text-center">
+                            <button name="check_prg" type="object" string="Set discount" class="btn-info"
+                                    attrs="{'invisible': [('type_action', '!=', 'apply')]}"/>
+                            <button name="reverse_prg_ids" type="object" string="Hoàn lại" class="btn-warning"
+                                    attrs="{'invisible': [('type_action', '=', 'apply')]}"/>
+                            <button special="cancel" string="Cancel" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

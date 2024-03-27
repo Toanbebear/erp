@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <record id="res_brand_form_inherit" model="ir.ui.view">
+        <field name="name">res.brand.form.inherit</field>
+        <field name="model">res.brand</field>
+        <field name="inherit_id" ref="sci_brand.view_form_brand" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook" position="inside">
+                <page name="survey" string="Khảo sát">
+                    <group name="survey_settings">
+                        <field name="survey_id"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

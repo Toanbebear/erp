@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="customer_persona_lead_view_inherit" model="ir.ui.view">
+            <field name="name">crm_lead_view_inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm.crm_lead_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="customer_persona" string="Chân dung khách hàng">
+                        <div>
+                            <label for="desires" string="Mong muốn" style="color: #2ecc71;font-size: 25px;"
+                                   class="fa fa-smile-o"/>
+                            <br/>
+                            <field name="desires"
+                                   context="{'default_lead_id':id, 'default_type':'desires'}">
+                                <tree editable="top">
+                                    <field name="lead_id" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="name" width="50%" required="1"/>
+                                    <field name="create_on" width="25%" readonly="1"/>
+                                    <field name="create_by" width="25%" readonly="1"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <div>
+                            <label for="pain_point" string="Điểm đau" style="color: #d35400;font-size: 25px;"
+                                   class="fa fa-frown-o"/>
+                            <field name="pain_point"
+                                   context="{'default_lead_id':id, 'default_type':'pain_point'}">
+                                <tree editable="top">
+                                    <field name="lead_id" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="name" width="50%" required="1"/>
+                                    <field name="create_on" width="25%" readonly="1"/>
+                                    <field name="create_by" width="25%" readonly="1"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </page>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="action_open_ticket" class="btn-info" string="Mở ticket" type="object"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="lead_view_inherit_add_button_open_ticket" model="ir.ui.view">
+            <field name="name">lead_view_inherit_add_button_open_ticket</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_open_ticket" class="btn-info" string="Mở ticket" type="object"/>
+                </xpath>
+                <xpath expr="//header" position="inside">
+                    <button name="view_customer_persona" class="btn-info" string="Xem chân dung khách hàng" type="object"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="inherit_crm_discount_program_form" model="ir.ui.view">
+            <field name="name">inherit_crm_discount_program_form</field>
+            <field name="model">crm.discount.program</field>
+            <field name="inherit_id" ref="crm_base.crm_discount_program_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//header/field[@name='stage_prg']" position="before">
+                    <button name="set_new" class="btn-danger" string="Đặt là Mới" groups="crm_base.promotion_user" type="object" attrs="{'invisible': [('stage_prg', '=', 'new')]}"/>
+                    <button name="set_active" class="oe_highlight" string="Đặt là Có hiệu lực" groups="crm_base.promotion_user" type="object" attrs="{'invisible': [('stage_prg', '=', 'active')]}"/>
+                    <button name="set_expire" class="oe_highlight" string="Đặt là Hết hiệu lực" groups="crm_base.promotion_user" type="object" attrs="{'invisible': [('stage_prg', '=', 'expire')]}"/>
+                    <button name="open_program_renewal" class="oe_highlight" string="Gia hạn Coupon" type="object"/>
+                </xpath>
+
+                <xpath expr="//group/group[2]" position="after">
+                    <group>
+                        <field name="note"/>
+                    </group>
+                    <group>
+                        <dl>
+                            <dt>
+                                <i class="text-info">
+                                    Đối với trường
+                                    <b>Chỉ số (Index)</b>
+                                </i>
+                            </dt>
+                            <ul>
+                                <li>
+                                    <dd class="text-info">
+                                        <i><i class="text-success">0</i>: Đối với với các dịch vụ là <b>Riêng lẻ</b>.
+                                        </i>
+                                    </dd>
+                                </li>
+                                <li>
+                                    <dd class="text-info">
+                                        <i><i class="text-success">Các giá trị giống nhau</i>: Đối với với các dịch vụ
+                                            là <b>
+                                                Combo</b>.
+                                        </i>
+                                    </dd>
+                                </li>
+                            </ul>
+                            <dt>
+                                <i class="text-info">Đối với trường
+                                    <b>Đã sử dụng (Used)</b>
+                                </i>
+                            </dt>
+                            <ul>
+                                <li>
+
+                                    <dd class="text-info">
+                                        <i><i class="fa fa-check text-success"/>: Nếu điều kiện của dịch vụ là <b>Đã sử
+                                            dụng
+                                            (Used)</b>.
+                                        </i>
+                                    </dd>
+                                </li>
+                            </ul>
+                        </dl>
+                    </group>
+                </xpath>
+
+                <xpath expr="//group" position="after">
+                    <notebook>
+                        <page string="Product/Category product" attrs="{'invisible': [('coupon_type', '=', '2')]}">
+                            <field name="discount_program_list" context="{'default_discount_program':id,}"
+                                   mode="tree">
+                                <tree editable="1">
+                                    <field name="index" width="5%"/>
+                                    <field name="gift" width="5%"/>
+                                    <field name="required_combo" width="5%"/>
+                                    <field name="used" width="5%"/>
+                                    <field name="incremental" width="5%"/>
+                                    <field name="minimum_group" width="5%"
+                                           attrs="{'readonly': ['|',('gift', '=', True), ('used', '=', True)]}"/>
+                                    <field name="type_product" width="10%"/>
+                                    <field name="brand_id" invisible="1"/>
+                                    <field name="discount_program" invisible="1"/>
+                                    <field name="product_ctg_ids" width="25%" widget="many2many_tags"
+                                           attrs="{'invisible': [('type_product', '=', 'product')]}"/>
+                                    <field name="product_ids" width="30%" widget="many2many_tags"
+                                           attrs="{'invisible': [('type_product', '=', 'product_ctg')]}"/>
+                                    <field name="dc_min_qty" width="10%"
+                                           attrs="{'readonly': ['|',('gift', '=', True), ('used', '=', True)]}"/>
+                                    <field name="dc_max_qty" width="10%"
+                                           attrs="{'readonly': ['|',('gift', '=', True), ('used', '=', True)]}"/>
+                                    <field name="type_discount" width="10%"
+                                           attrs="{'readonly': ['|',('gift', '=', True), ('used', '=', True)]}"/>
+                                    <field name="discount" width="10%"
+                                           attrs="{'readonly': ['|',('gift', '=', True), ('used', '=', True)]}"/>
+                                    <field name="discount_bonus" width="10%"
+                                           attrs="{'readonly': [('type_product', '=', 'product')]}"/>
+                                    <field name="combo_note" string="Mô tả" width="10%"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </xpath>
+                <xpath expr="//sheet" position="after">
+                    <footer>
+                        <div class="crm_box_change_infor">
+                            <div class="container">
+                                <div class="row pt-3">
+                                    <div class="col-lg-12">
+                                        <span style="padding:5px;">
+                                            <strong>Create on:</strong>
+                                            <field name="create_on" readonly="True" force_save="True"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Create by:</strong>
+                                            <field name="create_by" readonly="True" force_save="True"
+                                                   options="{'no_open':True,}"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Modify on:</strong>
+                                            <field name="write_date"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Modify by:</strong>
+                                            <field name="write_uid"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_discount_program_list_form">
+            <field name="name">Coupon chi tiết</field>
+            <field name="model">crm.discount.program.list</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="discount_program" required="True"
+                                       options="{'no_create_edit': True, 'no_create': True}"/>
+                                <field name="discount_program_stage" readonly="True"/>
+                                <field name="type_product"/>
+                                <field name="product_ctg_ids" widget="many2many_tags"
+                                       attrs="{'invisible': [('type_product', '=', 'product')], 'required':[('type_product', '=', 'product_ctg')]}"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                                <field name="product_ids" widget="many2many_tags"
+                                       attrs="{'invisible': [('type_product', '=', 'product_ctg')], 'required':[('type_product', '=', 'product')]}"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                                <field name="index"/>
+                                <field name="used" invisible="1"/>
+                                <field name="type_product_used" attrs="{'invisible': [('coupon_type', '!=', '8')]}"/>
+                                <field name="product_ctg_used_ids" widget="many2many_tags"
+                                       attrs="{'invisible': ['|', ('type_product_used', '=', 'product'), ('coupon_type', '!=', '8')], 'required':[('type_product_used', '=', 'product_ctg'), ('coupon_type', '=', '8')]}"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                                <field name="product_used_ids" widget="many2many_tags"
+                                       attrs="{'invisible': ['|', ('type_product_used', '=', 'product_ctg'), ('coupon_type', '!=', '8')], 'required':[('type_product_used', '=', 'product'), ('coupon_type', '=', '8')]}"
+                                       options="{'no_open': True, 'no_create': True}"/>
+                                <field name="incremental"/>
+                                <field name="not_incremental_coupon" widget="many2many_tags"/>
+                                <field name="gift"/>
+                                <field name="check_switch" invisible="True"/>
+                            </group>
+                            <group>
+                                <field name="required_combo"
+                                       attrs="{'readonly': ['|',('used', '=', True), ('gift', '=', True)]}"/>
+                                <field name="dc_min_qty"/>
+                                <field name="dc_max_qty"/>
+                                <field name="type_discount"
+                                       attrs="{'readonly': ['|',('gift', '=', True), ('used', '=', True)]}"/>
+                                <field name="discount" width="10%"
+                                       attrs="{'readonly': ['|',('gift', '=', True), ('used', '=', True)]}"/>
+                                <field name="discount_bonus" width="10%"
+                                       attrs="{'readonly': ['|',('gift', '=', True), ('used', '=', True)]}"/>
+                                <field name="combo_note"/>
+                                <field name="limit_discount"/>
+                                <field name="coupon_type" invisible="1"/>
+                                <field name="group_min"
+                                       attrs="{'invisible': [('coupon_type', '!=', '5')]}"/>
+                                <field name="group_max"
+                                       attrs="{'invisible': [('coupon_type', '!=', '5')]}"/>
+                            </group>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <div class="crm_box_change_infor">
+                            <div class="container">
+                                <div class="row pt-3">
+                                    <div class="col-lg-12">
+                                        <span style="padding:5px;">
+                                            <strong>Create on:</strong>
+                                            <field name="create_on" readonly="True" force_save="True"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Create by:</strong>
+                                            <field name="create_by" readonly="True" force_save="True"
+                                                   options="{'no_open':True,}"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Modify on:</strong>
+                                            <field name="write_date"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Modify by:</strong>
+                                            <field name="write_uid"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="crm_discount_program_list_search_view" model="ir.ui.view">
+            <field name="name">Coupon Detail Search</field>
+            <field name="model">crm.discount.program.list</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm Coupon chi tiết">
+                    <field name="product_ids" string="Dịch vụ"/>
+                    <group expand="0" string="Group By..." >
+                        <filter name="group_brand" string="Thương hiệu" context="{'group_by':'brand_id'}"/>
+                        <filter name="group_coupon" string="Coupon" context="{'group_by':'discount_program'}"/>
+                        <filter name="group_index" string="Chỉ số" context="{'group_by':'index'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_discount_program_list_tree">
+            <field name="name">Coupon chi tiết</field>
+            <field name="model">crm.discount.program.list</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="discount_program"/>
+                    <field name="index"/>
+                    <field name="product_ctg_ids" widget="many2many_tags"/>
+                    <field name="product_ids" widget="many2many_tags"/>
+                    <field name="gift"/>
+                    <field name="required_combo"/>
+                    <field name="check_switch" invisible="True"/>
+                    <field name="used"/>
+                    <field name="incremental"/>
+                    <field name="minimum_group"/>
+                    <field name="dc_min_qty"/>
+                    <field name="dc_max_qty"/>
+                    <field name="type_discount"/>
+                    <field name="discount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_discount_program_list" model="ir.actions.act_window">
+            <field name="name">Coupon chi tiết</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.discount.program.list</field>
+            <field name="domain">[('discount_program_stage','!=','expire'),]</field>
+            <field name="context" eval="{
+                    'search_default_group_brand':1,
+                    'search_default_group_coupon':1,
+            }"/>
+        </record>
+
+        <menuitem id="menu_crm_discount_program_list"
+                  name="Coupon chi tiết"
+                  parent="crm_base.menu_crm_discount"
+                  action="open_discount_program_list"
+                  sequence="5" groups="crm_base.promotion_user"
+        />
+        <record id="menu_crm_discount_program_list" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-tags</field>
+        </record>
+    </data>
+</odoo>

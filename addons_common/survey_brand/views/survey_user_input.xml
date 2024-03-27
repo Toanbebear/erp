@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="survey_user_input_view_tree" model="ir.ui.view">
+        <field name="name">survey.user_input.view.tree</field>
+        <field name="model">survey.user_input</field>
+        <field name="arch" type="xml">
+            <tree string="Lịch sử" create="false">
+                <field name="partner_id" string="Khách hàng"/>
+                <field name="create_date"/>
+                <field name="group_service_id"/>
+                <field name="survey_time_id"/>
+                <field name="answer_id" string="Trải nghiệm của KH"/>
+                <field name="state" invisible="1"/>
+                <field name="input_type" groups="base.group_no_one" invisible="1"/>
+                <field name="create_uid"/>
+                <field name="department_id" string="Phòng ban"/>
+                <field name="survey_type"/>
+                <field name="crm_id" string="Booking" attrs="{'invisible': [('survey_type','=','pk'),('survey_type','=','tk')]}"/>
+                <field name="walkin_id" string="Phiếu khám" attrs="{'invisible': [('survey_type','!=','pk')]}"/>
+                <field name="evaluation_id" string="Phiếu tái khám" attrs="{'invisible': [('survey_type','!=','tk')]}"/>
+                <field name="phone_call_check" string="Phone Call"/>
+                <field name="check_syn" optional="hide"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="survey_user_input_view_form" model="ir.ui.view">
+        <field name="name">survey.user_input.view.form</field>
+        <field name="model">survey.user_input</field>
+        <field name="arch" type="xml">
+            <form string="Khảo sát" create="false">
+                <header>
+                    <button name="action_resend" string="Resend Invitation" type="object" class="oe_highlight"
+                            attrs="{'invisible': ['|', ('state', '=', 'done'), '&amp;', ('partner_id', '=', False), ('email', '=', False)]}"/>
+                    <button name="action_print_answers" states="done" string="Print" type="object"
+                            class="oe_highlight"/>
+                    <field name="state" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                    <group col="2">
+                        <group>
+                            <field name="survey_id"/>
+                            <field name="partner_id"/>
+                            <field name="create_date"/>
+                            <field name="input_type"/>
+                            <field name="survey_type"/>
+                            <field name="answer_id"/>
+                            <field name="is_attempts_limited" invisible="1"/>
+                            <label for="attempt_number" string="Attempt n°"
+                                   attrs="{'invisible': ['|', ('is_attempts_limited', '=', False), '|', ('test_entry', '=', True), ('state', '!=', 'done')]}"/>
+                            <div attrs="{'invisible': ['|', ('is_attempts_limited', '=', False), '|', ('test_entry', '=', True), ('state', '!=', 'done')]}">
+                                <field name="attempt_number" nolabel="1"/>
+                                /
+                                <field name="attempts_limit" nolabel="1"/>
+                            </div>
+                            <field name="crm_id" attrs="{'invisible': [('survey_type','=','pk'),('survey_type','=','tk')]}"/>
+                            <field name="walkin_id"
+                                   attrs="{'invisible': [('survey_type','!=','pk')]}"
+                                   string="Phiếu khám"/>
+                            <field name="evaluation_id" attrs="{'invisible': [('survey_type','!=','tk')]}"/>
+
+                            <field name="token" groups="base.group_no_one"/>
+                        </group>
+                        <group>
+                            <field name="deadline" invisible="1"/>
+                            <field name="email" widget="email"/>
+                            <field name="test_entry" groups="base.group_no_one"/>
+                            <field name="brand_id" string="Thương hiệu"/>
+                            <field name="company_id" string="Chi nhánh"/>
+                            <field name="department_id" string="Phòng ban"/>
+                            <field name="scoring_type" invisible="1"/>
+                            <field name="quizz_score" attrs="{'invisible': [('scoring_type', '=', 'no_scoring')]}"/>
+                            <field name="quizz_passed" attrs="{'invisible': [('scoring_type', '=', 'no_scoring')]}"/>
+                            <field name="group_service_id"/>
+                            <field name="service_ids"
+                                   widget="many2many_tags"
+                                   options="{'no_create_edit': True}"/>
+                        </group>
+                    </group>
+                    <field name="user_input_line_ids"
+                           context="{'group_by': 'question_id'}"
+                           mode="tree" attrs="{'readonly': False}">
+                        <tree>
+                            <field name="question_sequence" invisible="1"/>
+                            <field name="create_date"/>
+                            <field name="question_id"/>
+                            <field name="page_id" invisible="1"/>
+                            <field name="answer_type" invisible="1"/>
+                            <field name="skipped" invisible="1"/>
+                            <field name="answer_is_correct" invisible="1"/>
+                            <field name="answer_score" invisible="1"/>
+                            <field name="answer_value" string="Câu trả lời"/>
+                            <field name="value_suggested" invisible="1"/>
+                            <field name="value_free_text" invisible="1"/>
+                            <field name="value_comment"/>
+                        </tree>
+                    </field>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="survey_user_input_view_search" model="ir.ui.view">
+        <field name="name">survey.user_input.view.search</field>
+        <field name="model">survey.user_input</field>
+        <field name="arch" type="xml">
+            <search string="Lịch sử">
+                <field name="partner_id" string="Khách hàng"/>
+                <field name="survey_id"/>
+                <field name="group_service_id"/>
+                <field name="create_date"/>
+                <field name="create_uid" string="Tạo bởi"/>
+                <field name="brand_id"/>
+                <field name="company_id"/>
+                <field name="department_id" string="Phòng ban"/>
+
+                <!--                <filter string="My Documents" name="state_filter" domain="[('owner_id', '=', uid)]"/>-->
+                <!--                <filter string="My Favorites" name="my_favorites_filter" domain="[('favorited_ids', 'in', uid)]"/>-->
+                <separator/>
+                <!--                <filter string="PDF/Document" name="pdf_doc" domain="['|', ('mimetype', 'ilike', 'pdf'), ('name', 'ilike', '.doc')]"/>-->
+                <!--                <filter string="Image/Video" name="img_video" domain="['|', ('mimetype', 'ilike', 'image'), ('mimetype', 'ilike', 'video')]"/>-->
+                <!--                <filter string="URL" name="url_filter" domain="[('type', '=', 'url')]"/>-->
+                <!--                <separator/>-->
+                <!--                <filter string="Locked" name="locked_filter" domain="['|', ('lock_uid', '=', uid), ('lock_uid', '!=', False)]"/>-->
+                <!--                <separator/>-->
+                <!--                <filter string="Requested" name="requested_filter" domain="[('type', '=', 'empty')]"/>-->
+                <!--                <separator/>-->
+                <!--                <filter string="Archived" name="Inactive" domain="[('active', '=', False)]"/>-->
+                <!--                <field name="type"/>-->
+                <group expand="1" string="Group By">
+                    <filter name="owner" string="Người tạo" domain="[]" context="{'group_by':'create_uid'}"/>
+                    <filter name="by_brand" string="Thương hiệu" domain="[]" context="{'group_by': 'brand_id'}"/>
+                    <filter name="by_survey" string="Khảo sát" domain="[]" context="{'group_by': 'survey_id'}"/>
+                    <filter name="by_company" string="Công ty" domain="[]" context="{'group_by': 'company_id'}"/>
+                    <filter name="by_department" string="Phòng ban" domain="[]"
+                            context="{'group_by': 'department_id'}"/>
+                    <filter name="by_group_service" string="Nhóm dịch vụ" domain="[]"
+                            context="{'group_by': 'group_service_id'}"/>
+                    <filter name="creation_month" string="Creation Date" domain="[]"
+                            context="{'group_by':'create_date'}"/>
+                </group>
+                <searchpanel>
+                    <field name="brand_id" icon="fa-tag" string="Thương hiệu"/>
+                    <field name="company_id"/>
+                    <!--                    <field name="tag_ids" select="multi" groupby="facet_id" icon="fa-tag"/>-->
+                    <!--                    <field name="res_model" select="multi" string="Attached To" icon="fa-file-text" color="#338FFC"/>-->
+                </searchpanel>
+            </search>
+        </field>
+    </record>
+
+    <record id="survey_user_input_action" model="ir.actions.act_window">
+        <field name="name">survey.user.input.action</field>
+        <field name="res_model">survey.user_input</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="survey_user_input_view_search"/>
+        <field name="context">{'search_default_by_brand': True,
+            'search_default_by_survey': True,
+            'search_default_by_company': True,
+            'search_default_by_department': True}
+        </field>
+        <field name="view_ids"
+               eval="[(5, 0, 0),
+                      (0, 0, {'view_mode': 'tree', 'view_id': ref('survey_user_input_view_tree')}),
+                      (0, 0, {'view_mode': 'form', 'view_id': ref('survey_user_input_view_form')})
+                      ]"/>
+        <field name="help">Lịch sử khảo sát của khách hàng.</field>
+    </record>
+
+    <record id="survey_user_input_action" model="ir.actions.act_window">
+        <field name="name">Lịch sử khảo sát</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.user_input</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+</odoo>

@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="account_report_standard_view" model="ir.ui.view">
+        <field name="name">Standard Ledger</field>
+        <field name="model">account.report.standard.ledger</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="Report Options">
+                <!-- class="oe_form_configuration"> -->
+                <header>
+                    <button name="action_view_lines" string="View Lines" type="object"/>
+                    <button name="print_pdf_report" string="Print PDF" type="object" default_focus="1" class="oe_highlight"/>
+                    <button name="print_excel_report" string="Excel File" type="object"/>
+                </header>
+                <sheet>
+                    <group>
+                        <group string="Các Mẫu BC">
+                            <label for="template_id"/>
+                            <div>
+                                <field name="template_id" class="oe_inline" domain="[('company_id','=',company_id)]"/>
+                                <button name="action_save_template" class="oe_inline" string="SAVE" type="object" attrs="{'invisible':[('template_id','=',False)]}"/>
+                                <button name="action_open_templates" class="oe_inline" string="OPEN TEMPLATES" type="object"/>
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Cơ bản">
+                            <group>
+                                <group>
+                                    <field name="ledger_type" widget="radio"/>
+                                </group>
+                                <group>
+                                    <field name="summary"/>
+                                    <field name="reconciled" attrs="{'readonly': [('ledger_type', 'not in', ('partner', 'aged',))]}"/>
+                                    <field name="compact_account" invisible="1" attrs="{'readonly': [('ledger_type', '!=', 'general')]}"/>
+                                    <field name="target_move"/>
+                                    <field name="result_selection" attrs="{'invisible': [('ledger_type', 'not in', ('partner', 'aged',))]}"/>
+                                </group>
+                                <group>
+                                    <field name="init_balance_history"/>
+                                    <field name="company_currency_id"/>
+                                    <field name="company_id" options="{'no_create':True,'no_open':True}" required="1"/>
+                                </group>
+                            </group>
+                        </page>
+
+                        <page string="Kỳ báo cáo">
+                            <group col="4">
+                                <field name="periode_date" widget="selection"/>
+                                <field name="month_selec" widget="selection"/>
+                            </group>
+                            <group>
+                                <field name="date_from"/>
+                                <field name="date_to"/>
+                            </group>
+                        </page>
+
+                        <page string="Tài khoản">
+                            <group>
+                                <group>
+                                    <field name="account_group_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                                    <field name="analytic_account_select_ids" widget="many2many_tags" options="{'no_create': True}" attrs="{'invisible': [('ledger_type', '!=', 'analytic')]}"/>
+                                </group>
+                                <group>
+                                    <field name="account_in_ex_clude_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                                    <field name="account_methode" attrs="{'invisible':[('account_in_ex_clude_ids', '=', [])]}"/>
+                                </group>
+                                <group>
+                                    <field string="Sổ" name="journal_ids" widget="many2many_tags" options="{'no_create': True}"/>
+                                </group>
+                                <group>
+                                    <field string="Đối tác" name="partner_select_ids" widget="many2many_tags" options="{'no_create': True}" attrs="{'invisible': [('ledger_type', 'not in', ('partner', 'aged',))]}"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_standard_report" model="ir.actions.act_window">
+        <field name="name">Standard Report</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.report.standard.ledger</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="account_report_standard_view"/>
+        <field name="target">current</field>
+    </record>
+
+    <menuitem id="menu_account_standard_report" name="Standard Report" sequence="0" parent="account.menu_finance_reports" action="action_account_standard_report" groups="account.group_account_user"/>
+
+</odoo>

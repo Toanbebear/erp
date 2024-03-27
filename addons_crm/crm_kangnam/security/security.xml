@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="le_tan_kangnam" model="res.groups">
+            <field name="name">Lễ tân Kangnam</field>
+    </record>
+</odoo>

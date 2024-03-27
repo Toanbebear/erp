@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Inherit Form View to Modify it -->
+        <record id="view_form_payment_crm_inherit" model="ir.ui.view">
+            <field name="name">Thông tin thanh toán</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="crm_base.view_form_payment_crm"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_type']" position="after">
+                    <field name="internal_payment_type" widget="radio"/>
+                </xpath>
+                <xpath expr="//field[@name='payment_method']" position="after">
+                    <field name="x_receive_company_id" attrs="{'required': [('internal_payment_type', 'in', ('thu_ho','chi_ho'))], 'invisible': [('internal_payment_type', 'not in', ('thu_ho','chi_ho'))]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_tree_payment_crm_inherit" model="ir.ui.view">
+            <field name="name">Thông tin thanh toán</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_walkin_payment_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_id']" position="after">
+                    <field name="x_receive_company_id" string="Công ty giao dịch"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

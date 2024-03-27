@@ -1,0 +1,317 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="bms_paperformat_sci" model="report.paperformat">
+            <field name="name">paper format tas payment sci</field>
+            <field name="default" eval="True"/>
+            <field name="format">A5</field>
+            <field name="page_height">0</field>
+            <field name="page_width">0</field>
+            <field name="orientation">Landscape</field>
+            <field name="margin_top">10</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">8</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">96</field>
+        </record>
+
+        <template id="template_account_move_sci">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=o.sudo().partner_id.lang)"/>
+                    <t t-set="o" t-value="o.sudo()"/>
+                    <div class="page" style="font-family:Times New Roman;font-size:18px;">
+                        <div class="oe_structure"/>
+                        <div class="row mt32 mb32">
+                            <div class="col-6" style="font-family:Times New Roman;font-size:12px;">
+                                <t t-if="o.company_id">
+                                    <div style="float:left">
+                                        <img t-if="o.company_id.favicon"
+                                             t-att-src="image_data_uri(o.company_id.favicon)"
+                                             width="50"
+                                             border="1"/>
+                                    </div>
+                                    <div class="text-left">
+                                        <span t-field="o.company_id.name" style="font-size:14px;"/>
+
+                                    </div>
+                                    <div class="text-left">
+                                        <span class="m-0" t-field="o.company_id.street"/>,
+                                        <span class="m-0" t-field="o.company_id.street2"/>,
+                                        <span class="m-0" t-field="o.company_id.city"/>
+                                    </div>
+                                </t>
+                            </div>
+                            <div class="col-6 text-center" style="font-size: 12px;">
+                                <b>Mẫu số 01 - TT</b>
+                                <br/>
+                                (Ban hành theo Thông tư số 200/2014/TT-BTC Ngày 22/12/2014 của Bộ Tài chính)
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4"/>
+                            <div class="col-5 text-center"
+                                 style="font-family:Times New Roman;">
+                                <div>
+                                    <t t-if="o.tas_type == 'inbound'">
+                                        <b style="font-size: 20px;font-weight:bolder;">PHIẾU THU</b>
+                                    </t>
+                                    <t t-elif="o.tas_type == 'outbound'">
+                                        <b style="font-size: 20px;font-weight:bolder;">PHIẾU CHI</b>
+                                    </t>
+                                    <t t-elif="o.tas_type == 'debit'">
+                                        <b style="font-size: 20px;font-weight:bolder;">GIẤY BÁO NỢ</b>
+                                    </t>
+                                    <t t-elif="o.tas_type == 'credit'">
+                                        <b style="font-size: 20px;font-weight:bolder;">GIẤY BÁO CÓ</b>
+                                    </t>
+                                </div>
+                                <div>
+                                    <i style="font-size: 12px;margin-top:0px; padding-top:0px">Ngày
+                                        <span t-esc="o.date.day"/>
+                                        tháng
+                                        <span t-esc="o.date.month"/>
+                                        năm
+                                        <span t-esc="o.date.year"/>
+                                    </i>
+                                </div>
+                            </div>
+                            <div class="col-3 text-left" style="font-family: 'times';font-size:12px;">
+                                Mã phiếu in:
+                                <span t-esc="o.ma_phieu_in"/>
+                                <br/>
+                                Mã kế toán:
+                                <span t-esc="o.name"/>
+                                <br/>
+                                Nợ:
+                                <t t-foreach="o.line_ids" t-as="move_line">
+                                    <t t-if="move_line.debit > 0">
+                                        <span t-esc="move_line.account_id.code"/>
+                                    </t>
+                                </t>
+                                <br/>
+                                Có:
+                                <t t-foreach="o.line_ids" t-as="move_line">
+                                    <t t-if="move_line.credit > 0">
+                                        <span t-esc="move_line.account_id.code"/>
+                                    </t>
+                                </t>
+                            </div>
+                        </div>
+
+                        <div style="clear:right">
+                            <div>
+                                <span t-if="o.tas_type == 'inbound'">
+                                    Họ và tên người nộp tiền:
+                                </span>
+                                <span t-if="o.tas_type == 'outbound'">
+                                    Họ và tên người nhận tiền:
+                                </span>
+                                <span t-if="o.tas_type == 'debit'">
+                                    Họ và tên người nhận tiền:
+                                </span>
+                                <span t-if="o.tas_type == 'credit'">
+                                    Họ và tên người nộp tiền:
+                                </span>
+                                <t t-if="o.nguoi_nhan">
+                                    <span t-esc="o.nguoi_nhan.name"/>
+                                </t>
+                                <t t-elif="o.nguoi_nhan_char">
+                                    <span t-esc="o.nguoi_nhan_char"/>
+                                </t>
+                            </div>
+                            <div>Địa chỉ:
+                                <span t-esc="o.address"/>
+                            </div>
+                            <div t-if="o.tas_type == 'outbound'">
+                                Lý do chi:
+                                <span t-esc="o.lydo"/>
+                            </div>
+                            <div t-if="o.tas_type == 'inbound'">
+                                Lý do nộp:
+                                <span t-esc="o.lydo"/>
+                            </div>
+                            <div>Số tiền:
+                                <t t-esc="'{0:,.0f}'.format(int(o.amount_total))"/>
+                                đ Viết bằng chữ:
+                                <span t-esc="o.money_char"/>
+                            </div>
+                            <div>
+                                Kèm theo
+                                <span t-esc="o.kemtheo"/>
+                                Chứng từ gốc:
+                                <span t-esc="o.origin"/>
+                            </div>
+                        </div>
+
+
+                        <div align="right" style="font-size: 12px;margin-top:0px; padding-top:0px">Ngày
+                            <i>
+                                <span t-esc="o.date.day"/>
+                                tháng
+                                <span t-esc="o.date.month"/>
+                                năm
+                                <span t-esc="o.date.year"/>
+                            </i>
+                        </div>
+
+
+                        <table width="100%" style="margin-top:0px; padding-top:0px">
+                            <tr>
+                                <th width="20%">
+                                    <center>
+                                        <b>Giám đốc</b>
+                                    </center>
+                                </th>
+                                <th width="20%">
+                                    <center>
+                                        <b>Kế toán trưởng</b>
+                                    </center>
+                                </th>
+                                <th width="20%">
+                                    <center>
+                                        <b>Thủ quỹ</b>
+
+                                    </center>
+                                </th>
+                                <th width="20%">
+                                    <center>
+                                        <b>Người lập phiếu</b>
+                                    </center>
+                                </th>
+                                <th width="20%">
+                                    <center>
+                                        <b t-if="o.tas_type == 'inbound'">
+                                            Người nộp tiền
+                                        </b>
+                                        <b t-if="o.tas_type == 'outbound'">
+                                            Người nhận tiền
+                                        </b>
+                                        <b t-if="o.tas_type == 'debit'">
+                                            Người nhận tiền
+                                        </b>
+                                        <b t-if="o.tas_type == 'credit'">
+                                            Người nộp tiền
+                                        </b>
+                                    </center>
+                                </th>
+                            </tr>
+
+                            <tr>
+                                <td width="20%">
+                                    <center>
+                                        <i>(Ký, họ tên, đóng dấu)</i>
+                                    </center>
+                                </td>
+                                <td width="20%">
+                                    <center>
+                                        <i>(Ký, họ tên)</i>
+                                    </center>
+                                </td>
+                                <td width="20%">
+                                    <center>
+                                        <i>(Ký, họ tên)</i>
+                                    </center>
+                                </td>
+                                <td width="20%">
+                                    <center>
+                                        <i>(Ký, họ tên)</i>
+                                    </center>
+                                </td>
+                                <td width="20%">
+                                    <center>
+                                        <i>(Ký, họ tên)</i>
+                                    </center>
+                                </td>
+                            </tr>
+
+                            <tr>
+                                <td width="20%">
+                                    <center>
+                                        <p>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <span t-esc="o.manager_id.name"/>
+                                        </p>
+                                    </center>
+                                </td>
+                                <td width="20%">
+                                    <center>
+                                        <p>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <span t-esc="o.accountant_id.name"/>
+                                        </p>
+                                    </center>
+                                </td>
+                                <td width="20%">
+                                    <center>
+                                        <p>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <span t-esc="o.treasurer_id.name"/>
+
+                                        </p>
+                                    </center>
+                                </td>
+                                <td width="20%">
+                                    <center>
+                                        <p>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <span t-esc="o.nguoi_lap.name"/>
+                                        </p>
+                                    </center>
+
+                                </td>
+                                <td width="20%">
+                                    <center>
+                                        <p>
+                                            <br/>
+                                            <br/>
+                                            <br/>
+                                            <!--                      <span t-esc="o.nguoi_nhan" />-->
+                                        </p>
+                                    </center>
+                                </td>
+                            </tr>
+
+                        </table>
+
+                        <div class="row" style="font-size: 14px;">
+                            <p>Đã nhận đủ số tiền (viết bằng chữ):
+                                <span t-esc="o.money_char"/>
+                                <br/>
+                            </p>
+                        </div>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_account_move_sci">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="tas_payment.template_account_move_sci"/>
+            </t>
+        </template>
+
+        <report
+                string="In phiếu thu/chi (New)"
+                id="action_print_account_move_sci"
+                model="account.move"
+                report_type="qweb-pdf"
+                name="tas_payment.report_account_move_sci"
+                file="tas_payment.report_account_move_sci"
+                print_report_name="Phiếu thu/chi"
+                paperformat="tas_payment.bms_paperformat_sci"
+        />
+    </data>
+</odoo>

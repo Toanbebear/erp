@@ -1,0 +1,3 @@
+from . import account_analytic_group_update_rate_wizard
+from . import account_analytic_tag_update_rate_wizard
+

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Consultation ticket assets  -->
+<!--        <template id="consultation_assets" name="Consultation ticket assets">-->
+<!--            <script type="text/javascript" src="/crm_consultation_tickets/static/src/js/custom.js"/>-->
+<!--            <link rel="stylesheet" type="text/scss" href="/crm_consultation_tickets/static/src/css/style.css"/>-->
+<!--        </template>-->
+    </data>
+</odoo>

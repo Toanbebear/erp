@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tree_account_payment_ctv" model="ir.ui.view">
+            <field name="name">Phiếu Chi cộng tác viên</field>
+            <field name="model">account.payment.ctv</field>
+            <field name="arch" type="xml">
+                <tree edit="false"
+                      decoration-danger="state =='cancelled'"
+                      decoration-success="state =='posted'"
+                     default_order="name desc">
+                    <field name="ctv_payment_date"/>
+                    <field name="name"/>
+                    <field name="ctv_journal_id"/>
+                    <field name="contract_id"/>
+                    <field name="collaborators_id"/>
+                    <field name="ctv_amount_vnd"/>
+                    <field name="state"/>
+                     <field name="company_id"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="write_uid" string="Ngày tạo"/>
+                    <field name="write_date" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_form_account_payment_ctv" model="ir.ui.view">
+            <field name="name">Phiếu chi CTV</field>
+            <field name="model">account.payment.ctv</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="post" class="oe_highlight" states="draft" string="Xác Nhận" type="object" groups="crm_collaborators.group_collaborators_manager"/>
+                        <button name="action_draft" class="btn btn-secondary" invisible="True" string="Đặt lại thành nháp" type="object"/>
+<!--                        <button name="cancel" attrs="{'invisible': [('state', '!=', 'posted')]}" string="Hủy" type="object"/>-->
+                        <field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title" attrs="{'invisible': [('state', '=', 'draft')]}">
+                            <h1><field name="name" readonly="True"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="ctv_payment_type" widget="radio" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="ctv_payment_method" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="ctv_partner_type" required="True" widget="selection"/>
+                                <field name="collaborators_id" required="True" attrs="{'readonly':[('state','!=', 'draft')]}" options="{'no_create':True}"/>
+                                <field name="partner_id" readonly="True" force_save="True"/>
+                                <field name="contract_id" force_save="True" readonly="True"/>
+                                <field name="check_ctv" invisible="True"/>
+                                <field name="phone" readonly="True" attrs="{'invisible':[('check_ctv','=', False )]}" force_save="True"/>
+                                <field name="collaborators_amount" readonly="True" attrs="{'invisible':[('check_ctv','=', False )]}" force_save="True"/>
+                                <field name="company_id" readonly="True" required="True" attrs="{'readonly':[('state','!=', 'draft')]}" options="{'no_create':True}"/>
+                                <field name="brand_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            </group>
+                            <group>
+                                <field name="ctv_journal_id" required="True" attrs="{'readonly':[('state','!=', 'draft')]}" options="{'no_create': True, 'no_open': True}"/>
+                                <field name="payment_method_id" widget="radio" invisible="True"/>
+                                <field name="payment_id" widget="many2many_tags" readonly="True"/>
+                            </group>
+                            <group name="right_column">
+                                <label for="amount"/>
+                                <div name="ctv_amount_div" class="o_row">
+                                    <field name="amount" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                    <field name="currency_id" options="{'no_create': True, 'no_open': True}" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                </div>
+                                <field name="ctv_amount_vnd" readonly="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="ctv_text_total" readonly="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="ctv_payment_date" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="ctv_communication" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="ctv_user" required="True" attrs="{'readonly':[('state','!=', 'draft')]}" options="{'no_create':True}"/>
+                            </group>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                    <div class="crm_lead_box_change_infor">
+                        <div class="col-lg-12">
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm tạo:
+                                <strong>
+                                    <field name="create_date" readonly="True" force_save="True"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Tạo bởi:
+                                <strong>
+                                    <field name="create_uid" readonly="True" force_save="True"
+                                           options="{'no_open':True,}"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm cập nhật:
+                                <strong>
+                                    <field name="write_date"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Cập nhật bởi:
+                                <strong>
+                                    <field name="write_uid"/>
+                                </strong>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="collaborators_account_payment_ctv_search" model="ir.ui.view">
+            <field name="name">collaborators Payment - Search</field>
+            <field name="model">account.payment.ctv</field>
+            <field name="arch" type="xml">
+                <search string="Stage Search">
+                    <field name="name" string="Tên"/>
+                    <field name="collaborators_id" string="Tên cộng tác viên"/>
+                     <group>
+                        <filter string="Trạng Thái" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Tên cộng tác viên" name="group_collaborators" context="{'group_by': 'collaborators_id'}"/>
+                        <filter string="Thương hiệu" name="group_brand_id" context="{'group_by': 'brand_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="action_open_view_account_payment_ctv" model="ir.actions.act_window">
+            <field name="name">Phiếu chi cộng tác viên</field>
+            <field name="res_model">account.payment.ctv</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_new_line" model="ir.ui.view">
+            <field name="name">Form crm line</field>
+            <field name="model">crm.line</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <header>
+                            <field name="stage" widget="statusbar"/>
+                        </header>
+                        <group>
+                            <group string="Dịch vụ/Khóa học">
+                                <field name="service_id_2"
+                                       domain="[('service_category.is_another_cost', '=', True)]"
+                                       options="{'no_open':True,'no_create':True}"
+                                       required="True"/>
+                                <field name="is_input_num" readonly="True" invisible="True"/>
+                                <field name="uom_price" string="Đơn vị xử lý(cm2/vùng/răng)"
+                                       attrs="{'invisible':[('type_brand','=','academy')],'readonly':['|','|',('prg_voucher_ids','!=', []), ('prg_ids','!=', []), ('stage','!=','new')]}"
+                                       required="True" force_save="True"/>
+                                <field name="product_ctg_id"
+                                       options="{'no_open':True,'no_create':True}"
+                                       invisible="True"/>
+                                <field name="quantity" string="Số lượng (lần/buổi)" required="True"
+                                       attrs="{'readonly':['|','|',('prg_voucher_ids','!=', []), ('prg_ids','!=', []), ('stage','!=','new')]}"/>
+                                <field name="unit_price" required="True" readonly="True"
+                                       force_save="True"/>
+                                <field name="discount_percent" readonly="True" force_save="True"/>
+                                <field name="discount_cash" readonly="True" force_save="True"/>
+                                <field name="sale_to" readonly="True" force_save="True"/>
+                                <field name="other_discount" readonly="True" force_save="True"
+                                       string="Giảm khác"/>
+                                <field name="total_before_discount" string="Tổng tiền trước giảm"/>
+                                <field name="total_discount" string="Tổng tiền đã giảm"/>
+                                <field name="total" string="Tổng tiền phải thu"
+                                       class="red_color_bold"/>
+                                <field name="sale_order_line_id" groups="base.group_erp_manager"
+                                       invisible="True">
+                                    <tree>
+                                        <field name="product_id"/>
+                                        <field name="state"/>
+                                    </tree>
+                                </field>
+                                <field name="voucher_id" invisible="True"/>
+                            </group>
+                            <group string="General information">
+                                <field name="cancel" invisible="True"/>
+                                <field name="name" invisible="True"/>
+                                <field name="crm_id" readonly="True" force_save="True"
+                                       options="{'no_open':True,'no_create':True}" invisible="1"/>
+                                <field name="company_id"
+                                       options="{'no_open':True,'no_create':True}"
+                                       required="True" force_save="True"
+                                       attrs="{'readonly':['|','|',('prg_voucher_ids','!=', []), ('prg_ids','!=', []), ('stage','!=','new')]}"/>
+                                <field name="brand_id" invisible="True"/>
+                                <field name="type_brand" invisible="1"/>
+                                <field name="company_shared" groups="base.group_system"
+                                       widget="many2many_tags" string="Shared booking" invisible="1"
+                                />
+                                <field name="price_list_id" required="True" force_save="True"
+                                       options="{'no_open':True,'no_create':True}"
+                                       attrs="{'readonly':['|','|',('prg_voucher_ids','!=', []), ('prg_ids','!=', []), ('stage','!=','new')]}"/>
+                                <field name="currency_id"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="source_extend_id"
+                                       options="{'no_open':True,'no_create':True}" required="True"
+                                       attrs="{'readonly':['|','|',('prg_voucher_ids','!=', []), ('prg_ids','!=', []), ('stage','!=','new')]}"/>
+                                <field name="line_booking_date" required="True"
+                                       attrs="{'readonly':['|','|',('prg_voucher_ids','!=', []), ('prg_ids','!=', []), ('stage','!=','new')]}"/>
+                                <field name="prg_ids" widget="many2many_tags" readonly="True"
+                                       force_save="True"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="prg_voucher_ids" widget="many2many_tags"
+                                       readonly="True"
+                                       force_save="True"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="voucher_id" invisible="1" widget="many2many_tags"/>
+                                <field name="discount_review_id"
+                                       string="Giảm giá đặc biệt" readonly="True"/>
+                                <field name="status_cus_come" required="True"
+                                       attrs="{'readonly':['|','|',('prg_voucher_ids','!=', []), ('prg_ids','!=', []), ('stage','!=','new')]}"/>
+                                <!--                                                    <field name="stage"/>-->
+                                <field name="color" groups="base.group_system" invisible="1"/>
+                                <field name="line_special" invisible="1"/>
+                                <!--                                                    <field name="reason_line_cancel" string="Lý do hủy dịch vụ" attrs="{'invisible':[('reason_line_cancel','=',False)]}"/>-->
+                                <field name="note" string="Ghi chú" attrs="{'invisible':[('stage','=','cancel')]}"/>
+                                <field name="consultants_1" string="Tư vấn viên 1"
+                                       options="{'no_open':True,'no_create':True}" required="True"
+                                       attrs="{'readonly':[('stage','not in',['new', 'processing'])]}"/>
+                                <field name="consulting_role_1" string="Vai trò tư vấn viên 1"
+                                       attrs="{'readonly':[('stage','not in',['new', 'processing'])]}"/>
+                                <field name="consultants_2" string="Tư vấn viên 2"
+                                       options="{'no_open':True,'no_create':True}"
+                                       attrs="{'readonly':[('stage','not in',['new', 'processing'])]}"/>
+                                <field name="consulting_role_2" string="Vai trò tư vấn viên 2"
+                                       attrs="{'readonly':[('stage','not in',['new', 'processing'])]}"/>
+                            </group>
+<!--                            <group string="Dịch vụ bảo hành"-->
+<!--                                   attrs="{'invisible':[('type_booking_price_list','!=','guarantee')]}">-->
+<!--                                <field name="type_booking_price_list" invisible="True"/>-->
+<!--                                <field name="initial_product_id" readonly="True"/>-->
+<!--                                <field name="type_guarantee" readonly="True"/>-->
+<!--                            </group>-->
+                            <group name="infor_cancel" string="Thông tin hủy dịch vụ" attrs="{'invisible':[('reason_line_cancel','=',False)]}">
+                                <field name="reason_line_cancel" string="Lý do hủy dịch vụ" attrs="{'invisible':[('reason_line_cancel','=',False)]}"/>
+                                <field name="note" optional="hide" string="Ghi chú" attrs="{'invisible':[('reason_line_cancel','=',False)]}"/>
+                                <field name="cancel_user" options="{'no_open':True,'no_create':True}" readonly="True" attrs="{'invisible':[('cancel_user','=',False)]}"/>
+                                <field name="cancel_date" readonly="True" attrs="{'invisible':[('cancel_date','=',False)]}"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button string="Tạo mới"
+                                    name="action_save_new_crm_line"
+                                    type="object"
+                                    class="btn-primary"
+                            />
+                            <button string="Huỷ" class="btn-secondary" special="cancel" />
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_form_crm_sale_payment_detail" model="ir.ui.view">
+            <field name="name">Payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="after">
+                    <div class="row">
+                        <div class="col-md-3">
+                            Bảng phân bổ doanh số theo dịch vụ
+                        </div>
+                        <div class="col-md-9 text-right">
+                            <field name="check_auto_input_money"/> Tự động điền thông tin số tiền giao dịch
+                        </div>
+                    </div>
+                    <field name="state" invisible="1"/>
+                    <field name="is_share_booking" groups="base.group_system"/>
+                    <field name="is_old_payment" groups="base.group_system"/>
+                    <field name="is_update_payment_list" groups="base.group_system" readonly="True" force_save="True"/>
+                    <field name="service_ids" mode="tree"
+                           context="{'default_parent_id':active_id}"
+                           >
+                        <tree class="crm_sale_payment_service_width_special" editable="bottom" delete="false" create="false"
+                              default_order='crm_line_id'
+                              options="{'no_open':True, 'no_create':True, 'no_create_edit': True}">
+                            <field name="crm_line_id" force_save="True" optional="show"/>
+                            <field name="domain_company_ids" invisible="1"/>
+                            <field name="state" invisible="1"/>
+                            <field name="is_another_cost" invisible="1"/>
+                            <field name="allow_unlink" invisible="1"/>
+                            <field name="unit_price" optional="show"/>
+                            <field name="quantity" optional="show"/>
+                            <field name="uom_price" optional="show"/>
+                            <field name="number_used" optional="hide"/>
+                            <field name="discount_percent" optional="hide"/>
+                            <field name="discount_cash" optional="hide"/>
+                            <field name="sale_to" optional="hide"/>
+                            <field name="other_discount" optional="hide"/>
+                            <field name="total_before_discount" optional="show"/>
+                            <field name="total" optional="show"/>
+                            <field name="total_received" sum="Tổng tiền" force_save="True" optional="show"/>
+                            <field name="remaining_amount" sum="Tổng tiền" force_save="True" optional="show"/>
+                            <field name="prepayment_amount" sum="Tổng tiền" attrs="{'readonly':[('parent.state','!=','draft'), ('parent.is_update_payment_list','=', False)]}" force_save="True" optional="show"/>
+                            <field name="company_id"
+                                   required="True"
+                                   domain="[('id','in', domain_company_ids)]"
+                                   attrs="{'readonly':[('parent.state', '!=', 'draft')]}"
+                                   options="{'no_create':True, 'no_open':True}" force_save="True" optional="show"/>
+                            <field name="stage" optional="hide"/>
+                            <field name="consultants_1" optional="hide"
+                                   attrs="{'readonly':['|', ('is_another_cost','=', False), ('parent.state', '!=', 'draft')]}" force_save="True"/>
+                            <button name="share" string="Chia sẻ" type="object" class="oe_edit_only btn-danger"
+                                    attrs="{'invisible':['|', ('parent.is_share_booking', '=', False), ('parent.state', '!=', 'draft')]}"/>
+                            <button name="unlink" class="oe_edit_only" type="object" icon="fa-trash-o" title="Xóa"
+                                    attrs="{'invisible':['|', ('parent.state', '!=', 'draft'), ('allow_unlink', '=', False)]}"/>
+                        </tree>
+                    </field>
+                    <button name="action_create_line" string="Thêm phụ thu" class="oe_highlight oe_edit_only" type="object" attrs="{'invisible': [('state', 'not in', ('draft'))]}"/>
+                    <group name="note_group" col="6">
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="subtotal_service"/>
+                            </div>
+                            <field name="subtotal_service" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_service_id'}"/>
+                            <field name="currency_service_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <div class="row">
+                        <div class="col-md-3">
+                            Bảng phân bổ doanh số theo sản phẩm
+                        </div>
+                        <div class="col-md-9 text-right">
+                            <field name="check_auto_input_money_product"/> Tự động điền thông tin số tiền giao dịch
+                        </div>
+                    </div>
+                     <field name="is_update_payment_list" invisible="1"/>
+                    <field context="{'default_parent_id':active_id}"
+                           default_order='crm_line_product_id'
+                           name="product_ids">
+                        <tree class="crm_sale_payment_service_width_special" create="false" delete="false" editable="top" options="{'no_open':True,'no_create':True}">
+                            <field name="domain_company_ids" invisible="1"/>
+                            <field name="state" invisible="1"/>
+                            <field name="allow_unlink" invisible="1"/>
+                            <field name="crm_line_product_id" optional="show" force_save="True"/>
+                            <field name="department_product" optional="show"/>
+                            <field name="unit_price" optional="show"/>
+                            <field name="quantity" optional="show"/>
+                            <field name="discount_percent" optional="hide"/>
+                            <field name="discount_cash" optional="hide"/>
+                            <field name="sale_to" optional="hide"/>
+                            <field name="other_discount" optional="hide"/>
+                            <field name="total_before_discount" optional="show"/>
+                            <field name="total" optional="show"/>
+                            <field name="total_received" sum="Tổng tiền" optional="show" force_save="True"/>
+                            <field name="remaining_amount" sum="Tổng tiền" force_save="True" optional="show"/>
+                            <field name="prepayment_amount" sum="Tổng tiền" attrs="{'readonly':[('parent.state','!=','draft'), ('parent.is_update_payment_list','=', False)]}" optional="show" force_save="True"/>
+                            <field name="company_id" domain="[('id','in', domain_company_ids)]"
+                                   attrs="{'readonly':[('parent.state', '!=', 'draft')]}"
+                                   options="{'no_create':True, 'no_open':True}" force_save="True" optional="show"/>
+                            <field name="stage" optional="hide"/>
+                            <field name="consultants_1" optional="hide" readonly="True" force_save="True"/>
+                            <button name="share" string="Chia sẻ" type="object" class="oe_edit_only btn-danger"
+                                    attrs="{'invisible':['|', ('parent.is_share_booking', '=', False), ('parent.state', '!=', 'draft')]}"/>
+                            <button name="unlink" class="oe_edit_only" type="object" icon="fa-trash-o" title="Xóa"
+                                    attrs="{'invisible':['|', ('parent.state', '!=', 'draft'), ('allow_unlink', '=', False)]}"/>
+                        </tree>
+                    </field>
+                    <group name="note_group" col="6">
+                        <group class="oe_subtotal_footer oe_right" colspan="2" name="sale_total">
+                            <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                                <label for="subtotal_product"/>
+                            </div>
+                            <field name="subtotal_product" nolabel="1" class="oe_subtotal_footer_separator" widget="monetary" options="{'currency_field': 'currency_service_id'}"/>
+                            <field name="currency_service_id" invisible="1"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

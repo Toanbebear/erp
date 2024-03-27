@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_payment_act" model="ir.actions.act_window">
+			<field name="name">Phiếu thu</field>
+			<field name="view_mode">tree,form</field>
+			<field name="type">ir.actions.act_window</field>
+			<field name="res_model">crm.hh.ehc.statement.payment</field>
+			<field name="domain">[]</field>
+		</record>
+		
+		<menuitem id="menu_payment_ehc"
+				  name="Phiếu thu"
+				  parent="crm_ehc.crm_hh_ehc_root_menu"
+				  action="crm_ehc.crm_hh_ehc_payment_act"
+		/>
+		
+		<record id="crm_hh_ehc_payment_tree" model="ir.ui.view">
+			<field name="name">Payment EHC tree</field>
+			<field name="model">crm.hh.ehc.statement.payment</field>
+			<field name="arch" type="xml">
+				<tree>
+					<field name="booking_id"/>
+					<field name="booking_create_by"/>
+					<field name="booking_category_source"/>
+					<field name="booking_source"/>
+					<field name="invoice_method"/>
+					<field name="invoice_type"/>
+					<field name="invoice_date"/>
+					<field name="amount_paid"/>
+				</tree>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_payment_form" model="ir.ui.view">
+			<field name="name">Payment EHC form</field>
+			<field name="model">crm.hh.ehc.statement.payment</field>
+			<field name="arch" type="xml">
+				<form>
+					<group>
+						<group>
+							<field name="booking_id" options="{'no_open':True,'no_create':True}" readonly="1"/>
+							<field name="patient_code" readonly="1"/>
+							<field name="patient_name" readonly="1"/>
+							<field name="booking_category_source" readonly="1" options="{'no_open':True,'no_create':True}"/>
+							<field name="booking_source" readonly="1" options="{'no_open':True,'no_create':True}"/>
+							<field name="booking_phone" widget="phone" readonly="1"/>
+							<field name="booking_create_by" readonly="1" options="{'no_open':True,'no_create':True}"/>
+							<field name="booking_company" readonly="1" options="{'no_open':True,'no_create':True}"/>
+							<field name="booking_product_category_ids" readonly="1" widget="many2many_tags"/>
+							<field name="patient_id" invisible="1" readonly="1"/>
+						</group>
+						<group>
+							<field name="invoice_code" readonly="1"/>
+							<!--						<field name="invoice_id"/>-->
+							<field name="invoice_group_code" readonly="1"/>
+							<field name="invoice_date" readonly="1"/>
+							<field name="amount_paid" readonly="1"/>
+							<field name="currency_id" readonly="1"/>
+							<field name="invoice_status" readonly="1"/>
+							<field name="invoice_method" readonly="1"/>
+							<field name="invoice_type" readonly="1"/>
+							<field name="invoice_type" readonly="1"/>
+							<field name="contract_code" readonly="1"/>
+							<field name="payment_code_erp" readonly="1"/>
+						</group>
+					</group>
+					<div class="oe_chatter">
+						<field name="message_follower_ids" widget="mail_followers"/>
+						<field name="activity_ids" widget="mail_activity"/>
+						<field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+					</div>
+				</form>
+			</field>
+		</record>
+		
+		<record id="crm_hh_ehc_statement_payment_search" model="ir.ui.view">
+			<field name="name">Search phiếu thu EHC</field>
+			<field name="model">crm.hh.ehc.statement.payment</field>
+			<field name="arch" type="xml">
+				<search string="state Search">
+					<field name="booking_id" string="Booking"/>
+					<field name="patient_code" string="Mã bệnh nhân"/>
+					<field name="invoice_code" string="Mã phiếu thu EHC"/>
+				</search>
+			</field>
+		</record>
+	</data>
+</odoo>

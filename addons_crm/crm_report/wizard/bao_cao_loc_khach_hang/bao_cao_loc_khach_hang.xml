@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="report_loc_kh_attachment" model="ir.attachment">
+        <field name="name">BÁO CÁO LỌC KHÁCH HÀNG</field>
+        <field name="type">binary</field>
+        <field name="datas" type="base64" file="crm_report/static/xls/bao_cao_loc_kh.xlsx"/>
+        <field name="store_fname">bao_cao_loc_kh.xlsx</field>
+    </record>
+
+    <record model="ir.ui.view" id="report_loc_khach_hang_form">
+        <field name="name">report.loc.kh.form</field>
+        <field name="model">report.loc.kh</field>
+        <field name="arch" type="xml">
+            <form string="Lọc khách hàng">
+                <group>
+                    <field name="company_ids" required="1" widget="many2many_tags"/>
+                    <field name="location_ids" widget="many2many_tags"/>
+                    <field name="all_location" help="Nếu tích vào trường này, sẽ lấy bản ghỉ dòng dịch vụ của tất cả tỉnh thành(lấy cả giá trị không có tỉnh thành)"/>
+                    <field name="start_date" required="1" string="Ngày bắt đầu" help="Kiểm tra theo ngày đến cửa trên Booking"/>
+                    <field name="end_date" required="1" string="Ngày kết thúc" help="Kiểm tra theo ngày đến cửa trên Booking"/>
+                    <field name="start_datetime" invisible="1"/>
+                    <field name="end_datetime" invisible="1"/>
+                </group>
+                <footer>
+                    <button name="report" type="object" string="Xuất dữ liệu" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="report_loc_kh_act">
+        <field name="name">Lọc khách hàng</field>
+        <field name="res_model">report.loc.kh</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="report_loc_khach_hang_form"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="report_loc_kh_menu"
+              name="Lọc khách hàng"
+              parent="crm_report.menu_crm_report"
+              action="report_loc_kh_act"
+              groups="crm_report.xuat_du_lieu_khach_hang"
+              sequence="15"/>
+</odoo>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="form_tuition_inherit_sh_walkin_payment_view_form" model="ir.ui.view">
+        <field name="name">form_tuition_inherit_sh_walkin_payment_view_form</field>
+        <field name="model">account.payment</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_walkin_payment_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='walkin']" position="before">
+                <field name="type_brand" invisible="1"/>
+            </xpath>
+            <xpath expr="//header//button[@name='view_choose_walkin']" position="replace">
+                <button name="view_choose_walkin" string="Gắn thanh toán với phiếu khám" type="object"
+                        class="oe_highlight"
+                        attrs="{'invisible':['|','|',('type_brand','=','academy'),('payment_type','not in',['inbound']),'!',('walkin','=',False)]}"
+                        groups="shealth_all_in_one.group_sh_medical_accountant"/>
+            </xpath>
+
+            <xpath expr="//field[@name='walkin']" position="replace">
+                <field options="{'no_create': True,'no_open': True}" name="walkin"
+                       domain="[('booking_id','in',[crm_id])]"
+                       attrs="{'readonly': [('state', '!=', 'draft')],'invisible':['|',('payment_type','=','outbound'),('type_brand','=','academy')]}"/>
+            </xpath>
+            <xpath expr="//field[@name='patient']" position="replace">
+                <field name="patient" options="{'no_create': True,'no_open': True}" readonly="1" force_save="1"
+                       class="text-uppercase"
+                       attrs="{'invisible':[('type_brand','=','academy')]}"/>
+            </xpath>
+
+        </field>
+    </record>
+</odoo>

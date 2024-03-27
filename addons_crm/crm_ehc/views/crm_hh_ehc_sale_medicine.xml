@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_hh_ehc_sale_medicine_tree_view" model="ir.ui.view">
+            <field name="name">crm.hh.ehc.sale.medicine.tree.view</field>
+            <field name="model">crm.hh.ehc.sale.medicine</field>
+            <field name="arch" type="xml">
+                <tree string="Danh sách bán thuốc EHC">
+                    <field name="booking_id"/>
+                    <field name="patient_id"/>
+                    <field name="create_date_ehc"/>
+                    <field name="approval_date"/>
+                    <field name="out_date" optional="hide"/>
+                    <field name="hh_line_ids" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_hh_ehc_sale_medicine_form_view" model="ir.ui.view">
+            <field name="name">crm.hh.ehc.sale.medicine.form.view</field>
+            <field name="model">crm.hh.ehc.sale.medicine</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+						<group>
+                            <field name="booking_id"/>
+                            <field name="patient_id"/>
+                            <field name="create_date_ehc"/>
+                            <field name="approval_date"/>
+                            <field name="out_date"/>
+                            <notebook>
+                                <page string="Danh sách thuốc">
+                                    <field name="hh_line_ids">
+                                        <tree>
+                                            <field name="medicine_code"/>
+                                            <field name="medicine_name"/>
+                                            <field name="unit"/>
+                                            <field name="quantity"/>
+                                            <field name="currency_id"/>
+                                            <field name="unit_price"/>
+                                        </tree>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                    </sheet>
+				</form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="crm_hh_ehc_sale_medicine_act">
+            <field name="name">Danh sách bán thuốc</field>
+            <field name="res_model">crm.hh.ehc.sale.medicine</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+        <menuitem id="crm_hh_ehc_sale_medicine_sub_menu"
+				  name="Danh sách bán thuốc"
+				  parent="crm_ehc.crm_hh_ehc_root_menu"
+				  action="crm_hh_ehc_sale_medicine_act"
+		/>
+    </data>
+</odoo>

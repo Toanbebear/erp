@@ -1,0 +1,381 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_hr_department_hide_all" model="ir.ui.view">
+            <field name="name">view_hr_department_hide_all</field>
+            <field name="model">hr.department</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Phòng/Ban">
+                    <field name="display_name"/>
+                    <field name="parent_id" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                    <field name="manager_id" optional="hide"/>
+                    <field name="id" optional="hide"/>
+                    <field name="create_uid" invisible="1"/>
+                    <field name="create_date" invisible="1"/>
+                    <field name="parent_id" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_hr_employee_hide_all" model="ir.ui.view">
+            <field name="name">view.hr.employee.hide.all</field>
+            <field name="model">hr.employee</field>
+            <field eval="8" name="priority"/>
+            <field name="arch" type="xml">
+                <tree string="Người quản lý">
+                    <field name="employee_id" readonly="1" force_save="1" invisible="1"/>
+                    <field name="employee_code" readonly="1" force_save="1" string="Mã nhân viên"/>
+                    <field name="name"/>
+                    <field name="birthday" optional="hide"/>
+                    <field name="work_phone" optional="hide"/>
+                    <field name="work_email" optional="hide"/>
+                    <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                    <field name="department_id" optional="hide"/>
+                    <field name="job_id" optional="hide"/>
+                    <field name="parent_id" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="write_date" optional="hide"/>
+                    <field name="write_uid" optional="hide"/>
+                    <field name="coach_id" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_employee_form_inherited" model="ir.ui.view">
+            <field name="name">hr.employee.form.inherited</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//div[@name='button_box']/button[1]" position="before">
+                    <button string="Tạo tài khoản" type="object" name="sci_create" groups="base.group_erp_manager"
+                            class="oe_stat_button" icon="fa-user"
+                            attrs="{'invisible': [('user_id', '!=', False)]}"/>
+                    <button string="Phân quyền" type="object" name="sci_create" groups="base.group_erp_manager"
+                            class="oe_stat_button" icon="fa-edit"
+                            attrs="{'invisible': [('user_id', '=', False)]}"/>
+                    <button name="send_msg" string="Send SMS" type="object" class="oe_stat_button"
+                            icon="fa-commenting"/>
+                </xpath>
+                <xpath expr="//div[@class='oe_title']" position="replace">
+                    <div class="oe_title" style="width:70%">
+                        <label for="name" class="oe_edit_only" modifiers="{}"/>
+                        <h1>
+                            <field name="name" placeholder="Tên nhân viên" required="True"
+                                   modifiers="{'required':true}"/>
+                        </h1>
+                        <div>
+                            <div style="width: 50%;float: right;" invisible="1">
+                                <label for="employee_id" modifiers="{}"/>
+                                <h3 modifiers="{}">
+                                    <field name="employee_id" modifiers="{}" style="width:50%" readonly="1" force_save="1" invisible="1"/>
+                                </h3>
+                            </div>
+                            <div>
+                                <label for="employee_code" modifiers="{}" string="Mã nhân viên"/>
+                                <h3>
+                                    <field name="employee_code" modifiers="{}" style="width:50%" readonly="1" force_save="1"/>
+                                </h3>
+                            </div>
+                        </div>
+                        <button string="Chat" class="btn btn-primary o_employee_chat_btn"
+                                attrs="{'invisible': [('user_id','=', False)]}"/>
+                        <field name="category_ids" widget="many2many_tags"
+                               options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags"
+                               groups="hr.group_hr_manager"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='mobile_phone']" position="before">
+                    <field name="email"/>
+                </xpath>
+                <xpath expr="//field[@name='emergency_contact']" position="after">
+                    <field name="emergency_address"/>
+                </xpath>
+                <xpath expr="//field[@name='work_phone']" position="after">
+                    <field name="hr_user_id"/>
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="replace">
+                    <field name="department_id" position="attributes">
+                        <attribute name="context">{'tree_view_ref': 'view_hr_department_hide_all'}</attribute>
+                    </field>
+                    <field name="sector_id"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="after">
+                    <field name="root_department"/>
+                    <field name="area"/>
+                </xpath>
+                <xpath expr="//field[@name='job_id']" position="after">
+                    <field name="job_title"/>
+                    <field name="job_ids" widget="many2many_tags" options="{'color_field': 'color'}"/>
+                    <field name="group_job"/>
+                    <field name="staff_level"/>
+                </xpath>
+                <xpath expr="//field[@name='joining_date']" position="after">
+                    <field name="work_duration" string="Thâm niên"/>
+                    <field name="barcode" string="Mã chấm công"/>
+                </xpath>
+                <xpath expr="//field[@name='parent_id']" position="replace">
+                    <field name="parent_id" position="attributes">
+                        <attribute name="context">{'tree_view_ref': 'view_hr_employee_hide_all'}</attribute>
+                    </field>
+                </xpath>
+                <xpath expr="//group[@name='identification_group']" position="after">
+                    <group>
+                        <group col="4">
+                        </group>
+                        <group col="8">
+                            <div id="o_employee_right">
+                                <h4 class="o_org_chart_title mb16 mt0">Sơ đồ tổ chức</h4>
+                                <field name="child_ids" widget="hr_org_chart"/>
+                            </div>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//group[@name='identification_group']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='tz']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='address_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//header" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='address_home_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='private_email']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//group[@name='timesheet']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='study_school']" position="after">
+                    <field name="graduation_year"/>
+                    <field name="classification"/>
+                </xpath>
+                <xpath expr="//notebook[1]/page[2]" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//page[@name='public']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='birthday']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='mobile_phone']" position="after">
+                    <field name="birthday" required="1"/>
+                </xpath>
+
+                <xpath expr="//page[@name='hr_settings']" position="after">
+                    <page name="gosi_info" string="Thông tin lương - Bảo hiểm"
+                          groups="hr_contract.group_hr_contract_manager">
+                        <group name="salary_and_advantages" col="12">
+                            <group name="salary" string="Lương thực tế" colspan="4">
+                                <field name="basic_salary" string="Lương cơ bản" widget="monetary_format" readonly="1"/>
+                                <field name="allowance" string="Lương phụ cấp" widget="monetary_format" readonly="1"/>
+                                <field name="KPI_salary" widget="monetary_format" readonly="1"
+                                       attrs="{'invisible' : [('salary_kd', '=', True)]}"/>
+                                <field name="wage" widget="monetary_format" readonly="1"/>
+                                <field name="salary_kd"/>
+                            </group>
+                            <group name="kq" string="Ký quỹ" colspan="4">
+                                <field name="check_kq"/>
+                                <field name="deposit" attrs="{'readonly':[('check_kq','=',True)]}"
+                                       widget="monetary_format"/>
+                                <field name="payment_term" attrs="{'readonly':[('check_kq','=',True)]}"/>
+                                <field name="money_per_month" string="Mỗi tháng đóng" widget="monetary_format"/>
+                                <field name="limit" readonly="1"/>
+                            </group>
+                            <group name="bh" string="Trích BHXH" colspan="4">
+                                <field name="deposit_bh" readonly="1" widget="monetary_format"/>
+                                <field name="payment_term_bh" readonly="1"/>
+                                <field name="money_per_month_bh" readonly="1" string="Trích BHXH"
+                                       widget="monetary_format"/>
+                                <field name="check_bh"/>
+                            </group>
+                        </group>
+                        <group string="Theo dõi điều chỉnh lương">
+                            <field name="salary_history" nolabel="1" context="{'default_employee_id': active_id}">
+                                <tree decoration-success="checked==False" decoration-muted="checked==True">
+                                    <field name="basic_salary" widget="monetary_format" width="10%"/>
+                                    <field name="allowance" widget="monetary_format" width="10%"/>
+                                    <field name="KPI_salary" widget="monetary_format" width="10%"/>
+                                    <field name="wage" readonly="1" width="10%"/>
+                                    <field name="confirm_date" width="10%"/>
+                                    <field name="reason" width="20%"/>
+                                    <field name="checked" width="5%" optional="hide"/>
+                                    <button name="print_notice" class="btn-primary" type="object" string="In"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="employee_id"/>
+                                            <field name="job_old"/>
+                                            <field name="basic_salary_old"/>
+                                            <field name="allowance_old"/>
+                                            <field name="KPI_salary_old"
+                                                   attrs="{'invisible' : [('salary_kd', '=', True)]}"/>
+                                            <field name="wage_old"/>
+                                            <field name="checked"/>
+                                            <field name="salary_kd" invisible="1"/>
+                                        </group>
+                                        <group>
+                                            <field name="job_new"/>
+                                            <field name="basic_salary" widget="monetary_format"/>
+                                            <field name="allowance" widget="monetary_format"/>
+                                            <field name="KPI_salary" widget="monetary_format"
+                                                   attrs="{'invisible' : [('salary_kd', '=', True)]}"/>
+                                            <field name="wage" widget="monetary_format" readonly="1"/>
+                                            <field name="confirm_date"/>
+                                        </group>
+                                        <field name="reason" placeholder="Ghi chú"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </group>
+                        <group string="Theo dõi BHXH">
+                            <field name="insurance_history" nolabel="1" context="{'default_employee_id': active_id}">
+                                <tree decoration-success="checked==False" decoration-muted="checked==True">
+                                    <field name="deposit_bh" widget="monetary_format" width="10%"/>
+                                    <field name="payment_term_bh" width="10%"/>
+                                    <field name="money_per_month_bh" widget="monetary_format" width="10%"/>
+                                    <field name="date" width="10%"/>
+                                    <field name="so_bhxh" width="10%"/>
+                                    <field name="so_so_luu" width="10%"/>
+                                    <field name="tinh_trang" width="10%"/>
+                                    <field name="noi_cap" width="10%"/>
+                                    <field name="noi_tham_gia" width="10%"/>
+                                    <field name="reason" width="10%"/>
+                                    <field name="checked" width="5%"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+
+                    <page name="history" string="Quá trình hợp đồng" groups="hr_contract.group_hr_contract_manager">
+                        <group modifiers="{}">
+                            <field name="contract_ids" nolabel="1" widget="one2many_list" readonly="1"
+                                   modifiers="{'readonly':true}">
+                                <tree limit="10" class="tree_no_open">
+                                    <field name="name" string="Mã hợp đồng"/>
+                                    <field name="job_id"/>
+                                    <field name="type_id"/>
+                                    <field name="struct_id"/>
+                                    <field name="date_start"/>
+                                    <field name="date_end"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sci_hr_employee_view_search_inherit" model="ir.ui.view">
+            <field name="name">sci_hr_employee_view_search_inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="replace">
+                    <field name="name" string="Nhân viên"
+                           filter_domain="['|','|',('work_email', 'ilike', self), ('employee_code', 'ilike', self), ('name', 'ilike', self)]"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="job_ids"/>
+                </xpath>
+                <xpath expr="//filter[@name='group_job']" position="after">
+                    <filter name="group_hr_user_id" string="Responsible" context="{'group_by':'hr_user_id'}"
+                            groups="hr.group_hr_user"/>
+                    <filter name="area" string="Khu vực" context="{'group_by':'area'}"/>
+                    <filter string="Ngày vào làm" name="group_joining_date"
+                            context="{'group_by':'joining_date:month'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sci_hr_employee_work_duration_tree_view">
+            <field name="name">hr.employee.tree.view</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="employee_id" readonly="1" force_save="1" invisible="1"/>
+                    <field name="employee_code" readonly="1" force_save="1" string = 'Mã nhân viên'/>
+                </xpath>
+                <xpath expr="//field[@name='work_phone']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='work_email']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='parent_id']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='department_id']" position="after">
+                    <field name="gender"/>
+                </xpath>
+                <xpath expr="//field[@name='job_id']" position="after">
+                    <field name="job_ids" widget="many2many_tags" options="{'no_create':True}"/>
+                    <field name="joining_date"/>
+                </xpath>
+                <xpath expr="//field[@name='joining_date']" position="after">
+                    <field name="work_duration"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_hr_contract_view_tree" model="ir.ui.view">
+            <field name="name">hr.contract.tree</field>
+            <field name="model">hr.contract</field>
+            <field name="arch" type="xml">
+                <tree string="Contracts" decoration-bf="message_needaction == True" create="0">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="job_id"/>
+                    <field name="type_id"/>
+                    <field name="resource_calendar_id"/>
+                    <field name="date_start"/>
+                    <field name="date_end"/>
+                    <field name="wage" invisible="1"/>
+                    <field name="message_needaction" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hr_contract_trial_action" model="ir.actions.act_window">
+            <field name="name">Trial contract</field>
+            <field name="res_model">hr.contract</field>
+            <field name="view_mode">tree</field>
+            <field name="view_id" ref="view_hr_contract_view_tree"/>
+            <field name="domain" eval="[('type_id', 'in', [ref('sci_hrms.hr_contract_type_probation')])]"/>
+            <field name="context">{'search_default_open': 1, 'search_default_group_department': 1}</field>
+        </record>
+
+        <record id="open_view_employee" model="ir.actions.act_window">
+            <field name="name">Employees</field>
+            <field name="res_model">hr.employee</field>
+            <field name="view_mode">tree,form,kanban,activity</field>
+            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+            <field name="context">{}</field>
+            <field name="view_id" ref="hr.view_employee_tree"/>
+        </record>
+
+        <menuitem
+                id="hr.menu_hr_employee_user"
+                name="Employees"
+                action="open_view_employee"
+                parent="hr.menu_hr_employee_payroll"
+                sequence="1"/>
+
+
+        <menuitem name="Hợp đồng thử việc" id="report_hr_employee_trial" parent="hr_recruitment.report_hr_recruitment"
+                  action="hr_contract_trial_action" sequence="35"/>
+    </data>
+</odoo>

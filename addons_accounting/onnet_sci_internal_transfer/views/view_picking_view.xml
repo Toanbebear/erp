@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_picking_form_inherit" model="ir.ui.view">
+            <field name="name">view.picking.form.inherit</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//div[hasclass('oe_button_box')]" position="inside">
+                    <button class="btn oe_stat_button" name="action_journal_entries" icon="fa-dollar" type="object" >
+                       <div class="o_field_widget o_stat_info">
+                            Journal Entries
+                       </div>
+                    </button>
+                </xpath>
+
+                <xpath expr="//field[@name='picking_type_id']" position="after">
+                    <field name="intercompany_transfer" attrs="{'invisible': [('picking_type_code','!=','internal')]}"/>
+                    <field name="receiving_company" attrs="{'invisible': [('intercompany_transfer', '=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='origin']" position="after">
+                    <field name="status_processed" attrs="{'invisible': [('picking_type_code','!=','internal')]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='move_ids_without_package']/tree//field[@name='quantity_done']" position="after">
+                    <field name="the_difference" attrs="{'invisible': [('parent.picking_type_code','!=','internal')]}" />
+                    <field name="is_processed" attrs="{'invisible': [('parent.picking_type_code','!=','internal')]}" />
+                </xpath>
+
+                <xpath expr="//field[@name='location_dest_id']" position="after">
+                    <field name="other_company_location_dest_id" options="{'no_create': True}" groups="stock.group_stock_multi_locations" context="{'view_only_name':True, 'with_sudo':True, 'allowed_company_ids': [receiving_company or company_id]}" attrs="{'invisible': [('intercompany_transfer', '=', False)]}"/>
+                </xpath>
+
+                <xpath expr="//field[@name='location_dest_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': ['|', ('picking_type_code', '=', 'outgoing'), ('intercompany_transfer', '=', True)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_picking_move_tree_custom" model="ir.ui.view">
+            <field name="name">stock.picking.move.tree.custom</field>
+            <field name="model">stock.move</field>
+            <field eval="50" name="priority"/>
+            <field name="inherit_id" ref="stock.view_picking_move_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='quantity_done']" position="after">
+                    <field name="the_difference" />
+                    <field name="is_processed" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_picking_tree_inherit" model="ir.ui.view">
+            <field name="name">stock.picking.tree.inherit</field>
+            <field name="model">stock.picking</field>
+            <field eval="50" name="priority"/>
+            <field name="inherit_id" ref="stock.vpicktree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='location_id']" position="after">
+                    <field name="transfer_company" string="Từ công ty"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,16 @@
+<template>
+    <div t-name="XlsView" class="o_xls_container">
+    <div aria-label="Control panel toolbar" class="xls_buttons" role="toolbar"><div>
+        <button accesskey="s" class="btn btn-primary xls_save" type="button" style="display: none;">
+            Save
+        </button>
+            
+       
+    
+        
+    </div></div>
+        <div id="xspreadsheet"/>
+    </div>
+
+    
+</template>

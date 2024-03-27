@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sh_medical_walkin">
+            <field name="name">Walkin</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="type">form</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='examination']/field[@name='note']" position="after">
+                    <field name="sol_product" widget="many2many_tags"
+                           options="{'no_create':True,'no_open':True}" invisible="1"/>
+                    <field name="line_done" widget="many2many_tags" context="{'name_product_with_stage': True}"
+                           domain="[('id', 'in', sol_product)]"
+                           options="{'no_create':True,'no_open':True}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

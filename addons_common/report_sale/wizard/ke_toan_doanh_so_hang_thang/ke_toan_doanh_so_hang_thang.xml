@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="ke_toan_doanh_so_hang_thang_form_view">
+            <field name="name">Kế toán doanh số tháng</field>
+            <field name="model">account.payment.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo dịch vụ thành công">
+                    <group>
+                        <field name="start_date" required="True" string="Từ ngày làm dịch vụ"/>
+                        <field name="end_date" required="True" string="Đến ngày làm dịch vụ"/>
+                        <field name="company_id" required="True" string="Chi nhánh" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="create_report" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="ke_toan_doanh_so_hang_thang_act">
+            <field name="name">Kế toán doanh số tháng</field>
+            <field name="res_model">account.payment.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="ke_toan_doanh_so_hang_thang_form_view"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="ke_toan_doanh_so_hang_thang_menu"
+                  name="A.I.7 Kế toán doanh số tháng"
+                  parent="report_sale.menu_report_brand_sale_marketing_and_accounting_marketing_dong_a"
+                  sequence="6"
+                  action="ke_toan_doanh_so_hang_thang_act"
+        />
+
+        <record id="ke_toan_doanh_so_hang_thang_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO KẾ TOÁN DOANH SỐ HÀNG THÁNG</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/ke_toan_doanh_so_hang_thang.xlsx"/>
+            <field name="store_fname">bao_cao_so_luong_khach_hang.xls</field>
+        </record>
+
+    </data>
+</odoo>

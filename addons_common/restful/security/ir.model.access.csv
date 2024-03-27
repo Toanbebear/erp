@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_api_access_token,access_api_access_token,model_api_access_token,,1,1,1,1
+access_custom_field_cs,access_custom_field_cs,model_custom_field_cs,,1,1,1,1
+access_value_custom_field_cs,access_value_custom_field_cs,model_value_custom_field_cs,,1,1,1,1
+access_config_phone_call_care_soft,access_config_phone_call_care_soft,model_config_phone_call_care_soft,,1,1,1,1
+access_api_log,access_api_log,model_api_log,,1,1,1,1
+access_lab_device_user,access_lab_device_user,model_lab_devices,,1,0,0,0
+access_lab_device_admin,access_lab_device_admin,model_lab_devices,,1,1,1,0

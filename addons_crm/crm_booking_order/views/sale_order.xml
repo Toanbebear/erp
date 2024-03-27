@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_view_quotation_tree_with_onboarding_tree_no_create" model="ir.ui.view">
+            <field name="name">inherit_view_quotation_tree_with_onboarding_tree_no_create</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree_with_onboarding"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_view_order_tree_no_create" model="ir.ui.view">
+            <field name="name">inherit_view_order_tree_no_create</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">0</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_view_sale_order_form_no_create" model="ir.ui.view">
+            <field name="name">inherit_view_sale_order_form_no_create</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">0</attribute>
+                </xpath>
+                <xpath expr="//button[@name='open_discount_review']" position="replace">
+
+                </xpath>
+<!--                <xpath expr="//button[@name='action_confirm']" position="attributes">-->
+<!--                    <attribute name="attrs">{'invisible':['|',('state', 'not in', ['draft']), ('pricelist_type', '!=', 'product')]}</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='amount_owed']" position="after">
+                    <field name="is_missing_money" attrs="{'invisible':['|',('state', '!=', 'draft'),('pricelist_type', '!=', 'product')]}" groups="base.group_erp_manager"/>
+                </xpath>
+<!--                <xpath expr="//button[@name='action_confirm']" position="before">-->
+<!--                    <button name="request_payment" type="object" string="Tạo phiếu thu nháp cho hóa đơn này" class="btn btn-danger"-->
+<!--                            attrs="{'invisible':['|','|',('state', '!=', 'draft'), ('pricelist_type', '!=', 'product'), ('is_missing_money', '=', False)]}"/>-->
+<!--                </xpath>-->
+                <xpath expr="//button[@name='action_confirm']" position="before">
+                    <button name="request_payment" type="object" string="Tạo phiếu thu nháp cho hóa đơn này" class="btn btn-danger"
+                            attrs="{'invisible':['|',('state', '!=', 'draft'), ('pricelist_type', '!=', 'product')]}"/>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|','|','|','|',('discount', '!=', 0),('discount_cash', '!=', 0),('sale_to', '!=', 0),('other_discount', '!=', 0),('product_updatable', '=', False)], 'required':[('display_type','=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|','|','|',('discount', '!=', 0),('discount_cash', '!=', 0),('sale_to', '!=', 0),('other_discount', '!=', 0)]}</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="groups">account.group_account_manager,shealth_all_in_one.group_sh_medical_accountant</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_view_detail_order_tree" model="ir.ui.view">
+            <field name="name">Thêm tư vấn viên</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="crm_base.view_detail_order_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <field name="consultants_1" optional="hide"/>
+                    <field name="consultants_2" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="inherit_view_sale_order_kanban_no_create" model="ir.ui.view">
+            <field name="name">inherit_view_sale_order_form_no_create</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_sale_order_kanban"/>
+            <field name="arch" type="xml">
+                <xpath expr="//kanban" position="attributes">
+                    <attribute name="create">0</attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+    </data>
+</odoo>

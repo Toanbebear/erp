@@ -1,0 +1,8 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_crm_advise_line,access.crm.advise.line,model_crm_advise_line,base.group_user,1,1,1,1
+access_crm_advise_desire,access.crm.advise.desire,model_crm_advise_desire,base.group_user,1,1,1,1
+access_crm_advise_desire_line,access.crm.advise.desire.line,model_crm_advise_desire_line,base.group_user,1,1,1,1
+access_crm_advise_painpoint,access.crm.advise.painpoint,model_crm_advise_painpoint,base.group_user,1,1,1,1
+access_crm_advise_painpoint_line,access.crm.advise.painpoint.line,model_crm_advise_painpoint_line,base.group_user,1,1,1,1
+access_crm_advise_state,access.crm.advise.state,model_crm_advise_state,base.group_user,1,1,1,1
+access_crm_advise_state_line,access.crm.advise.state.line,model_crm_advise_state_line,base.group_user,1,1,1,1

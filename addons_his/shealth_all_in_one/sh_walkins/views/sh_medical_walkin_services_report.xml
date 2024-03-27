@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--        PHIEU CHI DINH THỰC HIỆN DỊCH VỤ-->
+        <report
+                string="Phiếu chỉ định thực hiện dịch vụ"
+                id="action_report_assign_patient_services"
+                model="sh.medical.appointment.register.walkin"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_sh_medical_assign_patient_services"
+                file="shealth_all_in_one.report_sh_medical_walkin_patient_services"
+                paperformat="shealth_all_in_one.sh_paperformat_prescription"
+                menu="True"
+        />
+
+        <!--        PHIEU TƯ VẤN DỊCH VỤ-->
+        <report
+                string="PHIẾU TƯ VẤN DỊCH VỤ (2 mặt)"
+                id="action_report_assign_patient_services_advisory"
+                model="sh.medical.appointment.register.walkin"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.report_sh_medical_assign_patient_services_advisory"
+                file="shealth_all_in_one.report_sh_medical_assign_patient_services_advisory"
+                paperformat="shealth_all_in_one.sh_paperformat_information"
+                menu="True"
+        />
+    </data>
+</odoo>

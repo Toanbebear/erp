@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="sh_medical_register_for_walkin_view_sci_onnet" model="ir.ui.view">
+        <field name="name">Phiếu khám: SCI - Onnet</field>
+        <field name="model">sh.medical.appointment.register.walkin</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_out']" position="after">
+                <field name="is_invoice"/>
+                <field name="not_allow_return"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sh_medical_lab_test_form_sci_onnet" model="ir.ui.view">
+        <field name="name">Phiếu xét nghiệm: SCI - Onnet</field>
+        <field name="model">sh.medical.lab.test</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_lab_test_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_done']" position="after">
+                <field name="not_allow_return" groups="base.group_system"/>
+            </xpath>
+            <xpath expr="//field[@name='lab_test_criteria']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','in',['Draft','Completed']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_done']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','in',['Draft','Completed']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='set_to_test_inprogress'][2]" position="attributes">
+                <attribute name="attrs">{'invisible':['|','|',('check_current_company', '!=', True), ('state', 'not in', ('Completed')),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sh_medical_imaging_test_form_sci_onnet" model="ir.ui.view">
+        <field name="name">Phiếu CĐHA: SCI - Onnet</field>
+        <field name="model">sh.medical.imaging</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_imaging_test_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_done']" position="after">
+                <field name="not_allow_return" groups="base.group_system"/>
+            </xpath>
+            <xpath expr="//field[@name='imaging_material_ids']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','in',['Draft','Completed']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_done']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','in',['Draft','Completed']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//button[@name='set_to_test_start'][2]" position="attributes">
+                <attribute name="attrs">{'invisible':['|','|',('check_current_company', '!=', True), ('state', 'not in', ('Completed')),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sh_medical_surgery_view_sci_onnet" model="ir.ui.view">
+        <field name="name">Phiếu PTTT: SCI - Onnet</field>
+        <field name="model">sh.medical.surgery</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_surgery_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='surgery_end_date']" position="after">
+                <field name="not_allow_return" groups="base.group_system"/>
+            </xpath>
+            <xpath expr="//field[@name='supplies']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','in',['Draft','Completed']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='surgery_end_date']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','in',['Draft','Completed']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='other_bom']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','in',['Draft','Done','Signed']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sh_medical_specialty_view_sci_onnet" model="ir.ui.view">
+        <field name="name">Phiếu CK: SCI - Onnet</field>
+        <field name="model">sh.medical.specialty</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_specialty_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='services_end_date']" position="after">
+                <field name="not_allow_return" groups="base.group_system"/>
+            </xpath>
+            <xpath expr="//field[@name='supplies']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','in',['Draft','Completed']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='services_end_date']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','in',['Draft','Completed']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sh_medical_rounding_view_sci_onnet" model="ir.ui.view">
+        <field name="name">Phiếu CSHP: SCI - Onnet</field>
+        <field name="model">sh.medical.patient.rounding</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_rounding_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='evaluation_end_date']" position="after">
+                <field name="not_allow_return" groups="base.group_system"/>
+            </xpath>
+            <xpath expr="//field[@name='medicaments']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','not in',['Draft']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='evaluation_end_date']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','not in',['Draft']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='other_bom']" position="attributes">
+                <attribute name="attrs">{'readonly':['|',('state','not in',['Draft']),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="sh_medical_prescription_view_sci_onnet" model="ir.ui.view">
+        <field name="name">Phiếu Đơn thuốc: SCI - Onnet</field>
+        <field name="model">sh.medical.prescription</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_prescription_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='date_out']" position="after">
+                <field name="not_allow_return" groups="base.group_system"/>
+            </xpath>
+            <xpath expr="//button[@name='set_to_send_pharmacy']" position="attributes">
+                <attribute name="attrs">{'invisible':['|','|',('check_current_company', '!=', True), ('state', 'not in', ('Đã xuất thuốc')),('not_allow_return','=',True)]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

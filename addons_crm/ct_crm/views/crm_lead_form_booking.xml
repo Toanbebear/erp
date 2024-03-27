@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="ct_crm_lead_base_form_view_inherit" model="ir.ui.view">
+            <field name="name">ct_crm_lead_base_form_view_inherit</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='district_id']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+<!--                <xpath expr="//field[@name='ward_id']" position="attributes">-->
+<!--                    <attribute name="required">1</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//field[@name='street']" position="attributes">
+                    <attribute name="required">1</attribute>
+                </xpath>
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

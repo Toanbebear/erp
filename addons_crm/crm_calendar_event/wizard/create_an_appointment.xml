@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="form_create_calendar_event_from_booking">
+            <field name="name">Form tạo lịch hẹn từ Booking</field>
+            <field name="model">create.an.appointment</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="company_id" required="True" string="Chi nhánh"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="customer_id" required="True" string="Khách hàng"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="opportunity_id" required="True"
+                                       options="{'no_open':True,'no_create':True}"/>
+                            </group>
+                            <group>
+                                <field name="start_datetime" string="Thời gian bắt đầu" required="True"/>
+                                <label for="duration"/>
+                                <div>
+                                    <field name="duration" widget="float_time" string="Duration" class="oe_inline"/>
+                                    <span>Giờ</span>
+                                </div>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="domain_physician" widget="many2many_tags" invisible="1"/>
+                                <field name="physician" options="{'no_open':True,'no_create':True}"/>
+                            </group>
+                            <group>
+                                <field name="services" widget="many2many_tags" required="True"
+                                       options="{'no_open':True,'no_create':True}"/>
+                            </group>
+                        </group>
+                        <label for="name"/>
+                        <field name="name" required="True"/>
+                        <label for="users"/>
+                        <field name="users" widget="many2many_tags" options="{'no_open':True,'no_create':True}"
+                               context="{'name_code_employee_of_user': True,}"/>
+                    </sheet>
+                    <footer>
+                        <button name="request_appointment" type="object" string="Xác nhận" class="oe_highlight"/>
+                        <button string="Hủy thao tác" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_view_form_booking_connect_customer_persona" model="ir.ui.view">
+            <field name="name">Chân dung khách hàng: View portal</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="view_customer_persona" class="btn-info" string="Xem chân dung khách hàng" type="object"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

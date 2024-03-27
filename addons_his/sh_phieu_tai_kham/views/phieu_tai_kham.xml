@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="inherit_sh_medical_evaluation_view" model="ir.ui.view">
+            <field name="name">inherit.sh.medical.evaluation.view</field>
+            <field name="model">sh.medical.evaluation</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_evaluation_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="view_customer_persona" class="btn-info fa fa-user" string="Xem chân dung khách hàng"
+                            type="object"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_crm_create_sale_order,access_crm_create_sale_order,model_crm_line_product,,1,1,1,1
+access_create_multi_line_product,access_create_multi_line_product,model_create_multi_line_product,,1,1,1,1
+access_create_multi_line_product_detail,access_create_multi_line_product_detail,model_create_multi_line_product_detail,,1,1,1,1

@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_booking_create_sale_order" model="ir.ui.view">
+            <field name="name">view_booking_create_sale_order</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook/page[1]" position="after">
+                    <page name="crm_line_product" string="Bán sản phẩm">
+                        <div>
+                            <button name="open_wizard_create_multi_line_product" string="Bán nhiều sản phẩm"
+                                    class="btn-info"
+                                    type="object" style="margin:5px;"
+                                    attrs="{'readonly':[('effect','=', 'expire')],'invisible': [('effect','!=','effect')]}"
+                            />
+                            <button name="open_wizard_create_so" string="Tạo đơn hàng nháp" class="btn-info"
+                                    type="object"
+                            />
+                        </div>
+                        <br/>
+                        <field name="crm_line_product_ids"
+                               context="{'default_booking_id':id,
+                                         'default_source_extend_id':source_id,
+                                         'default_company_id':allowed_company_ids[0],
+                                         'default_stage_line_product':'new',}"
+                               attrs="{'readonly':[('effect','=', 'expire')]}">
+                            <tree delete="false" decoration-danger="stage_line_product=='cancel'"
+                                  decoration-success="stage_line_product=='sold'"
+                                  decoration-info="stage_line_product=='processing'"
+                                  decoration-warning="stage_line_product=='waiting'">
+                                <field name="product_id" required="True" options="{'no_open':True,'no_create':True}"/>
+                                <field name="price_unit" readonly="True" force_save="True"/>
+                                <field name="product_uom" readonly="True" force_save="True"/>
+                                <field name="product_uom_qty" required="True"/>
+                                <field name="discount_percent"/>
+                                <field name="discount_cash" widget="monetary_format"/>
+                                <field name="discount_other" widget="monetary_format"/>
+                                <field name="total_before_discount" sum="Tổng tiền" readonly="True" force_save="True"
+                                       widget="monetary_format"/>
+                                <field name="total" sum="Tổng tiền" readonly="True" force_save="True"
+                                       widget="monetary_format"/>
+                                <field name="stage_line_product"/>
+                                <button name="open_wizard_cancel_line_product" string="HỦY" class="btn btn-danger"
+                                        type="object" attrs="{'invisible':[('stage_line_product','!=','new')]}"/>
+                                <field name="order" optional="hide" string="SO"/>
+                                <button name="go_to_so" type="object" icon="fa-file-text-o" title="Đi đến SO"
+                                        style="font-size: 20px;"/>
+                            </tree>
+                            <form>
+                                <sheet>
+                                    <group name="a">
+                                        <group string="Sản phẩm" name="1">
+                                            <field name="product_id" options="{'no_open':True,'no_create':True}"
+                                                   required="True" width="60%"
+                                                   attrs="{'readonly':['|',('crm_discount_review', '!=', False),('stage_line_product','!=', 'new')]}"/>
+                                            <field name="price_unit" readonly="True" force_save="True"/>
+                                            <field name="product_uom" required="True" readonly="True" force_save="True"
+                                                   options="{'no_open':True,'no_create':True}"/>
+                                            <field name="product_uom_qty" required="True"
+                                                   attrs="{'readonly':['|',('crm_discount_review', '!=', False),('stage_line_product','!=', 'new')]}"/>
+                                            <field name="discount_percent" readonly="True" force_save="True"/>
+                                            <field name="discount_cash" widget="monetary_format" readonly="True"
+                                                   force_save="True"/>
+                                            <field name="discount_other" widget="monetary_format" readonly="True"
+                                                   force_save="True"/>
+                                            <field name="total_before_discount" readonly="True" force_save="True"/>
+                                            <field name="total" readonly="True" force_save="True"/>
+                                        </group>
+                                        <group string="Thông tin chung" name="2">
+                                            <field name="booking_id" readonly="True" force_save="True"
+                                                   invisible="True"/>
+                                            <field name="company_id" required="True"
+                                                   options="{'no_open':True,'no_create':True}"
+                                                   attrs="{'readonly':['|',('crm_discount_review', '!=', False),('stage_line_product','!=', 'new')]}"/>
+                                            <field name="brand_id" readonly="True" force_save="True" invisible="True"/>
+                                            <field name="product_pricelist_id" required="True"
+                                                   options="{'no_open':True,'no_create':True}"
+                                                   attrs="{'readonly':['|',('crm_discount_review', '!=', False),('stage_line_product','!=', 'new')]}"/>
+                                            <field name="source_extend_id" required="True"
+                                                   options="{'no_open':True,'no_create':True}"
+                                                   attrs="{'readonly':['|',('crm_discount_review', '!=', False),('stage_line_product','!=', 'new')]}"/>
+                                            <field name="crm_discount_review"
+                                                   options="{'no_open':True,'no_create':True}" readonly="True"
+                                                   force_save="True"/>
+                                            <field name="note"/>
+                                            <field name="stage_line_product" readonly="True" force_save="True"/>
+                                        </group>
+                                    </group>
+                                    <group name="b">
+                                        <group name="3" string="Thời gian bán hàng">
+                                            <field name="create_date" string="Thời gian tư vấn"/>
+                                            <field name="date_create_so" readonly="True" force_save="True"/>
+                                            <field name="date_confirm_so" readonly="True" force_save="True"/>
+                                        </group>
+                                        <group string="Tư vấn viên" name="4" attrs="{'invisible':[('brand_id','=',3)]}">
+                                            <field name="consultants_1" context="{'name_code_employee_of_user': True,}"
+                                                   options="{'no_open':True,'no_create':True}"
+                                                   attrs="{'readonly':['|',('stage_line_product','=', 'sold'),('brand_id','=',3)], 'required': [('brand_id','!=',3)]}"/>
+                                            <field name="consulting_role_1" options="{'no_open':True,'no_create':True}"
+                                                   attrs="{'readonly':['|',('stage_line_product','=', 'sold'),('brand_id','=',3)]}"/>
+                                            <field name="consultants_2" options="{'no_open':True,'no_create':True}"
+                                                   context="{'name_code_employee_of_user': True,}"
+                                                   attrs="{'readonly':['|',('stage_line_product','=', 'sold'),('brand_id','=',3)]}"/>
+                                            <field name="consulting_role_2" options="{'no_open':True,'no_create':True}"
+                                                   attrs="{'readonly':['|',('stage_line_product','=', 'sold'),('brand_id','=',3)]}"/>
+                                            <field name="consultants_3" options="{'no_open':True,'no_create':True}"
+                                                   context="{'name_code_employee_of_user': True,}"
+                                                   attrs="{'readonly':['|',('stage_line_product','=', 'sold'),('brand_id','=',3)]}"/>
+                                            <field name="consulting_role_3" options="{'no_open':True,'no_create':True}"
+                                                   attrs="{'readonly':['|',('stage_line_product','=', 'sold'),('brand_id','=',3)]}"/>
+                                        </group>
+                                    </group>
+                                    <group string="Thông tin tư vấn" attrs="{'invisible':[('brand_id','!=',3)]}">
+                                        <field name="crm_information_ids" attrs="{'required':[('brand_id','=',3)]}">
+                                            <tree editable="bottom">
+                                                <field name="role" required="1"/>
+                                                <field name="user_id" required="1"
+                                                       context="{'name_code_employee_of_user': True,}"
+                                                       string="Tư vấn viên"/>
+                                            </tree>
+                                        </field>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        <record id="wizard_view_order_product" model="ir.ui.view">-->
+        <!--            <field name="name">wizard_view_order_product</field>-->
+        <!--            <field name="model">crm.lead</field>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <form>-->
+        <!--                    <div class="text-center">-->
+        <!--                        <h2>-->
+        <!--                            <span style="color:red">ĐƠN HÀNG </span> NHÁP ĐÃ ĐƯỢC TẠO THÀNH CÔNG-->
+        <!--                        </h2>-->
+        <!--                    </div>-->
+        <!--                    <footer>-->
+        <!--                        <button string="Đi đến báo giá nháp" class="btn-primary" type="object" name="open_draft_so"/>-->
+        <!--                        <button string="Cancel" class="btn-secondary" special="cancel"/>-->
+        <!--                    </footer>-->
+        <!--                </form>-->
+        <!--            </field>-->
+        <!--        </record>-->
+    </data>
+</odoo>

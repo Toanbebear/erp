@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_tool_get_history_phone_call_inherit_res_partner" model="ir.ui.view">
+            <field name="name">res.partner.form.history.phone.call</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="open_form_get_history_phone_call" string="Lịch sử Phone Call"
+                            type="object" class="btn-info" groups="crm_tool.history_phone_call"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_get_history_phone_call">
+            <field name="name">Lịch sử Phone call Form</field>
+            <field name="model">history.phone.call.form</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="partner_id" readonly='1' required='1'
+                                   options="{'no_open': True, 'no_create': True}"/>
+                            <field name="phone" required='1'/>
+                            <field name="start_time_since" required='1'/>
+                            <field name="start_time_to" required='1'/>
+                            <field name="brand_id" required='1' options="{'no_open': True, 'no_create': True}"/>
+                        </group>
+                        <group>
+                            <div class='col-12 text-center'>
+                                <span class='text-danger'>Hạn chế truy xuất lịch sử cuộc gọi quá 7 ngày( tính từ 'Thời
+                                    gian bắt đầu' đến 'Thời gian kết thúc')!!!
+                                </span>
+                            </div>
+                        </group>
+                        <footer class="text-center">
+                            <button name="get_history_phone_call" type="object" string="Gửi" class="btn-info"/>
+                            <button special="cancel" string="Thoát" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_history_phone_call">
+            <field name="name">Lịch sử Phone call</field>
+            <field name="model">history.phone.call</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="partner_id" readonly='1' required='1'/>
+                            <field name="phone" required='1' readonly='1'/>
+                        </group>
+                        <group>
+                            <notebook>
+                                <page string='Lịch sử cuộc gọi'>
+                                    <field name="phone_call_line" readonly='1'>
+                                        <tree delete="false" edit="false" create="false" class="multiline-head">
+                                            <field name="start_time" readonly='1'/>
+                                            <field name="last_agent" readonly='1'/>
+                                            <field name="last_email_agent" readonly='1'/>
+                                            <field name="path" widget='url' readonly='1' invisible='1'/>
+                                        </tree>
+                                        <form edit="false" create="false">
+                                            <sheet>
+                                                <group>
+                                                    <field name="last_agent" readonly='1'/>
+                                                    <field name="last_email_agent" readonly='1'/>
+                                                    <field name="start_time" readonly='1'/>
+                                                    <field name="end_time" readonly='1'/>
+                                                    <field name="status" readonly='1'/>
+                                                    <field name="path" widget='url' readonly='1'/>
+                                                    <field name="path_download" widget='url' readonly='1'/>
+                                                </group>
+                                            </sheet>
+                                        </form>
+                                    </field>
+                                </page>
+                            </notebook>
+                        </group>
+                        <footer class="text-center">
+                            <button name="export_history_phone_call" type="object" string="Xuất lịch sử Phone call"
+                                    class="btn-info"/>
+                            <button special="cancel" string="Thoát" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="get_history_phone_call_action" model="ir.actions.act_window">
+            <field name="name">Lịch sử Phone call</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">history.phone.call.form</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_get_history_phone_call"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="lich_su_phone_call_attachment" model="ir.attachment">
+            <field name="name">Lịch sử Phone call</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_tool/static/xlxs/phone_call.xlsx"/>
+            <field name="store_fname">lich_su_phone_call.xls</field>
+        </record>
+
+    </data>
+</odoo>

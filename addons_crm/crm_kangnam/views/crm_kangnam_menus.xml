@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem id="crm_kangnam_menu"
+                  name="CRM Kangnam"
+                  web_icon="crm_kangnam,static/description/icon.png"
+                  action="crm_kangnam_crm_lead_action"
+                  sequence="4"
+                  groups="crm_kangnam.le_tan_kangnam"/>
+        <!--   Menu lịch hẹn-->
+        <menuitem id="crm_menu_calendar_kn"
+                  name="Lịch hẹn"
+                  sequence="0"
+                  parent="crm_kangnam.crm_kangnam_menu"/>
+
+        <record id="crm_menu_calendar_kn" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-calendar</field>
+        </record>
+
+        <menuitem id="crm_menu_calendar_event_kn"
+                  name="Lịch hẹn"
+                  sequence="1"
+                  action="crm_calendar_event.crm_action_calendar_event"
+                  parent="crm_menu_calendar_kn"/>
+
+        <menuitem action="crm_calendar_event.open_doctor_schedule"
+                  id="menu_doctor_schedule_kn"
+                  sequence="2"
+                  parent="crm_menu_calendar_event_kn"/>
+
+        <menuitem id="menu_calendar_surgery_kn"
+                  name="Lịch phẫu thuật"
+                  sequence="2"
+                  action="crm_calendar_event.open_calendar_surgery"
+                  parent="crm_menu_calendar_kn"/>
+        <!--        Menu LEAD-->
+        <menuitem id="crm_menu_leads_kn"
+                  name="Leads"
+                  parent="crm_kangnam.crm_kangnam_menu"
+                  action="crm.crm_lead_all_leads"
+                  sequence="1"/>
+
+        <record id="crm_menu_leads_kn" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-users</field>
+        </record>
+        <!--        Menu Booking-->
+        <menuitem id="crm_kangnam_crm_lead_menu"
+                  name="Booking"
+                  parent="crm_kangnam.crm_kangnam_menu"
+                  action="crm_kangnam_crm_lead_action"
+                  sequence="2"/>
+        <record id="crm_kangnam_crm_lead_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-calendar-check-o</field>
+        </record>
+        <!--        Menu Khách hàng-->
+        <menuitem id="crm_menu_customer_kn"
+                  name="Khách hàng"
+                  parent="crm_kangnam.crm_kangnam_menu"
+                  action="contacts.action_contacts"
+                  sequence="3"/>
+        <record id="crm_menu_customer_kn" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-user-circle-o</field>
+        </record>
+        <!--        Menu Thanh toán-->
+        <menuitem id="crm_menu_payment_kn"
+                  name="Thanh toán"
+                  parent="crm_kangnam.crm_kangnam_menu"
+                  sequence="4"/>
+        <record id="crm_menu_payment_kn" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-money</field>
+        </record>
+
+
+        <menuitem id="crm_base_menu_payment_kn"
+                  name="Thanh toán"
+                  parent="crm_menu_payment_kn"
+                  action="crm_base.action_payment_crm"
+                  groups="account.group_account_invoice,crm_base.manager_customer_service"
+                  sequence="0"/>
+
+        <menuitem id="menu_statement_service_kn"
+                  name="Lịch trình thanh toán"
+                  parent="crm_menu_payment_kn"
+                  action="crm_base.open_statement_service"
+                  sequence="5"/>
+
+        <menuitem id="menu_crm_sale_payment_local_kn"
+                  name="Số liệu cơ sở"
+                  parent="crm_menu_payment_kn"
+                  action="crm_sale_payment.action_sale_payment_local"
+                  groups="account.group_account_invoice,crm_base.manager_customer_service"
+                  sequence="10"/>
+        <menuitem id="menu_crm_sale_payment_all_kn"
+                  name="Danh sách thanh toán"
+                  parent="crm_menu_payment_kn"
+                  action="crm_sale_payment.action_sale_payment_all"
+                  groups="base.group_erp_manager"
+                  sequence="11"/>
+        <menuitem id="menu_crm_sale_payment_plan_kn"
+                  name="Doanh số kế hoạch"
+                  parent="crm_menu_payment_kn"
+                  action="crm_sale_payment.action_sale_payment_plan"
+                  groups="account.group_account_invoice,crm_base.manager_customer_service"
+                  sequence="11"/>
+
+        <menuitem id="menu_request_deposit_kn"
+                  name="Đặt cọc"
+                  parent="crm_menu_payment_kn"
+                  groups="base.group_system"
+                  sequence="8"
+                  action="crm_base.action_request_deposit"/>
+
+        <menuitem id="crm_menu_discount_rv_root_kn"
+                  name="Duyệt giảm giá sâu"
+                  parent="crm_menu_payment_kn"
+                  sequence="12"/>
+
+        <menuitem id="crm_menu_discount_review_kn"
+                  name="Duyệt giảm giá sâu"
+                  parent="crm_menu_discount_rv_root_kn"
+                  action="crm_base.action_open_view_discount_rv"
+                  groups="crm_base.receptionist_crm"
+                  sequence="1"/>
+
+        <menuitem id="crm_menu_discount_rule_kn"
+                  name="Quy tắc giảm giá sâu"
+                  parent="crm_menu_discount_rv_root_kn"
+                  action="crm_base.action_open_view_rule_dis"
+                  groups="base.group_erp_manager"
+                  sequence="2"/>
+        <menuitem id="menu_crm_debt_review_kn"
+                  name="Duyệt nợ"
+                  parent="crm_menu_payment_kn"
+                  sequence="14"
+                  action="crm_base.debt_review_action"
+                  groups="crm_base.receptionist_crm"/>
+        <!--        Menu Phone call-->
+        <menuitem id="root_menu_phone_call_kn"
+                  name="Phone call"
+                  parent="crm_kangnam.crm_kangnam_menu"
+                  sequence="6"/>
+        <record id="root_menu_phone_call_kn" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-phone</field>
+        </record>
+
+        <menuitem id="crm_menu_phone_call_kn"
+                  name="Phonecalls"
+                  parent="root_menu_phone_call_kn"
+                  action="crm_base.action_open_view_phone_call"
+                  sequence="0"/>
+        <record id="crm_menu_phone_call_kn" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-phone</field>
+        </record>
+
+        <menuitem id="crm_menu_crm_sms_kn"
+                  name="Tin nhắn SMS"
+                  parent="root_menu_phone_call_kn"
+                  action="crm_base.action_open_view_crm_sms"
+                  sequence="1"/>
+        <record id="crm_menu_crm_sms_kn" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-mobile</field>
+        </record>
+        <!--        Menu Khiếu nại-->
+        <menuitem id="crm_menu_case_complain_kn"
+                  name="Khiếu nại"
+                  parent="crm_kangnam.crm_kangnam_menu"
+                  sequence="6"/>
+
+        <menuitem id="crm_menu_case_kn"
+                  name="Case khiếu nại"
+                  parent="crm_menu_case_complain_kn"
+                  action="crm_base.action_complain_case_view"
+                  sequence="0"/>
+
+        <menuitem id="crm_menu_case_content_kn"
+                  name="Nội dung khiếu nại"
+                  parent="crm_menu_case_complain_kn"
+                  action="crm_base.action_content_complain_case_view"
+                  sequence="2"/>
+
+        <menuitem id="crm_menu_complain_kn"
+                  name="Khiếu nại chi tiết"
+                  parent="crm_menu_case_complain_kn"
+                  action="crm_base.action_complain_view"
+                  sequence="5"/>
+
+        <menuitem id="crm_menu_complain_group_kn"
+                  name="Nhóm khiếu nại"
+                  parent="crm_menu_case_complain_kn"
+                  action="crm_base.action_complain_group_view"
+                  sequence="10"/>
+
+        <menuitem id="crm_other_kn"
+                  name="Tính năng khác"
+                  parent="crm_kangnam.crm_kangnam_menu"
+                  sequence="20"/>
+        <menuitem id="menu_crm_line_readonly_kn"
+                  name="Chi tiết Booking"
+                  parent="crm_other_kn"
+                  action="crm_base.open_crm_line_readonly"
+                  sequence="10"/>
+    </data>
+</odoo>

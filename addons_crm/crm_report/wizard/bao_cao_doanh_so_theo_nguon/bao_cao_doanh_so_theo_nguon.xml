@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="bao_cao_doanh_so_theo_nguon_form">
+            <field name="name">report.sale.source</field>
+            <field name="model">report.sale.source</field>
+            <field name="arch" type="xml">
+                <form string="Brand Overview Report">
+                    <group>
+                        <field name="start_date" required="True"/>
+                        <field name="end_date" required="True"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}" required="True"/>
+                    </group>
+                    <footer>
+                        <button name="create_sales_source_report" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_doanh_so_theo_nguon_act">
+            <field name="name">Báo cáo doanh số theo nguồn</field>
+            <field name="res_model">report.sale.source</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_doanh_so_theo_nguon_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_doanh_so_theo_nguon_menu"
+                  name="Báo cáo doanh thu theo nguồn"
+                  parent="crm_report.menu_crm_report_sales"
+                  action="bao_cao_doanh_so_theo_nguon_act"
+        />
+
+        <record id="report_sales_source_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO DOANH THU THEO NGUỒN</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_report/static/xls/bao_cao_doanh_thu_theo_nguon.xlsx"/>
+            <field name="store_fname">bao_cao_doanh_so_theo_nguon.xls</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_update_uom_price_source_view_form" model="ir.ui.view">
+            <field name="name">crm.uom.price.source.view.form</field>
+            <field name="model">crm.uom.price.source</field>
+            <field name="arch" type="xml">
+                <form string="Cập nhật đơn vị xử lý và nguồn">
+                    <group> 
+                        <field name="walkin_id" readonly="1" force_save="1"/>
+                        <field name="order_lines" invisible="1"/>
+                        <field name="crm_line" options="{'no_create': True,'no_open': True}" required="1"/>
+                        <field name="uom_price" required="1"/>
+                        <field name="source_extend_id" options="{'no_create': True,'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="confirm_booking" type="object" string="Cập nhật trên Booking"
+                                class="oe_highlight"/>
+                        <button name="confirm_so" type="object" string="Chỉ cập nhật tại phiếu khám này"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <!-- Inheriting Walkin screen to display update -->
+
+        <record id="sh_medical_update_uom_price_source_view" model="ir.ui.view">
+            <field name="name">Phiếu khám bệnh - Cập nhật Đơn vị xử lý và nguồn</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header//button[@name='view_walkin_material']" position="after">
+                    <button name="crm_update_uom_price_source_action" states="Scheduled,WaitPayment,InProgress" string="Cập nhật đơn vị xử lý và nguồn"
+                                type="object" class="btn-info"
+                                groups="shealth_all_in_one.group_sh_medical_physician"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

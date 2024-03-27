@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="ceiling_discount_view_form" model="ir.ui.view">
+        <field name="name">sh.medical.ceiling.discount.view.form</field>
+        <field name="model">sh.medical.ceiling.discount</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="brand_id"/>
+                    <field name="ceiling_discount"/>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="sh_medical_ceiling_discount_view_form" model="ir.ui.view">
+        <field name="name">sh.medical.ceiling.discount.view.form</field>
+        <field name="model">sh.medical.health.center.service</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_service_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='promotional_ceiling']" position="replace">
+                <field name="not_sale"/>
+            </xpath>
+            <xpath expr="//page[4]" position="after">
+                <page string="Mức trần khuyến mãi">
+                    <field name="ceiling_discount_ids" context="{'default_service_id': active_id}">
+                        <tree editable="bottom" options="{'no_open':True}">
+                            <field name="service_id" invisible="1"/>
+                            <field name="domain_brand_ids"
+                                   widget="many2many_tags"
+                                   invisible="1"
+                                   options="{'no_open':True,'no_create':True}"/>
+                            <field name="brand_id"
+                                   domain="[('id', 'not in', domain_brand_ids)]"
+                                   options="{'no_open':True,'no_create':True}"/>
+                            <field name="ceiling_discount"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

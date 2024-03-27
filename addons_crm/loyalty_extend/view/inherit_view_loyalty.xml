@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_inherit_loyalty_relative_form" model="ir.ui.view">
+            <field name="model">crm.loyalty.card</field>
+            <field name="inherit_id" ref="loyalty.loyalty_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Khách hàng sử dụng">
+                        <field name="history_used_reward_id" options="{'no_create_edit': True, 'no_open': True}">
+                            <tree decoration-success="stage =='done'" decoration-danger="stage =='cancel'" decoration-info="stage =='upcoming'" default_order="date_used desc">
+                                <field name="booking_id"/>
+                                <field name="date_used"/>
+                                <field name="product"/>
+                                <field name="total"/>
+                                <field name="total_used"/>
+                                <field name="stage" string="Trạng thái"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Người thân sử dụng" name="relative">
+                        <field name="relative_reward">
+                            <tree decoration-muted="is_active==False" decoration-success="stage=='done'" decoration-danger="stage=='cancel'" decoration-info="stage=='upcoming'" default_order="create_date desc">
+                                <field name="booking"/>
+                                <field name="partner" string="Người sử dụng"/>
+                                <field name="create_date" string="Ngày sử dụng"/>
+                                <field name="product"/>
+                                <field name="total"/>
+                                <field name="total_used"/>
+                                <field name="is_active" invisible="1"/>
+                                <field name="stage" string="Trạng thái"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="view_inherit_reward_form" model="ir.ui.view">
+            <field name="model">crm.loyalty.line.reward</field>
+            <field name="inherit_id" ref="loyalty.reward_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='reward_parent']" position="replace">
+                    <field name="reward_id"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

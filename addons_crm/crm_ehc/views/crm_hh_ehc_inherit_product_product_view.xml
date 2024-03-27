@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        
+        <record id="crm_hh_ehc_product_product_view_inherit" model="ir.ui.view">
+			<field name="name">product.product.hh</field>
+			<field name="model">product.product</field>
+			<field name="inherit_id" ref="product.product_normal_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//notebook" position="inside">
+                    <page string="Thông tin EHC">
+						<group>
+							<group string="Dịch vụ">
+								<field name="service_room_ids" widget="many2many_tags"/>
+								<field name="service_code_ehc"/>
+								<field name="service_price_bhyt"/>
+								<field name="service_code_bhyt"/>
+								<field name="service_type" string="Mã loại dịch vụ"/>
+								<field name="service_unit" string="Đơn vị tính"/>
+								<field name="stage"/>
+								<field name="vs_hm"/>
+								<field name="pttm"/>
+								<field name="da_khoa"/>
+							</group>
+						</group>
+                    </page>
+                </xpath>
+			</field>
+		</record>
+    
+    </data>
+</odoo>

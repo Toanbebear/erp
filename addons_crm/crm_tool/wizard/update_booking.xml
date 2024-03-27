@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_update_booking">
+            <field name="name">CRM Update Booking</field>
+            <field name="model">crm.update.booking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="booking_id" readonly="1" force_save="1"
+                                   options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"/>
+                            <field name="has_group_tool" invisible="1"/>
+                            <field name="type_action" required="True"
+                                   attrs="{'required': [('has_group_tool', '=', True)], 'readonly': [('has_group_tool', '=', False)]}"/>
+                            <!--                            <field name="type_action" required="True"/>-->
+                            <field name="name"
+                                   attrs="{'required': [('type_action', '=', 'name')], 'invisible': [('type_action', '!=', 'name')]}"/>
+                            <field name="name_customer"
+                                   attrs="{'required': [('type_action', '=', 'name_customer')], 'invisible': [('type_action', '!=', 'name_customer')]}"/>
+                            <field name="gender"
+                                   attrs="{'required': [('type_action', '=', 'gender')], 'invisible': [('type_action', '!=', 'gender')]}"/>
+                            <field name="stage_id" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                                   attrs="{'required': [('type_action', '=', 'stage')], 'invisible': [('type_action', '!=', 'stage')]}"/>
+                            <field name="crm_line" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                                   attrs="{'required': [('type_action', '=', 'stage_line')], 'invisible': [('type_action', '!=', 'stage_line')]}"/>
+                            <field name="stage_line"
+                                   options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                                   attrs="{'required': [('type_action', '=', 'stage_line')], 'invisible': [('type_action', '!=', 'stage_line')]}"/>
+                            <field name="booking_source"
+                                   options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                                   attrs="{'invisible': [('type_action', '!=', 'update_source')]}"/>
+                            <!--                            <field name="lead_source" options="{'no_create': True, 'no_create_edit':True, 'no_open': True}" attrs="{'invisible': [('type_action', '!=', 'update_source')]}"/>-->
+                            <field name="customer_source"
+                                   options="{'no_create': True, 'no_create_edit':True, 'no_open': True}"
+                                   attrs="{'invisible': [('type_action', '!=', 'update_source')]}"/>
+                            <field name="line_product" string="Sản phẩm cập nhật tư vấn viên"
+                                   options="{'no_open':True,'no_create':True}"
+                                   attrs="{'invisible':[('type_action', '!=', 'consultant_line_product')], 'required': [('type_action', '=', 'consultant_line_product')]}"/>
+                            <field name="consultants_1" string="Tư vấn viên 1"
+                                   context="{'name_code_employee_of_user': True,}"
+                                   options="{'no_open':True,'no_create':True}"
+                                   attrs="{'invisible':[('type_action', '!=', 'consultant_line_product')], 'required': [('type_action', '=', 'consultant_line_product')]}"/>
+                            <field name="consulting_role_1" string="Vai trò tư vấn viên 1"
+                                   attrs="{'invisible':[('type_action', '!=', 'consultant_line_product')]}"/>
+                            <field name="consultants_2" string="Tư vấn viên 2"
+                                   context="{'name_code_employee_of_user': True,}"
+                                   options="{'no_open':True,'no_create':True}"
+                                   attrs="{'invisible':[('type_action', '!=', 'consultant_line_product')]}"/>
+                            <field name="consulting_role_2" string="Vai trò tư vấn viên 2"
+                                   attrs="{'invisible':[('type_action', '!=', 'consultant_line_product')]}"/>
+                        </group>
+                        <group string="Lưu ý" attrs="{'invisible': [('type_action', '!=', 'update_source')]}">
+                            <ul class="text-info">
+                                <li>
+                                    <i class="text-danger">Nguồn khách hàng, nguồn Lead/Booking là rất quan trọng</i>
+                                </li>
+                                <li>
+                                    <i class="text-danger">Nguồn khách hàng căn cứ vào nguồn sinh ra Booking đầu tiên
+                                        của khách, nên nếu Booking đó là Booking đầu tiên, thì cần đổi cả nguồn khách
+                                        hàng
+                                    </i>
+                                </li>
+                                <li>
+                                    <i class="text-danger">Việc đổi nguồn Lead/Booking cần có mail xác nhận của trưởng
+                                        bộ phận căn cứ vào bộ phận phòng ban người tạo
+                                    </i>
+                                </li>
+                                <li>
+                                    <i class="text-danger">Trường Nguồn Booking: Đổi nguồn và nhóm nguồn của Booking và
+                                        Lead đi kèm Booking
+                                    </i>
+                                </li>
+                                <li>
+                                    <i class="text-danger">Trường Nguồn Khách hàng: Đổi nguồn của Khách hàng và Tất cả
+                                        các trường nguồn ban đầu của tất cả các Lead/Booking của Khách hàng (THỰC SỰ CẨN
+                                        THẬN KHI SỬA)
+                                    </i>
+                                </li>
+                                <li>
+                                    <i class="text-danger">Sau khi thực hiện thao tác này, cần kiểm tra lại kết quả xem
+                                        đã như mong muốn chưa? Đối với việc đổi NGUỒN KHÁCH HÀNG CẦN TÌM TẤT CẢ CÁC
+                                        LEAD/BOOKING xem kết quả đúng không
+                                    </i>
+                                </li>
+                                <li>
+                                    <i class="text-danger">Với các Lead/Booking/Account đổi nguồn cần ghi chú vào chân
+                                        trang Lead/Booking(tab Ghi chú bên cạnh tab gửi tin) để sau này dễ rà soát. Nội
+                                        dung ghi chú: Người yêu cầu đổi, người duyệt
+                                    </i>
+                                </li>
+                            </ul>
+                        </group>
+                        <group string="Lưu ý" attrs="{'invisible': [('type_action', '!=', 'consultant_line_product')]}">
+                            <ul class="text-info">
+                                <li>
+                                    <i class="text-danger">Chỉ sử dụng chức năng này trong tháng (khi chi nhánh chưa
+                                        chốt báo cáo doanh thu cho tư vấn viên)
+                                    </i>
+                                </li>
+                                <li>
+                                    <i class="text-danger">Chức năng này sẽ cập nhật lại tư vấn viên ở những bản ghi có
+                                        liên quan đến sản phẩm bạn chọn (Bán sản phẩm, chi tiết thanh toán, Danh sách
+                                        thanh toán (sale.payment), chi tiết báo giá (sale.order.line)
+                                    </i>
+                                </li>
+                            </ul>
+                        </group>
+                        <footer class="text-center">
+                            <button name="update_booking" type="object" string="Cập nhật" class="btn-info"/>
+                            <button special="cancel" string="Hủy" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--        <record id="crm_lead_change_phone_action" model="ir.actions.act_window">-->
+        <!--            <field name="name">Change phone</field>-->
+        <!--            <field name="type">ir.actions.act_window</field>-->
+        <!--            <field name="res_model">crm.change.phone</field>-->
+        <!--            <field name="view_mode">form</field>-->
+        <!--            <field name="view_id" ref="view_change_phone"/>-->
+        <!--            <field name="target">new</field>-->
+        <!--        </record>-->
+
+    </data>
+</odoo>

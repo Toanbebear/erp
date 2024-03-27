@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <menuitem
+                id="sci_hrm_root_menu"
+                name="Nhân viên"
+                groups="hr.group_hr_manager,hr.group_hr_user"
+                web_icon="sci_hrm,static/description/icon.png"
+                sequence="75"/>
+
+
+        <menuitem
+                id="menu_sci_hrm_hr_employee"
+                name="Nhân viên"
+                action="sci_hrm_hr_employee_action"
+                parent="sci_hrm_root_menu"
+                sequence="1"/>
+            <record id="menu_sci_hrm_hr_employee" model="ir.ui.menu">
+                    <field name="web_icon_class">fa fa-user</field>
+            </record>
+
+        <menuitem
+                id="menu_sci_hrm_hr_department"
+                name="Phòng ban"
+                action="sci_hrm_hr_department_action"
+                parent="sci_hrm_root_menu"
+                sequence="2"/>
+            <record id="menu_sci_hrm_hr_department" model="ir.ui.menu">
+                    <field name="web_icon_class">fa fa-building</field>
+            </record>
+
+        <menuitem
+                id="sci_hrm_config_menu"
+                name="Cấu hình"
+                parent="sci_hrm_root_menu"
+                groups="hr.group_hr_manager"
+                sequence="4"/>
+            <record id="sci_hrm_config_menu" model="ir.ui.menu">
+                    <field name="web_icon_class">fa fa-cogs</field>
+            </record>
+
+            <menuitem
+                    id="sci_hrm_hr_job_menu"
+                    name="Vị trí"
+                    action="sci_hrm.sci_hrm_hr_job_action2"
+                    parent="sci_hrm_config_menu"
+                    sequence="1"/>
+                <record id="sci_hrm_hr_job_menu" model="ir.ui.menu">
+                    <field name="web_icon_class">fa fa-briefcase</field>
+                </record>
+
+
+            <menuitem
+                    id="sci_hrm_hr_group_job_menu"
+                    name="Bộ phận"
+                    action="sci_hrm_hr_group_job_action"
+                    parent="sci_hrm_config_menu"
+                    sequence="2"/>
+                <record id="sci_hrm_hr_group_job_menu" model="ir.ui.menu">
+                    <field name="web_icon_class">fa fa-sitemap</field>
+                </record>
+
+
+            <menuitem
+                    id="sci_hrm_hr_team_menu"
+                    name="Nhóm"
+                    action="sci_hrm_hr_team_action"
+                    parent="sci_hrm_config_menu"
+                    sequence="3"/>
+                <record id="sci_hrm_hr_team_menu" model="ir.ui.menu">
+                    <field name="web_icon_class">fa fa-users</field>
+                </record>
+
+
+            <menuitem
+                    id="sci_hrm_hr_sector_menu"
+                    name="Khối"
+                    action="sci_hrm.sci_hrm_hr_department_sector_action"
+                    parent="sci_hrm_config_menu"
+                    sequence="4"/>
+                <record id="sci_hrm_hr_sector_menu" model="ir.ui.menu">
+                    <field name="web_icon_class">fa fa-cubes</field>
+                </record>
+    </data>
+</odoo>

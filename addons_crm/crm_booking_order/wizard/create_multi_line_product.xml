@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_create_multi_line_product">
+            <field name="name">TẠO NHIỀU DÒNG BÁN SẢN PHẨM (WIZARD)</field>
+            <field name="model">create.multi.line.product</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="brand" readonly="True" force_save="True" invisible="True"/>
+                            <field name="booking" readonly="True" force_save="True"/>
+                            <!--                            <field name="brand" readonly="True" force_save="True"/>-->
+                            <field name="pricelist" required="True"
+                                   options="{'no_open':True,'no_create':True}"/>
+                        </group>
+                    </group>
+                    <group name="consultants" attrs="{'invisible':[('brand','=',3)]}">
+                        <group>
+                            <!--                        <group>-->
+                            <!--                            <field name="consultants_1" attrs="{'required':[('brand','!=',3)]}"-->
+                            <field name="consultants_1" attrs="{'required':[('brand','!=',3)]}"
+                                   context="{'name_code_employee_of_user': True,}"
+                                   options="{'no_open':True,'no_create':True}"/>
+                            <field name="consulting_role_1" options="{'no_open':True,'no_create':True}"/>
+                        </group>
+                        <group>
+                            <field name="consultants_2" options="{'no_open':True,'no_create':True}"
+                                   context="{'name_code_employee_of_user': True,}"/>
+                            <field name="consulting_role_2" options="{'no_open':True,'no_create':True}"/>
+                        </group>
+                        <group>
+                            <field name="consultants_3" options="{'no_open':True,'no_create':True}"
+                                   context="{'name_code_employee_of_user': True,}"/>
+                            <field name="consulting_role_3" options="{'no_open':True,'no_create':True}"/>
+                        </group>
+                    </group>
+                    <field attrs="{'invisible':[('brand','=',3)]}" name="detail"
+                           context="{'default_pricelist':pricelist,'default_create_multi_parent':id}" mode="tree">
+                        <tree editable="1">
+                            <field name="create_multi_parent" invisible="1"/>
+                            <field name="pricelist" invisible="1"/>
+                            <field name="product" options="{'no_open':True,'no_create':True}" required="1"/>
+                            <field name="uom_so_id" options="{'no_open':True,'no_create':True}" required="1"/>
+                            <field name="unit_price" readonly="1" force_save="1"/>
+                            <field name="product_uom_qty"/>
+                        </tree>
+                    </field>
+                    <group attrs="{'invisible':[('brand','!=',3)]}">
+                        <field name="crm_consultant_ids" required="1" nolable="1">
+                            <tree editable="bottom">
+                                <field name="role" required="1"/>
+                                <field name="user_id" required="1"
+                                       context="{'name_code_employee_of_user': True,}"
+                                       string="Tư vấn viên"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <group attrs="{'invisible':[('brand','!=',3)]}">
+                        <field name="detail" context="{'default_pricelist':pricelist,'default_create_multi_parent':id}"
+                               nolable="1"
+                               mode="tree">
+                            <tree editable="1">
+                                <field name="create_multi_parent" invisible="1"/>
+                                <field name="pricelist" invisible="1"/>
+                                <field name="product" options="{'no_open':True,'no_create':True}" required="1"/>
+                                <field name="uom_so_id" options="{'no_open':True,'no_create':True}" required="1"/>
+                                <field name="unit_price" readonly="1" force_save="1"/>
+                                <field name="product_uom_qty"/>
+                            </tree>
+                        </field>
+                    </group>
+                    <footer class="text-center">
+                        <button name="create_line_product" type="object" string="Tạo" class="btn-info"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

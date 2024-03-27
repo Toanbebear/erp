@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="note_account_calculator_index_form_view" model="ir.ui.view">
+            <field name="name">calculator.index.form</field>
+            <field name="model">index.roi</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <field name="start_date" required="1"/>
+                            <field name="end_date" required="1"/>
+<!--                            <field name="company" required="1" widget="many2many_tags"/>-->
+                            <field name="brand" required="1"/>
+                        </group>
+                        <footer>
+                            <button name="calculator_roi" type="object" string="Báo cáo"
+                                    class="oe_highlight"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="note_account_calculator_index_act_window" model="ir.actions.act_window">
+            <field name="name">note_account_calculator_index</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">index.roi</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+    </data>
+</odoo>

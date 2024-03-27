@@ -1,0 +1,177 @@
+<odoo>
+    <data>
+        <menuitem id="crm.crm_menu_leads"
+                  name="Leads"
+                  parent="crm.crm_menu_root"
+                  groups="crm.group_use_lead"
+                  action="crm.crm_lead_all_leads"
+                  sequence="1"/>
+        <record id="crm.crm_menu_leads" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-users</field>
+        </record>
+
+        <menuitem id="crm_menu_booking"
+                  name="Booking"
+                  parent="crm.crm_menu_root"
+                  action="crm.crm_lead_action_pipeline"
+                  sequence="1"/>
+        <record id="crm_menu_booking" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-calendar-check-o</field>
+        </record>
+
+        <menuitem id="crm_menu_customer"
+                  name="Customer"
+                  parent="crm.crm_menu_root"
+                  action="contacts.action_contacts"
+                  sequence="3"/>
+        <record id="crm_menu_customer" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-user-circle-o</field>
+        </record>
+
+        <menuitem id="crm_menu_payment"
+                  name="Payments"
+                  parent="crm.crm_menu_root"
+                  groups="account.group_account_invoice,crm_base.manager_customer_service,crm_base.receptionist_crm"
+                  sequence="4"/>
+        <record id="crm_menu_payment" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-money</field>
+        </record>
+
+
+        <menuitem id="crm_base_menu_payment"
+                  name="Payments"
+                  parent="crm_menu_payment"
+                  action="action_payment_crm"
+                  groups="account.group_account_invoice,crm_base.manager_customer_service"
+                  sequence="0"/>
+
+        <menuitem id="menu_statement_service"
+                  name="Lịch trình thanh toán"
+                  parent="crm_menu_payment"
+                  action="open_statement_service"
+                  sequence="5"/>
+
+
+        <menuitem id="menu_crm_debt_review"
+                  name="Debt review"
+                  parent="crm_menu_payment"
+                  sequence="14"
+                  action="debt_review_action"
+                  groups="crm_base.receptionist_crm"/>
+
+        <menuitem id="menu_request_deposit"
+                  name="Request deposit"
+                  parent="crm_menu_payment"
+                  groups="base.group_system"
+                  sequence="8"
+                  action="action_request_deposit"/>
+
+        <menuitem id="crm_menu_discount_rv_root"
+                  name="Discount review"
+                  parent="crm_menu_payment"
+                  sequence="12"/>
+
+        <menuitem id="crm_menu_discount_review"
+                  name="Discount review"
+                  parent="crm_menu_discount_rv_root"
+                  action="action_open_view_discount_rv"
+                  groups="crm_base.receptionist_crm"
+                  sequence="1"/>
+
+        <menuitem id="crm_menu_discount_rule"
+                  name="Discount rule"
+                  parent="crm_menu_discount_rv_root"
+                  action="action_open_view_rule_dis"
+                  groups="base.group_erp_manager"
+                  sequence="2"/>
+
+        <menuitem id="tab_discount_program"
+                  name="Giảm giá"
+                  parent="crm.crm_menu_root"
+                  sequence="5" groups="crm_base.promotion_user"/>
+        <record id="tab_discount_program" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-gift</field>
+        </record>
+
+        <menuitem id="menu_crm_campaign"
+                  name="Campaign"
+                  sequence="1"
+                  parent="tab_discount_program"
+                  action="crm_base.action_open_view_campaign_by_crm_base" groups="sales_team.group_sale_salesman"/>
+
+        <menuitem id="menu_crm_discount"
+                  name="Khuyến mại"
+                  parent="tab_discount_program"
+                  sequence="6"/>
+        <record id="tab_discount_program" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-tag</field>
+        </record>
+        <menuitem id="menu_crm_discount_program"
+                  name="Coupons"
+                  parent="menu_crm_discount"
+                  action="open_discount_program"
+                  sequence="1"/>
+        <record id="menu_crm_discount_program" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-gift</field>
+        </record>
+
+        <menuitem id="root_menu_phone_call"
+                  name="Phone call"
+                  parent="crm.crm_menu_root"
+                  sequence="6"/>
+        <record id="root_menu_phone_call" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-phone</field>
+        </record>
+
+        <menuitem id="crm_menu_phone_call"
+                  name="Phonecalls"
+                  parent="root_menu_phone_call"
+                  action="action_open_view_phone_call"
+                  sequence="0"/>
+        <record id="crm_menu_phone_call" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-phone</field>
+        </record>
+
+        <menuitem id="crm_menu_crm_sms"
+                  name="Tin nhắn SMS"
+                  parent="root_menu_phone_call"
+                  action="action_open_view_crm_sms"
+                  sequence="1"/>
+        <record id="crm_menu_crm_sms" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-mobile</field>
+        </record>
+
+        <menuitem id="crm_menu_case_complain"
+                  name="Khiếu nại"
+                  parent="crm.crm_menu_root"
+                  sequence="7"/>
+        <record id="crm_menu_case_complain" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-flag</field>
+        </record>
+
+        <menuitem
+                id="crm.crm_menu_config"
+                name="Configuration"
+                parent="crm.crm_menu_root"
+                sequence="25" groups="sales_team.group_sale_manager"/>
+        <record id="crm.crm_menu_config" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-cog</field>
+        </record>
+
+        <menuitem id="crm_other"
+                  name="Tính năng khác"
+                  parent="crm.crm_menu_root"
+                  sequence="20"/>
+
+        <menuitem
+                id="menu_all_menu_crm"
+                name="All menu crm"
+                parent="base.menu_administration"
+                sequence="101"
+                groups="base.group_system"
+        />
+        <menuitem id="crm.crm_menu_report"
+                  parent="menu_all_menu_crm"/>
+
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="phone_call_view_form_inherit" model="ir.ui.view">
+        <field name="name">phone_call_view_form_inherit</field>
+        <field name="model">crm.phone.call</field>
+        <field name="inherit_id" ref="crm_base.view_form_phone_call"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='Disease']" position="after">
+                <page name="pc_cs_history" string="Phone call CS">
+                    <field name="phone_call_history_ids">
+                        <tree>
+                            <field name="call_id"/>
+                            <field name="ticket_id"/>
+                            <button name="view_phone_call_cs" type="object" string="Mở ticket"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

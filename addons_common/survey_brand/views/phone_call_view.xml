@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="phone_call_survey_form_inherit" model="ir.ui.view">
+        <field name="name">phone.call.survey.form.inherit</field>
+        <field name="model">crm.phone.call</field>
+        <field name="inherit_id" ref="crm_base.view_form_phone_call"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                    <button name="action_start_survey_phone_call"
+                        class="btn-success fa fa-smile-o"
+                        groups="survey.group_survey_user"
+                        string=" Khảo sát" type="object"/>
+            </xpath>
+            <xpath expr="//page[@name='Disease']" position="after">
+                <page name="survey" string="Lịch sử khảo sát" icon="fa fa-smile-o" groups="survey.group_survey_user">
+                     <field name="survey_answer_ids" groups="survey.group_survey_user">
+                        <tree string="Survey" create="false">
+                            <field name="survey_id"/>
+                            <field name="brand_id"/>
+                            <field name="create_date"/>
+                            <field name="group_service_id"/>
+                            <field name="answer_id" string="Trải nghiệm của KH"/>
+                            <field name="input_type" invisible="1" groups="base.group_no_one"/>
+                            <field name="state"/>
+                            <field name="create_uid"/>
+                            <field name="department_id" string="Phòng ban"/>
+                            <field name="survey_type"/>
+                            <field name="crm_id" string="Booking"/>
+                            <field name="walkin_id" string="Phiếu khám"/>
+                            <field name="evaluation_id" string="Phiếu tái khám"/>
+                        </tree>
+                        <form string="Khảo sát" create="false">
+                            <sheet>
+                                <div class="oe_button_box" name="button_box"/>
+                                <group col="2">
+                                    <group>
+                                        <field name="survey_id"/>
+                                        <field name="partner_id"/>
+                                        <field name="create_date"/>
+                                        <field name="input_type"/>
+                                        <field name="survey_type"/>
+                                        <field name="crm_id" attrs="{'invisible': [('survey_type','!=','booking')]}"/>
+                                        <field name="walkin_id"
+                                               attrs="{'invisible': [('survey_type','!=','pk')]}"
+                                               string="Phiếu khám"/>
+                                        <field name="evaluation_id" attrs="{'invisible': [('survey_type','!=','tk')]}"/>
+                                        <field name="company_id"/>
+                                        <field name="brand_id"/>
+                                    </group>
+                                    <group>
+                                        <field name="email" widget="email"/>
+                                        <field name="group_service_id"/>
+                                        <field name="service_ids"
+                                           widget="many2many_tags"
+                                           options="{'no_create_edit': True}"/>
+                                    </group>
+                                </group>
+                                <field name="user_input_line_ids" mode="tree" attrs="{'readonly': False}" groups="survey.group_survey_user">
+                                    <tree>
+                                        <field name="question_sequence" invisible="1"/>
+                                        <field name="create_date"/>
+                                        <field name="question_id"/>
+                                        <field name="page_id" invisible="1"/>
+                                        <field name="answer_type"/>
+                                        <field name="skipped" invisible="1"/>
+                                        <field name="answer_is_correct" invisible="1"/>
+                                        <field name="answer_score" invisible="1"/>
+                                        <field name="value_suggested"/>
+                                        <field name="value_free_text"/>
+                                    </tree>
+                                </field>
+                            </sheet>
+                        </form>
+                     </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_sale_order_inherit_debt" model="ir.ui.view">
+            <field name="name">view.sale.order.inherit.debt</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='order_lines']" position="after">
+                    <page string="Lịch sử trả nợ" name="debt">
+                        <field name="sale_order_debt_id" mode="tree">
+                            <tree>
+                                <field name="sequence" widget="handle"/>
+                                <field name="product_id" width="25"/>
+                                <field name="uom_price" width="5"/>
+                                <field name="product_uom_qty" width="5"/>
+                                <field name="price_subtotal" width="15"/>
+                                <field name="amount_owned" width="15" sum="Tổng nợ"/>
+                                <field name="amount_paid" width="15" sum="Tổng đã trả"/>
+                                <field name="record_date" width="10"/>
+                                <field name="currency_id" invisible="1"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

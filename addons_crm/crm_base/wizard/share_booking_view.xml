@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_share_booking">
+            <field name="name">Share Booking</field>
+            <field name="model">share.booking</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="booking_id" invisible="True"/>
+                            <label for="company_shared_id" string="Chọn chi nhánh"/>
+                            <div>
+                                <field name="company_shared_id" options="{'no_open':True,'no_create':True}" required="1"/>
+                            </div>
+                        </group>
+                        <footer>
+                            <button name="get_company" type="object" string="Xác nhận" class="btn-info"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

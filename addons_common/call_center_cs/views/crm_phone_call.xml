@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+       <record id="crm_phone_call_form_inherit" model="ir.ui.view">
+           <field name="name">crm_phone_call_form_inherit</field>
+            <field name="model">crm.phone.call</field>
+            <field name="inherit_id" ref="crm_base.view_form_phone_call"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='phone']" position="after">
+                    <field name="create_date" invisible="1"/>
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('create_date', '!=', False)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

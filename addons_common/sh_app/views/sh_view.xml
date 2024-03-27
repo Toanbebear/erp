@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <menuitem id="base.menu_apps" action="base.open_module_tree" parent="base.menu_management" sequence="1"/>-->
+
+<!--        <menuitem id="menu_apps_configure" name="Cấu hình" parent="base.menu_management" sequence="100"/>-->
+<!--        <menuitem id="base.menu_third_party" parent="menu_apps_configure"/>-->
+<!--        <menuitem id="base.menu_module_updates" parent="menu_apps_configure"/>-->
+<!--        <menuitem id="base.menu_view_base_module_upgrade" parent="menu_apps_configure"/>-->
+<!--&lt;!&ndash;        <menuitem id="base.module_mi" parent="menu_apps_configure" name="Third Party"/>&ndash;&gt;-->
+<!--        <menuitem id="base.menu_theme_store" parent="menu_apps_configure"-->
+<!--                  name="Theme Store" sequence="10"/>-->
+
+        <record id="view_module_filter_inherit" model="ir.ui.view">
+            <field name="name">ir.module.module.list.select.inherit</field>
+            <field name="model">ir.module.module</field>
+            <field name="inherit_id" ref="base.view_module_filter"/>
+            <field name="priority" eval="10"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="after">
+                    <searchpanel>
+                        <field name="category_id" select="multi" string="Categories" icon="fa-cutlery"/>
+                    </searchpanel>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="open_module_category_tree" model="ir.actions.act_window">
+            <field name="name">Danh mục</field>
+            <field name="res_model">ir.module.category</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{}</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_empty_folder">
+                No category found!
+              </p><p>
+                You should try other search criteria.
+              </p>
+            </field>
+        </record>
+<!--        <menuitem id="menu_view_category" parent="menu_apps_configure" name="Danh mục" sequence="5"-->
+<!--                  action="open_module_category_tree"/>-->
+    </data>
+</odoo>

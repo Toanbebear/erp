@@ -1,0 +1,175 @@
+<?xml version="1.0"?>
+<odoo>
+    <data noupdate="1">
+
+        <!-- domain -->
+        <record id="config_domain_sci_care_soft_domain" model="ir.config_parameter">
+            <field name="key">domain_caresoft_sci</field>
+            <field name="value">https://api.caresoft.vn/scidemo</field>
+        </record>
+
+        <record id="config_domain_kn_care_soft_domain" model="ir.config_parameter">
+            <field name="key">domain_caresoft_kn</field>
+            <field name="value">https://api.caresoft.vn/kangnam</field>
+        </record>
+
+        <record id="config_domain_da_care_soft_domain" model="ir.config_parameter">
+            <field name="key">domain_caresoft_da</field>
+            <field name="value">https://api.caresoft.vn/dongabeauty</field>
+        </record>
+
+        <record id="config_domain_pr_care_soft_domain" model="ir.config_parameter">
+            <field name="key">domain_caresoft_pr</field>
+            <field name="value">https://api.caresoft.vn/nhakhoaparis</field>
+        </record>
+
+        <record id="config_domain_hh_care_soft_domain" model="ir.config_parameter">
+            <field name="key">domain_caresoft_hh</field>
+            <field name="value">https://api.caresoft.vn/benhvienhongha</field>
+        </record>
+
+        <record id="config_domain_hv_care_soft_domain" model="ir.config_parameter">
+            <field name="key">domain_caresoft_hv</field>
+            <field name="value">https://api.caresoft.vn/sciacademy</field>
+        </record>
+
+        <record id="config_domain_rh_care_soft_domain" model="ir.config_parameter">
+            <field name="key">domain_caresoft_rh</field>
+            <field name="value">https://api.caresoft.vn/richardhuy</field>
+        </record>
+
+        <!-- token -->
+        <record id="config_token_care_soft" model="ir.config_parameter">
+            <field name="key">domain_caresoft_token</field>
+            <field name="value">AniWsZEju0ur_qc</field>
+        </record>
+
+        <record id="config_token_care_soft_kn" model="ir.config_parameter">
+            <field name="key">domain_caresoft_token_kn</field>
+            <field name="value">UZDhVsGJXMK0LoQ</field>
+        </record>
+
+        <record id="config_token_care_soft_da" model="ir.config_parameter">
+            <field name="key">domain_caresoft_token_da</field>
+            <field name="value">MWGGexxOkLoumDg</field>
+        </record>
+
+        <record id="config_token_care_soft_pr" model="ir.config_parameter">
+            <field name="key">domain_caresoft_token_pr</field>
+            <field name="value">kwCk5cyfrxJOnUY</field>
+        </record>
+
+        <record id="config_token_care_soft_hv" model="ir.config_parameter">
+            <field name="key">domain_caresoft_token_hv</field>
+            <field name="value">cbEQ71tKcFyjwNQ</field>
+        </record>
+
+        <record id="config_token_care_soft_rh" model="ir.config_parameter">
+            <field name="key">domain_caresoft_token_rh</field>
+            <field name="value">981tbatMKawTOOw</field>
+        </record>
+
+        <record id="config_token_care_soft_hh" model="ir.config_parameter">
+            <field name="key">domain_caresoft_token_hh</field>
+            <field name="value">NRcb7KmXbWbrYnU</field>
+        </record>
+        
+        <!-- author_id -->
+        <record id="config_author_id_care_soft_kn" model="ir.config_parameter">
+            <field name="key">config_author_id_care_soft_kn</field>
+            <field name="value">135535553</field>
+        </record>
+        
+        <record id="config_author_id_care_soft_da" model="ir.config_parameter">
+            <field name="key">config_author_id_care_soft_da</field>
+            <field name="value">135596642</field>
+        </record>
+        
+        <record id="config_author_id_care_soft_pr" model="ir.config_parameter">
+            <field name="key">config_author_id_care_soft_pr</field>
+            <field name="value">135576072</field>
+        </record>
+        
+        <record id="config_author_id_care_soft_hh" model="ir.config_parameter">
+            <field name="key">config_author_id_care_soft_hh</field>
+            <field name="value">135597541</field>
+        </record>
+        
+<!--        custom_field_stage_id: Trạng thái Booking -->
+        <record id="config_stage_id_care_soft_kn" model="ir.config_parameter">
+            <field name="key">config_stage_id_care_soft_kn</field>
+            <field name="value">5825</field>
+        </record>
+        
+        <record id="config_stage_id_care_soft_da" model="ir.config_parameter">
+            <field name="key">config_stage_id_care_soft_da</field>
+            <field name="value">5853</field>
+        </record>
+        
+        <record id="config_stage_id_care_soft_pr" model="ir.config_parameter">
+            <field name="key">config_stage_id_care_soft_pr</field>
+            <field name="value">5865</field>
+        </record>
+        
+        <record id="config_stage_id_care_soft_hh" model="ir.config_parameter">
+            <field name="key">config_stage_id_care_soft_hh</field>
+            <field name="value">5884</field>
+        </record>
+        
+        <!--        custom_field_stage_id: Ngày đến cửa -->
+        <record id="config_arrival_date_id_care_soft_kn" model="ir.config_parameter">
+            <field name="key">config_arrival_date_id_care_soft_kn</field>
+            <field name="value">5830</field>
+        </record>
+        
+        <record id="config_arrival_date_id_care_soft_da" model="ir.config_parameter">
+            <field name="key">config_arrival_date_id_care_soft_da</field>
+            <field name="value">5858</field>
+        </record>
+        
+        <record id="config_arrival_date_id_care_soft_pr" model="ir.config_parameter">
+            <field name="key">config_arrival_date_id_care_soft_pr</field>
+            <field name="value">5870</field>
+        </record>
+        
+        <record id="config_arrival_date_id_care_soft_hh" model="ir.config_parameter">
+            <field name="key">config_arrival_date_id_care_soft_hh</field>
+            <field name="value">5890</field>
+        </record>
+        
+        <!--        custom_field_service: Dịch vụ chi tiết -->
+        <record id="config_service_care_soft_kn" model="ir.config_parameter">
+            <field name="key">config_service_care_soft_kn</field>
+            <field name="value">5833</field>
+        </record>
+        
+        <record id="config_service_care_soft_da" model="ir.config_parameter">
+            <field name="key">config_service_care_soft_da</field>
+            <field name="value">5861</field>
+        </record>
+        
+        <record id="config_service_care_soft_pr" model="ir.config_parameter">
+            <field name="key">config_service_care_soft_pr</field>
+            <field name="value">5873</field>
+        </record>
+        
+<!--        thiết lập có đồng bộ dữ liệu sang đa kênh hay ko-->
+        <record id="config_sync_data_care_soft" model="ir.config_parameter">
+            <field name="key">config_sync_data_care_soft</field>
+            <field name="value">False</field>
+        </record>
+        
+<!--        <record id="config_service_care_soft_hh" model="ir.config_parameter">-->
+<!--            <field name="key">config_stage_id_care_soft_hh</field>-->
+<!--            <field name="value">5884</field>-->
+<!--        </record>-->
+        
+        
+        <!-- service_id phone call -->
+<!--        <record id="config_service_id_phone_call_care_soft" model="ir.config_parameter">-->
+<!--            <field name="key">service_id_phone_call</field>-->
+<!--            <field name="value">95041768</field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

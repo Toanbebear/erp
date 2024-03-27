@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="open_view_hobbies">
+            <field name="name">Hobbies And Interest</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hobbies.interest</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="open_view_pain_point_and_desires">
+            <field name="name">Pain point and Desires</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pain.point.and.desires</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="menu_hobbies"
+                  action="open_view_hobbies"
+                  name="Hobbies"
+                  sequence="10" parent="custom_partner.customer_persona"/>
+
+        <menuitem id="menu_pain_point_and_desires"
+                  action="open_view_pain_point_and_desires"
+                  name="Pain point and Desires"
+                  sequence="15" parent="custom_partner.customer_persona"/>
+        <record model="ir.actions.act_window" id="open_view_hobbies">
+            <field name="name">Hobbies And Interest</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">hobbies.interest</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.actions.act_window" id="open_view_pain_point_and_desires">
+            <field name="name">Pain point and Desires</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">pain.point.and.desires</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="menu_hobbies"
+                  action="open_view_hobbies"
+                  name="Hobbies"
+                  sequence="10" parent="custom_partner.customer_persona"/>
+
+        <menuitem id="menu_pain_point_and_desires"
+                  action="open_view_pain_point_and_desires"
+                  name="Pain point and Desires"
+                  sequence="15" parent="custom_partner.customer_persona"/>
+    </data>
+</odoo>

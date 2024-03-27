@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="form_request_deposit" model="ir.ui.view">
+            <field name="name">Form request deposit</field>
+            <field name="model">crm.request.deposit</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="convert_payment" string="Chuyển đổi sang payment" type="object" class="btn-info"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="booking_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="partner_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                                <field name="brand_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                                <field name="company_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                                <field name="coupon_id" options="{'no_open':True,'no_create':True}" domain="[('stage_prg', '=', 'active'),('brand_id', '=', brand_id)]"/>
+                            </group>
+                            <group>
+                                <field name="payment_date" required="True"/>
+                                <field name="payment_type" required="True"/>
+                                <field name="payment_method" string="Phương thức thanh toán" required="True"/>
+                                <field name="currency_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                                <field name="amount" widget="monetary_format"/>
+                                <field name="journal_id"/>
+                                <field name="name"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="form_request_deposit_wizard" model="ir.ui.view">
+            <field name="name">Form request deposit Wizard</field>
+            <field name="model">crm.request.deposit</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+
+                                <field name="brand_id" options="{'no_open':True,'no_create':True}" readonly="True"
+                                       force_save="True" invisible="1"/>
+                                <field name="company_id" options="{'no_open':True,'no_create':True}" required="True" readonly="0"/>
+                                <field name="payment_date" required="True" readonly="True" force_save="True"/>
+                                <field name="payment_type" required="True"/>
+                                <field name="payment_method" required="True" string="Phương thức thanh toán"/>
+                                <field name="currency_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                                <field name="journal_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                                <field name="coupon_id" options="{'no_open':True,'no_create':True}" domain="[('stage_prg', '=', 'active'),('brand_id', '=', brand_id)]"/>
+                            </group>
+                            <group>
+                                <field name="amount" required="True" widget="monetary_format"/>
+                                <field name="name" required="True" widget="text"/>
+                            </group>
+                        </group>
+                        <footer>
+                            <button name="convert_payment" string="Tạo phiếu" type="object" class="btn-info"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_request_deposit_search">
+            <field name="name">Tìm kiếm phiếu đặt cọc</field>
+            <field name="model">crm.request.deposit</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm yêu cầu duyệt">
+                    <separator orientation="vertical"/>
+                    <field name="partner_id" string="Khách hàng" select="1"/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter name="group_partner_id" string="Khách hàng" context="{'group_by':'partner_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="tree_request_deposit" model="ir.ui.view">
+            <field name="name">Tree request deposit</field>
+            <field name="model">crm.request.deposit</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="partner_id"/>
+                    <field name="brand_id"/>
+                    <field name="company_id"/>
+                    <field name="payment_date"/>
+                    <field name="currency_id"/>
+                    <field name="amount"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_request_deposit" model="ir.actions.act_window">
+            <field name="name">Đặt cọc</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.request.deposit</field>
+            <field name="domain">[('payment_type','!=','outbound')]</field>
+        </record>
+
+<!--        <menuitem id="menu_request_deposit"-->
+<!--                  name="Request deposit"-->
+<!--                  parent="crm.crm_menu_root"-->
+<!--                  sequence="8"-->
+<!--                  action="action_request_deposit"/>-->
+
+    </data>
+</odoo>

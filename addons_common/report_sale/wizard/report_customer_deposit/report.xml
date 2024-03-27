@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="report_customer_deposit_form">
+            <field name="name">kpi.customer.deposit.report.form</field>
+            <field name="model">kpi.customer.deposit.report</field>
+            <field name="arch" type="xml">
+                <form string="Doanh thu Khách hàng Đặt cọc">
+                    <group>
+                        <field name="start_date" required="True"/>
+                        <field name="end_date" required="True"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}" required="True"/>
+                    </group>
+                    <footer>
+                        <button name="create_report" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_customer_deposit_action">
+            <field name="name">Doanh thu Khách hàng Đặt cọc</field>
+            <field name="res_model">kpi.customer.deposit.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_customer_deposit_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="report_customer_deposit_menu"
+                  name="Doanh thu Khách hàng Đặt cọc"
+                  parent="report_sale.menu_kpi_sale_erp_report"
+                  action="report_customer_deposit_action"
+        />
+
+        <record id="report_customer_deposit_attachment" model="ir.attachment">
+            <field name="name">Doanh thu Khách hàng Đặt cọc</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/report_customer_deposit.xlsx"/>
+            <field name="store_fname">report_customer_deposit.xls</field>
+        </record>
+
+    </data>
+</odoo>

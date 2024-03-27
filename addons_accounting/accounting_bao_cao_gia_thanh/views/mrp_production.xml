@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="tas_mrp_production_view_form_inherit" model="ir.ui.view">
+        <field name="name">mrp.production.view.form.inherit.cost.line</field>
+        <field name="model">sh.medical.specialty</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_specialty_view"/>
+        <field name="arch" type="xml">
+             <xpath expr="//page[last()]" position="after">
+                 <page string="Cost Lines" name="cost_lines">
+                     <button string="Compute Cost Line" class="oe_highlight" type="object" name="compute_cost_line"/>
+                     <button string="Tạo bút toán" class="oe_highlight" type="object" name="generate_journal_entry"/>
+                    <field name="production_cost_line_ids">
+                        <tree create="0" delete="0" editable="bottom">
+                            <field name="bom_name" />
+                            <field name="work_center_id"/>
+                            <field name="cost_driver_id"/>
+                            <field name="service_id"/>
+                            <field name="planned_count"/>
+                            <field name="planned_cost_per_uom_unit"/>
+                            <field name="planned_cost_per_bom_unit"/>
+                            <field name="planned_cost_of_activity" optional="hide"/>
+                            <field name="actual_count"/>
+                            <field name="actual_cost_per_uom_unit" />
+                            <field name="actual_cost_per_bom_unit" readonly="1"/>
+<!--                            <field name="actual_cost_of_activity" readonly="1"/>-->
+                            <field name="recomputed_actual_cost_per_uom_unit" optional="hide" readonly="1"/>
+                            <field name="recomputed_actual_cost_per_bom_unit" optional="hide" readonly="1"/>
+    <!--                            <field name="recomputed_actual_cost_of_activity" optional="hide" readonly="1"/>-->
+                            <field name="uom_id"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="tas_mrp_production_sh_medical_lab_test_view_form_inherit" model="ir.ui.view">
+        <field name="name">sh.medical.lab.test.view.form.inherit.cost.line</field>
+        <field name="model">sh.medical.lab.test</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_lab_test_form"/>
+        <field name="arch" type="xml">
+             <xpath expr="//page[last()]" position="after">
+                 <page string="Cost Lines" name="cost_lines">
+                     <field name="other_bom" widget="many2many_tags" readonly="1"/>
+                     <button string="Compute Cost Line" class="oe_highlight" type="object" name="compute_cost_line"/>
+                     <button string="Tạo bút toán" class="oe_highlight" type="object" name="generate_journal_entry"/>
+                     <field name="production_cost_line_ids">
+                        <tree create="0" delete="0" editable="bottom">
+                            <field name="bom_name" />
+                            <field name="work_center_id"/>
+                            <field name="cost_driver_id"/>
+                            <field name="service_id"/>
+                            <field name="planned_count"/>
+                            <field name="planned_cost_per_uom_unit"/>
+                            <field name="planned_cost_per_bom_unit"/>
+                            <field name="planned_cost_of_activity" optional="hide"/>
+                            <field name="actual_count"/>
+                            <field name="actual_cost_per_uom_unit" />
+                            <field name="actual_cost_per_bom_unit" readonly="1"/>
+<!--                            <field name="actual_cost_of_activity" readonly="1"/>-->
+                            <field name="recomputed_actual_cost_per_uom_unit" optional="hide" readonly="1"/>
+                            <field name="recomputed_actual_cost_per_bom_unit" optional="hide" readonly="1"/>
+<!--                            <field name="recomputed_actual_cost_of_activity" optional="hide" readonly="1"/>-->
+                            <field name="uom_id"/>
+                        </tree>
+                     </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="tas_mrp_production_sh_medical_surgery_view_form_inherit" model="ir.ui.view">
+        <field name="name">sh.medical.surgery.view.form.inherit.cost.line</field>
+        <field name="model">sh.medical.surgery</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_surgery_view"/>
+        <field name="arch" type="xml">
+             <xpath expr="//page[last()]" position="after">
+                 <page string="Cost Lines" name="cost_lines">
+                     <button string="Compute Cost Line" class="oe_highlight" type="object" name="compute_cost_line"/>
+                     <button string="Tạo bút toán" class="oe_highlight" type="object" name="generate_journal_entry"/>
+                    <field name="production_cost_line_ids">
+                        <tree create="0" delete="0" editable="bottom">
+                            <field name="bom_name" />
+                            <field name="work_center_id"/>
+                            <field name="cost_driver_id"/>
+                            <field name="service_id"/>
+                            <field name="planned_count"/>
+                            <field name="planned_cost_per_uom_unit"/>
+                            <field name="planned_cost_per_bom_unit"/>
+                            <field name="planned_cost_of_activity" optional="hide"/>
+                            <field name="actual_count"/>
+                            <field name="actual_cost_per_uom_unit" />
+                            <field name="actual_cost_per_bom_unit" readonly="1"/>
+<!--                            <field name="actual_cost_of_activity" readonly="1"/>-->
+                            <field name="recomputed_actual_cost_per_uom_unit" optional="hide" readonly="1"/>
+                            <field name="recomputed_actual_cost_per_bom_unit" optional="hide" readonly="1"/>
+<!--                            <field name="recomputed_actual_cost_of_activity" optional="hide" readonly="1"/>-->
+                            <field name="uom_id"/>
+                        </tree>
+                     </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="tas_mrp_production_sh_medical_patient_rounding_view_form_inherit" model="ir.ui.view">
+        <field name="name">sh.medical.patient.rounding.view.form.inherit.cost.line</field>
+        <field name="model">sh.medical.patient.rounding</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_rounding_view"/>
+        <field name="arch" type="xml">
+             <xpath expr="//page[last()]" position="after">
+                 <page string="Cost Lines" name="cost_lines">
+                     <button string="Compute Cost Line" class="oe_highlight" type="object" name="compute_cost_line"/>
+                     <button string="Tạo bút toán" class="oe_highlight" type="object" name="generate_journal_entry"/>
+
+                     <field name="production_cost_line_ids">
+                        <tree create="0" delete="0" editable="bottom">
+                            <field name="bom_name" />
+                            <field name="work_center_id"/>
+                            <field name="cost_driver_id"/>
+                            <field name="service_id"/>
+                            <field name="planned_count"/>
+                            <field name="planned_cost_per_uom_unit"/>
+                            <field name="planned_cost_per_bom_unit"/>
+                            <field name="planned_cost_of_activity" optional="hide"/>
+                            <field name="actual_count"/>
+                            <field name="actual_cost_per_uom_unit" />
+                            <field name="actual_cost_per_bom_unit" readonly="1"/>
+<!--                            <field name="actual_cost_of_activity" readonly="1"/>-->
+                            <field name="recomputed_actual_cost_per_uom_unit" optional="hide" readonly="1"/>
+                            <field name="recomputed_actual_cost_per_bom_unit" optional="hide" readonly="1"/>
+<!--                            <field name="recomputed_actual_cost_of_activity" optional="hide" readonly="1"/>-->
+                            <field name="uom_id"/>
+                        </tree>
+                     </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+
+    <record id="tas_mrp_production_sh_medical_prescription_view_form_inherit" model="ir.ui.view">
+        <field name="name">sh.medical.prescription.view.form.inherit.cost.line</field>
+        <field name="model">sh.medical.prescription</field>
+        <field name="inherit_id" ref="shealth_all_in_one.sh_medical_prescription_view"/>
+        <field name="arch" type="xml">
+             <xpath expr="//page[last()]" position="after">
+                 <page string="Cost Lines" name="cost_lines">
+                     <button string="Compute Cost Line" class="oe_highlight" type="object" name="compute_cost_line"/>
+                     <button string="Tạo bút toán" class="oe_highlight" type="object" name="generate_journal_entry"/>
+
+                     <field name="production_cost_line_ids">
+                        <tree create="0" delete="0" editable="bottom">
+                            <field name="bom_name" />
+                            <field name="work_center_id"/>
+                            <field name="cost_driver_id"/>
+                            <field name="service_id"/>
+                            <field name="planned_count"/>
+                            <field name="planned_cost_per_uom_unit"/>
+                            <field name="planned_cost_per_bom_unit"/>
+                            <field name="planned_cost_of_activity" optional="hide"/>
+                            <field name="actual_count"/>
+                            <field name="actual_cost_per_uom_unit" />
+                            <field name="actual_cost_per_bom_unit" readonly="1"/>
+<!--                            <field name="actual_cost_of_activity" readonly="1"/>-->
+                            <field name="recomputed_actual_cost_per_uom_unit" optional="hide" readonly="1"/>
+                            <field name="recomputed_actual_cost_per_bom_unit" optional="hide" readonly="1"/>
+<!--                            <field name="recomputed_actual_cost_of_activity" optional="hide" readonly="1"/>-->
+                            <field name="uom_id"/>
+                        </tree>
+                     </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

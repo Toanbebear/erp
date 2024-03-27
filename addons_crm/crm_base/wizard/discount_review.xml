@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_discount_review">
+            <field name="name">Discount</field>
+            <field name="model">discount.review</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="reason" required="True" string="Lý do xin giảm"/>
+                                <field name="name" force_save="True" attrs="{'required': [('reason', '=', '12')]}" string="Ghi chú"/>
+                                <field name="order_id" readonly="True" options="{'no_open':True,'no_create':True}" attrs="{'required': [('type', '=', 'so')], 'invisible': [('type', '=', 'booking')]}" string="Hóa đơn"/>
+                                <field name="booking_id" readonly="True" force_save="True" options="{'no_open':True}" attrs="{'required': [('type', '=', 'booking')]}"/>
+                                <field name="partner_id" readonly="True" force_save="True" options="{'no_open':True}"/>
+                                <field name="rule_discount_id" widget="radio"/>
+                                <field name="type" invisible="True"/>
+                                <field name="crm_line_id" string="Dịch vụ" options="{'no_open':True,'no_create':True}" attrs="{'required': [('type', '=', 'booking')], 'invisible': [('type', '=', 'so')]}"/>
+                                <field name="order_line_id" string="Sản phẩm" options="{'no_open':True,'no_create':True}" attrs="{'required': [('type', '=', 'so')], 'invisible': [('type', '=', 'booking')]}"/>
+                                <field name="type_discount" required="True" string="Loại giảm giá"/>
+                                <field name="discount" widget="monetary_format"/>
+                                <field name="send_email"/>
+                                <field name="approver_id" options="{'no_open':True,'no_create':True}" attrs="{'required': [('send_email', '=', True)], 'invisible': [('send_email', '=', False)]}"/>
+                            </group>
+                        </group>
+                        <footer class="text-center">
+                            <button name="offer" type="object" string="Gửi yêu cầu" class="btn-info"/>
+                            <button string="Hủy" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_discount_review_wizard" model="ir.actions.act_window">
+            <field name="name">Discount review</field>
+            <field name="res_model">discount.review</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_discount_review"/>
+            <field name="target">new</field>
+        </record>
+
+        <record id="view_discount_review_finish" model="ir.ui.view">
+            <field name="name">Discount review finish</field>
+            <field name="model">discount.review</field>
+            <field name="arch" type="xml">
+                <form>
+                    <separator
+                            string="Đề xuất giảm giá sâu đã được gửi đi!!"/>
+                    <footer>
+                        <button string="Ok" class="oe_highlight" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

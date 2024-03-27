@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="print_partner_code_kiosk_mode" model="ir.actions.client">
+            <field name="name">In QR khách hàng</field>
+            <field name="res_model">print.partner.code.data</field>
+            <field name="tag">print_partner_code_kiosk_mode</field>
+            <field name="target">fullscreen</field>
+        </record>
+
+        <menuitem
+                id="print_partner_code_menu_root"
+                name="In QR Khách Hàng"
+                web_icon="print_partner_code,static/description/icon_menu.png"
+                sequence="3"
+                action="print_partner_code.print_partner_code_kiosk_mode"
+        />
+    </data>
+</odoo>

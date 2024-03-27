@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="report_statement_template">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:18px;">
+                    <div class="oe_structure"/>
+                    <div class="row mt32 mb32">
+                        <div class="col-5" style="font-size:17px;">
+                            <div class="m-0"
+                                 style="text-transform: uppercase;font-weight:bold;"/>
+                            <div>
+                                <span class="m-0" t-field="o.company_id.name"/>
+                                <br/>
+                                <span class="m-0" t-field="o.company_id.street"/>,
+                                <span class="m-0" t-field="o.company_id.street2"/>,
+                                <span class="m-0" t-field="o.company_id.city"/>
+                            </div>
+                            <div class="m-0" t-if="o.company_id.phone">Hotline:
+                                <span t-field="o.company_id.phone"/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h2 style="display: inline}">Lịch trình thanh toán</h2>
+                        <br/>
+                        <i t-esc="(datetime.datetime.now() + relativedelta(hours=7)).strftime('Ngày %d tháng %m năm %Y')"/>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <div t-if="o.partner_id" class="col-12 bm-2">
+                                    <span>Khách hàng:</span>
+                                    <b style="text-transform: uppercase;" class="m-0 mr-5" t-field="o.partner_id.name"/>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-5">
+                            <div t-if="o.partner_id.code_customer" class="col-12 bm-2">
+                                <div>
+                                    <span>Mã khách hàng:</span>
+                                    <b style="text-transform: uppercase;" class="m-0 mr-5"
+                                       t-field="o.partner_id.code_customer"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <div t-if="o.partner_id.year_of_birth" class="col-12 bm-2">
+                                <span>Năm sinh:</span>
+                                <b class="m-0 mr-5" t-field="o.partner_id.year_of_birth"/>
+                            </div>
+                        </div>
+                        <div class="col-1"></div>
+                        <div class="col-5">
+                            <div t-if="o.name" class="col-12 bm-2">
+                                <div>
+                                    <span>Mã Booking:</span>
+                                    <b style="text-transform: uppercase;" class="m-0 mr-5" t-field="o.name"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 text-left">
+<!--                            <div t-if="o.phone" class="col-12 bm-2">-->
+<!--                                <span>Điện thoại:</span>-->
+<!--                                <b class="m-0" t-field="o.partner_id.phone"/>-->
+<!--                            </div>-->
+                            <div class="col-12 bm-2">
+                                <span>Địa chỉ:</span>
+                                <b class="m-0" t-field="o.partner_id.street"/>,
+                                <b class="m-0" t-field="o.partner_id.district_id.name"/>,
+                                <b class="m-0" t-field="o.partner_id.state_id.name"/>,
+                                <b class="m-0" t-field="o.partner_id.country_id.name"/>
+                            </div>
+                            <div class="col-12 bm-2">
+                                <span>Phân loại khách hàng:</span>
+                                <b class="m-0" t-field="o.type_data"/>
+                            </div>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="m-0" t-if="o.crm_line_ids">
+                        <h5>1. Bảng kê chi phí:</h5>
+                    </div>
+                    <table class="table table-condensed">
+                        <thead style="font-size:16px;">
+                            <th class="border border-dark">STT</th>
+                            <!--                            <th class="text-center border border-dark">MÃ DỊCH VỤ</th>-->
+                            <th class="text-center border border-dark">DỊCH VỤ</th>
+                            <th class="text-center border border-dark">MÃ RĂNG</th>
+                            <th class="text-center border border-dark">ĐƠN VỊ</th>
+                            <th class="text-center border border-dark">ĐƠN GIÁ</th>
+                            <th class="text-center border border-dark">SỐ LƯỢNG</th>
+                            <th class="text-center border border-dark">TỔNG</th>
+                            <th class="text-center border border-dark">GIẢM CTKM</th>
+                            <th class="text-center border border-dark">GIẢM THÊM</th>
+                            <th class="text-center border border-dark">PHẢI THU</th>
+                        </thead>
+                        <tbody>
+                            <t t-set="i" t-value="0"/>
+                            <t t-foreach="o.crm_line_ids" t-as="line">
+                                <t t-if="line.stage!='cancel'">
+                                    <t t-set="i" t-value="i + 1"/>
+                                    <tr>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <t t-esc="i"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0" t-field="line.service_id.name"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0"
+                                                  t-esc="', '.join(line.teeth_ids.mapped('code'))"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0" t-field="line.uom_price"
+                                                  t-options="{'widget': 'float', 'precision': 0}"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0" t-field="line.unit_price"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0" t-field="line.quantity"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0" t-field="line.total_before_discount"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0"
+                                                  t-esc="line.total_before_discount - line.total - line.discount_review_id.total_discount_cash"
+                                                  t-options="{'widget': 'monetary', 'display_currency': o.currency_id}"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <t t-if="line.discount_review_id.stage_id == 'approve'">
+                                                <span class="m-0"
+                                                      t-field="line.discount_review_id.total_discount_cash"/>
+                                            </t>
+                                            <t t-else="">
+                                                0
+                                            </t>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0" t-field="line.total"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                            <tr>
+                                <td colspan="9" class="text-center border border-dark text-left align-middle">
+                                    <strong>Tổng</strong>
+                                </td>
+                                <td class="border border-dark text-left align-middle">
+                                    <strong>
+                                        <span t-field="o.amount_total"/>
+                                    </strong>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <br/>
+                    <div class="m-0" t-if="o.statement_service_ids">
+                        <h5>2. Lịch trình thanh toán:</h5>
+                    </div>
+                    <table class="table table-condensed" t-if="o.statement_service_ids">
+                        <thead style="font-size:16px;">
+                            <th class="text-center border border-dark">NGÀY</th>
+                            <th class="text-center border border-dark">DỊCH VỤ</th>
+                            <th class="text-center border border-dark">SỐ TIỀN</th>
+                            <th class="text-center border border-dark">TIỀN TỆ</th>
+                            <th class="text-center border border-dark">GHI CHÚ</th>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="o.statement_service_ids" t-as="ss_details">
+                                <t t-if="ss_details.service_ids">
+                                    <tr>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0" t-field="ss_details.date"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <ul>
+                                                <t t-foreach="ss_details.service_ids" t-as="service">
+                                                    <li>
+                                                        <span class="m-0" t-field="service.name"/>
+                                                    </li>
+                                                </t>
+                                            </ul>
+
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0" t-field="ss_details.amount"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0" t-field="ss_details.currency_id.name"/>
+                                        </td>
+                                        <td class="border border-dark pl-4 py-0">
+                                            <span class="m-0" t-field="ss_details.note"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                    </table>
+                    <div class="m-0 mr-5">
+                        <em>*/Chương trình khuyến mãi đến ngày ............................</em>
+                    </div>
+                    <div class="m-0 mr-5">
+                        <em>*/Tiền đặt cọc có giá trị trong vòng 30 ngày kể từ ngày xuất phiếu thu</em>
+                    </div>
+                    <div class="m-0 mr-5">
+                        <em>*/Tiền đặt cọc có giá trị chuyển nhượng trong trường hợp khách không có nhu cầu</em>
+                    </div>
+                    <div class="row mt32 mb32">
+                        <div class="col-7 text-left" style="font-size: 20px;">
+                            Người nộp tiền:
+                            <br/>
+                            <div style="height:50px;"/>
+                            <!--                            <strong class="m-0" style="font-size: 20px;" t-field="o.partner_id.name"/>-->
+                        </div>
+                        <div class="col-5 text-center">
+                            <div class="m-0" style="font-size: 20px;">Kế toán:</div>
+
+                        </div>
+                    </div>
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+
+        <template id="report_statement">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="crm_his_13.report_statement_template" t-lang="o.partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

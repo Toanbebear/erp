@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_cancel_crm_line_product">
+            <field name="name">Cancel Line Product</field>
+            <field name="model">crm.line.product.cancel</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <group>
+                            <field name="crm_line_product_id" readonly="True"/>
+                            <field name="name" required="True"/>
+                        </group>
+                    </group>
+                    <footer class="text-center">
+                        <button name="cancel_crm_line_product" type="object" string="Hủy dịch vụ" class="btn-danger"/>
+                        <button string="Cancel" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

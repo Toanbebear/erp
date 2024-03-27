@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_account_payment_by_sci_onnet_accounting" model="ir.ui.view">
+            <field name="name">Tool :Cập nhật phiếu thu/hoàn</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="change_journal" class="btn-danger" states="posted" string="Đổi sổ nhật ký"
+                            type="object" groups="crm_tool.group_tool"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

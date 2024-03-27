@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crm_line_form_inherit" model="ir.ui.view">
+            <field name="name">crm.line.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_his_13.view_form_inherit_crm_line_form_booking"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='service']/field[@name='service_id']" position="attributes">
+                    <attribute name="context">{'name_service_with_price': True, 'pricelist': price_list_id, 'only_name': True,}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='service_id']" position="attributes">
+                    <attribute name="context"></attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_line_form_lead_inherit" model="ir.ui.view">
+            <field name="name">crm.line.lead.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_his_13.view_form_inherit_crm_line_form_lead"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='service']/field[@name='service_id']" position="attributes">
+                    <attribute name="context">{'name_service_with_price': True, 'pricelist': price_list_id}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

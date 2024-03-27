@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="hr_resignation_view_pivot" model="ir.ui.view">
+             <field name="name">hr.resignation.pivot</field>
+             <field name="model">hr.resignation</field>
+             <field name="arch" type="xml">
+                 <pivot string="Resignation">
+                     <field name="expected_revealing_date" type="col"/>
+<!--                     <field name="brand" type="row"/>-->
+                     <field name="department_id" type="row"/>
+                 </pivot>
+             </field>
+        </record>
+
+        <record id="hr_resignation_view_graph" model="ir.ui.view">
+             <field name="name">hr.resignation.graph</field>
+             <field name="model">hr.resignation</field>
+             <field name="arch" type="xml">
+                 <graph string="Resignation">
+                     <field name="expected_revealing_date" type="col"/>
+<!--                     <field name="brand" type="row"/>-->
+                 </graph>
+             </field>
+        </record>
+
+        <record model="ir.ui.view" id="hr_resignation_view_tree_inherit">
+            <field name="name">hr.resignation.tree.inherit</field>
+            <field name="model">hr.resignation</field>
+            <field name="inherit_id" ref="hr_resignation.employee_resignation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='expected_revealing_date']" position="after">
+                    <field name="work_duration"/>
+                </xpath>
+<!--                <xpath expr="//field[@name='job']" position="after">-->
+<!--                    <field name="brand" string="Thương hiệu"/>-->
+<!--                </xpath>-->
+            </field>
+        </record>
+
+        <record id="sci_hr_resignation_view_search" model="ir.ui.view">
+            <field name="name">sci_hr_resignation_view_search</field>
+            <field name="model">hr.resignation</field>
+            <field name="arch" type="xml">
+                <search string="Recruitment Analysis">
+                    <field name="employee_id"/>
+                    <field name="job"/>
+                    <field name="department_id"/>
+                    <separator/>
+                    <filter string="Resign date" name="resign_date" date="expected_revealing_date" default_period="this_year"/>
+                    <group expand="1" string="Group By">
+                       <filter string="Chức vụ" name='group_job' context="{'group_by':'job'}"/>
+                       <filter string="Phòng ban" name="group_department" context="{'group_by':'department_id'}" />
+<!--                       <filter string="Thương hiệu" name="group_brand" context="{'group_by':'brand'}"/>-->
+                       <filter string="Ngày nghỉ việc" name="group_date" context="{'group_by':'expected_revealing_date:month'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="hr_resignation.view_approved_resignation" model="ir.actions.act_window">
+            <field name="view_mode">tree,form,pivot,graph</field>
+            <field name="context">{'search_default_resign_date': 1}</field>
+        </record>
+
+<!--        <record model="ir.actions.act_window.view" id="act_hr_applicant_analysis_tree">-->
+<!--            <field name="act_window_id" ref="hr_recruitment.hr_applicant_action_analysis" />-->
+<!--            <field name="sequence" eval="5" />-->
+<!--            <field name="view_mode">tree</field>-->
+<!--            <field name="view_id" ref="hr_applicant_view_tree2" />-->
+<!--        </record>-->
+
+<!--        <record model="ir.actions.act_window.view" id="act_hr_applicant_analysis_pivot">-->
+<!--            <field name="act_window_id" ref="hr_recruitment.hr_applicant_action_analysis" />-->
+<!--            <field name="sequence" eval="10" />-->
+<!--            <field name="view_mode">pivot</field>-->
+<!--            <field name="view_id" ref="hr_applicant_view_pivot2" />-->
+<!--        </record>-->
+
+<!--        <record model="ir.actions.act_window.view" id="act_hr_applicant_analysis_graph">-->
+<!--            <field name="act_window_id" ref="hr_recruitment.hr_applicant_action_analysis" />-->
+<!--            <field name="sequence" eval="15" />-->
+<!--            <field name="view_mode">graph</field>-->
+<!--            <field name="view_id" ref="hr_applicant_view_graph2" />-->
+<!--        </record>-->
+
+    </data>
+</odoo>

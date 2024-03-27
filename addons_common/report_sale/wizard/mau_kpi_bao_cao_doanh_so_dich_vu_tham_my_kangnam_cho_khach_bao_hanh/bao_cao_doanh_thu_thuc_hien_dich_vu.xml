@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_kangnam_mau_kpi_form">
+            <field name="name">Báo cáo Doanh thu bán Dịch vụ cho KH bảo hành</field>
+            <field name="model">kpi.insurance.service.perform.report.kangnam</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo doanh thu thực hiện dịch vụ bảo hành">
+                    <group>
+                        <field name="search_by" string="Theo ngày" required="True"/>
+                        <field name="start_date" string="Từ ngày" required="True"/>
+                        <field name="end_date" string="Đến ngày" required="True"/>
+                        <field name="type" required="True"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}" required="True"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_service_perform_report" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_kangnam_mau_kpi_act">
+            <field name="name">Báo cáo Doanh thu bán Dịch vụ cho KH bảo hành</field>
+            <field name="res_model">kpi.insurance.service.perform.report.kangnam</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_kangnam_mau_kpi_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_kangnam_mau_kpi_menu"
+                  name="A.II.3 Báo cáo Doanh thu bán Dịch vụ cho KH bảo hành"
+                  parent="report_sale.menu_report_brand_kangnam_doanh_thu_doanh_so_kpi"
+                  sequence="3"
+                  action="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_kangnam_mau_kpi_act"/>
+
+<!--        <menuitem id="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_paris_mau_kpi_menu"-->
+<!--                  name="A.II.3 Báo cáo Doanh thu bán Dịch vụ cho KH bảo hành"-->
+<!--                  parent="report_sale.menu_report_brand_paris_kinh_doanh_doanh_thu_doanh_so_kpi"-->
+<!--                  sequence="3"-->
+<!--                  action="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_kangnam_mau_kpi_act"/>-->
+
+        <record id="bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_kangnam_mau_kpi_attachment" model="ir.attachment">
+            <field name="name">Báo cáo Doanh thu bán Dịch vụ cho KH bảo hành</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_doanh_thu_thuc_hien_dich_vu_cho_khac_bao_hanh_kangnam.xlsx"/>
+            <field name="store_fname">bao_cao_doanh_thu_thuc_hien_dich_vu_bao_hanh_kangnam.xls</field>
+        </record>
+    </data>
+</odoo>

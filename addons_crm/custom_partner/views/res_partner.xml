@@ -1,0 +1,248 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_partner_crm_tree_inherit_no_create" model="ir.ui.view">
+            <field name="name">view_partner_crm_tree_inherit_no_create</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="create">0</attribute>
+                    <attribute name="export_xlsx">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='phone']" position="attributes">
+                    <attribute name="widget">phone_tree</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_form_crm_partner" model="ir.ui.view">
+            <field name="name">Form crm partner</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//form" position="attributes">
+                    <attribute name="create">0</attribute>
+                </xpath>
+                <xpath expr="//field[@name='parent_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//sheet" position="before">
+                    <header>
+
+                    </header>
+                </xpath>
+                <xpath expr="//sheet/div[2]/h1" position="after">
+                    <div class="oe_left">
+                        <label for="customer_classification" string="Phân loại:"/>
+                        <h2>
+                            <field name="customer_classification"
+                                   options="{'classes': {'1': 'success', '2': 'info', '3': 'warning', '4': 'danger'}}"/>
+                        </h2>
+                    </div>
+                    <group>
+                        <field name="source_id" string="Nguồn ban đầu" readonly="True"
+                               options="{'no_open':True,'no_create':True}"/>
+                        <field name="overseas_vietnamese" string="Việt kiều" invisible="1"/>
+                    </group>
+                </xpath>
+                <xpath expr="//sheet/div[2]/h1" position="before">
+                    <h2>
+                        <!--                        <field name="code_customer" default_focus="2" placeholder="Code Customer"-->
+                        <!--                               attrs="{'required' : [('type', '=', 'contact')]}"/>-->
+                        <field name="code_customer" default_focus="2" placeholder="Code Customer" readonly="True"/>
+                    </h2>
+                </xpath>
+                <xpath expr="//sheet/group" position="replace">
+                    <group>
+                        <group name="personal_information">
+                            <field name="aliases"/>
+                            <field name="phone" widget="phone" string="Điện thoại 1"
+                                   attrs="{'readonly': [('id', '!=', False)]}"/>
+                            <field name="mobile" widget="phone" string="Điện thoại 2"/>
+                            <field name="emergency_phone" widget="phone"/>
+                            <field name="birth_date"/>
+                            <field name="year_of_birth" attrs="{'invisible': [('year_of_birth', '=', False)]}"/>
+                            <field name="type" invisible="1"/>
+                            <field name="gender"/>
+                            <field name="career"/>
+                            <label for="passport" string="Chứng minh thư/CCCD"/>
+                            <div class="o_address_format">
+                                <field name="pass_port" class="o_address_city"/>
+                                Ngày cấp:
+                                <field name="pass_port_date" class="o_address_city"/>
+                                <field name="pass_port_issue_by" placeholder="Nơi cấp" class="o_address_street"/>
+                            </div>
+                            <field name="pass_port_address" string="Địa chỉ thường trú"/>
+                            <label for="" name="address_name" string="Địa chỉ">
+                                <b attrs="{'invisible': [('type', '!=', 'contact')]}">Company Address</b>
+                                <b attrs="{'invisible': [('type', '!=', 'invoice')]}">Invoice Address</b>
+                                <b attrs="{'invisible': [('type', '!=', 'delivery')]}">Delivery Address</b>
+                                <b attrs="{'invisible': [('type', '!=', 'other')]}">Other Address</b>
+                                <b attrs="{'invisible': [('type', '!=', 'private')]}">Private Address</b>
+                                <b attrs="{'invisible': [('type', '!=', False)]}">Address</b>
+                            </label>
+                            <div class="o_address_format">
+                                <field name="street" placeholder="Địa chỉ..." class="o_address_street"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <!--                                <field name="ward_id" placeholder="Phường/xã" class="o_address_city"-->
+                                <!--                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"-->
+                                <!--                                       options="{'no_open':True,'no_create':True}"/>-->
+                                <field name="district_id" placeholder="Quận/huyện" class="o_address_city"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                       options="{'no_open':True,'no_create':True}"/>
+                                <field name="street2" placeholder="Street 2..." class="o_address_street"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                       invisible="True"/>
+                                <field name="city" placeholder="City" class="o_address_city"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                       invisible="True"/>
+                                <field name="state_id" class="o_address_state" placeholder="Tỉnh/thành phố"
+                                       options='{"no_open": True}'
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"
+                                       context="{'country_id': country_id, 'zip': zip}"/>
+                                <field name="zip" placeholder="ZIP" class="o_address_zip"
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                                <field name="country_id" placeholder="Quốc gia" class="o_address_country"
+                                       options='{"no_open": True, "no_create": True}'
+                                       attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"/>
+                            </div>
+
+                            <field name="email" widget="email" context="{'gravatar_image': True}"
+                                   attrs="{'required': [('user_ids','!=', [])]}" placeholder="...@gmail.com.vn"/>
+                            <field name="function" placeholder="e.g. Sales Director"
+                                   attrs="{'invisible': [('is_company','=', True)]}" invisible="1"/>
+                            <field name="user_ids" invisible="1"/>
+
+                            <field name="website" widget="url" placeholder="e.g. https://www.odoo.com"
+                                   invisible="1"/>
+                            <field name="title" options='{"no_open": True}' placeholder="e.g. Mister"
+                                   attrs="{'invisible': [('is_company', '=', True)]}" invisible="1"/>
+                            <field name="active_lang_count" invisible="1"/>
+                            <label for="lang" attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}"
+                                   invisible="1"/>
+                            <div class="o_row" attrs="{'invisible': [('active_lang_count', '&lt;=', 1)]}"
+                                 invisible="1">
+                                <field name="lang"/>
+                                <button
+                                        type="action"
+                                        name="%(base.res_lang_act_window)d"
+                                        class="btn-sm btn-link mb4 fa fa-globe"
+                                        aria-label="More languages"
+                                        groups="base.group_system"
+                                        title="More languages"
+                                />
+                            </div>
+                            <field name="category_id" widget="many2many_tags"
+                                   options="{'color_field': 'color', 'no_create_edit': True}" placeholder="Tags..."
+                                   invisible="1"/>
+
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//page[1]/field[@name='child_ids']" position="before">
+                    <group>
+                        <field name="vat" placeholder="e.g. BE0477472701"
+                               attrs="{'readonly': [('parent_id','!=',False)]}"/>
+                    </group>
+                </xpath>
+                <xpath expr="//page[1]" position="after">
+                    <page name="relative_partner" string="Thông tin người thân" icon="fa fa-user-o">
+                        <field name="relation_ids">
+                            <tree editable="bottom">
+                                <field name="phone" string="Điện thoại" required="True" width="20%"/>
+                                <field name="type_relative_id" string="Quan hệ"
+                                       domain="[('symmetry_relative', '!=',False)]" width="30%"/>
+                                <field name="partner_relative_id" string="Đối tác" readonly="True" width="20%"/>
+                                <field name="partner_relative_name" string="Tên" width="30%"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='internal_notes']" position="after">
+                    <page name="CRM" string="CRM" icon="fa fa-user-circle">
+                        <field name="crm_ids">
+                            <tree create="false">
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="payment_ids" string="Phiếu thu" icon="fa fa-credit-card">
+                        <field name="payment_ids">
+                            <tree create="false">
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="payment_type"/>
+                                <field name="amount"/>
+                                <field name="currency_id"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page name="page_sale_orders" string="Hóa đơn" icon="fa fa-file-text-o">
+                        <field name="sale_order_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="date_order"/>
+                                <field name="partner_id"/>
+                                <field name="order_line" widget="many2many_tags"/>
+                                <field name="amount_total"/>
+                                <field name="state"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="seq_code_partner" model="ir.sequence">
+            <field name="name">Code partner</field>
+            <field name="code">res.partner</field>
+            <field name="prefix">CUS</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="res_partner_view_search" model="ir.ui.view">
+            <field name="name">res.partner.search.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_res_partner_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='inactive']" position="before">
+                    <filter string="Customers" name="customer" domain="[('code_customer','ilike', 'CUS')]"/>
+                    <filter string="Vendors" name="supplier" domain="[('code_customer','ilike', 'NCC')]"/>
+                    <separator/>
+                </xpath>
+            </field>
+        </record>
+        <record id="account.res_partner_action_supplier" model="ir.actions.act_window">
+            <field name="name">Suppliers</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">res.partner</field>
+            <field name="view_mode">kanban,tree,form</field>
+            <field name="search_view_id" ref="res_partner_view_search"/>
+            <field name="context">{'search_default_supplier': 1,'res_partner_search_mode': 'supplier',
+                'default_is_company': True, 'default_supplier_rank': 1}
+            </field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new supplier in your address book
+                </p>
+                <p>
+                    Odoo helps you easily track all activities related to a supplier.
+                </p>
+            </field>
+        </record>
+
+        <record id="base.action_partner_supplier_form" model="ir.actions.act_window">
+            <field name="view_mode">kanban,tree,form,activity</field>
+            <field name="search_view_id" ref="res_partner_view_search"/>
+            <field name="context">{'search_default_supplier': 1,'res_partner_search_mode': 'supplier',
+                'default_is_company': True, 'default_supplier_rank': 1}
+            </field>
+        </record>
+
+
+    </data>
+</odoo>

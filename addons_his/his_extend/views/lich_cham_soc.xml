@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="sh_medical_reexam_tree_view_extend">
+            <field name="name">Lịch chăm sóc</field>
+            <field name="model">sh.medical.reexam</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Lịch chăm sóc' limit="10" decoration-info="state=='Draft'"
+                      decoration-success="state=='Confirmed'"
+                      default_order="date desc" create="0" delete="0">
+                    <field name="name"/>
+                    <field name="date"/>
+                    <field name="date_out"/>
+                    <field name="patient" class="text-uppercase"/>
+                    <field name="services" widget="many2many_tags"/>
+                    <field name="end_service"/>
+                    <field name="company"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_reexam_form_view_extend">
+            <field name="name">Lịch chăm sóc</field>
+            <field name="model">sh.medical.reexam</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Lịch chăm sóc" duplicate="false" create="false"
+                      edit_expr="state not in ['Confirmed']" delete_expr="state not in ['Confirmed']">
+                    <header>
+                        <button name="print_patient_huongdan" class="btn-success fa fa-print"
+                                string="In hướng dẫn chăm sóc"
+                                type="object"
+                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_stock_manager"/>
+                        <button confirm="Bạn có chắc muốn xác nhận lịch chăm sóc này?" name="action_confirm_reexam"
+                                string="Xác nhận lịch" type="object" class="btn-warning fa fa-step-forward"
+                                attrs="{'invisible': [('state','=','Confirmed')]}"/>
+                        <button confirm="Bạn có chắc muốn hủy lịch chăm sóc này?" name="set_to_cancelled"
+                                attrs="{'invisible': [('state','=','Draft')]}" class="btn-warning fa fa-step-forward"
+                                string="Hủy lịch chăm sóc" type="object"
+                                groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Confirmed"
+                               statusbar_colors='{"Draft":"blue","Confirmed":"green"}'/>
+                    </header>
+                    <sheet>
+                        <div class="row">
+                            <div class="oe_title col-2">
+                                <label for="name" string="Mã phiếu:"/>
+                                <h2>
+                                    <field name="name" class="oe_inline" widget="copy_char"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-2">
+                                <label for="partner_id" string="Tên khách hàng:"/>
+                                <h2>
+                                    <field name="partner_id"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-1">
+                                <label for="dob" string="Ngày sinh:"/>
+                                <h2>
+                                    <field name="dob" force_save="1" readonly="1"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-4">
+                                <label for="address" string="Địa chỉ:"/>
+                                <h2>
+                                    <field name="address" style="white-space: unset;overflow:unset"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-2">
+                                <label for="name" string="Phiếu khám liên quan:"/>
+                                <h2>
+                                    <field name="walkin"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page name="information" string="Thông tin chung" icon="fa fa-info">
+                                <group>
+                                    <group>
+                                        <field name="company" required="True" options="{'no_create': True}"
+                                               icon="fa fa-building"/>
+                                        <field name="end_service" readonly="1" icon="fa fa-info-circle"/>
+                                        <field name="walkin" readonly="1" string="Phiếu khám" icon="fa fa-file-text-o"/>
+                                        <field name="patient" class="text-uppercase" icon="fa fa-user-circle"
+                                               attrs="{'readonly': [('patient','!=',False)]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="date" string="Ngày làm dịch vụ" required="1"
+                                               icon="fa fa-calendar"/>
+                                        <field name="date_out" string="Ngày ra viện" required="1"
+                                               icon="fa fa-calendar"/>
+                                        <field name="service_related" invisible="1"/>
+                                        <field name="services" required="1" widget="many2many_tags" icon="fa fa-list-ul"
+                                               options="{'no_create': True}" domain="[('id','in', service_related)]"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="days_reexam_print" string="Hướng dẫn sau dịch vụ" icon="fa fa-file-text">
+                                <group string="Lịch tái khám">
+                                    <field name="days_reexam_print" nolabel="1"
+                                           attrs="{'readonly': [('state','in',['Confirmed'])]}"
+                                           force_save="1" context="{'default_is_print': True}">
+                                        <tree editable="bottom" default_order="date_recheck_print asc" delete="0">
+                                            <field name="name" required="1"/>
+                                            <field name="after_service_date"/>
+                                            <field name="after_service_phone_date" readonly="1" force_save="1"
+                                                   invisible="1"/>
+                                            <field name="type_date" required="1"/>
+                                            <field name="date_recheck_print" required="1" readonly="1"/>
+                                            <field name="type"/>
+                                            <field name="care_type"/>
+                                            <field name="for_service_phone"
+                                                   options="{'no_create':True, 'no_create':True}"
+                                                   widget="many2many_tags" attrs="{'readonly': [('system','=', True)]}"
+                                                   force_save="1"/>
+                                            <field name="system" invisible="1"/>
+                                            <!--                                            <field name="for_service"/>-->
+                                            <field name="is_print" readonly="1" force_save="1" invisible="1"/>
+                                            <field name="brand_id" invisible="1"/>
+                                            <button name="unlink" class="fa fa-trash-o" type="object"
+                                                    attrs="{'invisible': [('brand_id', '=', 3)]}"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                                <group string="Chăm sóc">
+                                    <field name="info" nolabel="1" placeholder="Ghi chú chăm sóc cho bệnh nhân"/>
+                                </group>
+                            </page>
+                            <page name="phone_call" string="Phone call sau dịch vụ" icon="fa fa fa-phone">
+                                <group string="Phone call chăm sóc">
+                                    <field name="days_reexam_phone" nolabel="1"
+                                           context="{'default_is_phonecall': True}"
+                                           attrs="{'readonly': [('state','in',['Confirmed'])]}">
+                                        <tree editable="bottom" default_order="date_recheck_phone asc" delete="0">
+                                            <field name="name_phone" required="1"/>
+                                            <field name="after_service_phone_date"/>
+                                            <field name="type_date" required="1"/>
+                                            <field name="date_recheck_phone" required="1" readonly="1"/>
+                                            <field name="type"/>
+                                            <field name="system" readonly="True"/>
+                                            <field name="care_type"/>
+                                            <field name="for_service_phone" widget="many2many_tags"
+                                                   options="{'no_open':True,'no_create':True}"/>
+                                            <field name="is_phonecall" readonly="1" force_save="1" invisible="1"/>
+                                            <field name="brand_id" invisible="1"/>
+                                            <button name="unlink" class="fa fa-trash-o" type="object"
+                                                    attrs="{'invisible': [('brand_id', '=', 3)]}"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="SMS sau dịch vụ" name="sms" icon="fa fa fa-comment">
+                                <group string="SMS chăm sóc">
+                                    <field name="days_reexam_sms" nolabel="1" options="{'no_create':True}"
+                                           attrs="{'readonly': [('state','in',['Confirmed'])]}"
+                                           context="{'default_is_sms': True}">
+                                        <tree editable="bottom" default_order="date_recheck_sms asc">
+                                            <field name="name_sms" required="1"/>
+                                            <field name="after_service_sms_date"/>
+                                            <field name="type_date" required="1"/>
+                                            <field name="date_recheck_sms" readonly="1"/>
+                                            <field name="for_service_sms"/>
+                                            <field name="is_sms" readonly="1" force_save="1" invisible="1"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"
+                                   options="{'post_refresh': 'recipients'}"/>
+                        </div>
+                        <footer>
+                            <div class="crm_box_change_infor">
+                                <div class="container">
+                                    <div class="row pt-3">
+                                        <div class="col-lg-12">
+                                            <span style="padding:5px;">
+                                                <strong>Ngày tạo:</strong>
+                                                <field name="create_date" readonly="True" force_save="True"/>
+                                            </span>
+                                            <span style="padding:5px;">
+                                                <strong>Tạo bởi:</strong>
+                                                <field name="create_uid" readonly="True" force_save="True"
+                                                       options="{'no_open':True,}"/>
+                                            </span>
+                                            <span style="padding:5px;">
+                                                <strong>Ngày sửa:</strong>
+                                                <field name="write_date" readonly="True" force_save="True"/>
+                                            </span>
+                                            <span style="padding:5px;">
+                                                <strong>Sửa bởi:</strong>
+                                                <field name="write_uid" readonly="True" force_save="True"/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sh_medical_reexam_action_extend" model="ir.actions.act_window">
+            <field name="name">Lịch hẹn chăm sóc</field>
+            <field name="res_model">sh.medical.reexam</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('his_extend.sh_medical_reexam_tree_view_extend')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('his_extend.sh_medical_reexam_form_view_extend')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Quản lý Lịch hẹn chăm sóc ở phiếu khám
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

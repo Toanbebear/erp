@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<template xml:space="preserve">
+    <t t-name="PresenceIndicator">
+        <div id="oe_hr_attendance_status" class="fa fa-circle" role="img" aria-label="Available" title="Available">
+        </div>
+    </t>
+    <t t-name="PrintPartnerCodeKioskMode">
+        <div class="bg-white" style="min-height:100vh">
+            <span class=""/>
+            <div class="o_print_partner_code text-center"/>
+            <div class="row content">
+                <div class="col-sm-8 list-patient bg-light" style="min-height:100vh">
+                       <h2 style="text-align:center;margin: 10px 0; color: #003471">In mã QR khách hàng</h2>
+                    <div class="table-wrapper-scroll-y my-custom-scrollbar">
+                        <div class="table-wrapper-scroll-y my-custom-scrollbar mb-3">
+                            <div class="row text-right">
+                                <div class="col-9 d-flex justify-content-left">
+
+                                    <div style="width:35%">
+                                         <input name="txt-check-in" id="txt-check-in" class="form-control" type='text' placeholder="Tìm kiếm theo Mã Booking/Mã khách hàng/SĐT"/>
+
+                                    </div>
+                                    <div style="width:65%" class="text-left">
+                                        <button type="button" id="btn-search-data" class="btn btn-primary"><i class="fa fa-search"></i><span>Thêm khách hàng</span></button>
+                                    </div>
+                                </div>
+                                <div class="col-3 text-right">
+                                    <button type="button" id="btn-reload-data" class="btn btn-danger"><i class="fa fa-close"></i><span>Clear</span></button>
+                                    <button type="button" id="btn_print" class="btn btn-primary"><i class="fa fa-print"></i><span>In mã khách hàng</span></button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-striped datatable">
+                          <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Mã Khách hàng</th>
+                                <th>Tên Khách hàng</th>
+                                <th>Giới tính</th>
+                                <th>Ngày tháng năm sinh</th>
+                                <th>Hành động</th>
+                            </tr>
+                          </thead>
+                            <tbody id="data_print_partner_code">
+                          </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <h1 class="text-center" style="padding-top: 20%">Preview</h1>
+                </div>
+            </div>
+        </div>
+    </t>
+</template>

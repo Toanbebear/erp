@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="collaborator_crm_lead_form">
+            <field name="name">Gán Cộng tác viên</field>
+            <field name="model">collaborator.crm.lead</field>
+            <field name="arch" type="xml">
+                <form string="Gán Cộng tác viên">
+                    <group>
+                        <field name="crm_id" invisible="1"/>
+                        <field name="company_id" invisible="1"/>
+                        <field name="source_id" string="Nguồn Booking"/>
+                        <field name="collaborator" options="{'no_create':True}" required="1" string="Cộng tác viên"/>
+                    </group>
+                    <footer>
+                        <button name="confirm" type="object" string="Xác nhận" class="btn-primary btn-lg fa fa-check"/>
+                        <button string="Đóng" class="btn-secondary btn-lg fa fa-times" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_collaborator_crm_lead_act">
+            <field name="name">Gán Cộng tác viên</field>
+            <field name="res_model">collaborator.crm.lead</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="collaborator_crm_lead_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,1111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <report
+                string="Phiếu kho"
+                id="action_stock_picking_bill"
+                model="stock.picking"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.shealth_stock_picking"
+                file="shealth_all_in_one.shealth_stock_picking"
+                print_report_name="Phiếu khoooo"
+                paperformat="shealth_all_in_one.sh_paperformat_stock_picking_bill_portrait"/>
+
+        <template id="shealth_stock_picking">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.shealth_stock_picking_document"/>
+            </t>
+        </template>
+
+
+        <template id="shealth_stock_picking_document">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=o.sudo().partner_id.lang)"/>
+                    <t t-set="o" t-value="o.sudo()"/>
+                    <div class="page" style="font-family:Times New Roman;font-size:25px;">
+                        <div class="oe_structure"/>
+                        <div class="row mt32 mb32">
+                            <div class="col-7">
+                                <strong>Tên công ty:
+                                    <span t-field="o.company_id.name"/>
+                                </strong>
+                                <br/>
+                                <strong>Địa chỉ:
+                                    <span t-field="o.company_id.street"/>
+                                </strong>
+                            </div>
+                            <div class="col-5">
+                                <center>
+                                    <strong>Mẫu số:02-VT</strong>
+                                    <br/>
+                                    <strong>(Ban hành theo QĐ số: 15/2006/QĐ-BTC</strong>
+                                    <br/>
+                                    <strong>Ngày 20/03/2006 của Bộ trưởng BTC)</strong>
+                                </center>
+                            </div>
+                        </div>
+                        <t t-set="companies" t-value="request.env['res.company'].search([]).partner_id"/>
+                        <t t-if="o.picking_type_id.code == 'incoming'">
+                            <t t-if="o.partner_id and o.partner_id in companies">
+                                <div class="row">
+                                    <div class="col-3"/>
+                                    <div class="col-5 text-center">
+                                        <span style="font-weight:bold;font-size:45px;">PHIẾU NHẬP HÀNG (nội bộ)</span>
+                                        <br/>
+                                        <i t-esc="o.sci_date_done.date().strftime('Ngày %d tháng %m năm %Y')"/>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <strong>Số:
+                                            <span t-field="o.name"/>
+                                        </strong>
+                                        <br/>
+                                        <strong>Nợ: 152100</strong>
+                                        <br/>
+                                        <strong>Có: 336904</strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span>Họ và tên người giao hàng:</span>
+                                    <br/>
+                                    <span>Theo đơn hàng số:
+                                        <t t-if="o.purchase_id">
+                                            <span t-field="o.purchase_id.name"/>
+                                        </t>
+                                    </span>
+                                    <br/>
+                                    <span>Nhập tại kho:
+                                        <span t-field="o.location_dest_id"/>
+                                    </span>
+                                    <br/>
+                                    <span>Diễn giải:</span>
+                                    <span style="margin-left:150px">Loại tiền:</span>
+                                    <span style="margin-left:150px">Tỷ giá:</span>
+                                </div>
+                                <table class="table table-condensed mt16">
+                                    <t t-set="total_price" t-value="0"/>
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center border border-dark">STT</th>
+                                            <th rowspan="2" class="text-center border border-dark">Tên, nhãn hiệu quy
+                                                cách,phẩm
+                                                chất
+                                                vật tư, dụng cụ sản phẩm, hàng hóa
+                                            </th>
+                                            <th rowspan="2" class="text-center border border-dark">Mã số</th>
+                                            <th rowspan="2" class="text-center border border-dark">Đơn vị tính</th>
+                                            <th colspan="2" class="text-center border border-dark">Số lượng</th>
+                                            <th rowspan="2" class="text-center border border-dark">Đơn giá</th>
+                                            <th rowspan="2" class="text-center border border-dark">Thành tiền</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center border border-dark">
+                                                <strong>Yêu cầu</strong>
+                                            </th>
+                                            <th class="text-center border border-dark">
+                                                <strong>Thực xuất</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                                        <t t-set="i" t-value="0"/>
+                                        <tr t-foreach="lines" t-as="move">
+                                            <t t-set="i" t-value="i + 1"/>
+                                            <td class="text-center border border-dark">
+                                                <t t-esc="i"/>
+                                            </td><!--STT-->
+                                            <td class="border border-dark"><!--tên sp-->
+                                                <span t-field="move.product_id.name"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- mã số-->
+                                                <span t-field="move.product_id.sudo().default_code"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--đơn vị tính-->
+                                                <span t-field="move.product_uom.name"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- yêu cầu -->
+                                                <span t-field="move.product_uom_qty"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- thực xuất -->
+                                                <span t-field="move.quantity_done"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--đơn giá-->
+                                                <t t-set="quantity" t-value="move.stock_valuation_layer_ids.quantity"/>
+                                                <t t-set="value" t-value="move.stock_valuation_layer_ids.value"/>
+                                                <t t-if="quantity != 0">
+                                                    <t t-set="unit_price" t-value="value / quantity"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="unit_price" t-value="0"/>
+                                                </t>
+                                                <t t-esc="unit_price"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--thành tiền-->
+                                                <t t-set="price" t-value="unit_price * move.quantity_done"/>
+                                                <t t-set="total_price" t-value="total_price + price"/>
+                                                <t t-esc="price"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" class="text-center border border-dark">
+                                                <strong>Cộng:</strong>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <t t-esc="total_price"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <span>Tổng số tiền:
+                                        <t t-esc="o.total_price_text(total_price)"/>
+                                    </span>
+                                    <br/>
+                                    <span>Số chứng từ gốc kèm theo:
+                                        <t t-esc="o.origin"/>
+                                    </span>
+                                </div>
+                            </t>
+                            <t t-else="">
+                                <div class="row">
+                                    <div class="col-3"/>
+                                    <div class="col-5 text-center">
+                                        <span style="font-weight:bold;font-size:45px;">PHIẾU NHẬP HÀNG</span>
+                                        <br/>
+                                        <i t-esc="o.sci_date_done.date().strftime('Ngày %d tháng %m năm %Y')"/>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <strong>Số:
+                                            <span t-field="o.name"/>
+                                        </strong>
+                                        <br/>
+                                        <strong>Nợ: 152100</strong>
+                                        <br/>
+                                        <strong>Có: 152900</strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span>Họ và tên người giao hàng:
+                                        <t t-if="o.purchase_id">
+                                            <span t-field="o.purchase_id.partner_id"/>
+                                        </t>
+                                    </span>
+                                    <br/>
+                                    <span>Theo đơn hàng số:
+                                        <t t-if="o.purchase_id">
+                                            <span t-field="o.purchase_id.name"/>
+                                        </t>
+                                    </span>
+                                    <br/>
+                                    <span>Nhập tại kho:
+                                        <span t-field="o.location_dest_id"/>
+                                    </span>
+                                    <br/>
+                                    <span>Diễn giải:</span>
+                                    <span style="margin-left:150px">Loại tiền:</span>
+                                    <span style="margin-left:150px">Tỷ giá:</span>
+                                </div>
+                                <table class="table table-condensed mt16">
+                                    <t t-set="total_price" t-value="0"/>
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center border border-dark">STT</th>
+                                            <th rowspan="2" class="text-center border border-dark">Tên, nhãn hiệu quy
+                                                cách,phẩm
+                                                chất
+                                                vật tư, dụng cụ sản phẩm, hàng hóa
+                                            </th>
+                                            <th rowspan="2" class="text-center border border-dark">Mã số</th>
+                                            <th rowspan="2" class="text-center border border-dark">Đơn vị tính</th>
+                                            <th colspan="2" class="text-center border border-dark">Số lượng</th>
+                                            <th rowspan="2" class="text-center border border-dark">Đơn giá</th>
+                                            <th rowspan="2" class="text-center border border-dark">Thành tiền</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center border border-dark">
+                                                <strong>Yêu cầu</strong>
+                                            </th>
+                                            <th class="text-center border border-dark">
+                                                <strong>Thực nhập</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="o.purchase_id">
+                                            <t t-set="lines" t-value="o.purchase_id.order_line.filtered(lambda x: x.product_uom_qty)"/>
+                                        </t>
+                                        <t t-set="i" t-value="0"/>
+                                        <tr t-foreach="lines" t-as="move">
+                                            <t t-set="i" t-value="i + 1"/>
+                                            <td class="text-center border border-dark m-0 p-1">
+                                                <t t-esc="i"/>
+                                            </td><!--STT-->
+                                            <td class="border border-dark m-0 p-1"><!--tên sp-->
+                                                <span t-field="move.product_id.name"/>
+                                            </td>
+                                            <td class="text-center border border-dark m-0 p-1"><!-- mã số-->
+                                                <span t-field="move.product_id.sudo().default_code"/>
+                                            </td>
+                                            <td class="text-center border border-dark m-0 p-1"><!--đơn vị tính-->
+                                                <span t-field="move.product_uom.name"/>
+                                            </td>
+                                            <td class="text-center border border-dark m-0 p-1"><!-- yêu cầu -->
+                                                <span t-field="move.product_qty"/>
+                                            </td>
+                                            <td class="text-center border border-dark m-0 p-1"><!-- thực xuất -->
+                                                <span t-field="move.qty_received"/>
+                                            </td>
+                                            <td class="text-right border border-dark m-0 p-1"><!--đơn giá-->
+                                                <span t-field="move.price_unit"/>
+                                            </td>
+                                            <td class="text-right border border-dark m-0 p-1"><!--thành tiền-->
+                                                <t t-set="price_subtotal" t-value="move.qty_received * move.price_unit"/>
+                                                <t t-set="total_price" t-value="total_price + move.price_subtotal"/>
+<!--                                                <t t-set="price_subtotal.split('.')"/>-->
+<!--                                                <t t-esc="price_subtotal"/>-->
+                                                <t t-set="price_subtotal" t-value="'{0:,.2f}'.format(price_subtotal)"/>
+                                                <t t-set="price_subtotal" t-value="price_subtotal.replace(',','/')"/>
+                                                <t t-set="price_subtotal" t-value="price_subtotal.replace('.',',')"/>
+                                                <t t-set="price_subtotal" t-value="price_subtotal.replace('/','.')"/>
+                                                <t t-esc="price_subtotal"/>
+
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" class="text-center border border-dark">
+                                                <strong>Cộng:</strong>
+                                            </td>
+                                            <td class="text-center border border-dark">
+<!--                                                <t t-esc="total_price"/>-->
+<!--                                                <t t-esc="'{0:,.2f}'.format(total_price)"/>-->
+                                                <t t-set="result" t-value="'{0:,.2f}'.format(total_price)"/>
+                                                <t t-set="result" t-value="result.replace(',','/')"/>
+                                                <t t-set="result" t-value="result.replace('.',',')"/>
+                                                <t t-set="result" t-value="result.replace('/','.')"/>
+                                                <t t-esc="result"/>
+
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <span>Tổng số tiền:
+                                        <t t-esc="o.total_price_text(total_price)"/>
+                                    </span>
+                                    <br/>
+                                    <span>Số chứng từ gốc kèm theo:
+                                        <t t-esc="o.origin"/>
+                                    </span>
+                                </div>
+                            </t>
+                            <div class="row mt32">
+                                <div class="col-8"/>
+                                <div class="col-4 text-center">
+                                    <i t-esc="o.sci_date_done.date().strftime('Ngày %d tháng %m năm %Y')"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1"/>
+                                <div class="col-2">
+                                    <center>
+                                        <span>Người lập biểu</span>
+                                        <br/>
+                                        <span>(Ký, Họ tên)</span>
+                                    </center>
+                                </div>
+                                <div class="col-2">
+                                    <center>
+                                        <span>Người giao hàng</span>
+                                        <br/>
+                                        <span>(Ký, Họ tên)</span>
+                                    </center>
+                                </div>
+                                <div class="col-2">
+                                    <center>
+                                        <span>Thủ kho</span>
+                                        <br/>
+                                        <span>(Ký, Họ tên)</span>
+                                    </center>
+                                </div>
+                                <div class="col-2">
+                                    <center>
+                                        <span>Kế toán trưởng</span>
+                                        <br/>
+                                        <span>(Hoặc bộ phận có nhu cầu nhập)</span>
+                                        <br/>
+                                        <span>(Ký, Họ tên)</span>
+                                    </center>
+                                </div>
+                                <div class="col-2">
+                                    <center>
+                                        <span>Giám đốc</span>
+                                        <br/>
+                                        <span>(Ký, Họ tên)</span>
+                                    </center>
+                                </div>
+                                <div class="col-1"/>
+                            </div>
+                        </t>
+                        <t t-elif="o.picking_type_id.code == 'outgoing'">
+                            <t t-if="o.partner_id and o.partner_id in companies">
+                                <div class="row">
+                                    <div class="col-4"/>
+                                    <div class="col-4 text-center">
+                                        <span style="font-weight:bold;font-size:45px">PHIẾU XUẤT KHO (nội bộ)</span>
+                                        <br/>
+                                        <i t-esc="o.sci_date_done.date().strftime('Ngày %d tháng %m năm %Y')"/>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <strong>Số:
+                                            <span t-field="o.name"/>
+                                        </strong>
+                                        <br/>
+                                        <strong>Nợ: 338100</strong>
+                                        <br/>
+                                        <strong>Có: 152100</strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span>Họ và tên người nhận hàng:</span>
+                                    <br/>
+                                    <span>Địa chỉ:</span>
+                                    <br/>
+                                    <span>Lý do xuất kho:</span>
+                                    <br/>
+                                    <span>Xuất tại kho(ngăn lô):
+                                        <span t-field="o.location_id"/>
+                                    </span>
+                                    <br/>
+                                    <span>Loại tiền:</span>
+                                    <span style="margin-left:150px;">Tỷ giá:</span>
+                                </div>
+                                <table class="table table-condensed mt16">
+                                    <t t-set="total_price" t-value="0"/>
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center border border-dark">STT</th>
+                                            <th rowspan="2" class="text-center border border-dark">Tên, nhãn hiệu quy
+                                                cách,phẩm
+                                                chất
+                                                vật tư, dụng cụ sản phẩm, hàng hóa
+                                            </th>
+                                            <th rowspan="2" class="text-center border border-dark">Mã số</th>
+                                            <th rowspan="2" class="text-center border border-dark">Đơn vị tính</th>
+                                            <th colspan="2" class="text-center border border-dark">Số lượng</th>
+                                            <th rowspan="2" class="text-center border border-dark">Đơn giá</th>
+                                            <th rowspan="2" class="text-center border border-dark">Thành tiền</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center border border-dark">
+                                                <strong>Yêu cầu</strong>
+                                            </th>
+                                            <th class="text-center border border-dark">
+                                                <strong>Thực xuất</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                                        <t t-set="i" t-value="0"/>
+                                        <tr t-foreach="lines" t-as="move">
+                                            <t t-set="i" t-value="i + 1"/>
+                                            <td class="text-center border border-dark">
+                                                <t t-esc="i"/>
+                                            </td><!--STT-->
+                                            <td class="border border-dark"><!--tên sp-->
+                                                <span t-field="move.product_id.name"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- mã số-->
+                                                <span t-field="move.product_id.sudo().default_code"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--đơn vị tính-->
+                                                <span t-field="move.product_uom.name"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- yêu cầu -->
+                                                <span t-field="move.product_uom_qty"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- thực xuất -->
+                                                <span t-field="move.quantity_done"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--đơn giá-->
+                                                <t t-set="quantity" t-value="move.stock_valuation_layer_ids.quantity"/>
+                                                <t t-set="value" t-value="move.stock_valuation_layer_ids.value"/>
+                                                <t t-if="quantity != 0">
+                                                    <t t-set="unit_price" t-value="value / quantity"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="unit_price" t-value="0"/>
+                                                </t>
+                                                <t t-esc="unit_price"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--thành tiền-->
+                                                <t t-set="price" t-value="unit_price * move.quantity_done"/>
+                                                <t t-set="total_price" t-value="total_price + price"/>
+                                                <t t-esc="price"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" class="text-center border border-dark">
+                                                <strong>Cộng:</strong>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <t t-esc="total_price"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <span>Tổng số tiền:
+                                        <t t-esc="o.total_price_text(total_price)"/>
+                                    </span>
+                                    <br/>
+                                    <span>Số chứng từ gốc kèm theo:
+                                        <t t-esc="o.origin"/>
+                                    </span>
+                                </div>
+                                <div class="row mt32">
+                                    <div class="col-8"/>
+                                    <div class="col-4 text-center">
+                                        <i t-esc="o.sci_date_done.date().strftime('Ngày %d tháng %m năm %Y')"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1"/>
+                                    <div class="col-2">
+                                        <center>
+                                            <span>Người lập biểu</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-2">
+                                        <center>
+                                            <span>Người nhận hàng</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-2">
+                                        <center>
+                                            <span>Thủ kho</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-2">
+                                        <center>
+                                            <span>Kế toán trưởng</span>
+                                            <br/>
+                                            <span>(Hoặc bộ phận có nhu cầu nhập)</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-2">
+                                        <center>
+                                            <span>Giám đốc</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-1"/>
+                                </div>
+                            </t>
+                            <t t-elif="o.patient_id">
+                                <div class="row">
+                                    <div class="col-12  text-center">
+                                        <h1 style="font-weight:bold">PHIẾU XUẤT BỆNH NHÂN</h1>
+                                    </div>
+                                </div>
+                                <table class="table table-no-border">
+                                    <tbody>
+                                        <tr>
+                                            <td>
+                                                <t t-if="not o.location_id.sudo().usage == 'supplier'">
+                                                    <p>
+                                                        <b>TỦ XUẤT:</b>
+                                                        <span t-field="o.location_id.name"/>
+                                                    </p>
+                                                </t>
+                                                <t t-if="not o.patient_id">
+                                                    <p>
+                                                        <b>TỦ NHẬP:</b>
+                                                        <span t-field="o.location_dest_id.name"/>
+                                                    </p>
+                                                </t>
+                                            </td>
+                                            <td name="td_sched_date">
+                                                <t t-if="o.state == 'done'">
+                                                    <i t-esc="context_timestamp(o.date_done).strftime('%H:%M Ngày %d tháng %m năm %Y')"/>
+                                                </t>
+                                                <t t-if="o.state != 'done'">
+                                                    <i t-esc="context_timestamp(o.scheduled_date).strftime('%H:%M Ngày %d tháng %m năm %Y')"/>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-condensed mt16">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center border border-dark">
+                                                <strong>STT</strong>
+                                            </th>
+                                            <th rowspan="2" class="text-center border border-dark">
+                                                <strong>MÃ</strong>
+                                            </th>
+                                            <th rowspan="2" class="text-center border border-dark">
+                                                <strong>TÊN THUỐC/VẬT TƯ</strong>
+                                            </th>
+                                            <th rowspan="2" class="text-center border border-dark">
+                                                <strong>ĐƠN VỊ</strong>
+                                            </th>
+                                            <th colspan="2" class="text-center border border-dark">
+                                                <strong>SỐ LƯỢNG</strong>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center border border-dark">
+                                                <strong>YÊU CẦU</strong>
+                                            </th>
+                                            <th class="text-center border border-dark">
+                                                <strong>THỰC NHẬN</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                                        <t t-set="i" t-value="0"/>
+                                        <tr t-foreach="lines" t-as="move">
+                                            <t t-set="i" t-value="i + 1"/>
+                                            <td class="text-center border border-dark">
+                                                <t t-esc="i"/>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span t-field="move.product_id.sudo().default_code"/>
+                                            </td>
+                                            <td class="text-left border border-dark">
+                                                <span t-field="move.product_id.name"/>
+                                                <!--                            <p t-if="o.picking_type_code == 'outgoing'">-->
+                                                <!--                                <span t-field="move.product_id.sudo().description_pickingout"/>-->
+                                                <!--                            </p>-->
+                                                <!--                            <p t-if="o.picking_type_code == 'incoming'">-->
+                                                <!--                                <span t-field="move.product_id.sudo().description_pickingin"/>-->
+                                                <!--                            </p>-->
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span t-field="move.product_uom"/>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span t-field="move.product_uom_qty"/>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <span t-field="move.quantity_done"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <table class="table table-no-border">
+                                    <tbody>
+                                        <tr>
+                                            <td t-if="not o.patient_id" class="text-center">
+                                                <p>
+                                                    <b>Người nhận</b>
+                                                </p>
+                                            </td>
+                                            <td t-if="not o.patient_id" class="text-center">
+                                                <p>
+                                                    <b>Người giao</b>
+                                                </p>
+                                            </td>
+                                            <td t-if="o.patient_id" class="text-center">
+                                                <p>
+                                                    <b>Người yêu cầu</b>
+                                                </p>
+                                            </td>
+                                            <td class="text-center">
+                                                <p>
+                                                    <b>Trưởng khoa Dược</b>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </t>
+                            <t t-elif="o.partner_id and o.partner_id not in companies and o.source_picking_id">
+                                <div class="row">
+                                    <div class="col-3"/>
+                                    <div class="col-5 text-center">
+                                        <span style="font-weight:bold;font-size:45px;">PHIẾU XUẤT KHO</span>
+                                        <br/>
+                                        <i t-esc="o.sci_date_done.date().strftime('Ngày %d tháng %m năm %Y')"/>
+                                    </div>
+                                    <div class="col-4 text-center">
+                                        <strong>Số:
+                                            <span t-field="o.name"/>
+                                        </strong>
+                                        <br/>
+                                        <strong>Nợ: 152900</strong>
+                                        <br/>
+                                        <strong>Có: 152100</strong>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span>Họ và tên người nhận hàng:
+                                        <t t-if="o.purchase_id">
+                                            <span t-field="o.purchase_id.partner_id"/>
+                                        </t>
+                                    </span>
+                                    <br/>
+                                    <span>Địa chỉ:
+                                        <t t-if="o.purchase_id">
+                                            <span t-field="o.purchase_id.partner_id.street"/>
+                                        </t>
+                                    </span>
+                                    <br/>
+                                    <span>Lý do xuất kho: Xuất trả NCC
+                                        <span t-field="o.location_dest_id"/>
+                                    </span>
+                                    <br/>
+                                    <span>Xuất tại kho:
+                                        <span t-field="o.location_id"/>
+                                    </span>
+                                    <span>Loại tiền:</span>
+                                    <span style="margin-left:150px">Tỷ giá:</span>
+                                </div>
+                                <table class="table table-condensed mt16">
+                                    <t t-set="total_price" t-value="0"/>
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center border border-dark">STT</th>
+                                            <th rowspan="2" class="text-center border border-dark">Tên, nhãn hiệu quy
+                                                cách,phẩm
+                                                chất
+                                                vật tư, dụng cụ sản phẩm, hàng hóa
+                                            </th>
+                                            <th rowspan="2" class="text-center border border-dark">Mã số</th>
+                                            <th rowspan="2" class="text-center border border-dark">Đơn vị tính</th>
+                                            <th colspan="2" class="text-center border border-dark">Số lượng</th>
+                                            <th rowspan="2" class="text-center border border-dark">Đơn giá</th>
+                                            <th rowspan="2" class="text-center border border-dark">Thành tiền</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center border border-dark">
+                                                <strong>Yêu cầu</strong>
+                                            </th>
+                                            <th class="text-center border border-dark">
+                                                <strong>Thực xuất</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="o.purchase_id">
+                                            <t t-set="lines" t-value="o.purchase_id.order_line.filtered(lambda x: x.product_uom_qty)"/>
+                                        </t>
+                                        <t t-set="i" t-value="0"/>
+                                        <tr t-foreach="lines" t-as="move">
+                                            <t t-set="i" t-value="i + 1"/>
+                                            <td class="text-center border border-dark">
+                                                <t t-esc="i"/>
+                                            </td><!--STT-->
+                                            <td class="border border-dark"><!--tên sp-->
+                                                <span t-field="move.product_id.name"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- mã số-->
+                                                <span t-field="move.product_id.sudo().default_code"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--đơn vị tính-->
+                                                <span t-field="move.product_uom.name"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- yêu cầu -->
+                                                <span t-field="move.product_qty"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- thực xuất -->
+                                                <span t-field="move.qty_received"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--đơn giá-->
+                                                <span t-field="move.price_unit"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--thành tiền-->
+                                                <t t-set="price_subtotal" t-value="move.qty_received * move.price_unit"/>
+                                                <t t-set="total_price" t-value="total_price + move.price_subtotal"/>
+                                                <t t-esc="price_subtotal"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" class="text-center border border-dark">
+                                                <strong>Cộng:</strong>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <t t-esc="total_price"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <span>Tổng số tiền:
+                                        <t t-esc="o.total_price_text(total_price)"/>
+                                    </span>
+                                    <br/>
+                                    <span>Số chứng từ gốc kèm theo:
+                                        <t t-esc="o.origin"/>
+                                    </span>
+                                </div>
+                                <div class="row mt32">
+                                    <div class="col-8"/>
+                                    <div class="col-4 text-center">
+                                        <i t-esc="o.sci_date_done.date().strftime('Ngày %d tháng %m năm %Y')"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-1"/>
+                                    <div class="col-2">
+                                        <center>
+                                            <span>Người lập biểu</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-2">
+                                        <center>
+                                            <span>Người nhận hàng</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-2">
+                                        <center>
+                                            <span>Thủ kho</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-2">
+                                        <center>
+                                            <span>Kế toán trưởng</span>
+                                            <br/>
+                                            <span>(Hoặc bộ phận có nhu cầu nhập)</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-2">
+                                        <center>
+                                            <span>Giám đốc</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-1"/>
+                                </div>
+                            </t>
+                            <t t-elif="o.sale_id">
+                                <div class="row">
+                                    <div class="col-12  text-center">
+                                        <span style="font-weight:bold;font-size:45px;">PHIẾU XUẤT BÁN</span>
+                                        <br/>
+                                        <i t-esc="o.sci_date_done.date().strftime('Ngày %d tháng %m năm %Y')"/>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <span>Họ và tên người mua:
+                                        <t t-if="o.partner_id">
+                                            <span t-field="o.partner_id"/>
+                                        </t>
+                                    </span>
+                                    <br/>
+                                    <span>Địa chỉ:
+                                        <t t-if="o.partner_id">
+                                            <span t-field="o.partner_id.street"/>
+                                        </t>
+                                    </span>
+                                    <br/>
+                                    <span>Xuất tại kho:
+                                        <span t-field="o.location_id"/>
+                                    </span>
+                                    <span>Loại tiền:</span>
+                                    <span style="margin-left:150px">Tỷ giá:</span>
+                                </div>
+                                <table class="table table-condensed mt16">
+                                    <t t-set="total_price" t-value="0"/>
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" class="text-center border border-dark">STT</th>
+                                            <th rowspan="2" class="text-center border border-dark">Tên, nhãn hiệu quy
+                                                cách,phẩm
+                                                chất
+                                                vật tư, dụng cụ sản phẩm, hàng hóa
+                                            </th>
+                                            <th rowspan="2" class="text-center border border-dark">Mã số</th>
+                                            <th rowspan="2" class="text-center border border-dark">Đơn vị tính</th>
+                                            <th colspan="2" class="text-center border border-dark">Số lượng</th>
+                                            <th rowspan="2" class="text-center border border-dark">Đơn giá</th>
+                                            <th rowspan="2" class="text-center border border-dark">Thành tiền</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center border border-dark">
+                                                <strong>Yêu cầu</strong>
+                                            </th>
+                                            <th class="text-center border border-dark">
+                                                <strong>Thực xuất</strong>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                                        <t t-set="i" t-value="0"/>
+                                        <tr t-foreach="lines" t-as="move">
+                                            <t t-set="i" t-value="i + 1"/>
+                                            <td class="text-center border border-dark">
+                                                <t t-esc="i"/>
+                                            </td><!--STT-->
+                                            <td class="border border-dark"><!--tên sp-->
+                                                <span t-field="move.product_id.name"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- mã số-->
+                                                <span t-field="move.product_id.sudo().default_code"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--đơn vị tính-->
+                                                <span t-field="move.product_uom.name"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- yêu cầu -->
+                                                <span t-field="move.product_uom_qty"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!-- thực xuất -->
+                                                <span t-field="move.quantity_done"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--đơn giá-->
+                                                <t t-set="quantity" t-value="move.stock_valuation_layer_ids.quantity"/>
+                                                <t t-set="value" t-value="move.stock_valuation_layer_ids.value"/>
+                                                <t t-if="quantity != 0">
+                                                    <t t-set="unit_price" t-value="value / quantity"/>
+                                                </t>
+                                                <t t-else="">
+                                                    <t t-set="unit_price" t-value="0"/>
+                                                </t>
+                                                <t t-esc="unit_price"/>
+                                            </td>
+                                            <td class="text-center border border-dark"><!--thành tiền-->
+                                                <t t-set="price" t-value="unit_price * move.quantity_done"/>
+                                                <t t-set="total_price" t-value="total_price + price"/>
+                                                <t t-esc="price"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="7" class="text-center border border-dark">
+                                                <strong>Cộng:</strong>
+                                            </td>
+                                            <td class="text-center border border-dark">
+                                                <t t-esc="total_price"/>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row">
+                                    <span>Tổng số tiền:
+                                        <t t-esc="o.total_price_text(total_price)"/>
+                                    </span>
+                                    <br/>
+                                    <span>Số chứng từ gốc kèm theo:
+                                        <t t-esc="o.origin"/>
+                                    </span>
+                                </div>
+                                <div class="row mt32">
+                                    <div class="col-6"/>
+                                    <div class="col-6 text-center">
+                                        <!--                                        <i t-esc="o.sci_date_done.date().strftime('Ngày %d tháng %m năm %Y')"/>-->
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-6 text-center">
+                                        <center>
+                                            <span>Người lập biểu</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                    <div class="col-6 text-center">
+                                        <center>
+                                            <span>Người nhận hàng</span>
+                                            <br/>
+                                            <span>(Ký, Họ tên)</span>
+                                        </center>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <div class="row">
+                                <div class="col-4"/>
+                                <div class="col-4 text-center">
+                                    <span style="font-weight:bold;font-size:45px">PHIẾU XUẤT KHO (nội bộ)</span>
+                                    <br/>
+                                    <i style="font-size:20px" t-esc="context_timestamp(o.date_done).strftime('Ngày %d tháng %m năm %Y')"/>
+                                </div>
+                                <div class="col-4 text-center">
+                                    <strong>Số:
+                                        <span t-field="o.name"/>
+                                    </strong>
+                                    <br/>
+                                    <strong>Nợ: 338100</strong>
+                                    <br/>
+                                    <strong>Có: 152100</strong>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <span>Họ và tên người nhận hàng:</span>
+                                <br/>
+                                <span>Địa chỉ:</span>
+                                <br/>
+                                <span>Lý do xuất kho:</span>
+                                <br/>
+                                <span>Xuất tại kho(ngăn lô):
+                                    <span t-field="o.location_id.name"/>
+                                </span>
+                                <br/>
+                                <span>Kho nhập:
+                                    <span t-field="o.location_dest_id.name"/>
+                                </span>
+                                <br/>
+                                <span>Loại tiền:</span>
+                                <span style="margin-left:150px;">Tỷ giá:</span>
+                            </div>
+                            <table class="table table-condensed mt16">
+                                <t t-set="total_price" t-value="0"/>
+                                <thead>
+                                    <tr>
+                                        <th rowspan="2" class="text-center border border-dark">STT</th>
+                                        <th rowspan="2" class="text-center border border-dark">Tên, nhãn hiệu quy
+                                            cách,phẩm
+                                            chất
+                                            vật tư, dụng cụ sản phẩm, hàng hóa
+                                        </th>
+                                        <th rowspan="2" class="text-center border border-dark">Mã số</th>
+                                        <th rowspan="2" class="text-center border border-dark">Đơn vị tính</th>
+                                        <th colspan="2" class="text-center border border-dark">Số lượng</th>
+                                        <th rowspan="2" class="text-center border border-dark">Đơn giá</th>
+                                        <th rowspan="2" class="text-center border border-dark">Thành tiền</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="text-center border border-dark">
+                                            <strong>Yêu cầu</strong>
+                                        </th>
+                                        <th class="text-center border border-dark">
+                                            <strong>Thực xuất</strong>
+                                        </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-set="lines" t-value="o.move_lines.filtered(lambda x: x.product_uom_qty)"/>
+                                    <t t-set="i" t-value="0"/>
+                                    <tr t-foreach="lines" t-as="move">
+                                        <t t-set="i" t-value="i + 1"/>
+                                        <td class="text-center border border-dark">
+                                            <t t-esc="i"/>
+                                        </td><!--STT-->
+                                        <td class="border border-dark"><!--tên sp-->
+                                            <span t-field="move.product_id.name"/>
+                                        </td>
+                                        <td class="text-center border border-dark"><!-- mã số-->
+                                            <span t-field="move.product_id.sudo().default_code"/>
+                                        </td>
+                                        <td class="text-center border border-dark"><!--đơn vị tính-->
+                                            <span t-field="move.product_uom.name"/>
+                                        </td>
+                                        <td class="text-center border border-dark"><!-- yêu cầu -->
+                                            <span t-field="move.product_uom_qty"/>
+                                        </td>
+                                        <td class="text-center border border-dark"><!-- thực xuất -->
+                                            <span t-field="move.quantity_done"/>
+                                        </td>
+                                        <td class="text-center border border-dark"><!--đơn giá-->
+                                            <t t-set="quantity" t-value="move.stock_valuation_layer_ids.quantity"/>
+                                            <t t-set="value" t-value="move.stock_valuation_layer_ids.value"/>
+                                            <t t-if="quantity != 0">
+                                                <t t-set="unit_price" t-value="value / quantity"/>
+                                            </t>
+                                            <t t-else="">
+                                                <t t-set="unit_price" t-value="0"/>
+                                            </t>
+                                            <t t-esc="unit_price"/>
+                                        </td>
+                                        <td class="text-center border border-dark"><!--thành tiền-->
+                                            <t t-set="price" t-value="unit_price * move.quantity_done"/>
+                                            <t t-set="total_price" t-value="total_price + price"/>
+                                            <t t-esc="price"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="7" class="text-center border border-dark">
+                                            <strong>Cộng:</strong>
+                                        </td>
+                                        <td class="text-center border border-dark">
+                                            <t t-esc="total_price"/>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="row">
+                                <span>Tổng số tiền:
+                                    <t t-esc="o.total_price_text(total_price)"/>
+                                </span>
+                                <br/>
+                                <span>Số chứng từ gốc kèm theo:
+                                    <t t-esc="o.origin"/>
+                                </span>
+                            </div>
+                            <div class="row" style="margin-top:50px">
+                                <div class="col-8"/>
+                                <div class="col-4 text-center">
+                                    <i t-esc="o.sci_date_done.date().strftime('Ngày %d tháng %m năm %Y')"/>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-1"/>
+                                <div class="col-2">
+                                    <center>
+                                        <span>Người lập biểu</span>
+                                        <br/>
+                                        <span>(Ký, Họ tên)</span>
+                                    </center>
+                                </div>
+                                <div class="col-2">
+                                    <center>
+                                        <span>Người nhận hàng</span>
+                                        <br/>
+                                        <span>(Ký, Họ tên)</span>
+                                    </center>
+                                </div>
+                                <div class="col-2">
+                                    <center>
+                                        <span>Thủ kho</span>
+                                        <br/>
+                                        <span>(Ký, Họ tên)</span>
+                                    </center>
+                                </div>
+                                <div class="col-2">
+                                    <center>
+                                        <span>Kế toán trưởng</span>
+                                        <br/>
+                                        <span>(Hoặc bộ phận có nhu cầu nhập)</span>
+                                        <br/>
+                                        <span>(Ký, Họ tên)</span>
+                                    </center>
+                                </div>
+                                <div class="col-2">
+                                    <center>
+                                        <span>Giám đốc</span>
+                                        <br/>
+                                        <span>(Ký, Họ tên)</span>
+                                    </center>
+                                </div>
+                                <div class="col-1"/>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

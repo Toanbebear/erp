@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!-- Cron job -->
+        <record id="cron_job_get_department_ehc" model="ir.cron">
+            <field name="name">EHC: Get Department EHC</field>
+            <field name="model_id" ref="model_crm_hh_ehc_department"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_get_department_ehc()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+        
+        <record id="cron_job_get_user_ehc" model="ir.cron">
+            <field name="name">EHC: Get User EHC</field>
+            <field name="model_id" ref="model_crm_hh_ehc_user"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_get_user_ehc()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+        
+        <record id="cron_job_get_material_ehc" model="ir.cron">
+            <field name="name">EHC: Get Material EHC</field>
+            <field name="model_id" ref="model_product_template"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_get_material_ehc()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+        
+<!--        <record id="cron_job_get_service_ehc" model="ir.cron">-->
+<!--            <field name="name">EHC: Get Service EHC</field>-->
+<!--            <field name="model_id" ref="model_product_product"/>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.cron_get_service_ehc()</field>-->
+<!--            <field name="nextcall"-->
+<!--                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>-->
+<!--            <field name='interval_number'>1</field>-->
+<!--            <field name='interval_type'>days</field>-->
+<!--            <field name="numbercall">-1</field>-->
+<!--        </record>-->
+        
+        <record id="cron_job_get_type_service_ehc" model="ir.cron">
+            <field name="name">EHC: Get Type Service EHC</field>
+            <field name="model_id" ref="model_product_category"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_get_type_service_ehc()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+        
+        <record id="cron_job_get_service_service_ehc" model="ir.cron">
+            <field name="name">EHC: Get Service Service EHC</field>
+            <field name="model_id" ref="model_crm_hh_ehc_service"/>
+            <field name="state">code</field>
+            <field name="code">model.get_service_ehc()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+        
+        <record id="cron_job_create_prd_prd_service_ehc" model="ir.cron">
+            <field name="name">EHC: Create Service Prd Prd EHC</field>
+            <field name="model_id" ref="model_crm_hh_ehc_service"/>
+            <field name="state">code</field>
+            <field name="code">model.create_prd_prd_service_ehc()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>10</field>
+            <field name='interval_type'>minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+        
+        <record id="cron_job_post_utm_source_to_ehc" model="ir.cron">
+            <field name="name">EHC: Post utm source to ehc</field>
+            <field name="model_id" ref="model_utm_source"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_post_source_to_ehc()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+        
+        <record id="cron_post_source_ctv_to_ehc" model="ir.cron">
+            <field name="name">EHC: Post ctv source to ehc</field>
+            <field name="model_id" ref="model_crm_collaborators"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_post_source_ctv_to_ehc()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>1</field>
+            <field name='interval_type'>days</field>
+            <field name="numbercall">-1</field>
+        </record>
+        
+        <record id="cron__get_patient_code_ehc" model="ir.cron">
+            <field name="name">EHC: lấy mã bệnh nhân cũ EHC</field>
+            <field name="model_id" ref="model_crm_hh_ehc_patient"/>
+            <field name="state">code</field>
+            <field name="code">model.cron_get_patient_code()</field>
+            <field name="nextcall"
+                   eval="(DateTime.now().replace(hour=18, minute=0, second=0)).strftime('%Y-%m-%d %H:%M:%S')"/>
+            <field name='interval_number'>10</field>
+            <field name='interval_type'>minutes</field>
+            <field name="numbercall">-1</field>
+        </record>
+
+    </data>
+</odoo>

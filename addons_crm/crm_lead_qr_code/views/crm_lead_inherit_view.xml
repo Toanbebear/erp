@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="form_crm_lead_inherit" model="ir.ui.view">
+            <field name="name">Form crm lead code</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.form_crm_lead"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <div class="oe_right" style="padding-top:0px; padding-right:70px">
+                        <field name="qr_id" widget="image" style="width:160px; height:160px;"/>
+                        <h4>
+                             <field name="contact_name" class="oe_center" readonly="True"/>
+                         <br></br>
+                            <label for="hotline_brand" string="Hotline liên hệ:"/>
+                             <field name="hotline_brand" class="oe_right" readonly="True"/>
+                        </h4>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="form_crm_booking_inherit" model="ir.ui.view">
+            <field name="name">Form crm booling code</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//div[@name='button_box']" position="after">
+                    <div class="oe_right" style="padding-top:-10px; padding-right:70px">
+                        <field name="qr_code_id" widget="image" style="width:160px; height:160px;"/>
+                        <h4>
+                             <field name="name" class="oe_center" readonly="True"/>
+                            <br></br>
+                             <field name="contact_name" style="text-align:center"  readonly="True"/>
+                            <br></br>
+                            <label for="hotline_brand" string="Hotline liên hệ:"/>
+                             <field name="hotline_brand" class="oe_right" readonly="True"/>
+                        </h4>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,9 @@
+<odoo>
+    <data>
+
+        <record id="manage_res_partner_ncc_group" model="res.groups">
+            <field name="name">Quyền truy cập danh sách nhà cung cấp</field>
+            <field name="comment">Tạo và quản lý danh sách nhà cung cấp.</field>
+        </record>
+    </data>
+</odoo>

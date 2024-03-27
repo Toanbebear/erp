@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_inherit_crm_select_service">
+            <field name="name">Select service</field>
+            <field name="model">crm.select.service</field>
+            <field name="inherit_id" ref="crm_base.view_form_crm_select_service"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="institution_ids" invisible="True"/>
+                    <field name="institution"
+                           options="{'no_open':True,'no_create':True}" required="True" readonly="True"/>
+                    <field name="exam_room_id"
+                           options="{'no_open':True,'no_create':True}" required="True"/>
+                    <field name="dentistry" readonly="True" force_save="True" invisible="True"/>
+                    <field name="chosen_line_ids" readonly="True" force_save="True" widget="many2many_tags" invisible="True"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="flag_surgery" invisible="1"/>
+                    <field name="doctor_order" options="{'no_open':True,'no_create':True}" attrs="{'invisible': [('flag_surgery','=',False)]}"/>
+                </xpath>
+                <xpath expr="//group" position="inside">
+                    <field name="select_line_ids"
+                           context="{'default_booking_id':booking_id,'default_select_service_id':id,'default_exam_room_id':exam_room_id,'default_dentistry':dentistry}">
+                        <tree editable="bottom">
+                            <field name="booking_id" invisible="True"/>
+                            <field name="exam_room_id" invisible="True"/>
+                            <field name="dentistry" invisible="True"/>
+                            <field name="crm_line_id" required="True" string="Dịch vụ" options="{'no_open':True,'no_create':True}"/>
+                            <field name="teeth_ids" widget="many2many_tags" attrs="{'column_invisible': [('parent.dentistry', '=', False)]}" options="{'no_open':True,'no_create':True}"/>
+                            <field name="is_input_num" invisible="True" optional="hide"/>
+                            <field name="uom_price" attrs="{'readonly':[('is_input_num','=',False)]}" force_save="True" string="Đơn vị xử lý" help="Số lượng xử lý cho một lần thực hiện dịch vụ"/>
+                            <field name="quantity" readonly="True" force_save="True" invisible="True"/>
+                            <field name="amount" force_save="True" widget="monetary_format" attrs="{'readonly': [('parent.dentistry', '=', False)]}"/>
+                            <field name="currency_id" invisible="True"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

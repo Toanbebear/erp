@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    view_form_crm_partner-->
+    <record id="view_form_crm_partner_evaluation" model="ir.ui.view">
+        <field name="name">Res partner Evaluation</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="crm_phone_call.view_form_crm_partner_phone_call"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='page_walkin_ids']" position="after">
+                <page name="page_evaluations" string="Phiếu tái khám" icon="fa fa-thermometer-three-quarters">
+                    <field name="evaluation_ids">
+                        <tree>
+                            <field name="patient_level"/>
+                            <field name="evaluation_services" widget="many2many_tags"/>
+                            <field name="name"/>
+                            <field name="notes_complaint"/>
+                            <field name="patient"/>
+                            <field name="services" widget="many2many_tags"/>
+                            <field name="doctor"/>
+                            <field name="evaluation_start_date"/>
+                        </tree>
+                    </field>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

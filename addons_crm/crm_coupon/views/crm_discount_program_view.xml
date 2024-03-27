@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_bill_crm_discount_program_form" model="ir.ui.view">
+            <field name="name">inherit_bill_crm_discount_program_form</field>
+            <field name="model">crm.discount.program</field>
+            <field name="inherit_id" ref="crm_base.crm_discount_program_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='end_date']" position="after">
+                    <field name="rank_id"
+                           domain="[('brand_id', '=', brand_id)]"
+                           options="{'no_open':True,'no_create':True}"
+                           attrs="{'invisible': [('coupon_type', '!=', '6')], 'required': [('coupon_type', '=', '6')]}"/>
+                    <field name="type_data_partner"
+                           attrs="{'invisible': [('coupon_type', '!=', '7')], 'required': [('coupon_type', '=', '7')]}"/>
+                </xpath>
+
+                <xpath expr="//page" position="after">
+                    <page name="coupon_bill" string="Quy tắc áp dụng" autofocus="autofocus"
+                    attrs="{'invisible': [('coupon_type', '!=', '2')]}">
+                        <group>
+                            <field name="country_id" attrs="{'readonly': [('stage_prg','!=', 'new')]}"/>
+                            <field name="state_ids" widget="many2many_tags"
+                                   attrs="{'readonly': [('stage_prg','!=', 'new')]}"
+                                   options="{'no_open':True,'no_create':True}"/>
+                            <field name="product_cate_ids" widget="many2many_tags"
+                                   attrs="{'readonly': [('stage_prg','!=', 'new')]}"
+                                   help="Điều kiện áp dụng coupon" options="{'no_open':True,'no_create':True}"/>
+                        </group>
+                        <field name="coupon_bill_ids">
+                            <tree editable="1" context="{'coupon_id':id}">
+                                <field name="total_min" width="25%"/>
+                                <field name="type_discount" width="25%"/>
+                                <field name="discount" width="25%"/>
+                                <field name="description" width="25%"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

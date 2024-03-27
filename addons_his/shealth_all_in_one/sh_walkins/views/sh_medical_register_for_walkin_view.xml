@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <data>
+<!--&lt;!&ndash;		FORM SALE ORDER (tự chọn địa điểm kho tại sale order)&ndash;&gt;-->
+<!--            <record model="ir.ui.view" id="view_order_form_inherit">-->
+<!--                <field name="name">sale.order.form.his</field>-->
+<!--                <field name="model">sale.order</field>-->
+<!--                <field name="inherit_id" ref="sale.view_order_form"/>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <xpath expr="//field[@name='partner_id']" position="after">-->
+<!--                        <field force_save="1" name="location_id" attrs="{'invisible':[('booking_id','!=',False)],'required':[('booking_id','=',False)]}" options="{'no_create': True,'no_open':True}" context="{'view_only_name': True}"/>-->
+<!--                    </xpath>-->
+<!--                </field>-->
+<!--            </record>-->
+
+<!--            <record model="ir.ui.view" id="sh_medical_healthcenters_ward_walkin_kanban_view">-->
+<!--                <field name="name">Departments</field>-->
+<!--                <field name="model">sh.medical.health.center.ward</field>-->
+<!--                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_healthcenters_ward_kanban_view"/>-->
+<!--                <field name="arch" type="xml">-->
+<!--                    <xpath expr="//templates//t//div[hasclass('sh_medical_details')]//ul" position="after">-->
+<!--                        <div class="mt-4 o_kanban_primary_left">-->
+<!--                            <button t-if="record.type.raw_value == 'Examination'" class="btn btn-primary" name="%(action_walkin_department_view)d" type="action">-->
+<!--                                <field string="Walkin not completed" name="count_walkin_not_completed" widget="statinfo"/>-->
+<!--                            </button>-->
+<!--                        </div>-->
+<!--                    </xpath>-->
+<!--                </field>-->
+<!--            </record>-->
+
+            <!-- Cron: Xóa bản ghi VTTH MÀ KO GẮN VỚI BẤT KỲ PHIẾU KHÁM NÀO -->
+            <record id="remove_materials_none_walkin_cron" model="ir.cron">
+              <field name="name">VTTH phiếu khám: Xóa bản ghi VTTH MÀ KO GẮN VỚI BẤT KỲ PHIẾU KHÁM NÀO</field>
+              <field name="model_id" ref="shealth_all_in_one.model_sh_medical_walkin_material"/>
+              <field name="state">code</field>
+              <field name="code">model.cron_remove_materials_none_walkin()</field>
+              <field name="active" eval="True"/>
+              <field name="interval_number">1</field>
+              <field name="interval_type">days</field>
+              <field name="numbercall">-1</field>
+            </record>
+        </data>
+</odoo>

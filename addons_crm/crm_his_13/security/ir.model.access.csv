@@ -1,0 +1,39 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_man_read_health_center,Sale man read health center,shealth_all_in_one.model_sh_medical_health_center,sales_team.group_sale_salesman,1,0,0,0
+access_sale_man_read_service,Sale man read service,shealth_all_in_one.model_sh_medical_health_center_service,sales_team.group_sale_salesman,1,0,0,0
+access_sale_man_read_health_center_ot,Sale man read health center ot,shealth_all_in_one.model_sh_medical_health_center_ot,sales_team.group_sale_salesman,1,0,0,0
+access_sale_man_read_health_center_ward,Sale man read health center ward,shealth_all_in_one.model_sh_medical_health_center_ward,sales_team.group_sale_salesman,1,0,0,0
+access_sale_man_read_health_center_patient,Sale man health center patient,shealth_all_in_one.model_sh_medical_patient,sales_team.group_sale_salesman,1,1,1,0
+access_sale_man_read_sh_reception,Sale man access sh reception,shealth_all_in_one.model_sh_reception,sales_team.group_sale_salesman,1,1,1,0
+access_sale_man_walkin,Sale man access sh walkin,shealth_all_in_one.model_sh_medical_appointment_register_walkin,sales_team.group_sale_salesman,1,0,1,0
+access_sale_man_physician,Sale man access sh physician,shealth_all_in_one.model_sh_medical_physician,sales_team.group_sale_salesman,1,0,0,0
+access_sale_man_read_evaluattion,Sale man access read evaluation,shealth_all_in_one.model_sh_medical_evaluation,sales_team.group_sale_salesman,1,0,0,0
+
+access_recept_read_health_center,recept read health center,shealth_all_in_one.model_sh_medical_health_center,crm_base.receptionist_crm,1,0,0,0
+access_recept_read_service,recept read service,shealth_all_in_one.model_sh_medical_health_center_service,crm_base.receptionist_crm,1,0,0,0
+access_recept_read_health_center_ot,recept read health center ot,shealth_all_in_one.model_sh_medical_health_center_ot,crm_base.receptionist_crm,1,0,0,0
+access_recept_read_health_center_ward,recept read health center ward,shealth_all_in_one.model_sh_medical_health_center_ward,crm_base.receptionist_crm,1,0,0,0
+access_recept_read_health_center_patient,recept health center patient,shealth_all_in_one.model_sh_medical_patient,crm_base.receptionist_crm,1,1,1,0
+access_recept_read_sh_reception,recept access sh reception,shealth_all_in_one.model_sh_reception,crm_base.receptionist_crm,1,1,1,0
+access_recept_walkin,recept access sh walkin,shealth_all_in_one.model_sh_medical_appointment_register_walkin,crm_base.receptionist_crm,1,0,1,0
+access_recept_physician,recept access sh physician,shealth_all_in_one.model_sh_medical_physician,crm_base.receptionist_crm,1,0,0,0
+
+access_QC_read_health_center,QC read health center,shealth_all_in_one.model_sh_medical_health_center,crm_base.quality_control,1,0,0,0
+access_QC_read_service,QC read service,shealth_all_in_one.model_sh_medical_health_center_service,crm_base.quality_control,1,0,0,0
+access_QC_read_health_center_ot,QC read health center ot,shealth_all_in_one.model_sh_medical_health_center_ot,crm_base.quality_control,1,0,0,0
+access_QC_read_health_center_ward,QC read health center ward,shealth_all_in_one.model_sh_medical_health_center_ward,crm_base.quality_control,1,0,0,0
+access_QC_read_health_center_patient,QC health center patient,shealth_all_in_one.model_sh_medical_patient,crm_base.quality_control,1,1,1,0
+access_QC_read_sh_reception,QC access sh reception,shealth_all_in_one.model_sh_reception,crm_base.quality_control,1,1,1,0
+access_QC_walkin,QC access sh walkin,shealth_all_in_one.model_sh_medical_appointment_register_walkin,crm_base.quality_control,1,0,1,0
+access_QC_physician,QC access sh physician,shealth_all_in_one.model_sh_medical_physician,crm_base.quality_control,1,0,0,0
+
+
+access_crm_promotion_program_rule,access_crm_promotion_program_rule,model_crm_discount_program_rule,,1,1,1,1
+access_crm_promotion_program_list,access_crm_promotion_program_list,model_crm_discount_program_list,,1,1,1,1
+access_crm_debt_request,access_crm_debt_request,model_crm_debt_request,,1,1,1,1
+access_crm_content_complain_service,access_crm_content_complain_service,model_crm_content_complain_service,,1,1,1,1
+
+
+
+
+

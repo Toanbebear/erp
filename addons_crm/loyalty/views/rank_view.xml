@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="form_rank_view" model="ir.ui.view">
+            <field name="name">Form rank</field>
+            <field name="model">crm.loyalty.rank</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name" required="True"/>
+                            <field name="brand_id" required="True"/>
+                            <field name="money_fst" required="True" widget="monetary_format"/>
+                            <field name="money_end" required="True" widget="monetary_format"/>
+                            <field name="rank_low_id" options="{'no_open':True,'no_create':True}"/>
+                            <field name="validity_card" required="True"/>
+                        </group>
+                        <notebook name="notebook_form_rank">
+                            <page string="Reward" name="page_reward_id">
+                                <field name="reward_ids" create="false">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="type_reward"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Special date">
+                                <group>
+                                    <field name="currency_id" invisible="True"/>
+                                    <field name="money_reward"/>
+                                    <field name="time_active"
+                                           placeholder="Đơn vị thời gian trong trường này là đơn vị ngày"/>
+                                </group>
+                                <field name="date_special">
+                                    <tree>
+                                        <field name="name"/>
+                                        <field name="brand_id"/>
+                                        <field name="date"/>
+                                        <field name="month"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="tree_rank_view" model="ir.ui.view">
+            <field name="name">Tree rank</field>
+            <field name="model">crm.loyalty.rank</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false">
+                    <field name="name"/>
+                    <field name="brand_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_open_rank" model="ir.actions.act_window">
+            <field name="name">Rank</field>
+            <field name="res_model">crm.loyalty.rank</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem
+                id="loyalty_menu_rank"
+                name="Hạng thẻ"
+                action="action_open_rank"
+                parent="loyalty_menu_root"
+                sequence="2"/>
+
+    </data>
+</odoo>

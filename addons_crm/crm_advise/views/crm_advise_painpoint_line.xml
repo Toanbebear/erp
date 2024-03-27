@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_advise_painpoint_line_action2" model="ir.actions.act_window">
+            <field name="name">Điểm đau</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.advise.painpoint.line</field>
+        </record>
+    </data>
+</odoo>

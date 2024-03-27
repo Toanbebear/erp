@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_crm_sale_payment_plan_inherit" model="ir.ui.view">
+            <field name="name">view.form.crm.sale.payment.plan.inherit</field>
+            <field name="model">crm.sale.payment.plan</field>
+            <field name="inherit_id" ref="crm_sale_payment.view_form_crm_sale_payment_plan"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='month']" position="replace">
+                    <field name="month" attrs="{'readonly': [('state', '=', 'done')]}" required="1"/>
+                </xpath>
+                <xpath expr="//field[@name='year']" position="replace">
+                    <field name="year" attrs="{'readonly': [('state', '=', 'done')]}" required="1"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

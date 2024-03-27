@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_account_asset_by_sci_onnet_accounting" model="ir.ui.view">
+            <field name="name">SCI Onnet Accounting : Tài sản</field>
+            <field name="model">account.asset</field>
+            <field name="inherit_id" ref="account_asset.view_account_asset_form"/>
+            <field name="arch" type="xml">
+<!--                <xpath expr="//tree" position="attributes">-->
+<!--                    <attribute name="default_order">x_code asc</attribute>-->
+<!--                </xpath>-->
+                <xpath expr="//sheet/group[1]" position="before">
+                    <div>
+                        <label for="picking_id" string="Phiếu kho" class="oe_edit_only"
+                               attrs="{'invisible': [('state', '=', 'model')]}"/>
+                        <field name="picking_id" attrs="{'invisible': [('state', '=', 'model')]}" options="{'no_create': True}"/>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

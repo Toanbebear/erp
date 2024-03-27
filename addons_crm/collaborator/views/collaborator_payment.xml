@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tree_collaborator_payment" model="ir.ui.view">
+            <field name="name">Phiếu Chi cộng tác viên</field>
+            <field name="model">collaborator.payment</field>
+            <field name="arch" type="xml">
+                <tree edit="false"
+                      decoration-danger="state =='cancelled'"
+                      decoration-success="state =='posted'"
+                     default_order="name desc">
+                    <field name="collaborator_payment_date"/>
+                    <field name="name"/>
+<!--                    <field name="collaborator_journal_id"/>-->
+                    <field name="contract_id"/>
+                    <field name="collaborator_id"/>
+                    <field name="amount"/>
+                    <field name="state"/>
+                     <field name="company_id"/>
+                     <field name="company_payment"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="write_uid" string="Ngày tạo"/>
+                    <field name="write_date" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+        <record id="view_form_collaborator_payment" model="ir.ui.view">
+            <field name="name">Phiếu chi cộng tác viên</field>
+            <field name="model">collaborator.payment</field>
+            <field name="arch" type="xml">
+                <form duplicate="false">
+                    <header>
+                        <button name="post" confirm="Bạn có chắc muốn xác nhận phiếu thanh toán!!!" class="oe_highlight" states="draft" string="Xác Nhận" type="object" groups="collaborator.collaborator_group_payment"/>
+                        <button name="action_draft" class="btn btn-secondary" invisible="True" string="Đặt lại thành nháp" type="object"/>
+                        <button name="cancel_payment" class="btn-danger" attrs="{'invisible': [('state', '!=', 'posted')]}" string="Hủy phiếu" type="object" groups="base.group_system"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,posted"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1><field name="name" readonly="True"/></h1>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="collaborator_payment_type" widget="radio" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="internal_payment_type" widget="radio" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="collaborator_payment_method" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+<!--                                <field name="collaborator_payment_line" required="True" attrs="{'readonly':[('state','!=', 'draft')]}" invisible="True"/>-->
+                                <field name="collaborator_partner_type" required="True" widget="selection" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="company_payment" force_save="True" readonly="True" options="{'no_create':True}" attrs="{'invisible':[('internal_payment_type','!=', 'chi_ho' )]}"/>
+                                <field name="collaborator_id" required="True" attrs="{'readonly':[('state','!=', 'draft')]}" options="{'no_create':True}"/>
+<!--                                <field name="partner_id" readonly="True" force_save="True"/>-->
+                                <field name="contract_id" context="{'name_collaborator_contract': True}" force_save="True" required="True" attrs="{'readonly':[('state','!=', 'draft')],'invisible':[('collaborator_id','=', False)]}" options="{'no_create':True}"/>
+                                <field name="check_collaborator" invisible="True"/>
+                                <field name="phone" widget="phone" readonly="True" attrs="{'invisible':[('check_collaborator','=', False )]}" force_save="True"/>
+                                <field name="collaborator_amount" readonly="True" attrs="{'invisible':[('check_collaborator','=', False )]}" force_save="True"/>
+                                <field name="company_id" readonly="True" required="True" attrs="{'readonly':[('state','!=', 'draft')]}" options="{'no_create':True}"/>
+                                <field name="brand_id" readonly="True" options="{'no_create': True, 'no_open': True}"/>
+                            </group>
+                            <group>
+<!--                                <field name="collaborator_journal_id" required="True" attrs="{'readonly':[('state','!=', 'draft')]}" options="{'no_create': True, 'no_open': True}"/>-->
+                                <field name="payment_method_id" widget="radio" invisible="True"/>
+<!--                                <field name="payment_id" widget="many2many_tags" readonly="True"/>-->
+                                <field name="collaborator_payment_cancel_date" readonly="True" attrs="{'invisible':[('state','!=', 'cancelled' )]}"/>
+                                <field name="note_cancel" readonly="True" attrs="{'invisible':[('state','!=', 'cancelled' )]}"/>
+                                <field name="collaborator_user_cancel" readonly="True" attrs="{'invisible':[('state','!=', 'cancelled' )]}"/>
+                            </group>
+                            <group name="right_column">
+                                <label for="amount"/>
+                                <div name="collaborator_amount_div" class="o_row">
+                                    <field name="amount" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                    <field name="currency_id" options="{'no_create': True, 'no_open': True}" readonly="True"/>
+                                </div>
+                                <field name="collaborator_amount_vnd" force_save="True" readonly="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="collaborator_text_total" force_save="True" readonly="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="collaborator_payment_date" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="collaborator_communication" required="True" attrs="{'readonly':[('state','!=', 'draft')]}"/>
+                                <field name="collaborator_user" required="True" attrs="{'readonly':[('state','!=', 'draft')]}" options="{'no_create':True}"/>
+                            </group>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                    <div class="crm_lead_box_change_infor">
+                        <div class="col-lg-12">
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm tạo:
+                                <strong>
+                                    <field name="create_date" readonly="True" force_save="True"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Tạo bởi:
+                                <strong>
+                                    <field name="create_uid" readonly="True" force_save="True"
+                                           options="{'no_open':True,}"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm cập nhật:
+                                <strong>
+                                    <field name="write_date"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Cập nhật bởi:
+                                <strong>
+                                    <field name="write_uid"/>
+                                </strong>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="collaborator_payment_search" model="ir.ui.view">
+            <field name="name">collaborator Payment - Search</field>
+            <field name="model">collaborator.payment</field>
+            <field name="arch" type="xml">
+                <search string="Stage Search">
+                    <field name="name" string="Mã phiếu"/>
+                    <field name="collaborator_id" string="Tên cộng tác viên"/>
+                     <group>
+                        <filter string="Trạng Thái" name="group_state" context="{'group_by': 'state'}"/>
+                        <filter string="Tên cộng tác viên" name="group_collaborator" context="{'group_by': 'collaborator_id'}"/>
+                        <filter string="Thương hiệu" name="group_brand_id" context="{'group_by': 'brand_id'}"/>
+                        <filter string="Ngày" name="group_collaborator_payment_date" context="{'group_by': 'collaborator_payment_date'}"/>
+                        <filter string="Loại giao dịch" name="group_internal_payment_type" context="{'group_by': 'internal_payment_type'}"/>
+                        <filter string="Công ty giao dịch" name="group_company_id" context="{'group_by': 'company_id'}"/>
+                        <filter string="Công ty ghi nợ" name="group_company_payment" context="{'group_by': 'company_payment'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+        <record id="collaborator_payment_action" model="ir.actions.act_window">
+            <field name="name">Phiếu chi cộng tác viên</field>
+            <field name="res_model">collaborator.payment</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

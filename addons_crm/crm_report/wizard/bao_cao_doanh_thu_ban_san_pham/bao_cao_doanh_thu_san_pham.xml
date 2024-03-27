@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+        <record id="report_revenue_sale_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO DOANH THU SẢN PHẨM</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_report/static/xls/bao_cao_doanh_thu_ban_san_pham.xlsx"/>
+            <field name="store_fname">bao_cao_doanh_thu_ban_san_pham.xlsx</field>
+        </record>
+
+        <record model="ir.ui.view" id="report_revenue_sale_form">
+            <field name="name">report.revenue.sale.form</field>
+            <field name="model">report.revenue.sale</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo doanh thu bán sản phẩm">
+                    <group>
+                        <field name="start_date" required="True" string="Ngày bắt đầu"/>
+                        <field name="end_date" required="True" string="Ngày kết thúc"/>
+                    </group>
+                    <group>
+<!--                        <field name="end_date"/>-->
+                        <field name="brand_id"/>
+                        <field name="company_id" string="Chi nhánh"/>
+                    </group>
+                    <footer>
+                        <button name="report_sale" type="object" string="XUẤT" class="oe_highlight"/>
+                        <button string="Hủy bỏ" class="btn btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_bao_cao_doanh_thu_bsp_act">
+            <field name="name">Báo cáo doanh thu bán sản phẩm</field>
+            <field name="res_model">report.revenue.sale</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_revenue_sale_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+<!--        <menuitem id="report_bao_cao_doanh_thu_bsp_menu"-->
+<!--                  name="Báo cáo doanh thu bán sản phẩm"-->
+<!--                  parent="crm_report.menu_crm_report"-->
+<!--                  action="report_bao_cao_doanh_thu_bsp_act"-->
+<!--                  groups="crm_report.security_crm_report"-->
+<!--                  sequence="15"/>-->
+</odoo>

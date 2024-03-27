@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="collaborator_menu_root"
+                  name="Cộng tác viên"
+                  groups="collaborator.collaborator_group_user,collaborator.collaborator_group_payment"
+                  web_icon="collaborator,static/description/collaborator.png"
+                  sequence="6"/>
+
+        <menuitem id="collaborator_collaborator_menu_action"
+                  name="Cộng tác viên"
+                  parent="collaborator_menu_root"
+                  groups="collaborator.collaborator_group_user,collaborator.collaborator_group_payment"
+                  action="collaborator.collaborator_collaborator_action_domain"
+                  sequence="1"/>
+        <record id="collaborator_collaborator_menu_action" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-users</field>
+        </record>
+
+        <menuitem id="collaborator_contract_menu_root"
+                  name="Quản lý hợp đồng"
+                  parent="collaborator_menu_root"
+                  groups="collaborator.collaborator_group_user,collaborator.collaborator_group_payment"
+                  sequence="2"/>
+        <record id="collaborator_contract_menu_root" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-file</field>
+        </record>
+        <menuitem id="collaborator_contract_menu_action"
+                  name="Hợp đồng"
+                  parent="collaborator_contract_menu_root"
+                  groups="collaborator.collaborator_group_user,collaborator.collaborator_group_payment"
+                  action="collaborator.collaborator_contract_action"
+                  sequence="1"/>
+        <record id="collaborator_contract_menu_action" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-file</field>
+        </record>
+
+        <menuitem id="collaborator_contract_almost_expired_menu_action"
+                  name="Hợp đồng sắp hết hạn"
+                  parent="collaborator_contract_menu_root"
+                  groups="collaborator.collaborator_group_user,collaborator.collaborator_group_payment"
+                  action="collaborator.collaborator_contract_almost_expired_action_server"
+                  sequence="2"/>
+        <record id="collaborator_contract_almost_expired_menu_action" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-clock-o</field>
+        </record>
+        <menuitem id="collaborator_contract_expired_menu_action"
+                  name="Hợp đồng hết hạn"
+                  parent="collaborator_contract_menu_root"
+                  groups="collaborator.collaborator_group_user,collaborator.collaborator_group_payment"
+                  action="collaborator.collaborator_contract_expired_action_server"
+                  sequence="3"/>
+        <record id="collaborator_contract_expired_menu_action" model="ir.ui.menu">
+            <field name="web_icon_class">fa-times-circle-o</field>
+        </record>
+
+        <menuitem id="collaborator_payment_menu_action"
+                  name="Thanh toán"
+                  parent="collaborator_menu_root"
+                  action="collaborator.collaborator_payment_action"
+                  sequence="3"/>
+        <record id="collaborator_payment_menu_action" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-money</field>
+        </record>
+
+        <menuitem id="collaborator_collaborator_menu_report"
+                  name="Báo cáo"
+                  parent="collaborator_menu_root"
+                  groups="collaborator.collaborator_group_manager"
+                  sequence="4"/>
+        <record id="collaborator_collaborator_menu_report" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-bar-chart</field>
+        </record>
+
+<!--        <menuitem id="collaborator_report_transaction_menu_report"-->
+<!--                  name="Hoa hồng"-->
+<!--                  action="collaborator_report_transaction_wizard_action"-->
+<!--                  sequence="1"-->
+<!--                  groups="collaborator.collaborator_group_manager"-->
+<!--                  parent="collaborator_collaborator_menu_report"/>-->
+<!--        <record id="collaborator_report_transaction_menu_report" model="ir.ui.menu">-->
+<!--            <field name="web_icon_class">fa fa-line-chart</field>-->
+<!--        </record>-->
+
+
+        <menuitem id="collaborator_collaborator_menu_config"
+                  name="Cấu hình"
+                  groups="collaborator.collaborator_group_manager"
+                  parent="collaborator_menu_root"
+                  sequence="10"/>
+        <record id="collaborator_collaborator_menu_config" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-cog</field>
+        </record>
+        <menuitem id="collaborator_contract_type_menu"
+                  name="Loại hợp đồng"
+                  parent="collaborator_collaborator_menu_config"
+                  groups="collaborator.collaborator_group_manager_branch"
+                  action="collaborator.collaborator_contract_type_action"
+                  sequence="1"/>
+        <record id="collaborator_contract_type_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-list-ul</field>
+        </record>
+
+        <menuitem id="collaborator_overseas_type_menu"
+                  name="Chính sách Việt kiều"
+                  parent="collaborator_collaborator_menu_config"
+                  action="collaborator.collaborator_overseas_type_action"
+                  sequence="2"/>
+        <record id="collaborator_overseas_type_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-list-ul</field>
+        </record>
+
+        <menuitem id="collaborator_service_not_allow_menu"
+                  name="Dịch vụ không tính hoa hồng"
+                  parent="collaborator_collaborator_menu_config"
+                  groups="collaborator.collaborator_group_manager_branch"
+                  action="collaborator.collaborator_service_not_allow_config_action"
+                  sequence="3"/>
+        <record id="collaborator_service_not_allow_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-minus-square</field>
+        </record>
+
+        <menuitem id="collaborator_bank_config_menu_action"
+                  name="Ngân hàng"
+                  parent="collaborator_collaborator_menu_config"
+                  action="collaborator.collaborator_bank_config_action"
+                  sequence="4"/>
+        <record id="collaborator_bank_config_menu_action" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-university</field>
+        </record>
+
+
+        <menuitem id="collaborator_bank_menu_action"
+                  name="Tài khoản ngân hàng"
+                  parent="collaborator_collaborator_menu_config"
+                  action="collaborator.collaborator_bank_action"
+                  sequence="5"/>
+        <record id="collaborator_bank_menu_action" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-credit-card</field>
+        </record>
+
+        <menuitem id="utm_source_menu_action"
+                  name="Nguồn"
+                  parent="collaborator_collaborator_menu_config"
+                  action="utm_source_collaborator_action"
+                  sequence="5"/>
+        <record id="utm_source_menu_action" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-globe</field>
+        </record>
+
+        <menuitem id="brand_menu_action"
+                  name="Thương hiệu"
+                  parent="collaborator_collaborator_menu_config"
+                  action="action_brand_form"
+                  sequence="6"/>
+        <record id="brand_menu_action" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-tags</field>
+        </record>
+
+        <menuitem id="company_menu_action"
+                  name="Công ty"
+                  parent="collaborator_collaborator_menu_config"
+                  action="res_company_action"
+                  sequence="7"/>
+        <record id="company_menu_action" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-building</field>
+        </record>
+
+        <menuitem id="collaborator_transaction_line_menu"
+                  name="Dòng giao dịch"
+                  parent="collaborator_collaborator_menu_report"
+                  action="collaborator.action_open_view_collaborator_transaction_line"
+                  sequence="7"/>
+        <record id="collaborator_transaction_line_menu" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-money</field>
+        </record>
+<!--        <menuitem id="collaborator_account_action_menu"-->
+<!--                  name="Tiền"-->
+<!--                  parent="collaborator_collaborator_menu_report"-->
+<!--                  action="collaborator.collaborator_account_action"-->
+<!--                  sequence="2"/>-->
+<!--        <record id="collaborator_account_action_menu" model="ir.ui.menu">-->
+<!--            <field name="web_icon_class">fa fa-money</field>-->
+<!--        </record>-->
+
+
+        <!--            <menuitem id="menu_products_discount"-->
+        <!--                      name="Loại hợp đồng"-->
+        <!--                      parent="collaborator.crm_menu_collaborator"-->
+        <!--                      action="action_open_view_collaborator_products_discount"-->
+        <!--                      groups="collaborator.collaborator_group_manager"-->
+        <!--                      sequence="3"/>-->
+        <!--        <menuitem   id="menu_report_source_ctv_erp"-->
+        <!--                    name="Báo cáo chi tiết doanh số"-->
+        <!--                    action="action_collaborator_report_act"-->
+        <!--                    sequence="18"-->
+        <!--                    groups="base.group_erp_manager"-->
+        <!--                    parent="report_sale.menu_kpi_erp_report"/>-->
+
+        <!--        <menuitem   id="menu_collaborator_payment_report"-->
+        <!--                    name="Báo cáo thanh toán hoa hồng"-->
+        <!--                    action="action_collaborator_payment_report_act"-->
+        <!--                    sequence="5"-->
+        <!--                    groups="base.group_erp_manager"-->
+        <!--                    parent="collaborator.crm_menu_collaborator"/>-->
+
+        <!--        <menuitem   id="menu_report_ctv_erp"-->
+        <!--                    name="Báo cáo chi tiết doanh số"-->
+        <!--                    action="action_collaborator_report_act"-->
+        <!--                    sequence="4"-->
+        <!--                    groups="base.group_erp_manager"-->
+        <!--                    parent="collaborator.crm_menu_collaborator"-->
+        <!--        />-->
+
+        <!--            <menuitem id="menu_log_transaction_so"-->
+        <!--                      name="Lịch sử"-->
+        <!--                      parent="collaborator.crm_menu_collaborator"-->
+        <!--                      action="action_open_view_log_transaction_so"-->
+        <!--                      groups="collaborator.collaborator_group_manager"-->
+        <!--                      sequence="4"/>-->
+
+        <!--            <menuitem action="action_open_view_account_payment_ctv"-->
+        <!--                  name="Thanh toán CTV"-->
+        <!--                  id="menu_action_account_payments_ctv"-->
+        <!--                  parent="account.menu_finance_receivables"-->
+        <!--                  groups="base.group_erp_manager"-->
+        <!--                  sequence="17"/>-->
+    </data>
+</odoo>

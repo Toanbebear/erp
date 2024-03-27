@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="history_used_reward_form" model="ir.ui.view">
+            <field name="name">Lịch sử sử dụng Quà tặng Khách hàng</field>
+            <field name="model">history.used.reward</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="reward_line_id"/>
+                            <field name="date_used"/>
+                            <field name="booking_id"/>
+                            <field name="customer_name"/>
+                            <field name="loyalty_id"/>
+                            <field name="product"/>
+                            <field name="currency_id"/>
+                            <field name="total"/>
+                            <field name="total_received"/>
+                            <field name="total_remaining"/>
+                            <field name="total_used"/>
+                            <field name="stage"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="history_used_reward_tree">
+            <field name="name">Lịch sử sử dụng Quà tặng Khách hàng</field>
+            <field name="model">history.used.reward</field>
+            <field name="arch" type="xml">
+                <tree create="0" decoration-success="stage=='done'" decoration-danger="stage=='cancel'" decoration-info="stage=='upcoming'" default_order="date_used desc">
+                    <field name="booking_id"/>
+                    <field name="customer_name"/>
+                    <field name="date_used"/>
+                    <field name="product"/>
+                    <field name="total"/>
+                    <field name="total_used"/>
+                    <field name="stage"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_history_used_reward" model="ir.actions.act_window">
+            <field name="name">Lịch sử sử dụng Quà tặng Khách hàng</field>
+            <field name="res_model">history.used.reward</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem
+                id="history_used_reward_menu"
+                name="Lịch sử Khách hàng"
+                action="action_history_used_reward"
+                parent="history_loyalty_menu"
+                sequence="2"/>
+    </data>
+</odoo>

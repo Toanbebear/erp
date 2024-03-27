@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="Auto refresh" inherit_id="web.assets_backend">
+            <xpath expr=".">
+                <script type="text/javascript" src="/print_partner_code/static/src/js/kiosk_mode.js"/>
+                <link rel="stylesheet" type="text/scss" href="/print_partner_code/static/src/scss/style.scss"/>
+                <link rel="stylesheet" type="text/scss" href="/print_partner_code/static/src/scss/hr_attendance.scss"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

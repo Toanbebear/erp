@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_apply_coupon">
+            <field name="name">Apply coupon</field>
+            <field name="model">crm.apply.coupon</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="campaign_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                            <field name="type_action" required="True"/>
+                            <field name="hide_type" invisible="1"/>
+                            <field name="type_coupon" options="{'no_open':True,'no_create':True}"
+                                   attrs="{'invisible': [('hide_type', '=', True)], 'required': [('hide_type', '=', False)]}"/>
+                            <field name="coupon_id" options="{'no_open':True,'no_create':True}"
+                                   required="True"/>
+                            <field name="group_customer_id" options="{'no_open':True,'no_create':True}"
+                                   attrs="{'invisible': ['|',('type_action', '!=', 'apply'), ('type_coupon', '!=', '5')], 'required': [('type_action', '=', 'apply'), ('type_coupon', '=', '5')]}"
+                                   domain="[('partner_ids', '=', partner_id), ('status', '=', 'can_use')]"/>
+                            <field name="description" attrs="{'invisible': [('type_action', '=', 'apply')]}"/>
+                            <field name="crm_id" invisible="True"/>
+                            <field name="partner_id" invisible="True"/>
+<!--                            <field name="note"/>-->
+                        </group>
+                        <group>
+                            <field name="line_ids" attrs="{'invisible': [('type_action', '!=', 'apply')], 'required': [('type_action', '=', 'apply')]}" widget="many2many_tags" string="Danh sách dịch vụ áp dụng" domain="[('crm_id', '=', crm_id), ('stage', '!=', 'cancel')]"/>
+                            <field name="line_product_ids" attrs="{'invisible': ['|', ('type_action', '!=', 'apply'), ('type_coupon', '!=', '3')]}" widget="many2many_tags" string="Danh sách sản phẩm áp dụng" domain="[('booking_id', '=', crm_id), ('stage_line_product', '!=', 'cancel')]"/>
+                            <field name="apply_combo" attrs="{'invisible': ['|',('type_action', '!=', 'apply'), ('type_coupon', '!=', '3')]}">
+                                <tree create="false" editable="top" options="{'no_open':True,'no_create':True}">
+                                    <field name="check"/>
+                                    <field name="index"/>
+                                    <field name="combo_note"/>
+                                </tree>
+                            </field>
+                        </group>
+
+
+
+                        <footer class="text-center">
+                            <button name="check_type_coupon" type="object" string="Set discount" class="btn-info"
+                                    attrs="{'invisible': [('type_action', '!=', 'apply')]}"/>
+                            <button name="reverse_prg_ids" type="object" string="Hoàn lại" class="btn-warning"
+                                    attrs="{'invisible': [('type_action', '=', 'apply')]}"/>
+                            <button special="cancel" string="Cancel" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_apply_coupon_finish" model="ir.ui.view">
+            <field name="name">Apply success</field>
+            <field name="model">crm.apply.coupon</field>
+            <field name="arch" type="xml">
+                <form>
+                    <field name="notify" readonly="True"/>
+                    <footer class="text-center">
+                        <button string="Ok" class="oe_highlight" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_view_apply_coupon_success_wizard" model="ir.actions.act_window">
+            <field name="name">Apply success</field>
+            <field name="res_model">crm.apply.coupon</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_apply_coupon_finish"/>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

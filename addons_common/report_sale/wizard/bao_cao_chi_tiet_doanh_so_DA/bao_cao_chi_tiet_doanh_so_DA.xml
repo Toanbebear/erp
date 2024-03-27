@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="sale_payment_detail_report_wizard_DA" model="ir.ui.view">
+            <field name="name">Báo cáo chi tiết doanh số</field>
+            <field name="model">crm.sale.payment.detail.report.da</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="start_date" required="1"/>
+                            </group>
+                            <group>
+                                <field name="end_date" required="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="region"/>
+                        </group>
+                        <group>
+                            <field name="brand_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('region', '=', False)]}" force_save="1"/>
+                        </group>
+                        <group>
+                            <field name="company_id" options="{'no_create': True, 'no_open': True}" attrs="{'readonly': [('brand_id', '=', False)]}" force_save="1"/>
+                        </group>
+                        <footer>
+                            <button name="create_report" string="Xuất" type="object" class="btn-primary"/>
+                            <button special="cancel" string="Huỷ" type="object" class="btn-secondary"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_wizard_crm_sale_payment_detail_report_DA" model="ir.actions.act_window">
+            <field name="name">Báo cáo chi tiết doanh số</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.sale.payment.detail.report.da</field>
+            <field name="view_id" ref="sale_payment_detail_report_wizard_DA"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+        <menuitem
+                name="A.I.8 Báo cáo chi tiết doanh số"
+                action="action_wizard_crm_sale_payment_detail_report_DA"
+                id="menu_wizard_crm_sale_payment_detail_report_DA"
+                sequence="8"
+                parent="report_sale.menu_report_brand_sale_marketing_and_accounting_marketing_dong_a"
+        />
+    </data>
+</odoo>

@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+
+        <!--        BÁO CÁO THU CHI-->
+        <record id="bc_thu_chi_form" model="ir.ui.view">
+            <field name="name">Báo cáo thu chi</field>
+            <field name="model">bc.thu.chi</field>
+            <field name="arch" type="xml">
+                <form edit_expr="state not in ['confirm']">
+                    <header>
+                        <button name="get_data" class="btn-info" string="Lấy doanh số ngày" type="object"
+                                attrs="{'invisible':[('state','not in',['draft','get_data'])]}"/>
+                        <button name="sent_data" class="btn-danger" string="Gửi báo cáo" type="object"
+                                attrs="{'invisible':[('state','!=','get_data')]}"/>
+                        <button name="get_data" class="btn-danger" string="Đặt là Lấy dữ liệu" type="object"
+                                groups="base.group_system" attrs="{'invisible':[('state','!=','confirm')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,get_data,confirm"/>
+                    </header>
+                    <sheet>
+                        <group name="general">
+                            <group name="1">
+                                <field name="ngay_bao_cao" required="True"
+                                       attrs="{'readonly':[('state','=','confirm')]}"/>
+                            </group>
+                            <group name="2">
+                                <field name="company_id" required="True" attrs="{'readonly':[('state','=','confirm')]}"
+                                       options="{'no_create': True,'no_open': True}"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="brand_id" invisible="1"/>
+                            </group>
+                        </group>
+<!--                        <div>-->
+<!--                            <span>Báo cáo thu chi (Quản lý quỹ tiền mặt) được xây dựng dựa trên các dòng phân bổ của theo các điều kiện sau:</span><br/>-->
+<!--                            <span>1. Doanh số không đến từ các nhóm nguồn : CBNV hoặc Đối ngoại hoặc thuê phòng mổ.</span><br/>-->
+<!--                            <span>2. Đối với trường hợp <u>thu/hoàn hộ KHÁCH HÀNG</u>: Doanh số căn cứ vào cột chi nhánh ghi nhận doanh số trên từng dòng phân bổ.</span><br/>-->
+<!--                        </div>-->
+
+                        <notebook>
+                            <page name="result" string="Kết quả">
+
+                                <div style="width:50%">
+                                    <style>
+                                        .test .o_input{
+                                        width:50%;
+                                        margin-right:20px}
+                                    </style>
+                                    <table class="table border border-dark test">
+                                        <tr>
+                                            <th class="border border-dark align-middle text-left"
+                                                style="background-color: #b3d1ff; width:20%">I. Tồn đầu
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff; width:20%">I
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:60%">
+                                                <field name="ton_dau" readonly="1"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="border border-dark align-middle text-left"
+                                                style="background-color: #b3d1ff; width:20%">II. Tổng thu
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff; width:20%">II = 1+2+3+4
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:60%">
+                                                <field name="tong_thu"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="border border-dark align-middle text-center" rowspan="5"
+                                                style="width:20%">Trong đó
+                                            </th>
+                                            <th class="border border-dark align-middle text-left"
+                                                style="width:20%">1. Tiền mặt
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="width:60%">
+                                                <field name="tm" readonly="1"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <!--                                            <th class="border border-dark align-middle text-left"-->
+                                            <!--                                                style=" width:20%">-->
+                                            <!--                                            </th>-->
+                                            <th class="border border-dark align-middle text-left"
+                                                style="width:20%">2. Quẹt thẻ
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="width:60%">
+                                                <field name="qt" readonly="1"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <!--                                            <th class="border border-dark align-middle text-left"-->
+                                            <!--                                                style=" width:20%">-->
+                                            <!--                                            </th>-->
+                                            <th class="border border-dark align-middle text-left"
+                                                style="width:20%">3. Chuyển khoản
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="width:60%">
+                                                <field name="ck" readonly="1"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <!--                                            <th class="border border-dark align-middle text-left"-->
+                                            <!--                                                style="width:20%">-->
+                                            <!--                                            </th>-->
+                                            <th class="border border-dark align-middle text-left"
+                                                style="width:20%">4. Ngoại tệ
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="width:60%">
+                                                <field name="ngoai_te" readonly="1"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <!--                                            <th class="border border-dark align-middle text-left"-->
+                                            <!--                                                style="width:20%">-->
+                                            <!--                                            </th>-->
+                                            <th class="border border-dark align-middle text-left"
+                                                style="width:20%">5. Nhận quỹ
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="width:60%">
+                                                <field name="nhan_quy" readonly="1"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="border border-dark align-middle text-left"
+                                                style="background-color: #b3d1ff; width:20%">III. Tổng chi
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff; width:20%">III = 1+2
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff; width:60%">
+                                                <field name="tong_chi"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="border border-dark align-middle text-center" rowspan="2"
+                                                style="width:20%">Trong đó
+                                            </th>
+                                            <th class="border border-dark align-middle text-left"
+                                                style="width:20%">1. Tổng chi tại CN
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="width:60%">
+                                                <field name="tong_chi_cn" readonly="1"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <!--                                            <th class="border border-dark align-middle text-left"-->
+                                            <!--                                                style="width:20%">-->
+                                            <!--                                            </th>-->
+                                            <th class="border border-dark align-middle text-left"
+                                                style="width:20%">2. Chi nộp quỹ
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="width:60%">
+                                                <field name="nop_quy" readonly="1"/>
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <th class="border border-dark align-middle text-left"
+                                                style="background-color: #b3d1ff; width:20%">IV. Tồn cuối
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff; width:20%">IV = I + (II.1 + II.5) - III
+                                            </th>
+                                            <th class="border border-dark align-middle text-center"
+                                                style="background-color: #b3d1ff;width:60%">
+                                                <field name="ton_cuoi"/>
+                                            </th>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </page>
+                            <page name="phieu_thu" string="Thu tiền">
+                                <field name="phieu_thu" readonly="True">
+                                    <tree>
+                                        <field name="partner_id" optional="hide"/>
+                                        <field name="crm_id" optional="hide"/>
+                                        <field name="payment_date" optional="show"/>
+                                        <field name="payment_type" optional="hide"/>
+                                        <field name="name"/>
+                                        <field name="journal_id" optional="show"/>
+                                        <field name="payment_method" string="Hình thức thanh toán" optional="show"/>
+                                        <field name="amount_vnd" sum="Tổng thu"/>
+                                        <field name="user" optional="show"/>
+                                        <field name="company_id" optional="hide"/>
+                                        <field name="state" optional="hide"/>
+                                        <field name="internal_payment_type" optional="hide"/>
+                                        <field name="x_receive_company_id" string="Công ty ghi nhận doanh số" optional="hide"/>
+                                        <field name="company_id" string="Công ty giao dịch" optional="hide"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                            <page name="phieu_nhan_quy" string="Phiếu nhận quỹ">
+                                <field name="phieu_nhan_quy" readonly="True">
+                                    <tree>
+                                        <field name="date" string="Ngày hóa đơn"/>
+                                        <field name="name"/>
+                                        <field name="ref"/>
+                                        <field name="lydo"/>
+                                        <field name="journal_id" optional="hide"/>
+                                        <field name="amount_total"/>
+                                        <field name="currency_id" optional="hide"/>
+                                        <field name="nguoi_nhan" optional="hide"/>
+                                        <field name="nguoi_nhan_char" optional="hide"/>
+                                        <field name="treasurer_id" optional="hide"/>
+                                        <field name="accountant_id" optional="hide"/>
+                                        <field name="manager_id" optional="hide"/>
+                                        <field name="state"/>
+                                        <field name="company_id"/>
+                                        <field name="create_uid" optional="hide"/>
+                                        <field name="create_date" optional="hide"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                            <page name="phieu_chi_tai_cn" string="Phiếu chi tại chi nhánh">
+                                <field name="phieu_chi_tai_cn" readonly="True">
+                                    <tree>
+                                        <field name="date" string="Ngày hóa đơn"/>
+                                        <field name="name"/>
+                                        <field name="ref"/>
+                                        <field name="lydo"/>
+                                        <field name="journal_id" optional="hide"/>
+                                        <field name="amount_total"/>
+                                        <field name="currency_id" optional="hide"/>
+                                        <field name="nguoi_nhan" optional="hide"/>
+                                        <field name="nguoi_nhan_char" optional="hide"/>
+                                        <field name="treasurer_id" optional="hide"/>
+                                        <field name="accountant_id" optional="hide"/>
+                                        <field name="manager_id" optional="hide"/>
+                                        <field name="state"/>
+                                        <field name="company_id"/>
+                                        <field name="create_uid" optional="hide"/>
+                                        <field name="create_date" optional="hide"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                            <page name="phieu_nop_quy" string="Phiếu nộp quỹ">
+                                <field name="phieu_nop_quy" readonly="True">
+                                    <tree>
+                                        <field name="date" string="Ngày hóa đơn"/>
+                                        <field name="name"/>
+                                        <field name="ref"/>
+                                        <field name="lydo"/>
+                                        <field name="journal_id" optional="hide"/>
+                                        <field name="amount_total"/>
+                                        <field name="currency_id" optional="hide"/>
+                                        <field name="nguoi_nhan" optional="hide"/>
+                                        <field name="nguoi_nhan_char" optional="hide"/>
+                                        <field name="treasurer_id" optional="hide"/>
+                                        <field name="accountant_id" optional="hide"/>
+                                        <field name="manager_id" optional="hide"/>
+                                        <field name="state"/>
+                                        <field name="company_id"/>
+                                        <field name="create_uid" optional="hide"/>
+                                        <field name="create_date" optional="hide"/>
+                                    </tree>
+                                </field>
+
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="bc_thu_chi_search_view" model="ir.ui.view">
+            <field name="name">Báo cáo thu chi</field>
+            <field name="model">bc.thu.chi</field>
+            <field name="arch" type="xml">
+                <search>
+                    <filter string="Hôm nay" name="ngay_bao_cao_hom_nay"
+                            domain="[('ngay_bao_cao', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <!--                        <filter name="not_cancel" string="Không bao gồm hủy"-->
+                        <!--                                domain="[('state', 'not in', ['cancel'])]"/>-->
+                        <filter name="group_ngay_ngay_bao_cao" string="Ngày báo cáo"
+                                context="{'group_by':'ngay_bao_cao:day'}"/>
+                        <filter name="group_chi_nhanh" string="Chi nhánh" context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="bc_thu_chi_tree">
+            <field name="name">Tổng hợp doanh số</field>
+            <field name="model">bc.thu.chi</field>
+            <field name="arch" type="xml">
+                <tree decoration-info="state=='draft'" decoration-success="state=='confirm'"
+                      decoration-danger="state=='get_data'" default_order="ngay_bao_cao desc">
+                    <field name="ngay_bao_cao" width="25%"/>
+                    <field name="ton_dau" width="25%"/>
+                    <field name="tong_thu" width="25%"/>
+                    <field name="tong_chi" width="25%"/>
+                    <field name="ton_cuoi" width="25%"/>
+                    <field name="currency_id" invisible="1"/>
+                    <field name="company_id" width="35%"/>
+                    <field name="state" width="15%"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_bc_thu_chi" model="ir.actions.act_window">
+            <field name="name">Báo cáo thu chi</field>
+            <field name="res_model">bc.thu.chi</field>
+            <field name="view_mode">tree,form,kanban</field>
+            <field name="domain">[('state', 'not in', ['cancel'])]</field>
+            <field name="context">{'search_default_group_ngay_ngay_bao_cao':1}</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+   <data>
+        <record id="view_form_crm_account_analytic_tag" model="ir.ui.view">
+            <field name="name">Account Analytic Tag</field>
+            <field name="model">account.analytic.tag</field>
+            <field name="inherit_id" ref="analytic.account_analytic_tag_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='analytic_distribution_ids']" position="replace">
+                    <group>
+                        <button name="update_rate" string="Cập nhật tỉ lệ phân bổ" type="object" icon="fa-refresh"/>
+                    </group>
+                    <field name="analytic_distribution_ids" nolabel="1" widget="one2many"
+                            attrs="{'invisible': [('active_analytic_distribution', '=', False)]}" groups="analytic.group_analytic_accounting">
+                            <tree string="Analytic Distribution" editable="bottom">
+                                <field name="department"/>
+                                <field name="account_id"/>
+                                <field name="start_date"/>
+                                <field name="end_date"/>
+                                <field name="percentage"/>
+                                <field name="note"/>
+                            </tree>
+                        </field>
+                </xpath>
+            </field>
+        </record>
+
+       <record id="view_form_crm_account_analytic_distribution" model="ir.ui.view">
+            <field name="name">Account Analytic Distribution</field>
+            <field name="model">account.analytic.distribution</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="department"/>
+                        <field name="account_id"/>
+                        <field name="start_date"/>
+                        <field name="end_date"/>
+                        <field name="percentage"/>
+                        <field name="note"/>
+                    </group>
+                </form>
+            </field>
+       </record>
+    </data>
+</odoo>

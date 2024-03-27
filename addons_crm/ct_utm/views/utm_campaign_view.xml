@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="utm_campaign_tree_inherit" model="ir.ui.view">
+            <field name="name">utm.campaign.tree.inherit</field>
+            <field name="model">utm.campaign</field>
+            <field name="inherit_id" ref="utm.utm_campaign_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='name']" position="before">
+                    <field name="sequence" widget="handle"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

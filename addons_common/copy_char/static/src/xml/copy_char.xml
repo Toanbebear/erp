@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+    <t t-name="CopyChar">
+        <button class="btn o_clipboard_button o_btn_copy_char">
+            <span class="fa fa-clipboard"></span>
+        </button>
+    </t>
+</templates>

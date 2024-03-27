@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="account_internal_debt_from" model="ir.ui.view">
+            <field name="name">Tạo xác nhận công nợ nội bộ</field>
+            <field name="model">account.internal.debt</field>
+            <field name="arch" type="xml">
+                <form string="_form">
+                    <sheet>
+                        <field name="internal_date"/>
+                        <group>
+                            <group>
+                                <field name="company_id"/>
+                                <field name="journal_id" domain="[('code', '=', 'PTRNB')]"/>
+                            </group>
+                            <group>
+                                <field name="company2_id"/>
+                                <field name="journal2_id" groups="base.group_multi_company"/>
+                            </group>
+                        </group>
+                        <group>
+                            <group>
+                                <field name="amount"/>
+                            </group>
+                            <group>
+                                <field name="text_amount"/>
+                            </group>
+                            <field name="communication"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button string="Request" name="request_internal_debt" type="object"
+                                class="btn btn-danger js_publish_btn"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

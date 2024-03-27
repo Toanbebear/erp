@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="stock_valuation_layer_tree_inherit" model="ir.ui.view">
+            <field name="name">stock.valuation.layer.tree.inherit</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="default_order">date desc, create_date desc, id desc</attribute>
+                </xpath>
+                <xpath expr="//field[@name='create_date']" position="replace">
+                    <field name="date"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="stock_valuation_layer_form_inherit" model="ir.ui.view">
+            <field name="name">stock.valuation.layer.form.inherit</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='create_date']" position="replace">
+                    <field name="date"/>
+                </xpath>
+            </field>
+        </record>
+
+   </data>
+</odoo>

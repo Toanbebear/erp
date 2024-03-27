@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="report_phone_call_source_odontology_graph" model="ir.ui.view">
+            <field name="name">report.phone.call.source.odontology.graph</field>
+            <field name="model">report.phone.call.source.odontology</field>
+            <field name="arch" type="xml">
+                <graph string="Biểu đồ phone call Nha khoa" type="bar" stacked="True">
+                    <field name="type_pc" type="row"/>
+                    <field name="state" type="row"/>
+                </graph>
+            </field>
+        </record>
+
+        <record id="report_phone_call_source_odontology_dashboard_view" model="ir.ui.view">
+            <field name="name">report.phone.call.source.odontology.dashboard.view</field>
+            <field name="model">report.phone.call.source.odontology</field>
+            <field name="mode">primary</field>
+            <field name="arch" type="xml">
+                <dashboard>
+                    <group>
+                        <group>
+                            <view type="graph" ref="report_sale.report_phone_call_source_odontology_graph"/>
+                        </group>
+                        <group>
+                            <widget name="pie_chart_with_percentage" title="Biểu đồ phone call Nha khoa" attrs="{'groupby': 'state'}"/>
+                        </group>
+                    </group>
+                </dashboard>
+            </field>
+        </record>
+        <record id="report_phone_call_source_odontology_search_view" model="ir.ui.view">
+            <field name="name">report.phone.call.source.odontology.search.view</field>
+            <field name="model">report.phone.call.source.odontology</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="brand_id"/>
+                    <field name="company_id"/>
+                </search>
+            </field>
+        </record>
+        <record id="report_phone_call_source_odontology_act_window" model="ir.actions.act_window">
+            <field name="name">Báo cáo phone call Nha khoa</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">report.phone.call.source.odontology</field>
+            <field name="view_id" ref="report_phone_call_source_odontology_dashboard_view"/>
+            <field name="view_mode">dashboard</field>
+            <field name="search_view_id" ref="report_phone_call_source_odontology_search_view"/>
+        </record>
+        <menuitem id="bao_cao_phone_call_odontology_dashboard_menu"
+                  name="Báo cáo Phone Call Nha khoa Dashboard"
+                  parent="report_sale.menu_report_van_hanh"
+                  sequence="6"
+                  action="report_sale.report_phone_call_source_odontology_act_window"
+/>
+    </data>
+</odoo>

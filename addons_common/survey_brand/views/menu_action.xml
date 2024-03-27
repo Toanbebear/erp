@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="survey_survey_action" model="ir.actions.act_window">
+        <field name="name">Surveys</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.survey</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="survey_question_action" model="ir.actions.act_window">
+        <field name="name">Survey.Question</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.question</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record id="survey_user_input_line_action" model="ir.actions.act_window">
+        <field name="name">survey.user.input.line.action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.user_input_line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="survey_label_action_window" model="ir.actions.act_window">
+        <field name="name">survey.label</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.label</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <!--    <menuitem id="surveys" name="Khảo sát" sequence="1"/>-->
+    <!-- Hidden menu -->
+    <menuitem id="survey.menu_survey_form"
+              name="Khảo sát"
+              parent="survey.menu_surveys"
+              action="survey_survey_action"
+              sequence="0"/>
+
+    <menuitem id="survey_base.survey_user_input_menu_item"
+              name="Lịch sử"
+              parent="survey.menu_surveys"
+              action="survey_user_input_action"
+              sequence="1"/>
+
+    <menuitem id="survey_report"
+              name="Báo cáo"
+              parent="survey.menu_surveys"
+              action="report_survey_action"
+              groups="survey.group_survey_manager"
+              sequence="2"/>
+
+<!--    <menuitem id="survey_report_da"-->
+<!--              name="Báo cáo Đông Á"-->
+<!--              parent="survey.menu_surveys"-->
+<!--              action="report_survey_da_action"-->
+<!--              sequence="3"/>-->
+
+    <menuitem id="survey_time_menu"
+              name="Phân loại khảo sát"
+              parent="survey_base.config_menu"
+              sequence="0"
+              action="survey_time_action"/>
+
+    <menuitem id="survey_base.survey_label_menu_action"
+              name="Gợi ý trả lời"
+              parent="survey_base.config_menu"
+              action="survey_base.survey_label_action_window"/>
+
+</odoo>

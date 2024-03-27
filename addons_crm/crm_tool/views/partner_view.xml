@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <act_window id="res_partner_act_window_chagne_phone"
+                name="Đổi số điện thoại"
+                binding_model="res.partner"
+                res_model="partner.change.phone"
+                binding_views="form"
+                view_mode="form"
+                target="new"
+                context="{
+            'default_res_id': active_id,
+        }"
+                groups="base.group_erp_manager"
+    />
+
+</odoo>

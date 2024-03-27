@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="cron_sync_crm" model="ir.cron">
+            <field name="name">Sync insight</field>
+            <field name="model_id" ref="model_crm_sync"/>
+            <field name="state">code</field>
+            <field name="code">model.sync()</field>
+            <field name='interval_number'>5</field>
+            <field name='interval_type'>minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="active">False</field>
+        </record>
+
+
+        <record id="crm_sync_form" model="ir.ui.view">
+            <field name="name">Sync</field>
+            <field name="model">crm.sync</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" required="True"/>
+                                <field name="ip" required="True"/>
+                                <field name="port" required="True"/>
+                                <field name="database" required="True"/>
+                                <field name="user"/>
+                                <field name="password"/>
+                                <field name="start_time_sync" required="True"/>
+                                <field name="limit" required="True"/>
+                                <field name="domain" required="True"/>
+                                <field name="brand_id" widget="many2many_tags"/>
+                                <field name="stage_sync" widget="many2many_tags"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="History">
+                                <field name="history_id">
+                                    <tree>
+                                        <field name="record_sync"/>
+                                        <field name="current_record"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="crm_sync_tree" model="ir.ui.view">
+            <field name="name">Sync</field>
+            <field name="model">crm.sync</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_sync" model="ir.actions.act_window">
+            <field name="name">CRM sync</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.sync</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <menuitem id="menu_crm_sync"
+                  name="Sync"
+                  parent="crm.menu_crm_config_lead"
+                  sequence="15"
+                  action="open_sync"
+                  groups="base.group_system"/>
+
+        <record model="ir.ui.view" id="record_history_form">
+            <field name="name">Record history</field>
+            <field name="model">crm.record.history</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="crm_sync_id"/>
+                                <field name="record_sync"/>
+                                <field name="current_record"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="record_history_tree">
+            <field name="name">Record history</field>
+            <field name="model">crm.record.history</field>
+            <field name="arch" type="xml">
+                <tree create="false" edit="false" delete="false">
+                    <field name="crm_sync_id"/>
+                    <field name="record_sync"/>
+                    <field name="current_record"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="open_record_history" model="ir.actions.act_window">
+            <field name="name">Record history</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.record.history</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <menuitem id="menu_crm_record_history"
+                  name="History"
+                  parent="crm.menu_crm_config_lead"
+                  sequence="16"
+                  action="open_record_history"
+                  groups="base.group_system"/>
+
+         <record id="crm_google_clid_tree" model="ir.ui.view">
+            <field name="name">CRM google clid</field>
+            <field name="model">crm.confix.gclid</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="brand_id"/>
+                    <field name="spreadsheet_id"/>
+                    <field name="sheet_name"/>
+                    <field name="sheet_point"/>
+                    <field name="sheet_index"/>
+                    <field name="conversion_name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_google_clid" model="ir.actions.act_window">
+            <field name="name">CRM google clid</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.confix.gclid</field>
+            <field name="domain">[]</field>
+        </record>
+
+        <menuitem id="menu_crm_gclid"
+                  name="Google clid"
+                  parent="crm.menu_crm_config_lead"
+                  sequence="17"
+                  action="crm_google_clid"
+                  groups="base.group_system"/>
+
+    </data>
+</odoo>

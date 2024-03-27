@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <!--        <record id="inherit_view_sale_order_add_rule" model="ir.ui.view">-->
+        <!--            <field name="name">inherit_view_sale_order_add_rule</field>-->
+        <!--            <field name="model">sale.order</field>-->
+        <!--            <field name="inherit_id" ref="sale.view_order_form"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//button[@name='action_view_invoice']" position="replace">-->
+        <!--                    <button name="action_view_invoice"-->
+        <!--                            type="object"-->
+        <!--                            class="oe_stat_button"-->
+        <!--                            icon="fa-pencil-square-o"-->
+        <!--                            attrs="{'invisible': [('invoice_count', '=', 0)]}" group="account.group_account_invoice">-->
+        <!--                        <field name="invoice_count" widget="statinfo" string="Invoices"/>-->
+        <!--                    </button>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+
+        <record id="inherit_view_account_payment_invoice_form" model="ir.ui.view">
+            <field name="name">inherit_view_account_payment_invoice_form</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="payment_method" required="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_form_order">
+            <field name="name">Sale order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_view_invoice']" position="replace">
+                    <button name="action_view_invoice"
+                            type="object"
+                            class="oe_stat_button"
+                            icon="fa-pencil-square-o"
+                            attrs="{'invisible': [('invoice_count', '=', 0)]}" group="account.group_account_invoice">
+                        <field name="invoice_count" widget="statinfo" string="Invoices"/>
+                    </button>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                    <field name="uom_price" optional="show" string="Đơn vị xử lý" readonly="True"/>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="after">
+                    <field name="discount" readonly="True"/>
+                    <field name="discount_cash" readonly="True"/>
+                    <field name="sale_to" readonly="True"/>
+                    <field name="other_discount" readonly="True" string="Giảm khác"/>
+                    <field name="uom_price" invisible="True"/>
+                </xpath>
+                <xpath expr="//button[@name='action_quotation_send']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm'][2]" position="attributes">
+                    <attribute name="attrs">{'invisible':['|',('state', 'not in', ['draft']), ('pricelist_type', '!=',
+                        'product')]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_cancel']" position="attributes">
+                    <attribute name="states">draft,sent</attribute>
+                </xpath>
+                <xpath expr="//button[@name='action_confirm']" position="after">
+                    <button name="open_discount_review" type="object" string="Giảm giá sâu" class="btn-info"
+                            attrs="{'invisible':['|',('state', '!=', 'draft'), ('pricelist_type', '!=', 'product')]}"
+                            groups="crm_base.receptionist_crm"/>
+                </xpath>
+                <xpath expr="//field[@name='pricelist_id']" position="before">
+                    <field name="brand_id"/>
+                    <field name="pricelist_type" groups="base.group_system"/>
+                </xpath>
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+                    <field name="amount_remain" invisible="False"/>
+                    <!--                    <field name="document_related" string="Mã booking tương ứng"/>-->
+                    <field name="booking_id" groups="base.group_system" invisible="True"/>
+                    <field name="debt_review_id" readonly="True" force_save="True" widget="many2many_tags"
+                           options="{'color_field': 'color'}"/>
+                    <field name="amount_owed" readonly="True" force_save="True" invisible="False"/>
+                    <field name="source_id" attrs="{'required': [('state', '=', 'draft')]}" force_save="True"
+                           options="{'no_create': True, 'no_open': True}"/>
+                    <!--                    <field name="amount_receivable" readonly="True" force_save="True" invisible="False"/>-->
+                </xpath>
+                <xpath expr="//field[@name='pricelist_id']" position="attributes">
+                    <attribute name="domain">[('type','=','product')]</attribute>
+                    <attribute name="groups"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="attributes">
+                    <attribute name="options">{'no_create':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_invoice_id']" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>
+                </xpath>
+                <!--                <xpath expr="//page[@name='order_lines']/field/form/group/group/field[@name='product_id']" position="attributes">-->
+                <!--                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>-->
+                <!--                </xpath>-->
+                <xpath expr="//field[@name='product_id']" position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='product_uom']"
+                       position="attributes">
+                    <attribute name="options">{'no_open':True,'no_create':True}</attribute>
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <!--                <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="attributes">-->
+                <!--                    <attribute name="readonly">True</attribute>-->
+                <!--                </xpath>-->
+                <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="readonly">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="code_customer"/>
+                    <field name="booking_id"/>
+                    <field name="phone_customer" widget="phone"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="widget">copy_char</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_detail_order_tree">
+            <field name="name">Chi tiết đơn hàng (SO)</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <tree create="false" delete="false">
+                    <field name="booking_id"/>
+                    <field name="partner_id" string="Khách hàng"/>
+                    <field name="order_id" string="Đơn hàng"/>
+                    <field name="pricelist_type" string="Loại"/>
+                    <field name="product_id"/>
+                    <field name="price_unit"/>
+                    <field name="product_uom_qty"/>
+                    <field name="qty_delivered" string="Đã giao"/>
+                    <field name="price_subtotal"/>
+                    <field name="date_order" optional="hide"/>
+                    <field name="order_state" optional="hide" string="Trạng thái"/>
+                    <field name="company_id" optional="hide" string="Chi nhánh"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="detail_order_search" model="ir.ui.view">
+            <field name="name">Tìm kiếm chi tiết đơn hàng (SO)</field>
+            <field name="model">sale.order.line</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm chi tiết đơn hàng (SO)">
+                    <field name="product_id" string="Sản phẩm/Dịch vụ"/>
+                    <field name="partner_id" string="Khách hàng"/>
+                    <field name="order_id" string="Đơn hàng"/>
+                    <group expand="0" string="Group By...">
+                        <filter name="group_pricelist_type" string="Loại SO" context="{'group_by':'pricelist_type'}"/>
+                        <filter name="group_sh_room" string="Phòng xuất" context="{'group_by':'sh_room_id'}"/>
+                        <filter name="group_date_order" string="Ngày đặt" context="{'group_by':'date_order'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_view_detail_order" model="ir.actions.act_window">
+            <field name="name">Chi tiết đơn hàng (SO)</field>
+            <field name="res_model">sale.order.line</field>
+            <field name="view_mode">tree</field>
+            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+            <field name="context">{'search_default_group_pricelist_type': 1,}</field>
+        </record>
+
+        <menuitem id="menu_view_detail_order"
+                  name="Chi tiết đơn hàng (SO)"
+                  parent="sale.sale_order_menu"
+                  action="action_view_detail_order"
+                  sequence="10"/>
+
+    </data>
+</odoo>

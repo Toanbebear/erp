@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_debt_warning_form_view" model="ir.ui.view">
+            <field name="name">Cảnh báo khi ấn nút đã trả</field>
+            <field name="model">crm.debt.warning</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div>
+                            <span>LƯU Ý: Khi ấn nút <b>'XÁC NHẬN'</b> hệ thống sẽ tạo hoa hồng của dịch vụ cho CTV <b><field name="collaborator_name" readonly="1"/></b> của <b><field name="crm_name" readonly="1"/></b></span>
+                        </div>
+                        <footer>
+                            <button name="confirm" string="Xác nhận" type="object" class="btn-primary btn-lg fa fa-check"/>
+                            <button string="Hủy" class="btn-secondary btn-lg" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_sale_report,Truy cập báo cáo doanh số,model_sales_report,group_sale_report,1,1,1,1
+access_bc_thu_chi,Truy cập báo cáo thu chi,model_bc_thu_chi,group_bc_thu_chi,1,1,1,1
+
+
+
+
+
+
+
+

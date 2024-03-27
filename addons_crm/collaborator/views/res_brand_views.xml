@@ -1,0 +1,63 @@
+<odoo>
+    <data>
+
+<!--        &lt;!&ndash;Thêm trường short code vào thương hiệu&ndash;&gt;-->
+<!--         <record id="inherit_res_brand_view_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">res.brand</field>-->
+<!--            <field name="model">res.brand</field>-->
+<!--			<field name="inherit_id" ref="sci_brand.view_form_brand"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--				<xpath expr="//field[@name='type']" position="after">-->
+<!--					<field name="short_code"/>-->
+<!--					<field name="is_collaborator"/>-->
+<!--				</xpath>-->
+<!--            </field>-->
+<!--         </record>-->
+
+        <!--    Hiển thị trong module collaborator -->
+        <record id="view_form_brand_ctv" model="ir.ui.view">
+            <field name="name">Thương hiệu</field>
+            <field name="model">res.brand</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <group string="Thông tin">
+                            <group>
+                                <field name="name" readonly="True"/>
+                                <field name="short_code"/>
+                                <field name="code"/>
+                                <field name="is_collaborator"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_brand_ctv" model="ir.ui.view">
+            <field name="name">Thương hiệu</field>
+            <field name="model">res.brand</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="short_code"/>
+                    <field name="code"/>
+                    <field name="is_collaborator"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_brand_form" model="ir.actions.act_window">
+            <field name="name">Thương hiệu</field>
+            <field name="res_model">res.brand</field>
+            <field name="view_mode">tree,form</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('collaborator.view_tree_brand_ctv')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('collaborator.view_form_brand_ctv')})]"/>
+        </record>
+    </data>
+</odoo>

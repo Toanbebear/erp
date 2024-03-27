@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="sh_medical_imaging_test_tree_view_extend">
+            <field name="name">Imaging Tests</field>
+            <field name="model">sh.medical.imaging</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree default_order="date_analysis desc" string='Imaging Tests' class="sh_has_icon" create="false"
+                      decoration-info="state=='Draft'" decoration-success="state=='Completed'"
+                      decoration-danger="state=='Test In Progress'">
+                    <field name="name" invisible="1"/>
+                    <field name="walkin" invisible="1"/>
+                    <field name="patient" class="text-uppercase"/>
+                    <field name="perform_room"/>
+                    <field name="test_type"/>
+                    <field name="institution" invisible="1"/>
+                    <field name="requestor"/>
+                    <field name="pathologist"/>
+                    <field name="date_requested"/>
+                    <field name="date_analysis"/>
+                    <field name="doctor_note"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_imaging_test_form_view_extend">
+            <field name="name">Imaging Tests</field>
+            <field name="model">sh.medical.imaging</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Imaging Tests" create="false" duplicate="false" edit_expr="state not in ['Completed']"
+                      delete_expr="state not in ['Completed']">
+                    <header>
+                        <button confirm="Bạn có chắc chắn muốn bắt đầu xét nghiệm?" name="set_to_test_start" title="Bắt đầu"
+                                states="Draft" string="Bắt đầu xét nghiệm" type="object" class="btn-warning fa fa-step-forward"
+                                groups="shealth_all_in_one.group_sh_medical_physician_subclinical_imaging,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Bạn có chắc muốn hoàn thành xét nghiệm này?" name="set_to_test_complete"
+                                states="Test In Progress" string="Hoàn thành" type="object"
+                                class="btn-warning fa fa-step-forward" title="Hoàn thành xét nghiệm"
+                                groups="shealth_all_in_one.group_sh_medical_physician_subclinical_imaging,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Bạn có chắc muốn đặt phiếu này về dạng Nháp?" name="set_to_test_draft"
+                                states="Test In Progress" string="Chuyển nháp (Admin)" type="object"
+                                class="btn-warning fa fa-step-forward" title="Chuyển phiếu về trạng thái nháp (Admin)"
+                                groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <button confirm="Bạn có chắc muốn đặt lại phiếu này ở trạng thái Đang thực hiện?"
+                                name="set_to_test_start" title="Chuyển phiếu về trạng thái đang thực hiện (Admin)"
+                                attrs="{'invisible':['|', ('check_current_company', '!=', True), ('state', 'not in', ('Completed'))]}"
+                                string="Chuyển Đang thực hiện (Admin)" type="object"
+                                class="btn-warning fa fa-step-forward"
+                                groups="shealth_all_in_one.group_sh_medical_manager"/>
+                        <button name="print_patient_imaging" states="Completed,Invoiced" string="In phiếu CDHA"
+                                type="object" class="btn-success fa fa-print" title="In phiếu chẩn đoán hình ảnh"
+                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_physician_subclinical_imaging,shealth_all_in_one.group_sh_medical_manager"/>
+                        <field name="check_current_company" invisible="1"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Test In Progress,Completed"
+                               statusbar_colors='{"Draft":"blue","Test In Progress":"red","Completed":"green","Cancelled":"grey"}'/>
+                    </header>
+                    <sheet>
+                        <div class="row">
+                            <div class="oe_title col-2">
+                                <label for="name" string="Mã phiếu CDHA:"/>
+                                <h2>
+                                    <field name="name" class="oe_inline" widget="copy_char"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-3">
+                                <label for="partner_id" string="Tên khách hàng:"/>
+                                <h2>
+                                    <field name="partner_id"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-2">
+                                <label for="dob" string="Ngày sinh:"/>
+                                <h2>
+                                    <field name="dob" force_save="1" readonly="1"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-5">
+                                <label for="address" string="Địa chỉ:"/>
+                                <h2>
+                                    <field name="address" style="white-space: unset;overflow:unset"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page name="info" string="Thông tin chung" icon="fa fa-info">
+                                <group>
+                                    <group>
+                                        <field name="institution" required="1" icon="fa fa-building"
+                                               options="{'no_create': True,'no_open': True}"
+                                               attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                        <field name="walkin" options="{'no_create': True}"/>
+                                        <field name="test_type" options="{'no_create': True}" icon="fa fa-info-circle"
+                                               attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                        <field name="group_type" string="Nhóm" readonly="1" force_save="1"
+                                               icon="fa fa-info-circle"
+                                               options="{'no_create': True}"/>
+                                        <field name="supply_domain" invisible="1"/>
+                                    </group>
+                                    <group>
+                                        <field name="department" required="1" icon="fa fa-building-o"
+                                               options="{'no_create': True,'no_open':True}"
+                                               attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                        <field name="perform_room" required="1" icon="fa fa-building-o"
+                                               options="{'no_create': True,'no_open': True}"
+                                               force_save="1"/>
+                                        <field name="doctor_note" icon="fa fa-sticky-note-o"/>
+                                    </group>
+                                </group>
+                                <group>
+                                    <group>
+                                        <field name="patient" class="text-uppercase" options="{'no_create': True}"
+                                               icon="fa fa-user"
+                                               attrs="{'readonly':['|',('state','in',['Completed']),('patient','!=',False)]}"
+                                               force_save="1"/>
+                                        <field name="requestor" options="{'no_create': True,'no_open': True}"
+                                               icon="fa fa-user"
+                                               attrs="{'readonly':[('state','in',['Completed'])]}" force_save="1"/>
+                                        <field name="pathologist" options="{'no_create': True,'no_open': True}"
+                                               icon="fa fa-user"
+                                               domain="[('department','in',department)]"/>
+                                    </group>
+                                    <group>
+                                        <field name="date_requested" icon="fa fa-calendar"/>
+                                        <field name="date_analysis" icon="fa fa-calendar"/>
+                                        <field name="date_done" icon="fa fa-calendar"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="images" icon="fa fa-picture-o" string="Hình ảnh"
+                                  attrs="{'invisible':[('state','=','Draft')]}">
+                                <group>
+                                    <group>
+                                        <field name="image1" widget="image" options='{"size": [150, 150]}'/>
+                                        <field name="image3" widget="image" options='{"size": [150, 150]}'/>
+                                        <field name="image5" widget="image" options='{"size": [150, 150]}'/>
+                                    </group>
+                                    <group>
+                                        <field name="image2" widget="image" options='{"size": [150, 150]}'/>
+                                        <field name="image4" widget="image" options='{"size": [150, 150]}'/>
+                                        <field name="image6" widget="image" options='{"size": [150, 150]}'/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page name="information" icon="fa fa-info" string="Thông tin chẩn đoán"
+                                  attrs="{'invisible':[('state','=','Draft')]}">
+                                <group>
+                                    <group>
+                                        <field name="analysis" attrs="{'required':[('state','=','Test In Progress')]}"/>
+                                    </group>
+                                    <group>
+                                        <field name="conclusion"
+                                               attrs="{'required':[('state','=','Test In Progress')]}"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Thông tin vật tư" name="materials_information" icon="fa fa-list">
+                                <field name="imaging_material_ids" nolable="1" force_save="1"
+                                       attrs="{'readonly':[('state','in',['Draft','Completed'])]}">
+                                    <tree editable="bottom">
+                                        <field name="sequence"/>
+                                        <field name="product_id" domain="[('id', 'in', parent.supply_domain)]"
+                                               required="1" force_save="1" attrs="{'readonly': [('is_init','=',True)]}"
+                                               options="{'no_create': True,'no_open': True}"/>
+                                        <field name="init_quantity" force_save="1" invisible="1"/>
+                                        <field name="is_init" invisible="1" force_save="1"/>
+                                        <field name="quantity" required="1" force_save="1"/>
+                                        <field name="uom_id" readonly="1" force_save="1" required="1"
+                                               options="{'no_create':True,'no_open': True}"/>
+                                        <field name="location_id" invisible="1" force_save="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="sh_medical_imaging_test_action_extend" model="ir.actions.act_window">
+            <field name="name">Phiếu chẩn đoán hình ảnh</field>
+            <field name="res_model">sh.medical.imaging</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain" eval="[]"/>
+            <field name="context">{'search_default_group_date_analysis': True, 'search_default_group_patient': True,
+                'search_default_group_walkin': True}
+            </field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('his_extend.sh_medical_imaging_test_tree_view_extend')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('his_extend.sh_medical_imaging_test_form_view_extend')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new imaging test.
+                </p>
+            </field>
+        </record>
+
+    </data>
+</odoo>

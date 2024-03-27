@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_get_history_phone_call_extend" model="ir.ui.view">
+            <field name="name">view.get.history.phone.call.extend</field>
+            <field name="model">history.phone.call.form</field>
+            <field name="inherit_id" ref="crm_tool.view_get_history_phone_call"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="get_history_phone_call" type="object" string="Gửi" class="btn-primary btn-lg fa fa-check"/>
+                        <button special="cancel" string="Hủy thao tác" class="btn-secondary btn-lg fa fa-times"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

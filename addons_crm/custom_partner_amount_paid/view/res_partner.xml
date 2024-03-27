@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_view_res_partner_add_amount_paid" model="ir.ui.view">
+            <field name="name">inherit_view_res_partner_add_amount_paid</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='payment_ids']" position="before">
+                    <group>
+                        <field name="amount_paid"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

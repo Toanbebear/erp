@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="used_coupon_tree_view">
+            <field name="name">Danh sách coupon đặt cọc</field>
+            <field name="model">crm.used.coupon</field>
+            <field name="arch" type="xml">
+                <tree string='Danh sách nhóm khách hàng' editable="bottom">
+                    <field name="partner_id"/>
+                    <field name="coupon_id"/>
+                    <field name="account_payment_id"/>
+                    <field name="campaign_id"/>
+                    <field name="booking_id"/>
+                    <field name="used"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_used_coupon" model="ir.actions.act_window">
+            <field name="name">Danh sách coupon đặt cọc</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.used.coupon</field>
+            <field name="view_mode">tree</field>
+        </record>
+
+        <menuitem id="menu_used_coupon"
+                  name="Danh sách coupon đặt cọc"
+                  parent="crm_base.menu_crm_discount"
+                  action="action_used_coupon"
+                  sequence="11"/>
+    </data>
+</odoo>

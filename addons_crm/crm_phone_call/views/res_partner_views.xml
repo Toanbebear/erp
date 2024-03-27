@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    view_form_crm_partner-->
+    <record id="view_form_crm_partner_phone_call" model="ir.ui.view">
+        <field name="name">Res partner Phone call</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='internal_notes']" position="attributes">
+                 <attribute name="icon">fa fa-note</attribute>
+            </xpath>
+            <xpath expr="//page[@name='internal_notes']" position="after">
+                <page name="phone_call" string="Phonecall" icon="fa fa-phone">
+                    <field nolabel="1" name="phone_call_ids"
+                           context="{'default_partner_id': active_id, 'default_phone': phone, 'default_direction': 'out',
+                           'default_country_id': country_id, 'default_street': 	street}">
+                        <tree>
+                            <field name="name"/>
+                            <field name="type_crm_id" optional="hide"/>
+                            <field name="direction"/>
+                            <field name="partner_id" optional="hide"/>
+                            <field name="phone" widget="phone_tree"/>
+                            <field name="call_date"/>
+                            <field name="state"/>
+                            <field name="support_rating" optional="hide"/>
+                            <field name="company_id" optional="hide"/>
+                            <field name="desc" optional="hide"/>
+                            <field name="note" optional="hide"/>
+                            <field name="crm_id" optional="hide"/>
+                            <field name="order_id" optional="hide"/>
+                            <field name="user_id" optional="hide"/>
+                            <field name="create_date" string="Ngày tạo"/>
+                            <field name="create_uid" string="Người tạo"/>
+                            <field name="write_date" optional="hide"/>
+                            <field name="write_uid" optional="hide"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="sms" string="SMS" icon="fa fa-mobile">
+                    <field name="sms_ids">
+                        <!--                        <kanban class="" create="false">-->
+                        <!--                            <field name="name"/>-->
+                        <!--                            <field name="phone"/>-->
+                        <!--                            <field name="desc"/>-->
+                        <!--                            <templates>-->
+                        <!--                                <t t-name="kanban-box">-->
+                        <!--                                <div class="oe_kanban_global_click o_kanban_full">-->
+                        <!--                                    <div class="oe_kanban_details">-->
+                        <!--                                        <div class="textbox">-->
+                        <!--                                            <field name="desc"/>-->
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                                </t>-->
+                        <!--                            </templates>-->
+                        <!--                        </kanban>-->
+                        <tree create="true">
+                            <field name="name"/>
+                            <field name="phone" widget="phone_tree"/>
+                            <field name="desc"/>
+                        </tree>
+                    </field>
+                </page>
+                <page name="page_walkin_ids" string="Phiếu khám" icon="fa fa-stethoscope ">
+                    <field name="walkin_ids">
+
+                    </field>
+                </page>
+                <page name="page_case_ids" string="Khiếu nại" icon="fa fa-flag">
+                    <field name="crm_case_ids">
+                    </field>
+                </page>
+
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_res_partner_search" model="ir.ui.view">
+        <field name="name">res.partner.search.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_res_partner_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//group" position="after">
+                <searchpanel>
+                    <field name="customer_classification" string="Phân loại" icon="fa fa-list-ul"/>
+                    <field name="gender" icon="fa-users" string="Giới tính"/>
+                    <field name="overseas_vietnamese" string="Việt kiều" icon="fa-users"/>
+                </searchpanel>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="res_partner_kanban_view_inherit" model="ir.ui.view">
+        <field name="name">res.partner.kanban.inherit</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.res_partner_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//strong[hasclass('o_kanban_record_title')]" position="after">
+                <div attrs="{'invisible': [('phone', '=', False)]}"><i class="fa fa-phone text-danger"/> <field name="phone" widget="phone_tree"/></div>
+                <div attrs="{'invisible': [('mobile', '=', False)]}"><i class="fa fa-mobile"/> <field name="mobile" widget="phone_tree"/></div>
+
+                <div attrs="{'invisible': [('age', '=', 0)]}">
+                    <i class="fa fa-address-book"/>
+                    <field name="age"/>
+                    <span>tuổi</span>
+                </div>
+            </xpath>
+        </field>
+    </record>
+
+
+</odoo>

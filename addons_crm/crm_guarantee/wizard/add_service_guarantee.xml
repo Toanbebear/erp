@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_add_service_guarantee_new" model="ir.ui.view">
+            <field name="name">view.form.add.service.guarantee.new</field>
+            <field name="model">add.service.guarantee</field>
+            <field name="inherit_id" ref="crm_his_13.view_form_add_service_guarantee"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_add_service_guarantee']" position="replace">
+                    <button name="confirm_create" type="object" string="Xác nhận" class="btn-primary btn-lg fa fa-check"/>
+                </xpath>
+                <xpath expr="//field[@name='add_service_line_guarantee']" position="replace">
+                    <field name="add_service_line_guarantee" context="{'default_add_service_guarantee_id':id,}" mode="tree">
+                        <tree editable="bottom">
+                            <field name="add_service_guarantee_id" optional="hide"/>
+                            <field name="type_guarantee_2" optional="show" width="15" required="True"/>
+                            <field name="reason_id" optional="show" width="20" required="True" options="{'no_open':True, 'no_create':True}"/>
+                            <field name="crm_line_guarantee" optional="show" width="30" options="{'no_open':True, 'no_create':True}" required="True"/>
+                            <field name="product_incurred_2" optional="show" width="30" options="{'no_open':True, 'no_create':True}" string="Dịch vụ thực hiện nâng cấp"/>
+<!--                            <field name="checked" optional="show" width="5" string="Thu tiền"/>-->
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

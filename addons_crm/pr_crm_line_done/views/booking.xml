@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="line_pr_done_view_booking" model="ir.ui.view">
+            <field name="name">Booking: Line DV thêm thông tin kết thúc</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_line_ids']/form/sheet/group[1]" position="after">
+                    <group name="pr_line_done" attrs="{'invisible':[('parent.brand_id','!=',3)]}">
+                        <field name="pr_done" invisible="1"/>
+                        <field name="pr_date_done" invisible="0" readonly="1" force_save="1"/>
+                    </group>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

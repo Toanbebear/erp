@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sync_his_83_wizard_form_view">
+            <field name="name">Hồ sơ 83 TC</field>
+            <field name="model">sync.his.83.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Thông tin">
+                    <group>
+                        <group >
+                            <field name="company_id" required="True" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="booking_id" readonly="True"/>
+                        </group>
+                        <footer>
+                            <button name="post" type="object" string="Tạo hồ sơ" class="oe_highlight"/>
+                            <button string="Hủy" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

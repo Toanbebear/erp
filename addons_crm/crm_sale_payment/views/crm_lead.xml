@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="crm_line_booking_add_compute_money">
+        <field name="name">Thêm nút tính lại số tiền đã thu</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='open_case']" position="after">
+                <button name="compute_remaining_amount" type="object" string="Cập nhật tiền đã thu" class="btn-danger"/>
+<!--                <button name="edit_account_payment_line"-->
+<!--                        class="btn-danger"-->
+<!--                        groups="crm_sale_payment.group_delete_payment_detail_posted"-->
+<!--                        string="Sửa phiếu thanh toán"-->
+<!--                        type="object"/>-->
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="view_form_phone_call" model="ir.ui.view">
+            <field name="name">Form phone call</field>
+            <field name="model">crm.phone.call</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <button name="create_case" type="object" string="Tạo case khiếu nại" class="btn-danger"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="V.I.P" text="V.I.P" bg_color="bg-danger"
+                                attrs="{'invisible': [('customer_classification', '!=', '5')]}"/>
+                        <div class="oe_title">
+                            <label for="name" string="Phone Call"/>
+                            <h1>
+                                <field name="name" required="True"
+                                       attrs="{'readonly': [('confirm_reexam', '=', True)]}"/>
+                            </h1>
+                            <label for="type_crm_id" string="Loại"/>
+                            <h3>
+                                <field name="type_crm_id" options="{'no_open':True,'no_create':True}" required="True"
+                                       attrs="{'readonly': [('confirm_reexam', '=', True)]}"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group>
+                                <!--                                <field name="active"/>-->
+                                <field name="direction" required="True"
+                                       attrs="{'readonly': [('confirm_reexam', '=', True)]}"/>
+                                <!--                                <field name="user_id" options="{'no_open':True,'no_create':True}"/>-->
+                                <field name="phone" widget="phone" required="True"
+                                       attrs="{'readonly': [('confirm_reexam', '=', True)]}"/>
+                                <!--                                <field name="partner_id" options="{'no_open':True,'no_create':True} "-->
+                                <!--                                       attrs="{'readonly': [('confirm_reexam', '=', True)]}"/>-->
+                                <field name="partner_id" options="{'no_open':False,'no_create':True} " readonly="1"
+                                       force_save="1"/>
+                                <field name="customer_classification"/>
+                                <field name="code_customer"/>
+                                <field name="country_id" options="{'no_open':True,'no_create':True}" readonly="1"
+                                       force_save="1"/>
+                                <field name="street" readonly="1" force_save="1"/>
+                                <field name="call_date" readonly="True" force_save="True"/>
+                                <field name="booking_date"/>
+                                <field name="confirm_reexam" invisible="1" readonly="1"/>
+                                <field name="ticket_id" invisible="1" readonly="1"/>
+                            </group>
+                            <group>
+                                <field name="state" required="True"/>
+                                <field name="brand_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="type_brand" invisible="1"/>
+                                <field name="company_id" options="{'no_open':True,'no_create':True}" required="True"
+                                       attrs="{'readonly': [('confirm_reexam', '=', True)]}"/>
+                                <field name="crm_id" options="{'no_create':True}"/>
+                                <field name="order_id" options="{'no_create':True}"/>
+                                <field name="support_rating" attrs="{'invisible': [('support_rating', '!=', True)]}"/>
+                                <field name="support_quality"/>
+                                <field name="service_quality"/>
+                            </group>
+
+                        </group>
+                        <div>
+                            <label for="desc" string="Mô tả" class="font-weight-bold"/>
+                            <field name="desc"/>
+                            <br/>
+                            <label for="note" string="Nội dung ghi chú" class="font-weight-bold"/>
+                            <field name="note"/>
+                        </div>
+                        <notebook>
+                            <page string="Dịch vụ Booking">
+                                <field name="crm_line_id">
+                                    <tree create="false" class="tree_no_open">
+                                        <field name="product_id" optional="show"/>
+                                        <field name="quantity" optional="show"/>
+                                        <field name="number_used" optional="show" string="Đã sử dụng"/>
+                                        <field name="unit_price" optional="show"/>
+                                        <field name="discount_percent" optional="show"/>
+                                        <field name="discount_cash" optional="show"/>
+                                        <field name="total_before_discount" optional="show"/>
+                                        <field name="total" optional="show"/>
+                                        <field name="crm_id" optional="hide"/>
+                                        <field name="company_id" optional="hide"/>
+                                        <field name="price_list_id" optional="hide"/>
+                                        <field name="currency_id" optional="hide"/>
+                                        <field name="stage" string="Trạng thái" optional="show" width="10%"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <!--                            <field name="activity_ids" widget="mail_activity"/>-->
+                            <field name="message_ids" widget="mail_thread"
+                                   options="{'post_refresh': 'recipients'}"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="tree_view_phone_call" model="ir.ui.view">
+            <field name="name">Tree phone call</field>
+            <field name="model">crm.phone.call</field>
+            <field name="arch" type="xml">
+                <tree export_xlsx="0" decoration-success="state in ['connected','connected_1','connected_2']"
+                      decoration-muted="state in ['not_connect', 'not_connect_1']"
+                      decoration-warning="state in ['later','later_1']"
+                      decoration-danger="state in ['cancelled', 'error_phone']"
+                      decoration-primary="state in ['duplicate']">
+                    <field name="customer_classification" widget="label_selection" optional="show"
+                           string="Phân loại"
+                           options="{'classes': {'1': 'success', '2': 'info', '3': 'warning', '4': 'danger','5': 'danger'}}"/>
+                    <field name="name"/>
+                    <field name="type_crm_id" optional="hide"/>
+                    <field name="direction"/>
+                    <field name="partner_id"/>
+                    <field name="phone" widget="phone_tree"/>
+                    <field name="call_date"/>
+                    <field name="booking_date"/>
+                    <field name="state"/>
+                    <field name="support_rating" optional="hide" invisible="1"/>
+                    <field name="service_quality" optional="hide"/>
+                    <field name="support_quality" optional="hide"/>
+                    <field name="company_id" optional="hide"/>
+                    <field name="desc" optional="hide"/>
+                    <field name="note" optional="hide"/>
+                    <field name="crm_id" optional="hide"/>
+                    <field name="order_id" optional="hide"/>
+                    <field name="user_id" optional="hide"/>
+                    <field name="create_date" string="Ngày tạo"/>
+                    <field name="create_uid" string="Người tạo"/>
+                    <field name="write_date" optional="hide"/>
+                    <field name="write_uid" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_base_view_phone_call_filter" model="ir.ui.view">
+            <field name="name">crm.lead.search.phone.call</field>
+            <field name="model">crm.phone.call</field>
+            <field name="arch" type="xml">
+                <search string="Search phone call">
+                    <field name="name" string="phone call"
+                           filter_domain="['|', '|', ('phone', 'ilike', self), ('partner_id', 'ilike', self),
+                            ('name', 'ilike', self)]"/>
+                    <field name="crm_id" string="Booking"/>
+                    <separator/>
+                    <filter string="My phone call"
+                            name="assigned_to_me"
+                            domain="[('user_id', '=', uid)]"
+                            help="Phone call that are assigned to me"/>
+                    <separator/>
+                    <separator/>
+                    <filter string="TT: Chưa xử lý" name="state_draft" domain="[('state', '=', 'draft')]"/>
+                    <filter string="TT: Chưa kết nối" name="state_not_connect"
+                            domain="[('state', '=', 'not_connect')]"/>
+                    <filter string="TT: Hẹn gọi lại sau" name="state_later" domain="[('state', '=', 'later')]"/>
+                    <filter string="TT: Đã xử lý" name="state_connected" domain="[('state', '=', 'connected')]"/>
+                    <filter string="TT: Hủy" name="state_connected" domain="[('state', '=', 'cancelled')]"/>
+                    <separator/>
+                    <filter string="Call date" name="call_date" date="call_date"/>
+                    <filter string="Ngày tạo" name="creation_date" date="create_date"/>
+                    <filter string="Ngày gọi: hôm nay" name="call_today"
+                            domain="[('call_date', '&gt;=', datetime.datetime.combine(context_today(), datetime.time(0,0,0))),('call_date', '&lt;=', datetime.datetime.combine(context_today(), datetime.time(23,59,59)))]"/>
+                    <filter string="Ngày gọi: ngày mai" name="call_tomorrow"
+                            domain="[('call_date', '&gt;=', datetime.datetime.combine(context_today() + relativedelta(days=1), datetime.time(0,0,0))),('call_date', '&lt;=', datetime.datetime.combine(context_today() + relativedelta(days=1), datetime.time(23,59,59)))]"/>
+                    <separator/>
+                    <filter string="Hết hiệu lực" name="inactive" domain="[('active', '=', False)]"/>
+                    <group expand="0" string="Group By">
+                        <filter string="Trạng thái" name="state" context="{'group_by':'state'}"/>
+                        <filter string="Type phone call" name="Type pc" context="{'group_by':'type_crm_id'}"/>
+                        <filter string="Đơn vị chăm sóc" name="care_type" context="{'group_by':'care_type'}"/>
+                        <filter string="Người xác nhận" name="Salesperson" context="{'group_by':'user_id'}"/>
+                        <filter string="Company" name="Company" context="{'group_by':'company_id'}"/>
+                        <filter string="Brand" name="Brand" context="{'group_by':'brand_id'}"/>
+                        <filter string="Booking" name="Booking" context="{'group_by':'crm_id'}"/>
+                        <filter string="Order" name="Order" context="{'group_by':'order_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Ngày tạo" context="{'group_by':'create_date:month'}" name="month"/>
+                        <filter string="Call Date" context="{'group_by':'call_date:month'}" name="month"/>
+                        <filter string="Booking Date" context="{'group_by':'booking_date:month'}" name="month"/>
+                    </group>
+                </search>
+
+            </field>
+        </record>
+
+        <record id="action_open_view_phone_call" model="ir.actions.act_window">
+            <field name="name">Phone call</field>
+            <field name="res_model">crm.phone.call</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context" eval="{'search_default_call_today':1, 'search_default_care_type':1}"/>
+        </record>
+
+        <!--        <menuitem id="crm_menu_phone_call"-->
+        <!--                  name="Phonecalls"-->
+        <!--                  parent="root_menu_phone_call"-->
+        <!--                  action="action_open_view_phone_call"-->
+        <!--                  sequence="1"/>-->
+<!--        <record id="model_crm_phone_call_action_close_phone_call" model="ir.actions.server">-->
+<!--            <field name="name">Đóng trùng Phonecall</field>-->
+<!--            <field name="model_id" ref="crm_base.model_crm_phone_call"/>-->
+<!--            <field name="binding_model_id" ref="crm_base.model_crm_phone_call"/>-->
+<!--            <field name="binding_view_types">form</field>-->
+<!--            <field name="state">code</field>-->
+<!--            <field name="code">model.action_close_phone_call_duplicate</field>-->
+<!--        </record>-->
+
+        <act_window id="model_crm_phone_call_action_close_phone_call_act_window"
+                    name="Đóng trùng Phonecall"
+                    binding_model="crm.phone.call"
+                    res_model="close.phone.call.duplicate"
+                    binding_views="form,list"
+                    view_mode="form"
+                    target="new"
+                    context="{
+                        'default_phone_call_ids' : active_ids,
+                    }"
+        />
+    </data>
+</odoo>

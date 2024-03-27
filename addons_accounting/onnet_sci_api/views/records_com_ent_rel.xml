@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="map_records_action" model="ir.actions.act_window">
+        <field name="name">Map records</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">records.com.ent.rel</field>
+        <field name="view_mode">tree,kanban,form</field>
+    </record>
+
+    <record id="map_records_form" model="ir.ui.view">
+        <field name="name">records.com.ent.rel.form</field>
+        <field name="model">records.com.ent.rel</field>
+        <field name="arch" type="xml">
+            <form string="Record map" create="false" delete="false">
+                <header>
+                    <button name="sync_to_enterprise" string="Sync" type="object"/>
+                </header>
+                <sheet>
+                    <h1>
+                        <field name="name" class="oe_inline" />
+                    </h1>
+                    <group>
+                        <field name="model"/>
+                        <field name="com_id"/>
+                        <field name="ent_id"/>
+                        <field name="action"/>
+                        <field name="status"/>
+                        <field name="active"/>
+                        <field name="write_date"/>
+                        <field name="log_ids"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="map_records_tree" model="ir.ui.view">
+        <field name="name">records.com.ent.rel.tree</field>
+        <field name="model">records.com.ent.rel</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+                <field name="model"/>
+                <field name="com_id"/>
+                <field name="ent_id"/>
+                <field name="action"/>
+                <field name="status"/>
+                <field name="active"/>
+                <field name="write_date"/>
+            </tree>
+        </field>
+    </record>
+
+    <menuitem action="map_records_action" id="menu_action_map_records"
+              name="Map records" sequence="30" parent="api_log"/>
+
+    <record id="action_sync_retry" model="ir.actions.server">
+        <field name="name">Retry</field>
+        <field name="type">ir.actions.server</field>
+        <field name="state">code</field>
+        <field name="model_id" ref="model_records_com_ent_rel"/>
+        <field name="binding_model_id" ref="model_records_com_ent_rel"/>
+        <field name="binding_view_types">list</field>
+        <field name="code">
+            records.sudo().with_delay().sync_to_enterprise()
+        </field>
+    </record>
+</odoo>

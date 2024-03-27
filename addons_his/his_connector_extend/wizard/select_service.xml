@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_inherit_crm_select_service_connector">
+            <field name="name">His Connector: Select service</field>
+            <field name="model">crm.select.service</field>
+            <field name="inherit_id" ref="crm_base.view_form_crm_select_service"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/group[1]" position="after">
+                    <group string="HIS 83" name="his_83">
+                        <field name="brand_kn" invisible="1"/>
+                        <field name="height" attrs="{'required': [('brand_kn', '=', True)]}"/>
+                        <field name="weight" attrs="{'required': [('brand_kn', '=', True)]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_walkin_inherit">
+            <field name="name">checkbox is_deposit</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='booking_id']" position="after">
+                    <field name="is_deposit"/>
+                </xpath>
+                <xpath expr="//field[@name='type_crm_id']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_tree_walkin_inherit">
+            <field name="name">checkbox is_deposit</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='state']" position="after">
+                    <field name="is_deposit"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_his_13_view_form_service_inherit">
+            <field name="name">CRM HIS 13: Dịch vụ</field>
+            <field name="model">sh.medical.health.center.service</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_service_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='is_input_num']" position="after">
+                    <field name="allow_adjust_unit_price"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

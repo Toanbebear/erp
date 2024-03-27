@@ -1,0 +1,22 @@
+#name_employee {
+ width: 60%;
+}
+.ranger_employee{
+ width: 15%;
+}
+.district_employee{
+ width: 25%;
+}
+#date_issue {
+ width: 200 %;
+
+}
+#relationship {
+ width: 20 %;
+}
+#name_relative {
+ width: 50 %;
+}
+#phone_relative {
+ width: 30 %;
+}

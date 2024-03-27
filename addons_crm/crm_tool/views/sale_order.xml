@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <act_window id="sale_order_act_window_update_order"
+                    name="Cập nhật báo giá"
+                    binding_model="sale.order"
+                    res_model="crm.update.order"
+                    binding_views="form,list"
+                    view_mode="form"
+                    target="new"
+                    context="{
+                            'default_order_id': active_id,
+                        }"/>
+
+        <record id="so_add_button_update_amount_remain" model="ir.ui.view">
+            <field name="name">so_add_button_update_amount_remain</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='action_draft']" position="after">
+                    <button name="update_amount_remain" string="Cập nhật số tiền chưa sử dụng" class="btn-info"
+                            type="object"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

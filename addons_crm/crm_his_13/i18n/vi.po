@@ -1,0 +1,1634 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* crm_his_13
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-06-10 06:25+0000\n"
+"PO-Revision-Date: 2021-06-10 06:25+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. modules: loyalty, crm_base, crm, crm_his_13, crm_academy
+#: model_terms:ir.ui.view,arch_db:crm.crm_lead_lost_view_form
+#: model_terms:ir.ui.view,arch_db:crm.merge_opportunity_form
+#: model_terms:ir.ui.view,arch_db:crm.view_crm_lead2opportunity_partner
+#: model_terms:ir.ui.view,arch_db:crm.view_crm_lead2opportunity_partner_mass
+#: model_terms:ir.ui.view,arch_db:crm_academy.add_button_cancel_batch
+#: model_terms:ir.ui.view,arch_db:crm_academy.internal_general_report_form
+#: model_terms:ir.ui.view,arch_db:crm_academy.request_debt_form
+#: model_terms:ir.ui.view,arch_db:crm_academy.student_report_form
+#: model_terms:ir.ui.view,arch_db:crm_academy.training_qualify_report_form
+#: model_terms:ir.ui.view,arch_db:crm_academy.tuition_form_view
+#: model:crm.stage,name:crm_base.crm_stage_cancel
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__cancel
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_line__stage__cancel
+#: model_terms:ir.ui.view,arch_db:crm_base.form_request_deposit_wizard
+#: model_terms:ir.ui.view,arch_db:crm_base.view_apply_discount
+#: model_terms:ir.ui.view,arch_db:crm_base.view_apply_discount_prg
+#: model_terms:ir.ui.view,arch_db:crm_base.view_assign_data
+#: model_terms:ir.ui.view,arch_db:crm_base.view_discount_review
+#: model_terms:ir.ui.view,arch_db:crm_base.view_form_cancel_booking
+#: model_terms:ir.ui.view,arch_db:crm_base.view_form_create_booking_guarantee
+#: model:ir.model.fields.selection,name:crm_his_13.selection__sale_order_line__stage_sol__cancel
+#: model_terms:ir.ui.view,arch_db:loyalty.scan_loyalty_card_form
+#: model_terms:ir.ui.view,arch_db:loyalty.use_reward_form
+msgid "Cancel"
+msgstr "Hủy"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__ceiling_price
+msgid "Ceiling price"
+msgstr "Giá trần"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_line__consultants
+msgid "Consultants"
+msgstr "Tư vấn viên"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__create_uid
+msgid "Created by"
+msgstr "Được tạo bởi"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__create_date
+msgid "Created on"
+msgstr "Thời điểm tạo"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__currency_id
+msgid "Currency"
+msgstr "Tiền tệ"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_phone_call__date_out_location
+msgid "Date out"
+msgstr "Ngày ra viện"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_phone_call__date_re_exam
+msgid "Date re exam"
+msgstr "Ngày tái khám"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__dentistry
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_select_service__dentistry
+msgid "Dentistry"
+msgstr "Nha khoa"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_phone_call__desc_doctor
+msgid "Desc doctor"
+msgstr "Lời dặn của bác sĩ"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__display_name
+msgid "Display Name"
+msgstr "Tên hiển thị"
+
+#. modules: crm_his_13, crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_line__stage__done
+#: model:ir.model.fields.selection,name:crm_his_13.selection__sale_order_line__stage_sol__done
+msgid "Done"
+msgstr "Kết thúc"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_line__exam_room_ids
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_select_service__exam_room_id
+msgid "Exam room"
+msgstr "Phòng khám"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__foreign_affair
+msgid "Foreign affair"
+msgstr ""
+
+#. module: crm_his_13
+#: model_terms:ir.ui.view,arch_db:crm_his_13.form_tuition_inherit_sh_walkin_payment_view_form
+msgid "Gắn thanh toán với phiếu khám"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__id
+msgid "ID"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model,name:crm_his_13.model_sh_medical_appointment_register_walkin
+msgid "Information of Walkin"
+msgstr "Thông tin phiếu khám"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_line__institution
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_select_service__institution
+msgid "Institution"
+msgstr "Cơ sở"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_line__institution_shared
+msgid "Institution shared"
+msgstr "Cơ sở được share"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__laser
+msgid "Laser"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt____last_update
+msgid "Last Modified on"
+msgstr "Sửa lần cuối"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__write_uid
+msgid "Last Updated by"
+msgstr "Cập nhật gần đây bởi"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__write_date
+msgid "Last Updated on"
+msgstr "Cập nhật gần đây vào"
+
+#. module: crm_his_13
+#: model:ir.model,name:crm_his_13.model_crm_lead
+msgid "Lead/Opportunity"
+msgstr "Lead/Booking"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_select_service__institution_ids
+msgid "List institution"
+msgstr "Danh sách bệnh viện"
+
+#. module: crm_his_13
+#: model_terms:ir.ui.view,arch_db:crm_his_13.view_form_inherit_crm_line_form_booking
+msgid "Lịch sử khám"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__major
+msgid "Major"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__max_level
+msgid "Maximum levels(%)"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__minor
+msgid "Minor"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__name
+msgid "Name"
+msgstr "Tên"
+
+#. modules: crm_base, crm_his_13
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_discount_program__stage_prg__new
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__type_data__new
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_voucher__stage_voucher__new
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_voucher_program__stage_prg_voucher__new
+#: model:ir.model.fields.selection,name:crm_his_13.selection__sale_order_line__stage_sol__new
+msgid "New"
+msgstr "Mới"
+
+#. modules: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_content_complain__stage__new
+msgid "New"
+msgstr "Chưa xử lý"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_line__odontology
+#: model:ir.model.fields,field_description:crm_his_13.field_sale_order__odontology
+#: model:ir.model.fields,field_description:crm_his_13.field_sale_order_line__odontology
+msgid "Odontology"
+msgstr "Nha khoa"
+
+#. module: crm_his_13
+#: model:ir.model,name:crm_his_13.model_account_payment
+msgid "Payments"
+msgstr "Thanh toán"
+
+#. modules: loyalty, crm_base, crm_his_13
+#: model:ir.model,name:crm_base.model_product_product
+#: model:ir.model.fields,field_description:crm_base.field_crm_content_complain__product_ids
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__product_id
+#: model:ir.model.fields,field_description:crm_base.field_sell_voucher__product_id
+#: model:ir.model.fields,field_description:crm_base.field_statement_service__product_ids
+#: model:ir.model.fields.selection,name:crm_base.selection__product_pricelist__type__product
+#: model:ir.model.fields.selection,name:crm_base.selection__product_product__type_product_crm__product
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__product_ids
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_rule__product_id
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__product
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_voucher_program_list__product_id
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_discount_program_list__type_product__product
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_voucher_program_list__type_product__product
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_line_reward__product_id
+#: model:ir.model.fields.selection,name:loyalty.selection__crm_loyalty_line_reward__type_reward__prd
+msgid "Product"
+msgstr "Sản phẩm"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__discount_bonus
+msgid "Discount bonus"
+msgstr "Giảm thêm"
+
+#. module: crm_his_13
+#: model:ir.actions.act_window,name:crm_his_13.action_crm_rule_debt
+#: model:ir.ui.menu,name:crm_his_13.menu_rule_debt
+msgid "Rule debt"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model,name:crm_his_13.model_sale_order
+msgid "Sales Order"
+msgstr "Đơn bán hàng"
+
+#. module: crm_his_13
+#: model:ir.model,name:crm_his_13.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Chi tiết đơn hàng"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_line__service_id
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_phone_call__service_id
+msgid "Service"
+msgstr "Dịch vụ"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_select_service__crm_line_ids
+msgid "Services"
+msgstr "Dịch vụ"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__minimum_group
+msgid "Minimum group"
+msgstr "Nhóm tối thiểu"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__spa
+msgid "Spa"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_sale_order_line__stage_sol
+msgid "Stage"
+msgstr "Trạng thái"
+
+#. modules: loyalty, crm_base, crm_his_13
+#: model:ir.model.fields,field_description:crm_base.field_crm_content_complain__stage
+#: model:ir.model.fields,field_description:crm_base.field_crm_debt_review__stage
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_program__stage_prg
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_review__stage_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__stage_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__stage
+#: model:ir.model.fields,field_description:crm_base.field_crm_type__stage_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher__stage_voucher
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__stage_prg_voucher
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_crm_booking_filter
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_crm_case_leads_filter
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_phone_call_filter
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_code_card__stage
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_line_reward__stage
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_reward_date_special__stage
+msgid "Stage"
+msgstr "Trạng thái"
+
+#. module: crm_his_13
+#: model_terms:ir.ui.view,arch_db:crm_his_13.sh_walkin_payment_view_tree_crm
+msgid "Số tiền VNĐ"
+msgstr ""
+
+#. module: crm_his_13
+#: code:addons/crm_his_13/wizard/select_service.py:0
+#, python-format
+msgid "The amount entered exceeds the amount for the service"
+msgstr "Số tiền bạn điền đang vượt quá số tiền 1 lần làm dịch vụ !!!"
+
+#. module: crm_his_13
+#: code:addons/crm_his_13/models/rule_debt.py:0
+#, python-format
+msgid "The maximum level should be between 0 and 100"
+msgstr "Mức giảm giá nằm trong khoảng từ 0 đến 100"
+
+#. modules: loyalty, crm_base, crm_his_13, customer_persona
+#: model:ir.model.fields,field_description:crm_base.field_crm_brand__type
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__type_brand
+#: model:ir.model.fields,field_description:crm_base.field_crm_line_discount_history__type
+#: model:ir.model.fields,field_description:crm_base.field_crm_type__type_crm
+#: model:ir.model.fields,field_description:crm_his_13.field_account_payment__type_brand
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__type_product
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_voucher_program_list__type_product
+#: model:ir.model.fields,field_description:customer_persona.field_pain_point_and_desires__type
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_reward_date_special__type
+msgid "Type"
+msgstr "Loại"
+
+#. module: crm_his_13
+#: model_terms:ir.ui.view,arch_db:crm_his_13.view_form_phone_call_his
+msgid "Update disease"
+msgstr "Bệnh án"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_rule_debt__user_id
+msgid "User"
+msgstr "Người dùng"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_lead__walkin_ids
+msgid "Walkin"
+msgstr "Phiếu khám"
+
+#. module: crm_his_13
+#: model:ir.model,name:crm_his_13.model_crm_line
+msgid "crm.line"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model,name:crm_his_13.model_crm_phone_call
+msgid "crm.phone.call"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model,name:crm_his_13.model_crm_rule_debt
+msgid "crm.rule.debt"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model,name:crm_his_13.model_crm_select_service
+msgid "crm.select.service"
+msgstr ""
+
+#. module: crm_his_13
+#: model_terms:ir.ui.view,arch_db:crm_his_13.view_form_crm_rule_debt
+msgid "if the value is 0 it will be applied to the prices of all products"
+msgstr ""
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__dc_min_qty
+msgid "Min Quantity"
+msgstr "Số lượng tối thiểu"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__dc_max_qty
+msgid "Max Quantity"
+msgstr "Số lượng tối đa"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program__related_discounts_program_ids
+msgid "Related discount program"
+msgstr "CTKM được cộng dồn"
+
+#. modules: crm_base, crm_his_13
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__sale_to
+#: model:ir.model.fields,field_description:crm_base.field_sale_order_line__sale_to
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_line_discount_history__type_discount__sale_to
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_discount_program_list__type_discount__sale_to
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_discount_program_rule__type_discount__sale_to
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_voucher_program_list__type_discount__sale_to
+msgid "Sale to"
+msgstr "Giảm còn"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_review__discount
+#: model:ir.model.fields,field_description:crm_base.field_crm_line_discount_history__discount
+#: model:ir.model.fields,field_description:crm_base.field_discount_review__discount
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_line_discount_history__type__discount
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__discount
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_rule__discount
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_voucher_program_list__discount
+msgid "Discount"
+msgstr "Giảm"
+
+#. module: crm_his_13
+#: model:ir.ui.menu,name:crm_his_13.menu_crm_discount_program_list
+msgid "Discount Program List"
+msgstr "Coupon chi tiết"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__product_ctg_id
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__product_ctg_ids
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_voucher_program_list__product_ctg_id
+msgid "List category"
+msgstr "Nhóm dịch vụ"
+
+#. module: crm_his_13
+#: model_terms:ir.ui.view,arch_db:crm_his_13.inherit_crm_discount_program_form
+msgid "Product/Category product"
+msgstr "Coupon chi tiết"
+
+#. modules: crm_base, crm_his_13
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_line_discount_history__type_discount__percent
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_discount_program_list__type_discount__percent
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_discount_program_rule__type_discount__percent
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_voucher_program_list__type_discount__percent
+msgid "Percent"
+msgstr "Phần trăm"
+
+#. modules: crm_base, crm_his_13
+#: model:ir.model,name:crm_base.model_product_category
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_discount_program_list__type_product__product_ctg
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_voucher_program_list__type_product__product_ctg
+msgid "Product Category"
+msgstr "Nhóm sản phẩm"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__index
+msgid "Index"
+msgstr "Chỉ số"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__used
+msgid "Used"
+msgstr "Đã sử dụng?"
+
+#. modules: crm_base, crm_his_13
+#: model:ir.model.fields,field_description:crm_base.field_crm_content_complain__note
+#: model:ir.model.fields,field_description:crm_base.field_crm_phone_call__note
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_apply_discount_program__note
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program__note
+msgid "Note"
+msgstr "Ghi chú"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_discount_program__stage_prg__expire
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_voucher__stage_voucher__expire
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_voucher_program__stage_prg_voucher__expire
+msgid "Expire"
+msgstr "Hết hạn"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_program__company_ids
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__company_id
+msgid "Branch"
+msgstr "Thương hiệu"
+
+#. modules: loyalty, crm_base, crm_his_13
+#: model:ir.model.fields,field_description:crm_base.field_account_payment__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_apply_voucher__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_confix_gclid__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_create_guarantee__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_program__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_sms__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_team_brand__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_product_pricelist__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_res_company__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_sale_order__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_sell_voucher__brand_id
+#: model:ir.model.fields,field_description:crm_base.field_utm_campaign__brand_id
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_case_search
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_crm_sms_filter
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_phone_call_filter
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__brand_id
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_voucher_program_discount_invoice__brand_id
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_voucher_program_list__brand_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_card__brand_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_code_card__brand_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_date__brand_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_line_reward__brand_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_rank__brand_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_reward_date_special__brand_id
+msgid "Brand"
+msgstr "Thương hiệu"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program__discount_program_list
+msgid "List discount"
+msgstr "Danh sách giảm giá"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_apply_discount_program__program_discount_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__prg_ids
+#: model:ir.ui.menu,name:crm_base.menu_crm_discount
+#: model:ir.ui.menu,name:crm_base.menu_crm_discount_program
+msgid "Discount program"
+msgstr "Coupon"
+
+#. module: crm_his_13
+#: model:ir.actions.act_window,name:crm_his_13.open_discount_program_list
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__discount_program
+msgid "Discount Program"
+msgstr "Coupon"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+#: model_terms:ir.ui.view,arch_db:crm_base.form_crm_lead
+msgid "Apply program discount"
+msgstr "Áp dụng Chương trình khuyến mại"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.view_apply_discount_prg
+msgid "Set discount"
+msgstr "Áp dụng"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_line__come_number
+msgid "Come number"
+msgstr "Khách đến cửa"
+
+#. modules: loyalty, crm_base, crm_his_13, custom_partner, contacts
+#: model:ir.ui.menu,name:contacts.menu_country_partner
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__country_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__country_id
+#: model_terms:ir.ui.view,arch_db:crm_base.partner_view_filter
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_voucher_program__country_id
+#: model:ir.model.fields,field_description:custom_partner.field_relation_partner__country_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_card__country_id
+msgid "Country"
+msgstr "Quốc gia"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_account_payment__payment_method
+msgid "Payment method"
+msgstr "Hình thức thanh toán"
+
+#. module: crm_base
+#: model:ir.model,name:crm_base.model_sell_voucher
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher__sell_voucher_id
+#: model_terms:ir.ui.view,arch_db:crm_base.sell_voucher_form
+msgid "Sell Voucher"
+msgstr "Bán Voucher"
+
+#. module: crm_base
+#: model:ir.actions.act_window,name:crm_base.open_voucher_program
+#: model:ir.model.fields,field_description:crm_base.field_sell_voucher__voucher_program_id
+msgid "Voucher Program"
+msgstr "Chương trình Voucher"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.sell_voucher_form
+msgid "Create Payment"
+msgstr "Tạo phiếu thanh toán"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.sell_voucher_form
+msgid "Gift voucher"
+msgstr "Bàn giao Voucher"
+
+#. modules: crm_base, crm_his_13
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__prg_voucher_ids
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher__voucher_program_id
+#: model:ir.ui.menu,name:crm_base.menu_crm_voucher_program
+#: model:ir.ui.menu,name:crm_base.menu_crm_voucher_program_2
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_voucher_program_list__voucher_program
+msgid "Voucher program"
+msgstr "Chương trình Voucher"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher__partner2_id
+msgid "Customer used"
+msgstr "Đối tác sử dụng"
+
+#. modules: loyalty, crm_base, custom_partner
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__partner_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_create_guarantee__partner_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_review__partner_id
+#: model:ir.model.fields,field_description:crm_base.field_discount_review__partner_id
+#: model:ir.model.fields,field_description:crm_base.field_sell_voucher__partner_id
+#: model:ir.ui.menu,name:crm_base.crm_menu_customer
+#: model:ir.model.fields,field_description:custom_partner.field_partner_wallet__partner_id
+#: model:ir.model.fields,field_description:custom_partner.field_relation_partner__partner_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_card__partner_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_use_reward__partner_id
+msgid "Customer"
+msgstr "Khách hàng"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__create_by
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher__partner_id
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_case_search
+msgid "Owner"
+msgstr "Đối tác sở hữu"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher__order_id
+msgid "Sale order"
+msgstr "Đơn hàng"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+msgid "Apply voucher"
+msgstr "Áp dụng Voucher"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.view_apply_discount
+msgid "Check voucher"
+msgstr "Áp dụng"
+
+#. modules: crm_base, crm_his_13
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__quantity
+#: model:ir.model.fields,field_description:crm_base.field_sell_voucher__quantity
+msgid "Quantity"
+msgstr "Số lượng"
+
+#. modules: crm_base, crm_his_13
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__quantity
+msgid "Quantity"
+msgstr "Số voucher tạo/lần"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__current_number_voucher
+msgid "Current number voucher"
+msgstr "Số voucher đã tạo"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.voucher_program_form_view
+msgid "Create voucher"
+msgstr "Tạo Voucher"
+
+#. module: crm_base
+#: model:ir.actions.act_window,name:crm_base.sell_voucher_action
+#: model:ir.ui.menu,name:crm_base.menu_sell_voucher
+msgid "Sell voucher"
+msgstr "Bán Voucher"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_no_coincide_customer
+msgid "Coincide customer"
+msgstr "Nhầm khách hàng"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_no_process
+msgid "No process"
+msgstr "Chưa xử lý"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_refer
+msgid "Refer"
+msgstr "Tham khảo"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_potential
+msgid "Potential"
+msgstr "Tiềm năng"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_lead_not_quality
+msgid "Lead not quality"
+msgstr "Lead không chất lượng"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_see_you_later
+msgid "See you later"
+msgstr "Hẹn gọi lại sau"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_no_first_call
+msgid "No first call"
+msgstr "Không nghe máy lần 1"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_no_second_call
+msgid "No second call"
+msgstr "Không nghe máy lần 2"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_no_3_4_call
+msgid "No phone answering 3,4"
+msgstr "Không nghe máy lần 3,4"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_wrong_phone
+msgid "Wrong phone"
+msgstr "Sai số"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_send_email
+msgid "Send email"
+msgstr "Gửi email"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_test
+msgid "Test"
+msgstr "Kiểm thử"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_type__type_crm__opportunity
+msgid "Opportunity"
+msgstr "Cơ hội"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_not_confirm
+msgid "Not confirm"
+msgstr "Chưa xác nhận"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_crm_booking_filter
+msgid "Booking Date"
+msgstr "Ngày hẹn lịch"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_check_partner_qualify__booking_date
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__booking_date
+#: model:ir.model.fields,field_description:crm_base.field_crm_phone_call__booking_date
+msgid "Booking date"
+msgstr "Ngày hẹn lịch"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__customer_come
+msgid "Customer come"
+msgstr "Khách hàng đến cửa"
+
+#. module: crm_base
+#: model:ir.actions.act_window,name:crm_base.action_open_view_category_source
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__category_source_id
+#: model:ir.model.fields,field_description:crm_base.field_hr_recruitment_source__category_id
+#: model:ir.model.fields,field_description:crm_base.field_utm_source__category_id
+#: model:ir.ui.menu,name:crm_base.crm_menu_ctg_source
+msgid "Category source"
+msgstr "Nhóm nguồn"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_apply_discount_program__campaign_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_program__campaign_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__campaign_id
+#: model:ir.ui.menu,name:crm_base.menu_crm_campaign
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_crm_booking_filter
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_crm_case_leads_filter
+msgid "Campaign"
+msgstr "Chiến dịch"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_utm_campaign__campaign_status
+msgid "Campaign Status"
+msgstr "Trạng thái chiến dịch"
+
+#. modules: crm_base, crm_his_13
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_line_discount_history__type_discount__cash
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_discount_program_list__type_discount__cash
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_discount_program_rule__type_discount__cash
+#: model:ir.model.fields.selection,name:crm_his_13.selection__crm_voucher_program_list__type_discount__cash
+msgid "Cash"
+msgstr "Tiền mặt"
+
+#. module: loyalty
+#: model:ir.actions.act_window,name:loyalty.action_open_loyalty
+#: model:ir.model.fields,field_description:loyalty.field_crm_lead__loyalty_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_code_card__loyalty_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_date__loyalty_ids
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_line_reward__loyalty_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_reward_date_special__loyalty_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_use_reward__loyalty_id
+#: model:ir.model.fields,field_description:loyalty.field_sale_order__loyalty_id
+#: model:ir.module.category,description:loyalty.module_category_group_loyalty
+#: model:ir.module.category,name:loyalty.module_category_group_loyalty
+#: model:ir.ui.menu,name:loyalty.loyalty_menu_root
+msgid "Loyalty"
+msgstr "Thẻ thành viên"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__price_list_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__price_list_id
+#: model:ir.ui.menu,name:crm_base.crm_menu_price_list
+msgid "Price list"
+msgstr "Bảng giá"
+
+#. module: crm_base
+#: model:ir.actions.act_window,name:crm_base.open_product_price_list_item
+#: model:ir.ui.menu,name:crm_base.crm_menu_price_list_item
+msgid "Price list item"
+msgstr "Bảng giá chi tiết"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_convert_service_guarantee__crm_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_create_guarantee__crm_id
+msgid "Related booking"
+msgstr "Booking liên quan"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_create_guarantee__price_list_id
+msgid "price list"
+msgstr "Bảng giá niêm yết"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_assign_data__type_data
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__type_data
+msgid "Type data"
+msgstr "Kiểu dữ liệu"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__type_crm_id
+msgid "Type record"
+msgstr "Loại bản ghi"
+
+#. modules: crm_his_13, crm_base
+#: model:ir.model.fields,field_description:crm_base.field_account_move_line__discount_cash
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__discount_cash
+#: model:ir.model.fields,field_description:crm_base.field_history_discount__discount_cash
+#: model:ir.model.fields,field_description:crm_base.field_sale_order_line__discount_cash
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_discount_review__type_discount__discount_cash
+#: model:ir.model.fields.selection,name:crm_base.selection__discount_review__type_discount__discount_cash
+#: model:ir.model.fields.selection,name:crm_base.selection__history_discount__type__cash
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_voucher_program_discount_invoice__discount_cash
+msgid "Discount cash"
+msgstr "Giảm giá tiền mặt"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__total_before_discount
+msgid "Total before discount"
+msgstr "Tổng tiền trước giảm giá"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__discount_review_ids
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+msgid "Deep discounts"
+msgstr "Giảm giá sâu"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_sell_voucher__unit_price
+msgid "Unit Price"
+msgstr "Đơn giá"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__unit_price
+msgid "Unit price"
+msgstr "Đơn giá"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__discount_percent
+msgid "Discount(%)"
+msgstr "Giảm giá(%)"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__source_extend_id
+msgid "Extended source"
+msgstr "Nguồn mở rộng "
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__facebook_acc
+msgid "Facebook account"
+msgstr "Tài khoản Facebook"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__zalo_acc
+msgid "Zalo account"
+msgstr "Tài khoản Zalo"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+#: model_terms:ir.ui.view,arch_db:crm_base.view_form_create_booking_guarantee
+msgid "Create booking guarantee"
+msgstr "Tạo booking bảo hành"
+
+#. modules: crm_base, crm_academy
+#: model:ir.model.fields,field_description:crm_academy.field_request_payment__debt_review_reason
+#: model:ir.model.fields,field_description:crm_base.field_crm_select_service__debt_review_reason
+msgid "Reason for debt"
+msgstr "Lý do"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_review__name
+#: model:ir.model.fields,field_description:crm_base.field_discount_review__name
+msgid "Reason for the discount"
+msgstr "Lý do giảm giá"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.view_discount_review
+msgid "Send offer"
+msgstr "Gửi yêu cầu"
+
+#. modules: crm_base, loyalty
+#: model:ir.model.fields,field_description:crm_base.field_history_discount__discount_percent
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_discount_review__type_discount__discount_pr
+#: model:ir.model.fields.selection,name:crm_base.selection__discount_review__type_discount__discount_pr
+#: model:ir.model.fields.selection,name:crm_base.selection__history_discount__type__percent
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_line_reward__discount_percent
+msgid "Discount percent"
+msgstr "Giảm giá phần trăm"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_review__rule_discount_id
+#: model:ir.model.fields,field_description:crm_base.field_discount_review__rule_discount_id
+msgid "Discount limit"
+msgstr "Giới hạn giảm giá"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+msgid "Create phone call customer to ask for more information"
+msgstr "Tạo phone call"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+#: model_terms:ir.ui.view,arch_db:crm_base.form_crm_lead
+msgid "Information Customer"
+msgstr "Thông tin khách hàng"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_case_view_form
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+#: model_terms:ir.ui.view,arch_db:crm_base.form_crm_lead
+#: model_terms:ir.ui.view,arch_db:crm_base.view_form_phone_call
+msgid "Interactive"
+msgstr "Tương tác"
+
+#. module: crm_base
+#: model:ir.actions.act_window,name:crm_base.crm_lead_act_window_cancel_booking
+msgid "Close booking"
+msgstr "Đóng booking"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_sale_order__amount_remain
+msgid "Amount remain"
+msgstr "Tổng tiền còn lại"
+
+#. module: crm_academy
+#: model:ir.model.fields,field_description:crm_academy.field_crm_debt_review__amount_total
+#: model:ir.model.fields,field_description:crm_academy.field_request_debt__amount_total
+#: model:ir.model.fields,field_description:crm_academy.field_request_payment__amount_total
+msgid "Amount total"
+
+#. modules: crm_base, loyalty
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_line__stage__new
+#: model:ir.model.fields.selection,name:loyalty.selection__crm_loyalty_line_reward__stage__allow
+#: model:ir.model.fields.selection,name:loyalty.selection__crm_loyalty_reward_date_special__stage__use
+msgid "Allow to use"
+msgstr "Được sử dụng"
+
+#. modules: crm_his_13, crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_content_complain__stage__processing
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_line__stage__processing
+#: model:ir.model.fields.selection,name:crm_his_13.selection__sale_order_line__stage_sol__processing
+msgid "Processing"
+msgstr "Đang xử trí"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_line__stage__waiting
+msgid "Awaiting approval"
+msgstr "Chờ phê duyệt"
+
+#. module: crm_base
+#: code:addons/crm_base/models/crm_line.py:0
+#, python-format
+msgid "This service is not included in the price list"
+msgstr "Dịch vụ này không nằm trong bảng giá"
+
+#. module: crm_base
+#: model:ir.actions.act_window,name:crm_base.action_request_deposit
+#: model:ir.ui.menu,name:crm_base.menu_request_deposit
+msgid "Request deposit"
+msgstr "Đặt cọc"
+
+#. module: crm_base
+#: model:ir.actions.act_window,name:crm_base.action_open_view_discount_rv
+#: model:ir.actions.act_window,name:crm_base.action_view_discount_review_wizard
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__discount_review_id
+#: model:ir.model.fields,field_description:crm_base.field_history_discount__discount_review_id
+#: model:ir.ui.menu,name:crm_base.crm_menu_discount_review
+#: model:ir.ui.menu,name:crm_base.crm_menu_discount_rv_root
+msgid "Discount review"
+msgstr "Duyệt giảm giá sâu"
+
+#. module: crm_base
+#: model:ir.ui.menu,name:crm_base.crm_menu_discount_rule
+msgid "Discount rule"
+msgstr "Quy tắc giảm giá sâu"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_review__total_amount_after_discount
+msgid "Total Amount After Discount"
+msgstr "Tổng tiền sau giảm"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__amount_total
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__total
+#: model:ir.model.fields,field_description:crm_base.field_sell_voucher__total
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_view_tree_booking
+msgid "Total"
+msgstr "Tổng tiền"
+
+#. modules: loyalty, crm_base, custom_partner
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__state_id
+#: model:ir.model.fields,field_description:custom_partner.field_relation_partner__state_id
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_card__state_id
+#: model:ir.model.fields,field_description:loyalty.field_qr_action_loyalty_card__state
+msgid "State"
+msgstr "Thành phố"
+
+#. modules: crm_base, custom_partner
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__street
+#: model:ir.model.fields,field_description:crm_base.field_crm_phone_call__street
+#: model:ir.model.fields,field_description:custom_partner.field_relation_partner__street
+msgid "Street"
+msgstr "Địa chỉ chi tiết"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__receive_source
+msgid "Receive source"
+msgstr "Nguồn tiếp nhận"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_case__receive_source__call
+msgid "Call center"
+msgstr "Tổng đài"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_case__receive_source__directly
+msgid "Directly"
+msgstr "Trực tiếp"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__department_ids
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain_code__department_ids
+#: model:ir.model.fields,field_description:crm_base.field_crm_content_complain__department_ids
+msgid "Department"
+msgstr "Phòng ban"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_content_complain__priority
+msgid "Priority"
+msgstr "Mức độ ưu tiên"
+
+#. modules: loyalty, crm_base, custom_partner
+#: model:ir.model.fields,field_description:crm_base.field_check_partner_qualify__phone
+#: model:ir.model.fields,field_description:crm_base.field_crm_brand__phone
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__phone
+#: model:ir.model.fields,field_description:crm_base.field_crm_family_info__phone
+#: model:ir.model.fields,field_description:crm_base.field_crm_phone_call__phone
+#: model:ir.model.fields,field_description:crm_base.field_crm_sms__phone
+#: model:ir.model.fields,field_description:custom_partner.field_relation_partner__phone
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_card__phone
+msgid "Phone"
+msgstr "Điện thoại"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__customer_come__yes
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__online_counseling__yes
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__shuttle_bus__yes
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__work_online__yes
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_select_service__debt_review__yes
+msgid "Yes"
+msgstr "Có"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__customer_come__no
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__online_counseling__no
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__overseas_vietnamese__no
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__shuttle_bus__no
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__work_online__no
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_select_service__debt_review__no
+msgid "No"
+msgstr "Không"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__online_counseling
+msgid "Online Counseling"
+msgstr "Tư vấn trực tuyến"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__work_online
+msgid "Work Online"
+msgstr "Làm việc Online"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__pass_port_date
+msgid "Pass port Date"
+msgstr "Ngày cấp"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__pass_port_issue_by
+msgid "Pass port Issue by"
+msgstr "Nơi cấp"
+
+#. module: crm_base
+#: model:ir.actions.act_window,name:crm_base.debt_review_action
+#: model:ir.model.fields,field_description:crm_base.field_crm_select_service__debt_review
+#: model:ir.model.fields,field_description:crm_base.field_sale_order__debt_review
+#: model:ir.ui.menu,name:crm_base.menu_crm_debt_review
+msgid "Debt review"
+msgstr "Duyệt nợ"
+
+#. module: crm_base
+#: code:addons/crm_base/models/crm.py:0
+#, python-format
+msgid "Booking has begun to process cannot apply any discounts"
+msgstr "Bạn không thể áp giảm giá cho booking đã xử lý !!"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.view_form_crm_select_service
+msgid "Information Services"
+msgstr "Thông tin dịch vụ"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.view_form_crm_select_service
+msgid "Special"
+msgstr "Đặc biệt"
+
+#. modules: crm_base, custom_partner
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__source_id
+#: model:ir.ui.menu,name:crm_base.crm_menu_source
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_crm_booking_filter
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_crm_case_leads_filter
+#: model:ir.model.fields,field_description:custom_partner.field_res_partner__source_id
+#: model:ir.model.fields,field_description:custom_partner.field_res_users__source_id
+msgid "Source"
+msgstr "Nguồn"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.view_form_crm_select_service
+msgid "Do you want to apply for debt approval?"
+msgstr "Bạn có muốn xin phê duyệt khoản nợ không"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__type_data__old
+msgid "Old"
+msgstr "Cũ"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+msgid "Reason cancel"
+msgstr "Lí do hủy"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_lead__group_booking
+#: model_terms:ir.ui.view,arch_db:crm_his_13.view_form_inherit_crm_line_form_booking
+msgid "Group booking"
+msgstr "Nhóm Booking"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_review__crm_line_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__crm_line_ids
+msgid "Line service"
+msgstr "Dòng dịch vụ"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_re_open
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__re_open
+msgid "Re-open"
+msgstr "Mở lại"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.form_crm_lead
+msgid "Re-open lead"
+msgstr "Mở lại lead"
+
+#. modules: crm_his_13, crm_base, loyalty
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__create_on
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__create_on
+#: model:ir.model.fields,field_description:crm_base.field_crm_phone_call__create_on
+#: model:ir.model.fields,field_description:crm_base.field_crm_sms__create_on
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__create_on
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program__create_on
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__create_on
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_card__create_on
+msgid "Create on"
+msgstr "Ngày tạo"
+
+#. modules: crm_his_13, crm_base, loyalty
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__create_by
+#: model:ir.model.fields,field_description:crm_base.field_crm_phone_call__create_by
+#: model:ir.model.fields,field_description:crm_base.field_crm_sms__create_by
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__create_by
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program__create_by
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__create_by
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_card__create_by
+msgid "Create by"
+msgstr "Người tạo"
+
+#. module: crm_base
+#: model:crm.stage,name:crm_base.crm_stage_processing
+msgid "Processing"
+msgstr "Đang xử lý"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+msgid "Create phone call"
+msgstr "Tạo PhoneCall"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__incremental
+msgid "Incremental?"
+msgstr "Cộng dồn"
+
+#. module: crm_his_13
+#: model_terms:ir.ui.view,arch_db:crm_his_13.inherit_crm_discount_program_form
+#: model_terms:ir.ui.view,arch_db:crm_his_13.inherit_crm_voucher_program_form
+msgid "Set Active"
+msgstr "Active"
+
+#. module: crm_his_13
+#: model_terms:ir.ui.view,arch_db:crm_his_13.inherit_crm_discount_program_form
+#: model_terms:ir.ui.view,arch_db:crm_his_13.inherit_crm_voucher_program_form
+msgid "Set New"
+msgstr "New"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__required_combo
+msgid "Required combo"
+msgstr "Combo bắt buộc"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_line_discount_history__type__gift
+msgid "Gift"
+msgstr "Quà tặng"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_program__text_code
+msgid "Text Code"
+msgstr "Mã văn bản"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_phone_call_filter
+msgid "Call Date"
+msgstr "Ngày gọi"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_phone_call__type_crm_id
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_phone_call_filter
+#: model_terms:ir.ui.view,arch_db:crm_base.view_form_phone_call
+msgid "Type phone call"
+msgstr "Loại PhoneCall"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_rule_discount__discount2
+msgid "Maximum levels"
+msgstr "Mức trần"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_rule_discount__discount
+msgid "ceiling level"
+msgstr "Mức sàn"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_rule_discount__user_ids
+msgid "User approve"
+msgstr "Người duyệt"
+
+#. module: crm_base
+#: model:ir.actions.act_window,name:crm_base.action_open_view_rule_dis
+msgid "Rule discount"
+msgstr "Quy tắc giảm giá sâu"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_review__type_discount
+#: model:ir.model.fields,field_description:crm_base.field_discount_review__type_discount
+#: model:ir.model.fields,field_description:crm_base.field_history_discount__type
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__type_discount
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_rule__type_discount
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_voucher_program_list__type_discount
+msgid "Type discount"
+msgstr "Loại giảm giá"
+
+#. module: crm_his_13
+#: model:ir.model.fields,field_description:crm_his_13.field_crm_discount_program_list__gift
+msgid "Gift?"
+msgstr "Quà tặng"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__special_note
+msgid "Special note"
+msgstr "Ghi chú đặc biệt"
+
+#. modules: loyalty, crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_case_view_form
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+#: model_terms:ir.ui.view,arch_db:crm_base.form_crm_lead
+#: model_terms:ir.ui.view,arch_db:loyalty.loyalty_form
+#: model_terms:ir.ui.view,arch_db:loyalty.reward_form
+msgid "General information"
+msgstr "Thông tin chung"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.form_crm_lead
+msgid "Service and product"
+msgstr "Dịch vụ và sản phẩm"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+#: model_terms:ir.ui.view,arch_db:crm_base.form_crm_lead
+msgid "Add Facebook"
+msgstr "Gửi thông tin Facebook"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_form_booking
+#: model_terms:ir.ui.view,arch_db:crm_base.form_crm_lead
+msgid "Add zalo"
+msgstr "Gửi thông tin Zalo"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_account_payment__amount_vnd
+msgid "Amount vnd"
+msgstr "Số tiền bằng số"
+
+#. module: custom_partner
+#: model:ir.model,name:custom_partner.model_res_currency_rate
+msgid "Currency Rate"
+msgstr "Tỷ giá"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_account_payment__currency_rate_id
+msgid "Currency rate"
+msgstr "Tỷ giá"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_program__loyalty_active
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__loyalty_active
+msgid "Loyalty active"
+msgstr "Áp dụng cho Thẻ thành viên"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_check_partner_qualify__name
+#: model:ir.model.fields,field_description:crm_base.field_crm_sms__contact_name
+msgid "Contact name"
+msgstr "Tên liên hệ"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__crm_content_complain
+msgid "Content Complain"
+msgstr "Nội dung khiếu nại"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_sms__partner_id
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_lead_view_tree_booking
+msgid "Account customer"
+msgstr "Account khách hàng"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_phone_call__partner_id
+msgid "Account khách hàng"
+msgstr "Account khách hàng"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_sms__send_date
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_crm_sms_filter
+msgid "Send date"
+msgstr "Ngày gửi"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_sms__crm_id
+msgid "Regarding booking"
+msgstr "Booking liên quan"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__consultants_1
+msgid "Consultants 1"
+msgstr "Tư vấn viên 1"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__consultants_2
+msgid "Consultants 2"
+msgstr "Tư vấn viên 2"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__history_discount_ids
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__history_discount_ids
+msgid "History discount"
+msgstr "Lịch sử giảm giá"
+
+#. modules: loyalty, crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__number_used
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_line_reward__number_use
+msgid "Number used"
+msgstr "Số lượng đã sử dụng"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__company2_id
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__company_shared
+msgid "Company shared"
+msgstr "Công ty shared"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__user_id
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_case_search
+msgid "Handler"
+msgstr "Người chỉnh sửa"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__account_facebook
+msgid "Account facebook"
+msgstr "Tài khoản Facebook"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_content_complain__complain_group_id
+msgid "Complain Group"
+msgstr "Nhóm khiếu nại"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_content_complain__complain_id
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_case__type_case__complain
+msgid "Complain"
+msgstr "Khiếu nại"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_content_complain__stage__complete
+msgid "Complete"
+msgstr "Hoàn thành"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_content_complain__stage__finding
+msgid "Finding more Information"
+msgstr "Tìm thêm thông tin"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_content_complain__stage__waiting_response
+msgid "Waiting response"
+msgstr "Chờ phản hồi"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_content_complain__stage__need_to_track
+msgid "Need to track"
+msgstr "Cần theo dõi"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_content_complain__stage__resolve
+msgid "Resolve"
+msgstr "Đã có hướng xử lý"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_content_complain__brand_sla
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_complain_view_form
+msgid "SLA Brand"
+msgstr "SLA Thương hiệu"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_content_complain__cskh_sla
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_complain_view_form
+msgid "SLA CSKH"
+msgstr "SLA CSKH"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_complain_view_form
+msgid "SLA Company"
+msgstr "SLA Chi nhánh"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__brand_sla_high
+msgid "SLA Brand - High"
+msgstr "SLA Thương hiệu - Cao"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__brand_sla_low
+msgid "SLA Brand - Low"
+msgstr "SLA Thương hiệu - Thấp"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__brand_sla_normal
+msgid "SLA Brand - Normal"
+msgstr "SLA Thương hiệu - Bình thường"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__brand_sla_urgent
+msgid "SLA Brand - Urgent"
+msgstr "SLA Thương hiệu - Khẩn cấp"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__cskh_sla_high
+msgid "SLA CSKH - High"
+msgstr "SLA CSKH - Cao"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__cskh_sla_low
+msgid "SLA CSKH - Low"
+msgstr "SLA CSKH - Thấp"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__cskh_sla_normal
+msgid "SLA CSKH - Normal"
+msgstr "SLA CSKH - Bình thường"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__cskh_sla_urgent
+msgid "SLA CSKH - Urgent"
+msgstr "SLA CSKH - Khẩn cấp"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__company_sla_high
+msgid "SLA Company - High"
+msgstr "SLA Chinh nhánh - Cao"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__company_sla_low
+msgid "SLA Company - Low"
+msgstr "SLA Chinh nhánh - Thấp"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__company_sla_normal
+msgid "SLA Company - Normal"
+msgstr "SLA Chinh nhánh - Bình thường"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__company_sla_urgent
+msgid "SLA Company - Urgent"
+msgstr "SLA Chinh nhánh - Khẩn cấp"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__time_high
+msgid "Processing Time - High"
+msgstr "Thời gian xử lý - Cao"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__time_low
+msgid "Processing Time - Low"
+msgstr "Thời gian xử lý - Thấp"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__time_normal
+msgid "Processing Time - Normal"
+msgstr "Thời gian xử lý - Bình thường"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_complain__time_urgent
+msgid "Processing Time - Urgent"
+msgstr "Thời gian xử lý - Khẩn cấp"
+
+#. module: crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__type_price_list
+#: model:ir.model.fields,field_description:crm_base.field_crm_line__type_booking_price_list
+#: model:ir.model.fields,field_description:crm_base.field_product_pricelist__type
+msgid "Type price list"
+msgstr "Loại bảng giá"
+
+#. module: crm_base
+#: model:ir.model.fields.selection,name:crm_base.selection__product_pricelist__type__guarantee
+msgid "Guarantee"
+msgstr "Bảo hành"
+
+#. modules: crm_base, custom_partner
+#: model:ir.model.fields.selection,name:crm_base.selection__consultation_ticket__gender_customer__male
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__gender__male
+#: model:ir.model.fields.selection,name:custom_partner.selection__res_partner__gender__male
+msgid "Male"
+msgstr "Nam"
+
+#. modules: crm_base, custom_partner
+#: model:ir.model.fields.selection,name:crm_base.selection__consultation_ticket__gender_customer__female
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__gender__female
+#: model:ir.model.fields.selection,name:custom_partner.selection__res_partner__gender__female
+msgid "Female"
+msgstr "Nữ"
+
+#. modules: loyalty, crm_base, customer_persona, custom_partner
+#: model:ir.model.fields.selection,name:crm_base.selection__consultation_ticket__gender_customer__other
+#: model:ir.model.fields.selection,name:crm_base.selection__crm_lead__gender__other
+#: model:ir.model.fields.selection,name:custom_partner.selection__res_partner__gender__other
+#: model:ir.model.fields.selection,name:customer_persona.selection__res_partner__affected_by__other
+#: model:ir.model.fields.selection,name:customer_persona.selection__res_partner__marital_status__other
+#: model:ir.model.fields.selection,name:customer_persona.selection__res_partner__transport__other
+#: model:ir.model.fields.selection,name:loyalty.selection__crm_loyalty_date__type__other
+msgid "Other"
+msgstr "Khác"
+
+#. modules: loyalty, crm_base, custom_partner
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__birth_date
+#: model:ir.model.fields,field_description:custom_partner.field_relation_partner__birth_date
+#: model:ir.model.fields,field_description:custom_partner.field_res_partner__birth_date
+#: model:ir.model.fields,field_description:custom_partner.field_res_users__birth_date
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_card__birth_date
+#: model:ir.model.fields.selection,name:loyalty.selection__crm_loyalty_date__type__b_date
+msgid "Birth date"
+msgstr "Ngày/tháng/năm sinh"
+
+#. modules: crm_base, custom_partner
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__year_of_birth
+#: model:ir.model.fields,field_description:custom_partner.field_res_partner__year_of_birth
+#: model:ir.model.fields,field_description:custom_partner.field_res_users__year_of_birth
+msgid "Year of birth"
+msgstr "Năm sinh"
+
+#. modules: crm_base, custom_partner
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__gender
+#: model:ir.model.fields,field_description:custom_partner.field_res_partner__gender
+msgid "Gender"
+msgstr "Giới tính"
+
+#. modules: loyalty, crm_base, custom_partner
+#: model_terms:ir.ui.view,arch_db:custom_partner.view_form_crm_partner
+#: model:ir.model.fields,field_description:crm_base.field_crm_lead__code_customer
+#: model:ir.model.fields,field_description:crm_base.field_crm_phone_call__code_customer
+#: model:ir.model.fields,field_description:custom_partner.field_res_partner__code_customer
+#: model:ir.model.fields,field_description:custom_partner.field_res_users__code_customer
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_card__code_customer
+msgid "Code customer"
+msgstr "Mã khách hàng"
+
+#. module: crm_base
+#: model_terms:ir.ui.view,arch_db:crm_base.crm_base_view_case_search
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__start_date
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_program__start_date
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher__start_date
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__start_date
+#: model:ir.model.fields,field_description:crm_base.field_product_pricelist__start_date
+msgid "Start date"
+msgstr "Ngày bắt đầu"
+
+#. modules: loyalty, crm_base
+#: model:ir.model.fields,field_description:crm_base.field_crm_case__end_date
+#: model:ir.model.fields,field_description:crm_base.field_crm_discount_program__end_date
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher__end_date
+#: model:ir.model.fields,field_description:crm_base.field_crm_voucher_program__end_date
+#: model:ir.model.fields,field_description:crm_base.field_product_pricelist__end_date
+#: model:ir.model.fields,field_description:loyalty.field_crm_loyalty_reward_date_special__end_date
+msgid "End date"
+msgstr "Ngày kết thúc"

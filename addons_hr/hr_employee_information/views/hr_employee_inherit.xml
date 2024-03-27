@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="view_information_employee_form_inherited" model="ir.ui.view">
+            <field name="name">Form View HR Employee Inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="hr.view_employee_form"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='image_1920']" position="after">
+                    <field name="employee_qr" widget="image" class="oe_avatar"/>
+                </xpath>
+
+                <xpath expr="//field[@name='emergency_phone']" position="after">
+                    <field name="name_relative"/>
+                    <field name="relationship"/>
+                    <field name="social_insurance"/>
+                    <field name="personal_income_tax"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_information_employee_button_form" model="ir.ui.view">
+            <field name="name">Button Form View HR Employee Inherit</field>
+            <field name="model">hr.employee</field>
+            <field name="inherit_id" ref="sci_hrms.view_employee_form_inherited"/>
+            <field name="arch" type="xml">
+                <xpath expr="//button[@name='sci_create']" position="before">
+                    <button string="Cập nhật thông tin" name="update_information" icon="fa-edit" type="object" class="oe_stat_button"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="sync_his_83_wizard_form_view_extend" model="ir.ui.view">
+            <field name="name">sync.his.83.wizard.form.view.extend</field>
+            <field name="model">sync.his.83.wizard</field>
+            <field name="inherit_id" ref="his_connector.sync_his_83_wizard_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="post" type="object" string="Tạo hồ sơ" class="btn-info btn-lg fa fa-check"/>
+                        <button string="Hủy" class="btn-secondary btn-lg fa fa-times" special="cancel"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

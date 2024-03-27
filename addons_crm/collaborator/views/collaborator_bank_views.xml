@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="collaborator_bank_view_form" model="ir.ui.view">
+            <field name="name">Tài khoản ngân hàng</field>
+            <field name="model">collaborator.bank</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                    </header>
+                    <sheet>
+                        <group string="Thông tin">
+                            <group>
+                                <field name="collaborator_id"/>
+                                <field name="name" required="True"/>
+                                <field name="card_number" required="True"/>
+                                <field name="bank_id" required="True"/>
+                                <field name="chi_nhanh" required="True"/>
+                                <field name="default_banking" required="True"/>
+<!--                                <field name="active" invisible="1"/>-->
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="collaborator_bank_view_tree" model="ir.ui.view">
+            <field name="name">Tài khoản ngân hàng</field>
+            <field name="model">collaborator.bank</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc" >
+                    <field name="collaborator_id"/>
+                     <field name="name"/>
+                    <field name="card_number"/>
+                    <field name="bank_id"/>
+                    <field name="chi_nhanh"/>
+<!--                    <field name="active" invisible="1"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="collaborator_bank_view_search" model="ir.ui.view">
+            <field name="name">collaborator.bank.view.search</field>
+            <field name="model">collaborator.bank</field>
+            <field name="arch" type="xml">
+                <search string="Tài khoản ngân hàng">
+                    <field name="collaborator_id" string="Cộng tác viên"
+                           filter_domain="['|', '|', ('collaborator_id','ilike', self),
+                                    ('name','ilike', self),
+                                    ('card_number','ilike', self)]"/>
+                    <group>
+<!--                        <filter string="Trạng Thái" name="group_state" context="{'group_by': 'state'}"/>-->
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="collaborator_bank_action" model="ir.actions.act_window">
+            <field name="name">Tài khoản ngân hàng</field>
+            <field name="res_model">collaborator.bank</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+    </data>
+</odoo>

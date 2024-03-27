@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="walkin_form_inherit_83" model="ir.ui.view">
+            <field name="name">Hình ảnh</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Thông tin 83 tiêu chí">
+                        <group>
+                            <group>
+                                <field name="temperature"/>
+                                <field name="systolic"/>
+                                <field name="respiratory_rate"/>
+                                <field name="bpm"/>
+                                <field name="bmi"/>
+                            </group>
+                            <group>
+                                <field name="weight"/>
+                                <field name="height"/>
+                            </group>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

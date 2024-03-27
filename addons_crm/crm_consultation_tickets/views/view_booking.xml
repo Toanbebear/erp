@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_booking_add_button_consultation_ticket" model="ir.ui.view">
+            <field name="name">view_booking_add_button_consultation_ticket</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='family_info']" position="after">
+                    <page name="des" string="Phiếu tư vấn">
+                        <div>
+                            <button name="open_consultation_ticket" string="Mở phiếu tư vấn" class="btn-info"
+                                    type="object"/>
+                        </div>
+                        <br/>
+                        <field name="consultation_ticket_ids"
+                               context="{'default_booking_id':id, 'default_partner_id': partner_id}" readonly="True">
+                            <tree>
+                                <field name="name"/>
+                                <field name="consultation_reception"/>
+                                <field name="create_date"/>
+                                <button name="open_and_print_consultation_ticket" string="XEM VÀ IN PHIẾU" class="btn-info" type="object"/>
+                            </tree>
+                            <form>
+                                <sheet>
+                                    <group>
+                                        <group name="information" string="Thông tin cá nhân">
+                                            <field name="booking_id" readonly="True" force_save="True"/>
+                                            <field name="partner_id" readonly="True" force_save="True"/>
+                                            <field name="allergy_history" readonly="True" force_save="True"/>
+                                            <field name="name_customer" readonly="True" force_save="True"/>
+                                            <field name="code_customer" readonly="True" force_save="True"/>
+                                            <field name="gender_customer" readonly="True" force_save="True"/>
+                                            <field name="birth_date_customer" readonly="True"
+                                                   force_save="True"/>
+                                            <field name="passport_customer" readonly="True" force_save="True"/>
+                                            <field name="passport_date_customer" readonly="True"
+                                                   force_save="True"/>
+
+                                        </group>
+                                        <group name="contact_info" string="Thông tin liên hệ">
+                                            <field name="address_customer" readonly="True" force_save="True"/>
+                                            <field name="phone_customer" readonly="True" force_save="True"/>
+                                            <field name="emergency_phone_customer"/>
+                                            <field name="email_customer" readonly="True" force_save="True"/>
+                                            <field name="know_source"/>
+                                            <field name="source_id"
+                                                   options="{'no_open':True,'no_create':True}"/>
+                                        </group>
+                                    </group>
+                                    <label for="consultation_detail_ticket_ids"/>
+                                    <field name="consultation_detail_ticket_ids">
+                                        <tree editable="bottom">
+                                            <field name="booking_id" readonly="True" force_save="True"
+                                                   invisible="True"/>
+                                            <field name="product_id" invisible="1"/>
+                                            <field name="service_id" required="True" options="{'no_open':True,'no_create':True}"/>
+                                            <field name="desire"/>
+                                            <field name="health_status"/>
+                                            <field name="consultation"/>
+<!--                                            <field name="level_of_improvement"/>-->
+<!--                                            <field name="schedule"/>-->
+<!--                                            <field name="warranty"/>-->
+<!--                                            <field name="product_for_home_use"/>-->
+                                            <field name="note"/>
+                                            <field name="confirm_service"/>
+                                        </tree>
+                                    </field>
+                                    <group name="consultation_person">
+                                        <field name="sh_medical_physician_id" options="{'no_open':True,'no_create':True}"/>
+                                        <field name="consultation_reception" readonly="True"/>
+                                        <field name="company_id" readonly="True" invisible="True"/>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sh_walkin_cancel_medical_view">
+            <field name="name">sh_medical_register_for_walkin_view</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+                 <xpath expr="//button[@name='set_to_cancelled']" position="replace">
+                     <button  name="set_to_cancelled_walkin"
+                              states="Scheduled,InProgress,WaitPayment,Payment" string="Đặt là hủy" type="object"/>
+                </xpath>
+                <xpath expr="//group[1]/group[1]/field[@name='reception_nurse']" position="after">
+                    <field name="pathological_process"
+                                       attrs="{'readonly': [('state','in',['WaitPayment','Payment','Completed'])], 'invisible': [('state', '!=', 'Cancelled')]}"
+                                       force_save="1"/>
+                    <field name="info_diagnosis" string="Chuẩn đoán vào viện" attrs="{'invisible': [('state', '!=', 'Cancelled')]}"/>
+                    <field name="note" attrs="{'invisible': [('state', '!=', 'Cancelled')]}"/>
+                    <field name="sale_order_id" options="{'no_create': True}" readonly="1" force_save="1" attrs="{'invisible': [('state', '!=', 'Cancelled')]}"/>
+                </xpath>
+                <xpath expr="//group[1]/group[2]/field[@name='pathological_process']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('state','in',['WaitPayment','Payment','Completed'])], 'invisible': [('state', '=', 'Cancelled')]}</attribute>
+                </xpath>
+                <xpath expr="//group[1]/group[2]/field[@name='info_diagnosis']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('state', '=', 'Cancelled')]}</attribute>
+                </xpath>
+                <xpath expr="//group[1]/group[2]/field[@name='note']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('state', '=', 'Cancelled')]}</attribute>
+                </xpath>
+                <xpath expr="//group[1]/group[2]/field[@name='sale_order_id']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('state', '=', 'Cancelled')]}</attribute>
+                </xpath>
+                <xpath expr="//group[1]/group[2]/field[@name='sale_order_id']" position="after" >
+                    <field name="cancel_user" attrs="{'invisible': [('state', '!=', 'Cancelled')]}" force_save="1"
+                               options='{"no_open": True, "no_create": True}' class="text-danger oe_inline"/>
+                    <field name="department_cancel_user" attrs="{'invisible': [('state', '!=', 'Cancelled')]}"
+                               force_save="1" options='{"no_open": True, "no_create": True}' class="text-danger oe_inline"/>
+                    <field name="date_cancel" attrs="{'invisible': [('state', '!=', 'Cancelled')]}" force_save="1"
+                               options='{"no_open": True, "no_create": True}' class="text-danger oe_inline"/>
+                    <field name="note_cancel" force_save="1" attrs="{'invisible': [('state', '!=', 'Cancelled')]}"
+                               options='{"no_open": True, "no_create": True}' class="text-danger oe_inline"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

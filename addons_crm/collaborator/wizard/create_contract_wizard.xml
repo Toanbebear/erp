@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="create_contract_wizard_view_form" model="ir.ui.view">
+            <field name="name">create.contract.wizard</field>
+            <field name="model">create.contract.wizard</field>
+            <field name="arch" type="xml">
+                <form string="Tạo thông tin hợp đồng">
+                        <group>
+                            <field name="company_id" options="{'no_create': True, 'no_open': True}" force_save="True" />
+                            <field name="brand_id" readonly="True" force_save="True"/>
+                            <field name="partner_id" readonly="True" force_save="True" invisible="True"/>
+                        </group>
+                        <group>
+                            <field name="name" readonly="True" force_save="True"/>
+                            <field name="source_id" readonly="True" force_save="True"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="phone" readonly="True" force_save="True"/>
+                            <field name="mobile" readonly="True" force_save="True"/>
+                            <field name="passport" readonly="True" force_save="True"/>
+                            <field name="email" readonly="True" force_save="True"/>
+                            <field name="bank_id" force_save="True" options="{'no_create': True, 'no_open': True}" context="{'name_collaborator_bank': True}" />
+                        </group>
+
+                        <ul class="text-info">
+                            <strong style="color: #808080;">
+                                <i  class="fa fa-warning text-warning"/>Lưu ý:
+                            </strong>
+                            <i>Bạn cần chọn đúng <b>Công ty</b> khi tạo hợp đồng cho cộng tác viên.</i>
+                        </ul>
+                    <footer class="text-left">
+                        <button name="create_contract" confirm="Bạn đã chọn đúng công ty mà cộng tác viên đã ký?"
+                                type="object" class="oe_highlight fa fa-plus"
+                                string="Tạo hợp đồng"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

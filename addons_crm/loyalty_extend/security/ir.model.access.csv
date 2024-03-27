@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+loyalty_rank_reward_sys,loyalty_rank_reward_sys,model_crm_loyalty_rank_reward,loyalty.sys_loyalty,1,1,1,1
+loyalty_rank_reward_user,loyalty_rank_reward_user,model_crm_loyalty_rank_reward,loyalty.user_loyalty,1,1,1,0
+loyalty_rank_reward,loyalty_rank_reward,model_crm_loyalty_rank_reward,,1,1,1,0
+sys_all_perm_loyalty_relative,sys all perm loyalty relative,model_history_relative_reward,,1,1,1,1
+history_used_reward_id,history_used_reward_name,model_history_used_reward,,1,1,1,0
+
+
+
+
+
+
+

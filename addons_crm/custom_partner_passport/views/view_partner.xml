@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+<!--        <record id="inherit_view_res_partner_page_his" model="ir.ui.view">-->
+<!--            <field name="name">inherit_view_res_partner_page_his</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="shealth_all_in_one.view_res_partner_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='is_pharmacy']" position="after">-->
+<!--                    <field name="allergy_history" string="Tiền sử dị ứng" placeholder="Không"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="inherit_view_res_partner_add_passport" model="ir.ui.view">-->
+<!--            <field name="name">inherit_view_res_partner_add_passport</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//group[@name='personal_information']/field[@name='gender']" position="after">-->
+<!--                    <field name="pass_port" string="CCCD"/>-->
+<!--                    <field name="pass_port_date" string="Ngày cấp"/>-->
+<!--                    <field name="pass_port_issue_by" string="Nơi cấp"/>-->
+<!--                </xpath>-->
+<!--                <xpath expr="//field[@name='street']" position="after">-->
+<!--                    <field name="district_id" placeholder="Quận/huyện" class="o_address_city"-->
+<!--                           attrs="{'readonly': [('type', '=', 'contact'),('parent_id', '!=', False)]}"-->
+<!--                           options="{'no_open':True,'no_create':True}"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+<!--        <record id="inherit_view_res_partner_add_overseas_vietnamese" model="ir.ui.view">-->
+<!--            <field name="name">inherit_view_res_partner_add_passport</field>-->
+<!--            <field name="model">res.partner</field>-->
+<!--            <field name="inherit_id" ref="base.view_partner_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//sheet/div[2]/h1" position="after">-->
+<!--                    <div class="oe_left">-->
+<!--                        <label for="customer_classification" string="Phân loại:"/>-->
+<!--                        <h2>-->
+<!--                            <field name="customer_classification"-->
+<!--                                   options="{'classes': {'1': 'success', '2': 'info', '3': 'warning', '4': 'danger'}}"/>-->
+<!--                        </h2>-->
+<!--                    </div>-->
+<!--                    <group>-->
+<!--                        <field name="overseas_vietnamese" string="Việt kiều"/>-->
+<!--                    </group>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+    </data>
+</odoo>

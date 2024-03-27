@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="report_sale_erp_daily_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO DOANH SỐ NGÀY</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_report/static/xls/bao_cao_doanh_so_ngay.xlsx"/>
+            <field name="store_fname">bao_cao_doanh_so_ngay.xlsx</field>
+        </record>
+
+        <record model="ir.ui.view" id="report_sales_erp_daily_form">
+            <field name="name">daily.sales.report.form</field>
+            <field name="model">report.sales.erp.daily</field>
+            <field name="arch" type="xml">
+                <form string="Daily Sales repor">
+                    <group>
+                        <field name="start_date" string="Từ ngày"/>
+                        <field name="end_date" string="Đến ngày"/>
+                        <field name="company_ids" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="report_daily_sales" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_sale_erp_daily_act">
+            <field name="name">Báo cáo doanh số ngày</field>
+            <field name="res_model">report.sales.erp.daily</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_sales_erp_daily_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="report_sale_erp_daily_menu"
+                  name="Báo cáo doanh số ngày v2"
+                  parent="crm_report.menu_crm_report"
+                  action="report_sale_erp_daily_act"
+                  groups="crm_report.security_crm_report"
+                  sequence="12"/>
+    </data>
+</odoo>

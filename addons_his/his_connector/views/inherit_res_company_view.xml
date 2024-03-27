@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <record id="view_config_his_83_res_company" model="ir.ui.view">
+            <field name="name">Config his 83</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//notebook" position="inside">
+                    <page name="config" string="His 83">
+                        <sheet>
+                            <group>
+                                <field name="url_his_83"/>
+                                <field name="user_his"/>
+                                <field name="pass_his" password="True"/>
+                            </group>
+                            <button name="get_token_his" string="Tạo Token" type="object" class="btn-secondary"/>
+                            <group>
+                                <field name="token_his" readonly="1"/>
+                            </group>
+                        </sheet>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

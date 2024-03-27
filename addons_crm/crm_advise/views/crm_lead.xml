@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crm_lead_advise_form_view_inherit" model="ir.ui.view">
+            <field name="name">Phiếu tư vấn</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_consultation_tickets.view_booking_add_button_consultation_ticket"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[@name='des']" position="replace">
+
+                </xpath>
+            </field>
+        </record>
+
+
+        <record id="crm_lead_base_form_view_inherit" model="ir.ui.view">
+            <field name="name">Bán dịch vụ</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='service']/field[@name='uom_price']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('type_brand','=','academy')],'readonly':['|',('prg_ids','!=',
+                        []), ('stage','not in',['new','chotuvan'])]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='service']/field[@name='quantity']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('prg_ids','!=', []), ('stage','not in',['chotuvan', 'new'])]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='company_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('prg_ids','!=', []), ('stage','!=','chotuvan')]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='price_list_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('prg_ids','!=', []), ('stage','!=','chotuvan')]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='source_extend_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('stage','not in',['chotuvan','new', 'processing'])]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='line_booking_date']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('prg_ids','!=', []), ('stage','!=','chotuvan')]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='status_cus_come']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('stage','not in',['chotuvan','new', 'processing'])]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='consultants_1']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('stage','not in',['chotuvan', 'new', 'processing']),
+                        ('parent.brand_id','=',3)], 'required': [('parent.brand_id','!=',3)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='consulting_role_1']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('stage','not in',['chotuvan', 'new', 'processing']),
+                        ('parent.brand_id','=',3)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='consultants_2']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('stage','not in',['chotuvan', 'new', 'processing']),
+                        ('parent.brand_id','=',3)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='consulting_role_2']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('stage','not in',['chotuvan', 'new', 'processing']),
+                        ('parent.brand_id','=',3)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='consultants_3']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('stage','not in',['chotuvan', 'new', 'processing']),
+                        ('parent.brand_id','=',3)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='general_info']/field[@name='consulting_role_3']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('stage','not in',['chotuvan', 'new', 'processing']),
+                        ('parent.brand_id','=',3)]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//page[@name='sell_service']" position="after">
+                    <page name="consultation_form" string="Phiếu tư vấn">
+                        <field name="advise_ids"
+                               context="{'default_crm_id' : active_id,'default_brand_id':brand_id,'default_consultant':uid}">
+                            <tree editable="bottom" delete="0">
+                                <field name="brand_id"/>
+                                <field name="crm_id" invisible="1"/>
+                                <field name="booking_source" invisible="1"/>
+                                <field name="booking_by" invisible="1"/>
+                                <field name="crm_line_id" invisible="1"/>
+                                <field name="create_date" invisible="1"/>
+                                <field name="service" attrs="{'readonly':[('create_date','!=',False )]}"/>
+                                <field name="group_service" readonly="True"/>
+                                <field name="advise_required" invisible="1"/>
+                                <field name="state_ids" widget="many2many_tags" placeholder="Tình trạng"
+                                       attrs="{'required':[('advise_required','=',True)]}"
+                                       options="{'no_create': True, 'no_edit': True}" readonly="0"/>
+                                <field name="desire_ids" widget="many2many_tags" placeholder="Mong muốn"
+                                       attrs="{'required':[('advise_required','=',True)]}"
+                                       options="{'no_create': True, 'no_edit': True}" readonly="0"/>
+                                <field name="pain_point_ids" widget="many2many_tags" placeholder="Điểm đau"
+                                       attrs="{'required':[('advise_required','=',True)]}"
+                                       options="{'no_create': True, 'no_edit': True}" readonly="0"/>
+                                <field name="information" required="1"/>
+                                <field name="stage" invisible="1"/>
+                                <field name="conclude" readonly="1"/>
+                                <field name="consultant" invisible="1"/>
+                                <button name="action_chot" string="Chốt"
+                                        type="object" class="btn-success"
+                                        attrs="{'invisible':[('conclude','!=', False) ]}"/>
+                                <button name="action_huy" string="Hủy"
+                                        type="object" class="btn-danger"
+                                        attrs="{'invisible':[('conclude','!=', False)]}"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+
+                <xpath expr="//button[@name='cancel_line']" position="replace">
+                    <button name="cancel_line" string="Hủy"
+                            type="object" class="btn-danger" optional="show"
+                            attrs="{'invisible':[('stage','!=', 'new')]}"/>
+                </xpath>
+                <xpath expr="//page[@name='sell_service']/field[@name='crm_line_ids']/tree[@class='multiline-head']"
+                       position="inside">
+                    <field name="is_potential" invisible="1"/>
+
+                </xpath>
+
+                <xpath expr="//page[@name='sell_service']/field[@name='crm_line_ids']/tree[@class='multiline-head']"
+                       position="attributes">
+                    <attribute name="decoration-orange">stage=='cancel' and is_potential == True</attribute>
+                    <attribute name="decoration-danger">stage=='cancel' and is_potential != True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_line_form_inherit_2" model="ir.ui.view">
+            <field name="name">crm.line.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_his_13.view_form_inherit_crm_line_form_booking"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='service']/field[@name='service_id']" position="attributes">
+                    <attribute name="attrs">{'required': [('type_brand', '=',
+                        'hospital')],'readonly':['|',('prg_ids','!=', []), ('stage','!=','chotuvan')]}
+                    </attribute>
+                </xpath>
+
+                <xpath expr="//group[@name='service']/field[@name='teeth_ids']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('odontology','=', False)],'readonly':['|',('prg_ids','!=',
+                        []), ('stage','!=','chotuvan')]}
+                    </attribute>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="crm_line_form_inherit_3" model="ir.ui.view">
+            <field name="name">crm.line.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="sh_intro_service.crm_lead_form_booking_add_field"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='x_company_do_service_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|',('prg_ids','!=', []), ('stage','!=','chotuvan')]}
+                    </attribute>
+                </xpath>
+
+
+            </field>
+        </record>
+        <record id="sh_medical_register_for_walkin_advise_view" model="ir.ui.view">
+            <field name="name">sh.medical.register.for.walkin.advise.view</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='list_advisory_services']" position="before">
+                    <field name="advise_ids">
+                        <tree editable="bottom" delete="0">
+                            <field name="brand_id"/>
+                            <field name="crm_id" invisible="1"/>
+                            <field name="crm_line_id" invisible="1"/>
+                            <field name="create_date" invisible="1"/>
+                            <field name="service" attrs="{'readonly':[('create_date','!=',False )]}"/>
+                            <field name="group_service" readonly="True"/>
+                            <field name="advise_required" invisible="1"/>
+                            <field name="state_ids" widget="many2many_tags" placeholder="Tình trạng"
+                                   attrs="{'required':[('advise_required','=',True)]}"/>
+                            <field name="desire_ids" widget="many2many_tags" placeholder="Mong muốn"
+                                   attrs="{'required':[('advise_required','=',True)]}"/>
+                            <field name="pain_point_ids" widget="many2many_tags" placeholder="Điểm đau"
+                                   attrs="{'required':[('advise_required','=',True)]}"/>
+                            <field name="information" required="1"/>
+                            <field name="stage" invisible="1"/>
+                            <field name="conclude" readonly="1"/>
+                        </tree>
+                    </field>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="security_crm_report" model="res.groups">
+            <field name="name">Quyền báo cáo CRM</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+        </record>
+
+        <record id="xuat_du_lieu_khach_hang" model="res.groups">
+            <field name="name">Xuất dữ liệu khách hàng</field>
+            <field name="category_id" ref="base.module_category_sales_sales"/>
+        </record>
+    </data>
+</odoo>

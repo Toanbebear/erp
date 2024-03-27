@@ -1,0 +1,15 @@
+<odoo>
+    <data>
+         <record id="collaborator_res_partner_view_form_inherit" model="ir.ui.view">
+            <field name="name">collaborator.res.partner.view.form.inherit</field>
+            <field name="model">res.partner</field>
+			<field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+				<xpath expr="//button[@name='open_form_get_history_phone_call']" position="after">
+                    <button name="create_collaborator" string="Tạo cộng tác viên" groups="collaborator.collaborator_group_department"
+                                type="object" class="btn-info"/>
+                </xpath>
+            </field>
+         </record>
+    </data>
+</odoo>

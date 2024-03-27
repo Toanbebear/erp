@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="report_loc_the_thanh_vien_attachment" model="ir.attachment">
+        <field name="name">BÁO CÁO LỌC KHÁCH HÀNG</field>
+        <field name="type">binary</field>
+        <field name="datas" type="base64" file="crm_report/static/xls/bao_cao_loc_the_thanh_vien.xlsx"/>
+        <field name="store_fname">bao_cao_loc_the_thanh_vien.xlsx</field>
+    </record>
+
+    <record model="ir.ui.view" id="report_loc_the_thanh_vien_form">
+        <field name="name">report.loc.the.thanh.vien.form</field>
+        <field name="model">report.the.thanh.vien</field>
+        <field name="arch" type="xml">
+            <form string="Lọc khách hàng">
+                <group>
+                    <field name="company_ids" required="1" widget="many2many_tags"/>
+                    <field name="all_company"/>
+                    <field name="rank" widget="many2many_tags"/>
+                    <field name="all_rank"/>
+                    <field name="start_date" required="True"/>
+                    <field name="end_date" required="True"/>
+                    <field name="start_datetime" invisible="True"/>
+                    <field name="end_datetime" invisible="True"/>
+                </group>
+                <footer>
+                    <button name="report" type="object" string="Xuất dữ liệu" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="report_loc_the_thanh_vien_act">
+        <field name="name">Lọc khách hàng</field>
+        <field name="res_model">report.the.thanh.vien</field>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="report_loc_the_thanh_vien_form"/>
+        <field name="context">{}</field>
+        <field name="target">new</field>
+    </record>
+
+    <menuitem id="report_loc_the_thanh_vien_menu"
+              name="Lọc khách hàng"
+              parent="loyalty.loyalty_menu_root"
+              action="report_loc_the_thanh_vien_act"
+              groups="crm_report.xuat_du_lieu_khach_hang"
+              sequence="15"/>
+</odoo>

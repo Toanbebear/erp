@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <menuitem id="his_menu_extend"
+                  name="Bệnh viện Demo"
+                  web_icon="his_extend,static/description/icon.png"/>
+
+<!--        Phiếu khám-->
+        <menuitem name="Phiếu khám" id="sh_medical_walkin_menu_extend" parent="his_extend.his_menu_extend" sequence="1"/>
+        <record id="sh_medical_walkin_menu_extend" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-stethoscope</field>
+        </record>
+
+            <menuitem name="Phiếu khám" id="sh_medical_walkin_all_menu_extend"
+                  action="his_extend.phieu_kham_extend_action" parent="his_extend.sh_medical_walkin_menu_extend" sequence="1"/>
+            <record id="sh_medical_walkin_all_menu_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-stethoscope</field>
+            </record>
+
+            <menuitem name="Phiếu khám Phẫu thụật" id="sh_medical_walkin_surgery_menu_extend"
+                  action="his_extend.phieu_kham_surgery_extend_action" parent="his_extend.sh_medical_walkin_menu_extend" sequence="2"/>
+            <record id="sh_medical_walkin_surgery_menu_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-stethoscope</field>
+            </record>
+
+            <menuitem name="Phiếu khám Spa" id="sh_medical_walkin_spa_menu_extend"
+                  action="his_extend.phieu_kham_spa_extend_action" parent="his_extend.sh_medical_walkin_menu_extend" sequence="3"/>
+            <record id="sh_medical_walkin_spa_menu_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-stethoscope</field>
+            </record>
+
+            <menuitem name="Phiếu khám Laser" id="sh_medical_walkin_laser_menu_extend"
+                  action="his_extend.phieu_kham_laser_extend_action" parent="his_extend.sh_medical_walkin_menu_extend" sequence="4"/>
+            <record id="sh_medical_walkin_laser_menu_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-stethoscope</field>
+            </record>
+
+            <menuitem name="Phiếu khám Nha khoa" id="sh_medical_walkin_odontology_menu_extend"
+                  action="his_extend.phieu_kham_odontology_extend_action" parent="his_extend.sh_medical_walkin_menu_extend" sequence="5"/>
+            <record id="sh_medical_walkin_odontology_menu_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-stethoscope</field>
+            </record>
+
+<!--        Viện phí-->
+        <menuitem id="sh_medical_root_payment_menu_extend" name="Viện phí"
+                  parent="his_extend.his_menu_extend"
+                  action="shealth_all_in_one.sh_view_walkin_payment" sequence="2"/>
+        <record id="sh_medical_root_payment_menu_extend" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-money</field>
+        </record>
+
+        <!--        Cận lâm sàng-->
+        <menuitem id="sh_medical_lab_and_img_menu_extend" name="Cận lâm sàng"
+                  parent="his_extend.his_menu_extend" sequence="3"/>
+        <record id="sh_medical_lab_and_img_menu_extend" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-flask</field>
+        </record>
+
+            <menuitem name="Phiếu xét nghiệm - Trả KQ" id="sh_medical_walkin_result_labtest_menu_extend"
+                      action="shealth_all_in_one.sh_medical_walkin_result_labtest_tree_action"
+                      parent="sh_medical_lab_and_img_menu_extend"
+                      sequence="0"/>
+            <record id="sh_medical_walkin_result_labtest_menu_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-flask</field>
+            </record>
+
+            <menuitem action="sh_medical_lab_test_action_extend" name="Phiếu xét nghiệm" id="sh_medical_lab_test_conf_list_extend"
+                      parent="sh_medical_lab_and_img_menu_extend" sequence="1"/>
+            <record id="sh_medical_lab_test_conf_list_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-flask</field>
+            </record>
+
+            <menuitem action="sh_medical_imaging_test_action_extend" name="Chẩn đoán hình ảnh" id="sh_medical_imaging_test_conf_list_extend"
+                      parent="sh_medical_lab_and_img_menu_extend" sequence="2"/>
+            <record id="sh_medical_imaging_test_conf_list_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-picture-o</field>
+            </record>
+
+<!--        Chuyên khoa-->
+        <menuitem id="sh_medical_root_specialty_menu_extend" name="Chuyên khoa" parent="his_extend.his_menu_extend" sequence="4"/>
+        <record id="sh_medical_root_specialty_menu_extend" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-user-md</field>
+        </record>
+
+            <menuitem action="sh_medical_surgery_action_extend" name="Phẫu thuật thủ thật" parent="sh_medical_root_specialty_menu_extend"
+                  id="sh_medical_surgery_list_extend" sequence="1"/>
+            <record id="sh_medical_surgery_list_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-heart</field>
+            </record>
+
+            <menuitem name="Spa" action="sh_medical_specialty_action_extend"
+                  groups="shealth_all_in_one.group_sh_medical_physician_spa,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_document"
+                  parent="sh_medical_root_specialty_menu_extend" id="sh_medical_specialty_list_extend" sequence="2"/>
+            <record id="sh_medical_specialty_list_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-user-md</field>
+            </record>
+
+            <menuitem name="Laser" action="sh_medical_specialty_laser_action_extend"
+                  groups="shealth_all_in_one.group_sh_medical_physician_laser,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_document"
+                  parent="sh_medical_root_specialty_menu_extend" id="sh_medical_specialty_laser_list_extend" sequence="3"/>
+            <record id="sh_medical_specialty_laser_list_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-user-md</field>
+            </record>
+
+            <menuitem name="Răng hàm mặt" action="sh_medical_specialty_rhm_action_extend"
+                  groups="shealth_all_in_one.group_sh_medical_physician_odontology,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_document"
+                  parent="sh_medical_root_specialty_menu_extend" id="sh_medical_specialty_rhm_list_extend" sequence="4"/>
+            <record id="sh_medical_specialty_rhm_list_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-user-md</field>
+            </record>
+
+        <!-- Bệnh nhân -->
+        <menuitem name="QL Bệnh nhân" id="sh_medical_patients_menu_extend" parent="his_extend.his_menu_extend" sequence="5"/>
+        <record id="sh_medical_patients_menu_extend" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-user</field>
+        </record>
+
+            <menuitem name="Bệnh nhân" action="sh_medical_patient_action_extend" parent="sh_medical_patients_menu_extend" id="sh_medical_edit_patient_extend"
+                  sequence="1"/>
+            <record model='ir.ui.menu' id='sh_medical_edit_patient_extend'>
+                <field name="web_icon_class">fa fa-user-circle-o</field>
+            </record>
+
+
+            <menuitem name="Bệnh nhân lưu" action="sh_medical_inpatient_action_extend" id="sh_medical_inpatient_list_extend" parent="sh_medical_patients_menu_extend" sequence="2"/>
+            <record model='ir.ui.menu' id='sh_medical_inpatient_list_extend'>
+                <field name="web_icon_class">fa fa-h-square</field>
+            </record>
+
+            <menuitem name="Chăm sóc hậu phẫu" action="sh_medical_rounding_action_extend" id="sh_medical_rounding_list_extend" parent="sh_medical_patients_menu_extend" groups="shealth_all_in_one.group_sh_medical_physician_surgery" sequence="3"/>
+            <record id="sh_medical_rounding_list_extend" model="ir.ui.menu">
+                <field name="web_icon_class">fa fa-wheelchair</field>
+            </record>
+<!--        Đơn thuốc-->
+        <menuitem name="Đơn thuốc" action="sh_medical_prescription_action_extend" id="sh_medical_prescription_list_extend"
+                  parent="his_extend.his_menu_extend" sequence="6"/>
+        <record id="sh_medical_prescription_list_extend" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-list</field>
+        </record>
+
+<!--        Tái khám-->
+        <menuitem action="sh_medical_evaluation_action_extend" parent="his_extend.his_menu_extend" id="sh_medical_evaluation_list_extend"
+                  sequence="7"
+                  groups="shealth_all_in_one.group_sh_medical_physician_surgery,shealth_all_in_one.group_sh_medical_physician_odontology,shealth_all_in_one.group_sh_medical_physician_spa,shealth_all_in_one.group_sh_medical_physician_laser,shealth_all_in_one.group_sh_medical_nurse"/>
+        <record id="sh_medical_evaluation_list_extend" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-thermometer-three-quarters</field>
+        </record>
+<!--        Lịch hẹn chăm sóc-->
+        <menuitem action="sh_medical_reexam_action_extend" id="sh_medical_reexam_list_extend" name="Lịch hẹn chăm sóc"
+                  parent="his_extend.his_menu_extend" sequence="8"/>
+        <record id="sh_medical_reexam_list_extend" model="ir.ui.menu">
+            <field name="web_icon_class">fa fa-calendar-check-o</field>
+        </record>
+    </data>
+</odoo>

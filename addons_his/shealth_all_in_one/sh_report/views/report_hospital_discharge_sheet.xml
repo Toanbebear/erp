@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="shealth_report_hospital_discharge_sheet_document">
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <t t-set="o" t-value="o.with_context(lang=o.sudo().partner_id.lang)"/>
+                    <t t-set="o" t-value="o.sudo()"/>
+                    <div class="page" style="font-family:Times New Roman;font-size:26px;">
+                        <div class="oe_structure"/>
+                        <t t-if="o.state == 'Completed'">
+                            <div class="row mt32 mb32">
+                                <!--                                <div class="col-1">-->
+                                <!--                                    <img t-if="o.institution.his_company.favicon"-->
+                                <!--                                         t-att-src="image_data_uri(o.institution.his_company.favicon)" width="50"-->
+                                <!--                                         border="1"/>-->
+                                <!--                                </div>-->
+                                <div class="col-6" style="font-family:Times New Roman;font-size:20px;">
+                                    <t t-if="o.institution.name == 'BỆNH VIỆN KANGNAM SÀI GÒN'">
+                                        <div style="float:left">
+                                            <img t-if="o.institution.his_company.favicon"
+                                                 t-att-src="image_data_uri(o.institution.his_company.favicon)"
+                                                 width="50"
+                                                 border="1"/>
+                                        </div>
+                                        <div class="text-center">
+                                            <span>CÔNG TY TNHH BVTM KANGNAM SÀI GÒN</span>
+                                            <br/>
+                                            <span t-field="o.institution.name" style="font-size:20px;"/>
+                                        </div>
+                                    </t>
+                                    <t class="text-center" t-elif="o.institution.name == 'BỆNH VIỆN KANGNAM HÀ NỘI'">
+                                        <div style="float:left">
+                                            <img t-if="o.institution.his_company.favicon"
+                                                 t-att-src="image_data_uri(o.institution.his_company.favicon)"
+                                                 width="50"
+                                                 border="1"/>
+                                        </div>
+                                        <div class="text-center">
+                                            <span>CÔNG TY TNHH BVTM KANGNAM HÀ NỘI</span>
+                                            <br/>
+                                            <span t-field="o.institution.name" style="font-size:20px;"/>
+                                        </div>
+                                    </t>
+                                    <t class="text-center"
+                                       t-elif="o.institution.id == 11">
+                                        <div style="float:left">
+                                            <img t-if="o.institution.his_company.favicon"
+                                                 t-att-src="image_data_uri(o.institution.his_company.favicon)"
+                                                 width="50"
+                                                 border="1"/>
+                                        </div>
+                                        <div class="text-center">
+                                            <span>CÔNG TY TNHH BỆNH VIỆN THẨM MỸ ĐÔNG Á</span>
+                                            <br/>
+                                            <span t-field="o.institution.name" style="font-size:20px;"/>
+                                        </div>
+                                    </t>
+                                    <t t-else="">
+                                        <div>
+                                            <img t-if="o.institution.his_company.favicon"
+                                                 t-att-src="image_data_uri(o.institution.his_company.favicon)"
+                                                 width="50"
+                                                 border="1"/>
+                                            <span t-field="o.institution.name"
+                                                  style="font-size:20px;margin-left: 20px;"/>
+                                        </div>
+                                    </t>
+                                </div>
+                                <div class="col-6 text-center" style="font-size: 25px;">
+                                    <b>CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM</b>
+                                    <br/>
+                                    <b>Độc lập - Tự do - Hạnh phúc</b>
+                                </div>
+                            </div>
+                            <div class="text-center"
+                                 style="font-family:Times New Roman;font-weight:bolder;font-size:35px;">
+                                <div>GIẤY RA VIỆN</div>
+                            </div>
+                            <br/>
+                            <div class="col-12">
+                                <span class="mr-5">Họ và tên:
+                                    <b>
+                                        <span t-esc="o.patient.name"/>
+                                    </b>
+                                </span>
+                                <span class="mr-5">Năm sinh:
+                                    <span t-esc="o.patient.partner_id.year_of_birth"/>
+                                </span>
+                                <span class="mr-5">Giới tính:
+                                    <t t-if="o.patient.gender == 'male'">
+                                        <span>Nam</span>
+                                    </t>
+                                    <t t-elif="o.patient.gender == 'female'">
+                                        <span>Nữ</span>
+                                    </t>
+                                    <t t-elif="o.patient.gender == 'transguy'">
+                                        <span>Transguy</span>
+                                    </t>
+                                    <t t-elif="o.patient.gender == 'transgirl'">
+                                        <span>Transgirl</span>
+                                    </t>
+                                    <t t-else="">
+                                        <span>Khác</span>
+                                    </t>
+                                </span>
+                            </div>
+                            <div class="col-12">
+                                <span class="mr-5">Dân tộc:
+                                    <span t-esc="o.patient.ethnic_group.name"/>
+                                </span>
+                                <span class="mr-5">Nghề nghiệp:
+                                    <span t-esc="o.patient.function"/>
+                                </span>
+                            </div>
+                            <div class="col-12">
+                                Địa chỉ :
+                                <t t-if="o.patient.partner_id.pass_port_address">
+                                    <span t-field="o.patient.partner_id.pass_port_address"/>
+                                </t>
+                                <t t-else="">
+                                    <t t-if="o.patient.partner_id.street">
+                                        <span t-field="o.patient.partner_id.street"/>
+                                    </t>
+                                    <t t-if="o.patient.partner_id.district_id.name">
+                                        ,
+                                        <span t-field="o.patient.partner_id.district_id.name"/>
+                                    </t>
+                                    <t t-if="o.patient.partner_id.state_id.name">
+                                        ,
+                                        <span t-field="o.patient.partner_id.state_id.name"/>,
+                                    </t>
+                                    <t t-if="o.patient.partner_id.country_id.name">
+                                        <span t-field="o.patient.partner_id.country_id.name"/>
+                                    </t>
+                                </t>
+                            </div>
+                            <div class="col-12">
+                                <span class="mr-5">Vào viện lúc:
+                                    <span t-esc="context_timestamp(o.date).strftime('%H giờ %M phút ngày %d tháng %m năm %Y')"/>
+                                </span>
+                            </div>
+                            <div class="col-12">
+                                <span class="mr-5">Ra viện lúc:
+                                    <span t-esc="context_timestamp(o.date_out).strftime('%H giờ %M phút ngày %d tháng %m năm %Y')"/>
+                                </span>
+                            </div>
+                            <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                <div>
+                                    <t t-esc="'Chẩn đoán:' + '.'*400"/>
+                                </div>
+                            </div>
+                            <div class="col-12" style="white-space: nowrap;
+                                                  width: auto;
+                                                  overflow: hidden;
+                                                  text-overflow: ellipsis;">
+                                <div>
+                                    <t t-esc="'Phương pháp phẫu thuật:' + '.'*400"/>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <span class="mr-5">Lời dặn của thầy thuốc: Uống thuốc theo đơn, tái khám theo
+                                    giấy hẹn, chăm sóc vết mổ theo tờ hướng dẫn
+                                </span>
+                            </div>
+                            <div class="row mt32">
+                                <div class="col-6 text-center"/>
+                                <div class="col-6 text-center">
+                                    <b>Ngày ... tháng ... năm 20....</b>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6 text-center">
+                                    <b style="font-size:20px">TRƯỞNG KHOA ĐIỀU TRỊ</b>
+                                    <div style="height:80px;"/>
+                                    <strong>
+                                        <span class="m-0" style="font-size: 21px;" t-field="o.doctor.name"/>
+                                    </strong>
+                                </div>
+                                <div class="col-6 text-center" style="font-size:20px">
+                                    <b>GIÁM ĐỐC BỆNH VIỆN</b>
+                                </div>
+                            </div>
+                        </t>
+                        <t t-else="">
+                            <div class="text-center col-12">
+                                <!--                                <span t-esc="o.state.name"/>-->
+                                <b>Không thể in Phiếu ra viện do phiếu khám:
+                                    <span t-esc="o.name"/>
+                                    chưa ở trạng thái "Hoàn thành"
+                                </b>
+                            </div>
+                        </t>
+
+                    </div>
+                </t>
+            </t>
+        </template>
+
+        <template id="shealth_report_hospital_discharge_sheet">
+            <t t-foreach="docs" t-as="o">
+                <t t-call="shealth_all_in_one.shealth_report_hospital_discharge_sheet_document"/>
+            </t>
+        </template>
+
+        <report
+                string="Giấy ra viện"
+                id="action_report_hospital_discharge_sheet"
+                model="sh.medical.appointment.register.walkin"
+                report_type="qweb-pdf"
+                name="shealth_all_in_one.shealth_report_hospital_discharge_sheet"
+                file="shealth_all_in_one.shealth_report_hospital_discharge_sheet"
+                print_report_name="Phiếu tái khám"
+                paperformat="shealth_all_in_one.sh_paperformat_medical_payment"
+        />
+    </data>
+</odoo>

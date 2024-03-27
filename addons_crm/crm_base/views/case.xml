@@ -1,0 +1,881 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="crm_complain_view_form">
+            <field name="name">Form complain</field>
+            <field name="model">crm.complain</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false">
+                    <sheet>
+                        <group>
+                            <field name="complain_group_id" required="1"/>
+                            <field name="name"/>
+                            <field name="brand_id"/>
+                            <field name="department_ids" widget="many2many_tags" required="True"/>
+                        </group>
+                        <group>
+                            <group name="brand_sla" string="SLA Brand">
+                                <field name="brand_sla_urgent"/>
+                                <field name="brand_sla_high"/>
+                                <field name="brand_sla_normal"/>
+                                <field name="brand_sla_low"/>
+                            </group>
+                            <group name="cskh_sla" string="SLA CSKH">
+                                <field name="cskh_sla_urgent"/>
+                                <field name="cskh_sla_high"/>
+                                <field name="cskh_sla_normal"/>
+                                <field name="cskh_sla_low"/>
+                            </group>
+                            <group name="company_sla" string="SLA Company">
+                                <field name="company_sla_urgent"/>
+                                <field name="company_sla_high"/>
+                                <field name="company_sla_normal"/>
+                                <field name="company_sla_low"/>
+                            </group>
+                            <group name="time" string="Time">
+                                <field name="time_urgent"/>
+                                <field name="time_high"/>
+                                <field name="time_normal"/>
+                                <field name="time_low"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_complain_view_tree">
+            <field name="name">Tree complain</field>
+            <field name="model">crm.complain</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="complain_group_id"/>
+                    <field name="name"/>
+                    <field name="brand_id"/>
+                    <field name="department_ids" widget="many2many_tags"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_complain_group_view_form">
+            <field name="name">Nhóm khiếu nại</field>
+            <field name="model">crm.complain.group</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_complain_group_view_tree">
+            <field name="name">Nhóm khiếu nại</field>
+            <field name="model">crm.complain.group</field>
+            <field name="arch" type="xml">
+                <tree create="false">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_complain_view" model="ir.actions.act_window">
+            <field name="name">Khiếu nại chi tiết</field>
+            <field name="res_model">crm.complain</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="action_complain_group_view" model="ir.actions.act_window">
+            <field name="name">Nhóm khiếu nại</field>
+            <field name="res_model">crm.complain.group</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_case_view_form">
+            <field name="name">Form Case</field>
+            <field name="model">crm.case</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Khiếu nại..." required="True"/>
+                            </h1>
+                        </div>
+                        <label for="type_case" string="Phân loại:"/>
+                        <h3>
+                            <field name="type_case" class="oe_left" required="True"/>
+                        </h3>
+                        <group>
+                            <group string="General information">
+                                <!--                                <field name="subject_case" required="True"/>-->
+                                <field name="code" readonly="True" force_save="True"
+                                       attrs="{'invisible': [('code', '=', False)]}"/>
+                                <field name="phone" required="True" widget="phone"/>
+                                <field name="partner_id" options="{'no_create':True}"/>
+                                <field name="country_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="state_id" options="{'no_open':True,'no_create':True}"/>
+                                <field name="street"/>
+                                <field name="account_facebook"/>
+                            </group>
+                            <group string="Interactive">
+                                <field name="brand_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                                <field name="company_id" options="{'no_open':True,'no_create':True}" required="True"
+                                       domain="[('id', 'in', allowed_company_ids)]"/>
+                                <field name="booking_id" options="{'no_open':True,'no_create':True}"
+                                       string="Mã Booking"/>
+                                <field name="phone_call_id" options="{'no_open':True,'no_create':True}" readonly="True"
+                                       force_save="True"/>
+                                <field name="create_by" options="{'no_open':True,'no_create':True}" readonly="True"
+                                       force_save="True" string="Người tạo"/>
+                                <!--                                <field name="user_id" options="{'no_open':True,'no_create':True}" required="True"/>-->
+                                <!--                                <field name="stage" required="True"/>-->
+                                <field name="start_date" required="True"/>
+                                <!--                                <field name="end_date"-->
+                                <!--                                       attrs="{'required':[('stage','=','complete')],'invisible':[('stage','!=','complete')]}"/>-->
+                                <!--                                <field name="duration"/>-->
+                                <field name="documents" widget="many2many_binary" class="oe_inline"/>
+                            </group>
+
+                        </group>
+                        <group string="Nội dung khiếu nại">
+                            <div>
+                                <field name="crm_content_complain" context="{'default_crm_case':id,}" mode="kanban">
+                                    <tree editable="bottom">
+                                        <field name="crm_case" optional="hide"/>
+                                        <field name="complain_group_id" optional="show" string="Nhóm khiếu nại"
+                                               required="True"/>
+                                        <field name="complain_id" optional="show" required="True" string="Mã chi tiết"/>
+                                        <field name="receive_source" required="True"/>
+                                        <field name="product_ids" widget="many2many_tags" optional="show"
+                                               string="Dịch vụ"/>
+                                        <field name="department_ids" widget="many2many_tags" optional="show"
+                                               string="Phòng ban"/>
+                                        <field name="priority" optional="show" required="True" string="Độ ưu tiên"/>
+                                        <field name="desc" optional="show" string="Phản ánh khách hàng"/>
+                                        <field name="solution" optional="show" string="Giải pháp"/>
+                                        <field name="stage" optional="show" string="Trạng thái"/>
+                                        <field name="brand_sla" optional="show"/>
+                                        <field name="cskh_sla" optional="show"/>
+                                        <field name="branch_sla" optional="show"/>
+                                        <field name="note" optional="show" string="Ghi chú"/>
+                                    </tree>
+                                    <kanban>
+                                        <field name="crm_case" invisible="True"/>
+                                        <field name="complain_group_id"/>
+                                        <field name="complain_id"/>
+                                        <field name="receive_source"/>
+                                        <field name="product_ids" widget="many2many_tags"/>
+                                        <field name="department_ids" widget="many2many_tags"/>
+                                        <field name="priority"/>
+                                        <field name="desc" required="True"/>
+                                        <field name="solution" required="True"/>
+                                        <field name="stage" required="True"/>
+                                        <field name="brand_sla" invisible="True"/>
+                                        <field name="cskh_sla" invisible="True"/>
+                                        <field name="branch_sla" invisible="True"/>
+                                        <field name="note"/>
+                                        <templates>
+                                            <t t-name="kanban-box">
+                                                <div class="oe_kanban_global_click o_kanban_full">
+                                                    <div class="oe_kanban_details">
+                                                        <div class="container">
+                                                            <div class="row">
+                                                                <div class="col-3">
+                                                                    <div>
+                                                                        <label>Nhóm khiếu nại:</label>
+                                                                        <strong>
+                                                                            <field name="complain_group_id"/>
+                                                                        </strong>
+                                                                    </div>
+                                                                    <div>
+                                                                        <label>Mã chi tiết:</label>
+                                                                        <strong>
+                                                                            <field name="complain_id"/>
+                                                                        </strong>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <!--    Trạng thái -->
+                                                                        <label>Trạng thái:</label>
+                                                                        <strong t-att-class="record.stage.raw_value == 'complete' ? 'text-success' : ''">
+                                                                            <field name="stage"/>
+                                                                        </strong>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <label>Độ ưu tiên:</label>
+                                                                        <strong>
+                                                                            <field name="priority"/>
+                                                                        </strong>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <label>
+                                                                            <strong>Sản phẩm/Dịch vụ:</strong>
+                                                                        </label>
+                                                                        <field name="product_ids"
+                                                                               widget="kanban.many2many_tags"/>
+                                                                    </div>
+
+                                                                    <div>
+                                                                        <label>
+                                                                            <strong>Phòng ban bị khiếu nại:</strong>
+                                                                        </label>
+                                                                        <field name="department_ids"
+                                                                               widget="kanban.many2many_tags"/>
+                                                                    </div>
+
+                                                                    <!--                                                                    <div>-->
+                                                                    <!--                                                                        &lt;!&ndash; SLA Brand &ndash;&gt;-->
+                                                                    <!--                                                                        <label>SLA Brand:</label>-->
+                                                                    <!--                                                                        &lt;!&ndash;                                                                        <strong class="btn btn-danger btn-radius">&ndash;&gt;-->
+                                                                    <!--                                                                        <field name="brand_sla"/>-->
+                                                                    <!--                                                                        &lt;!&ndash;                                                                        </strong>&ndash;&gt;-->
+                                                                    <!--                                                                    </div>-->
+
+                                                                </div>
+
+                                                                <div class="col-3">
+                                                                    <label>
+                                                                        <strong>Nội dung phản ánh:</strong>
+                                                                    </label>
+                                                                    <field name="desc" widget="html"/>
+                                                                </div>
+
+                                                                <div class="col-3">
+                                                                    <div>
+                                                                        <label>
+                                                                            <strong>Giải pháp:</strong>
+                                                                        </label>
+
+                                                                        <field name="solution" widget="html"/>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-3">
+                                                                    <div>
+                                                                        <label>
+                                                                            <strong>Nội dung:</strong>
+                                                                        </label>
+                                                                        <field name="note" widget="html"/>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </t>
+                                        </templates>
+                                    </kanban>
+                                    <form>
+                                        <group>
+                                            <field name="crm_case" invisible="True"/>
+                                            <field name="complain_group_id"
+                                                   options="{'no_create': True,'no_open': True}"/>
+                                            <field name="complain_id" options="{'no_create': True,'no_open': True}"/>
+                                            <field name="documents" widget="many2many_binary" class="oe_inline"/>
+                                            <field name="receive_source"/>
+                                            <field name="product_ids" widget="many2many_tags"
+                                                   options="{'no_create': True,'no_open': True}"/>
+                                            <field name="department_ids" widget="many2many_tags"
+                                                   options="{'no_create': True,'no_open': True}"/>
+                                            <field name="priority"/>
+                                            <field name="desc"/>
+                                            <field name="solution"/>
+                                            <field name="stage"/>
+                                            <field name="brand_sla" invisible="True"/>
+                                            <field name="cskh_sla" invisible="True"/>
+                                            <field name="branch_sla" invisible="True"/>
+                                            <field name="note"/>
+                                        </group>
+                                    </form>
+                                </field>
+                            </div>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="message_ids" widget="mail_thread"
+                                   options="{'post_refresh': 'recipients'}"/>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <div class="crm_box_change_infor">
+                            <div class="container">
+                                <div class="row pt-3">
+                                    <div class="col-lg-12">
+                                        <span style="padding:5px;">
+                                            <strong>Ngày tạo:</strong>
+                                            <field name="create_date" readonly="True" force_save="True"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Tạo bởi:</strong>
+                                            <field name="create_by" readonly="True" force_save="True"
+                                                   options="{'no_open':True,}"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Phòng ban:</strong>
+                                            <field name="department_create_by" readonly="True" force_save="True"
+                                                   options="{'no_open':True,}"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Ngày sửa:</strong>
+                                            <field name="write_date" readonly="True" force_save="True"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Sửa bởi:</strong>
+                                            <field name="write_uid" readonly="True" force_save="True"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_case_tree_view">
+            <field name="name">Tree case</field>
+            <field name="model">crm.case</field>
+            <field name="arch" type="xml">
+                <tree export_xlsx="0" default_order="create_date desc">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <!--                    <field name="subject_case"/>-->
+                    <field name="partner_id"/>
+                    <field name="phone" widget="phone_tree"/>
+                    <field name="company_id"/>
+                    <!--                    <field name="content_complain_ids" widget="many2many_tags"/>-->
+                    <!--                    <field name="complain_group_id"/>-->
+                    <!--                    <field name="complain_id"/>-->
+                    <!--                    <field name="stage"/>-->
+                    <!--                    <field name="type_case"/>-->
+                    <!--                    <field name="priority"/>-->
+                    <field name="create_by" string="Người tạo"/>
+                    <field name="create_date"/>
+                    <!--                    <field name="user_id"/>-->
+                    <field name="write_date"/>
+                    <field name="write_uid"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_base_view_case_search" model="ir.ui.view">
+            <field name="name">crm.lead.search.case</field>
+            <field name="model">crm.case</field>
+            <field name="arch" type="xml">
+                <search string="Search Case">
+                    <field name="name" string="Case"
+                           filter_domain="['|','|','|','|',('code', 'ilike', self),('phone', 'ilike', self),('create_by', 'ilike', self),
+                           ('user_id', 'ilike', self),('partner_id', 'ilike', self)]"/>
+                    <field name="partner_id" string="Khách hàng"/>
+                    <separator/>
+                    <filter string="Start Date" name="st_date" date="start_date"/>
+                    <group expand="0" string="Group By">
+                        <!--                        <filter string="Stage" name="stage" context="{'group_by':'stage'}"/>-->
+                        <filter string="Loại case" name="Type case" context="{'group_by':'type_case'}"/>
+                        <!--                        <filter string="Handler" name="salesperson" context="{'group_by':'user_id'}"/>-->
+                        <filter string="Người tạo" name="owner" context="{'group_by':'create_by'}"/>
+                        <filter string="Khách hàng" name="owner" context="{'group_by':'partner_id'}"/>
+                        <filter string="Chi nhánh" name="cp" context="{'group_by':'company_id'}"/>
+                        <filter string="Thương hiệu" name="br" context="{'group_by':'brand_id'}"/>
+                        <separator orientation="vertical"/>
+                        <filter string="Ngày tạo" context="{'group_by':'start_date:month'}" name="month"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_case_content_tree_view">
+            <field name="name">Nội dung khiếu nại</field>
+            <field name="model">crm.content.complain</field>
+            <field name="arch" type="xml">
+                <tree create="false" class="multiline-row" decoration-muted="stage =='complete'">
+                    <field name="brand_id" optional="hide"/>
+                    <field name="company_id" optional="hide"/>
+                    <field name="type_crm_case" string="Loại case" optional="show"/>
+                    <field name="complain_group_id" optional="hide"/>
+                    <field name="complain_id" optional="hide" string="Khiếu nại chi tiết"/>
+                    <field name="code_crm_case" optional="show"/>
+                    <field name="crm_case" optional="show"/>
+                    <field name="partner_id" string="Khách hàng" optional="show"/>
+                    <field name="phone_partner" widget="phone_tree" string="Điện thoại" optional="show"/>
+                    <field name="booking_id" optional="hide"/>
+                    <field name="receive_source" string="Nguồn tiếp nhận" optional="hide"/>
+                    <field name="desc" optional="show"/>
+                    <field name="product_ids" widget="many2many_tags" string="Dịch vụ" optional="hide"/>
+                    <field name="solution" optional="show"/>
+                    <field name="priority" optional="show"/>
+                    <field name="stage" optional="show"/>
+                    <field name="note" string="Ghi chú"/>
+                    <field name="create_date" optional="hide"/>
+                    <field name="create_by" optional="hide"/>
+                    <field name="department_create_by" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_case_content_form_view">
+            <field name="name">Nội dung khiếu nại</field>
+            <field name="model">crm.content.complain</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <header>
+                        <field name="stage" widget="statusbar"
+                               statusbar_visible="new,processing,finding,waiting_response,need_to_track,resolve,complete"
+                               options="{'clickable': '1', 'fold_field': 'fold'}"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="type_crm_case" string="Loại case"/>
+                            <field name="crm_case"/>
+                            <field name="code_crm_case"/>
+                            <field name="complain_group_id"/>
+                            <field name="complain_id" string="Khiếu nại chi tiết"/>
+                            <field name="partner_id" string="Khách hàng"/>
+                            <field name="phone_partner" string="Điện thoại" widget="phone"/>
+                            <field name="booking_id"/>
+                            <field name="receive_source" string="Nguồn tiếp nhận"/>
+                            <field name="product_ids" widget="many2many_tags" string="Dịch vụ"/>
+                            <field name="department_ids" widget="many2many_tags" string="Phòng ban bị khiếu nại"/>
+                            <field name="priority"/>
+                            <field name="desc"/>
+                            <field name="solution"/>
+                            <field name="note" string="Ghi chú"/>
+                            <field name="documents" widget="many2many_binary"/>
+                            <field name="processing_results"/>
+                            <field name="support_cost" widget="monetary_format"/>
+                            <field name="post_processing_evaluation"/>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread" options="{'post_refresh': 'recipients'}"/>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <div class="crm_box_change_infor">
+                            <div class="container">
+                                <div class="row pt-3">
+                                    <div class="col-lg-12">
+                                        <span style="padding:5px;">
+                                            <strong>Ngày tạo:</strong>
+                                            <field name="create_date" readonly="True" force_save="True"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Tạo bởi:</strong>
+                                            <field name="create_by" readonly="True" force_save="True"
+                                                   options="{'no_open':True,}"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Phòng ban:</strong>
+                                            <field name="department_create_by" readonly="True" force_save="True"
+                                                   options="{'no_open':True,}"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Ngày sửa:</strong>
+                                            <field name="write_date" readonly="True" force_save="True"/>
+                                        </span>
+                                        <span style="padding:5px;">
+                                            <strong>Sửa bởi:</strong>
+                                            <field name="write_uid" readonly="True" force_save="True"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_case_content_kanban_view">
+            <field name="name">Nội dung khiếu nại</field>
+            <field name="model">crm.content.complain</field>
+            <field name="arch" type="xml">
+                <kanban>
+                    <!--                                        <field name="crm_case" invisible="True"/>-->
+                    <!--                                        <field name="complain_group_id"/>-->
+                    <!--                                        <field name="complain_id"/>-->
+                    <!--                                        <field name="receive_source"/>-->
+                    <!--                                        <field name="product_ids" widget="many2many_tags"/>-->
+                    <!--                                        <field name="department_ids" widget="many2many_tags"/>-->
+                    <!--                                        <field name="priority"/>-->
+                    <!--                                        <field name="desc" required="True"/>-->
+                    <!--                                        <field name="solution" required="True"/>-->
+                    <!--                                        <field name="stage" required="True"/>-->
+                    <!--                                        <field name="brand_sla" invisible="True"/>-->
+                    <!--                                        <field name="cskh_sla" invisible="True"/>-->
+                    <!--                                        <field name="branch_sla" invisible="True"/>-->
+                    <!--                                        <field name="note"/>-->
+                    <templates>
+                        <t t-name="kanban-box">
+                            <div class="oe_kanban_global_click o_kanban_full">
+                                <div class="oe_kanban_details">
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <div>
+                                                    <label>Nhóm khiếu nại:</label>
+                                                    <strong>
+                                                        <field name="complain_group_id"/>
+                                                    </strong>
+                                                </div>
+                                                <div>
+                                                    <label>Mã chi tiết:</label>
+                                                    <strong>
+                                                        <field name="complain_id"/>
+                                                    </strong>
+                                                </div>
+
+                                                <div>
+                                                    <!--    Trạng thái -->
+                                                    <label>Trạng thái:</label>
+                                                    <strong t-att-class="record.stage.raw_value == 'complete' ? 'text-success' : ''">
+                                                        <field name="stage"/>
+                                                    </strong>
+                                                </div>
+
+                                                <div>
+                                                    <label>Độ ưu tiên:</label>
+                                                    <strong>
+                                                        <field name="priority"/>
+                                                    </strong>
+                                                </div>
+
+                                                <div>
+                                                    <label>
+                                                        <strong>Sản phẩm/Dịch vụ:</strong>
+                                                    </label>
+                                                    <field name="product_ids"
+                                                           widget="kanban.many2many_tags"/>
+                                                </div>
+
+                                                <div>
+                                                    <label>
+                                                        <strong>Phòng ban:</strong>
+                                                    </label>
+                                                    <field name="department_ids"
+                                                           widget="kanban.many2many_tags"/>
+                                                </div>
+
+                                                <!--                                                                    <div>-->
+                                                <!--                                                                        &lt;!&ndash; SLA Brand &ndash;&gt;-->
+                                                <!--                                                                        <label>SLA Brand:</label>-->
+                                                <!--                                                                        &lt;!&ndash;                                                                        <strong class="btn btn-danger btn-radius">&ndash;&gt;-->
+                                                <!--                                                                        <field name="brand_sla"/>-->
+                                                <!--                                                                        &lt;!&ndash;                                                                        </strong>&ndash;&gt;-->
+                                                <!--                                                                    </div>-->
+
+                                            </div>
+
+                                            <div class="col-3">
+                                                <label>
+                                                    <strong>Nội dung phản ánh:</strong>
+                                                </label>
+                                                <field name="desc" widget="html"/>
+                                            </div>
+
+                                            <div class="col-3">
+                                                <div>
+                                                    <label>
+                                                        <strong>Giải pháp:</strong>
+                                                    </label>
+
+                                                    <field name="solution" widget="html"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-3">
+                                                <div>
+                                                    <label>
+                                                        <strong>Ghi chú:</strong>
+                                                    </label>
+                                                    <field name="note" widget="html"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </templates>
+                </kanban>
+            </field>
+        </record>
+
+        <record id="crm_base_view_case_content_search" model="ir.ui.view">
+            <field name="name">search.case.content</field>
+            <field name="model">crm.content.complain</field>
+            <field name="arch" type="xml">
+                <search string="Search Case">
+                    <field name="crm_case" string="Tên Case"/>
+                    <field name="code_crm_case" string="ID Case"/>
+                    <field name="partner_id" string="Khách hàng"/>
+                    <separator/>
+                    <group expand="0" string="Group By">
+                        <filter string="Tên Case" name="case" context="{'group_by':'crm_case'}"/>
+                        <filter string="ID Case" name="id_case" context="{'group_by':'code_crm_case'}"/>
+                        <!--                        <filter string="Khách hàng" name="partner" context="{'group_by':'partner_id'}"/>-->
+                        <filter string="Nhóm khiếu nại" name="complain_group"
+                                context="{'group_by':'complain_group_id'}"/>
+                        <filter string="Khiếu nại chi tiết" name="complain" context="{'group_by':'complain_id'}"/>
+                        <filter string="Mức độ ưu tiên" name="priority" context="{'group_by':'priority'}"/>
+                        <filter string="Trạng thái" name="stage" context="{'group_by':'stage'}"/>
+                        <filter string="Thương hiệu" name="brand" context="{'group_by':'brand_id'}"/>
+                        <filter string="Chi nhánh" name="company" context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_content_complain_case_view" model="ir.actions.act_window">
+            <field name="name">Nội dung khiếu nại</field>
+            <field name="res_model">crm.content.complain</field>
+            <field name="view_mode">tree,kanban,form</field>
+            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <record id="action_complain_case_view" model="ir.actions.act_window">
+            <field name="name">Case khiếu nại</field>
+            <field name="res_model">crm.case</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+            <field name="context">{}</field>
+        </record>
+
+        <menuitem id="crm_menu_case_complain"
+                  name="Khiếu nại"
+                  parent="crm.crm_menu_root"
+                  sequence="6"/>
+
+        <menuitem id="crm_menu_case"
+                  name="Case khiếu nại"
+                  parent="crm_menu_case_complain"
+                  action="action_complain_case_view"
+                  sequence="0"/>
+
+        <menuitem id="crm_menu_case_content"
+                  name="Nội dung khiếu nại"
+                  parent="crm_menu_case_complain"
+                  action="action_content_complain_case_view"
+                  sequence="2"/>
+
+        <menuitem id="crm_menu_complain"
+                  name="Khiếu nại chi tiết"
+                  parent="crm_menu_case_complain"
+                  action="action_complain_view"
+                  sequence="5"/>
+
+        <menuitem id="crm_menu_complain_group"
+                  name="Nhóm khiếu nại"
+                  parent="crm_menu_case_complain"
+                  action="action_complain_group_view"
+                  sequence="10"/>
+
+        <template id="content_complain_information">
+            <t t-call="web.external_layout">
+                <div class="page" style="font-family:Times New Roman;font-size:14px;">
+                    <div class="oe_structure"/>
+                    <div class="col-12 text-center mt16 mb16" style="font-family:Times New Roman;font-weight:bolder;">
+                        <div style="font-size: 25px;" class="text-center">THÔNG TIN KHÁCH HÀNG KHIẾU NẠI</div>
+<!--                        <div class="text-center"><i><span t-field="o.crm_case.name"/></i></div>-->
+                        <div class="text-center"><i>Mã Case : <span t-field="o.code_crm_case"/></i></div>
+                    </div>
+                    <table class="table mt-3 border border-dark">
+                        <tr class="text-center border border-dark align-middle">
+                            <td colspan="2"  style="font-family:Times New Roman;font-weight:bolder;">Nội dung tiếp nhận từ Sale Marketing</td>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Họ và tên KH</td>
+                            <td class=" border border-dark"><span t-field="o.partner_id.name"/>-<span t-field="o.phone_partner"/></td>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Tên Case</td>
+                            <td class=" border border-dark"><span t-field="o.crm_case.name"/></td>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Dịch vụ thực hiện/ tư vấn</td>
+                            <t t-if="o.product_ids">
+                                <td class=" border border-dark"><span t-esc="', '.join(o.product_ids.mapped('name'))"/></td>
+                            </t>
+                            <t t-else="">
+                                <td class=" border border-dark"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Ngày làm/ tư vấn</td>
+                            <t t-if="o.product_ids">
+                                <td class=" border border-dark"/>
+                            </t>
+                            <t t-else="">
+                                <td class=" border border-dark"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Ngày phản ánh</td>
+                            <td class=" border border-dark"><span t-field="o.create_date"/></td>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Tỉnh thành</td>
+                            <t t-if="o.booking_id.state_id">
+                                <td class=" border border-dark"><span t-field="o.booking_id.state_id.name"/></td>
+                            </t>
+                            <t t-else="">
+                                <td class=" border border-dark"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Nguồn</td>
+                            <t t-if="o.booking_id.source_id">
+                                <td class=" border border-dark"><span t-field="o.booking_id.source_id.name"/></td>
+                            </t>
+                            <t t-else="">
+                                <td class=" border border-dark"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Chi nhánh</td>
+                            <t t-if="o.booking_id.company_id.code">
+                                <td class=" border border-dark"><span t-field="o.booking_id.company_id.name"/> - <span t-field="o.booking_id.company_id.code"/></td>
+                            </t>
+                            <t t-else="">
+                                <td class=" border border-dark"><span t-field="o.booking_id.company_id.name"/></td>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Facebook</td>
+                            <t t-if="o.booking_id.facebook_acc">
+                                <td class=" border border-dark"><span t-field="o.booking_id.facebook_acc"/></td>
+                            </t>
+                            <t t-else="">
+                                <td class=" border border-dark"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Tình trạng hiện tại</td>
+                            <t t-if="o.desc">
+                                <td class=" border border-dark"><span t-field="o.desc"/></td>
+                            </t>
+                            <t t-else="">
+                                <td class=" border border-dark"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Yêu cầu của KH</td>
+<!--                            <t t-if="o.desc">-->
+<!--                                <td class=" border border-dark"><span t-field="o.desc"/></td>-->
+<!--                            </t>-->
+<!--                            <t t-else="">-->
+<!--                                <td class=" border border-dark"/>-->
+<!--                            </t>-->
+                            <td class=" border border-dark"/>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Bước đầu xử lý</td>
+                            <t t-if="o.solution">
+                                <td class=" border border-dark"><span t-field="o.solution"/></td>
+                            </t>
+                            <t t-else="">
+                                <td class=" border border-dark"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Ghi chú</td>
+                            <t t-if="o.note">
+                                <td class=" border border-dark"><span t-field="o.note"/></td>
+                            </t>
+                            <t t-else="">
+                                <td class=" border border-dark"/>
+                            </t>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Đánh giá của NV</td>
+                            <td class=" border border-dark"><span t-field="o.priority"/></td>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Người tiếp nhận</td>
+                            <td class=" border border-dark"><span t-field="o.create_uid"/></td>
+                        </tr>
+                        <tr class="text-center border border-dark align-middle">
+                            <td colspan="2"  style="font-family:Times New Roman;font-weight:bolder;">Nội dung cơ sở phản hồi</td>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Ngày tương tác KH</td>
+                            <td class=" border border-dark"/>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Ngày hẹn xử lý</td>
+                            <td class=" border border-dark"/>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Nguyên nhân</td>
+                            <td class=" border border-dark"/>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Nhân viên/nhóm chịu trách nhiệm</td>
+                            <td class=" border border-dark"/>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">QL chịu trách nhiệm</td>
+                            <td class=" border border-dark"/>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Phương án xử lý ban đầu</td>
+                            <td class=" border border-dark"/>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Phương án xử lý cuối cùng</td>
+                            <td class=" border border-dark"/>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Yêu cầu khác (nếu có)</td>
+                            <td class=" border border-dark"/>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Tình trạng KH sau xử lý</td>
+                            <td class=" border border-dark"/>
+                        </tr>
+                        <tr>
+                            <td class=" border border-dark" width="23%">Người chịu trách nhiệm chăm sóc/theo dõi</td>
+                            <td class=" border border-dark"/>
+                        </tr>
+
+
+                    </table>
+
+
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+
+        <template id="content_complain_information_sheet">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="o">
+                    <t t-call="crm_base.content_complain_information"/>
+                </t>
+            </t>
+        </template>
+
+        <report
+                string="IN THÔNG TIN KHIẾU NẠI"
+                id="action_print_content_complain_information"
+                model="crm.content.complain"
+                report_type="qweb-pdf"
+                name="crm_base.content_complain_information_sheet"
+                file="crm_base.content_complain_information_sheet"
+                paperformat="crm_base.paper_format_crm"
+                menu="True"
+        />
+
+    </data>
+</odoo>

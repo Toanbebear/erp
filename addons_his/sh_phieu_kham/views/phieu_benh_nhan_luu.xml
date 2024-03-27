@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+<!--        <record id="phieu_benh_nhan_luu_filter" model="ir.ui.view">-->
+<!--            <field name="name">Bệnh nhân lưu</field>-->
+<!--            <field name="model">sh.medical.inpatient</field>-->
+<!--            <field name="type">search</field>-->
+<!--            <field name="arch" type="xml">-->
+
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="phieu_benh_nhan_luu_tree" model="ir.ui.view" >
+            <field name="name">Bệnh nhân lưu</field>
+            <field name="model">sh.medical.inpatient</field>
+            <field name="type">tree</field>
+            <field name="priority">100</field>
+            <field name="arch" type="xml">
+                <tree class="sh_has_icon tree_no_open" delete="false" string='Inpatient Admission'
+                      decoration-info="state=='Draft'" decoration-danger="state=='Hospitalized'"
+                      decoration-success="state=='Discharged'"
+                      decoration-muted="state=='Cancelled'"
+                      editable="bottom">
+                    <field name="walkin" optional="hide" readonly="1" force_save="1"/>
+                    <field name="id" invisible="1"/>
+                    <field name="name"/>
+                    <field name="patient" class="text-uppercase"/>
+<!--                    <field name="admission_type" invisible="1"/>-->
+                    <field name="institution"
+                           domain="[('id', 'in', parent.allow_institutions)]"
+                           options="{'no_create': True,'no_open': True}"/>
+                    <field name="ward" options="{'no_create': True,'no_open': True}"/>
+                    <field string="Phòng" name="room"
+                           options="{'no_create': True,'no_open':True}"
+                           attrs="{'readonly':[('state','!=','Draft')]}"/>
+                    <field name="bed" options="{'no_create': True,'no_open': True}"
+                           domain="[('state','=','Free'),('room','=',room)]"/>
+                    <field name="services" options="{'no_create': True,'no_open': True}"
+                           widget="many2many_tags"
+                           attrs="{'readonly': [('state','in',['Invoiced','Discharged','Cancelled'])]}"
+                           domain="[('id', 'in', parent.service)]"/>
+                    <field name="admission_date"/>
+                    <field name="discharge_date"/>
+                    <field name="state"/>
+                    <button name="view_detail_inpatient" groups="shealth_all_in_one.group_sh_medical_physician_surgery"
+                            type="object" icon="fa-file-text-o"
+                            title="Chi tiết"/>
+                    <button attrs="{'invisible': ['|',('state','!=','Draft'),('id','=',False)]}" class="oe_edit_only"
+                            name="unlink" type="object" icon="fa-trash-o" title="Xóa"/>
+                </tree>
+            </field>
+        </record>
+
+<!--        <record id="phieu_benh_nhan_luu_form" model="ir.ui.view">-->
+<!--            <field name="name">Bệnh nhân lưu</field>-->
+<!--            <field name="model">sh.medical.inpatient</field>-->
+<!--            <field name="type">form</field>-->
+<!--            <field name="arch" type="xml">-->
+
+<!--            </field>-->
+<!--        </record>-->
+
+        <record id="phieu_benh_nhan_luu_action" model="ir.actions.act_window">
+            <field name="name">Bệnh nhân lưu</field>
+            <field name="res_model">sh.medical.inpatient</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),(0, 0, {'view_mode': 'tree', 'view_id': ref('phieu_benh_nhan_luu_tree')})]"/>
+<!--            <field name="view_ids"-->
+<!--                   eval="[(5, 0, 0),-->
+<!--                          (0, 0, {'view_mode': 'tree', 'view_id': ref('phieu_benh_nhan_luu_tree')}),-->
+<!--                          (0, 0, {'view_mode': 'form', 'view_id': ref('phieu_benh_nhan_luu_form')})]"/>-->
+<!--            <field name="search_view_id" ref="phieu_benh_nhan_luu_filter"/>-->
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Chưa có Bệnh nhân lưu
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="survey_question_view_form_inherit" model="ir.ui.view">
+            <field name="name">survey_question_view_form_inherit</field>
+            <field name="model">survey.question</field>
+            <field name="inherit_id" ref="survey.survey_question_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='questions_selection']" position="after">
+                    <field name="service_room_page" attrs="{'invisible': [('is_page', '=', False)]}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

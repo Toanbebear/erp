@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="inherit_view_form_payment_crm_required_crm" model="ir.ui.view">
+            <field name="name">inherit_view_form_payment_crm_required_crm</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="crm_base.view_form_payment_crm"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_id']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('state','!=','draft'),('crm_id','!=',False)], 'required':[('partner_type', '!=', 'supplier')]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

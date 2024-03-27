@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="collaborator_account_view_form" model="ir.ui.view">
+            <field name="name">collaborator.account.view.form</field>
+            <field name="model">collaborator.account</field>
+            <field name="arch" type="xml">
+                <form create="false">
+                    <sheet>
+                        <group string="Thông tin">
+                            <group>
+                                <field name="collaborator_id"/>
+                                <field name="contract_id"/>
+                                <field name="amount_total"/>
+                                <field name="amount_used"/>
+                                <field name="amount_remain"/>
+                                <field name="company_id"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="collaborator_account_view_tree" model="ir.ui.view">
+            <field name="name">collaborator.account.view.tree</field>
+            <field name="model">collaborator.account</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc">
+                    <field name="collaborator_id"/>
+                    <field name="contract_id"/>
+                    <field name="company_id"/>
+                    <field name="amount_total"/>
+                    <field name="amount_used"/>
+                    <field name="amount_remain"/>
+                    <field name="currency_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="collaborator_account_view_search" model="ir.ui.view">
+            <field name="name">collaborator.account.view.search</field>
+            <field name="model">collaborator.account</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm tài khoản">
+<!--                    <field name="default_code" string="Mã hợp đồng"/>-->
+                    <field name="collaborator_id" string="Cộng tác viên"/>
+                    <group>
+<!--                        <filter string="Tên cộng tác viên" name="group_collaborator"-->
+<!--                                context="{'group_by': 'collaborator_id'}"/>-->
+<!--                        <filter string="Công ty" name="group_company_id" context="{'group_by': 'company_id'}"/>-->
+<!--                        <filter string="Trạng Thái" name="group_stage" context="{'group_by': 'stage'}"/>-->
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="collaborator_account_action" model="ir.actions.act_window">
+            <field name="name">Tài khoản</field>
+            <field name="res_model">collaborator.account</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="collaborator_account_view_search"/>
+        </record>
+    </data>
+</odoo>

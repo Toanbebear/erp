@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="crm_discount_program_form">
+            <field name="name">Coupons</field>
+            <field name="model">crm.discount.program</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                        <field name="stage_prg" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <field name="active" groups="base.group_erp_manager"/>
+                        <div class="oe_title">
+                            <label for="name" string="Name" style="color: #002050;font-size: 25px;"/>
+                            <h1>
+                                <field name="name" placeholder="Describe the program..." required="True"/>
+                            </h1>
+                            <h2>
+                                <field name="code" readonly="1" force_save="True"/>
+                            </h2>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="brand_id" required="True" options='{"no_open": True, "no_create": True}'/>
+                                <field name="company_ids" widget="many2many_tags" string="Chi nhánh"
+                                       placeholder="if the branch field has no value, it applies to all branches of the brand by default"
+                                       options='{"no_open": True, "no_create": True}'
+                                       domain="[('id', 'in', allowed_company_ids),('brand_id','=',brand_id)]"/>
+                                <field name="campaign_id" options='{"no_open": True, "no_create": True}'
+                                       required="True"/>
+                                <field name="coupon_type" required="True"/>
+                                <!--                                <field name="type_service" required="True"/>-->
+                            </group>
+                            <group>
+                                <field name="start_date" required="True" force_save="True"/>
+                                <field name="end_date" required="True" force_save="True"/>
+                                <field name="loyalty_active"/>
+                            </group>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_discount_program_tree">
+            <field name="name">Coupons</field>
+            <field name="model">crm.discount.program</field>
+            <field name="arch" type="xml">
+                <tree default_order="start_date" decoration-muted="stage_prg =='expire'">
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="brand_id"/>
+                    <field name="campaign_id"/>
+                    <field name="start_date"/>
+                    <field name="end_date"/>
+                    <field name="stage_prg"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_discount_program_search_view">
+            <field name="name">Coupon</field>
+            <field name="model">crm.discount.program</field>
+            <field name="arch" type="xml">
+                <search string="Coupon...">
+                    <separator orientation="vertical"/>
+                    <field name="name" string="Tên" select="1"/>
+                    <field name="code" string="Mã" select="1"/>
+                    <field name="campaign_id" string="Chiến dịch" select="1"/>
+                    <filter string="Trạng thái Mới" name="stage_prg_new" domain="[('stage_prg', '=', 'new')]"/>
+                    <filter string=" Trạng thái Có hiệu lực" name="stage_prg_active" domain="[('stage_prg', '=', 'active')]"/>
+                    <filter string="Trạng thái Hết hiệu lực" name="stage_prg_expire" domain="[('stage_prg', '=', 'expire')]"/>
+                    <group expand="0" string="Nhóm theo..." colspan="11" col="11">
+                        <filter name="group_stage" string="Trạng thái" context="{'group_by':'stage_prg'}"/>
+                        <filter name="group_brand" string="Thương hiệu" context="{'group_by':'brand_id'}"/>
+                        <filter name="group_campaign" string="Chiến dịch"
+                                context="{'group_by':'campaign_id'}"/>
+                        <filter name="group_program_month" string="Thời gian"
+                                context="{'group_by':'start_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="open_discount_program" model="ir.actions.act_window">
+            <field name="name">Coupons</field>
+            <field name="view_mode">tree,form</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.discount.program</field>
+            <field name="domain">[('brand_id.company_ids', 'in', allowed_company_ids)]</field>
+            <field name="context">{'search_default_stage_prg_new': 1,'search_default_stage_prg_active': 1}</field>
+        </record>
+
+<!--        <menuitem id="menu_crm_discount"-->
+<!--                  name="Khuyến mại"-->
+<!--                  parent="crm.crm_menu_root"-->
+<!--                  sequence="7"-->
+<!--        />-->
+<!--        <menuitem id="tab_discount_program"-->
+<!--                  name="Chương trình khuyến mại"-->
+<!--                  parent="menu_crm_discount"-->
+<!--                  sequence="1"/>-->
+<!--        <menuitem id="menu_crm_discount_program"-->
+<!--                  name="Chương trình khuyến mại"-->
+<!--                  parent="tab_discount_program"-->
+<!--                  action="open_discount_program"-->
+<!--                  sequence="1"-->
+<!--        />-->
+
+    </data>
+</odoo>

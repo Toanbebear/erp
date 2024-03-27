@@ -1,0 +1,559 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!--    PHIẾU TƯ VẤN DỊCH VỤ -->
+    <template id="report_sh_medical_assign_patient_services_advisory_document">
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].patient.partner_id.lang})"/>
+            <t t-set="o" t-value="o.with_user(1)"/>
+            <div class="page" style="font-family:Times New Roman;font-size:18px;">
+                <div class="oe_structure"/>
+                <div class="row mt32 mb32">
+                    <div class="col-5" style="font-size:18px;">
+                        <img t-if="o.institution.image_256" t-att-src="image_data_uri(o.institution.image_256)"
+                             width="225" border="1"/>
+                        <div class="m-0" t-field="o.institution.company_name"
+                             style="text-transform: uppercase;font-weight:bold;"/>
+                    </div>
+                    <div class="col-7 text-center">
+                        <div style="font-size: 29px;">
+                            <b>PHIẾU TƯ VẤN DỊCH VỤ</b>
+                        </div>
+                        <div>Mã Booking:
+                            <strong><i t-field="o.booking_id.name"/></strong>
+                        </div>
+                        <div>
+                            <i t-esc="o.date.strftime('Ngày %d tháng %m năm %Y')"/>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="font-size:23px;font-weight:bold;">I. Thông tin khách hàng</div>
+                <t t-if="o.patient">
+                    <div class="col-12">
+                        <span>Mã BN:</span>
+                        <b t-field="o.patient.code_customer"/>
+                    </div>
+                    <div class="col-12">
+                        <span>Họ và tên:</span>
+                        <b style="text-transform: uppercase;" class="mr-3" t-field="o.patient.name"/>
+                        <span>Ngày/tháng/năm sinh:</span>
+                        <t t-if="o.patient.birth_date">
+                            <b t-esc="o.patient.birth_date.strftime('%d/%m/%Y')" class="mr-3"/>
+                        </t>
+                        <t t-else="">
+                            <span>..........................</span>
+                        </t>
+                        <span>Giới tính:</span>
+                        <b t-field="o.patient.gender"/>
+                    </div>
+                    <div class="col-12">
+                        <span>Chiều cao:</span>
+                        <t t-if="o.height != 0">
+                          <b t-field="o.height"/>
+                        </t>
+                        <t t-else="">
+                          <b>.............</b>
+                        </t>
+                        <span class="mr-5">cm</span>
+                        <span>Cân nặng:</span>
+                        <t t-if="o.weight != 0">
+                          <b t-field="o.weight"/>
+                        </t>
+                        <t t-else="">
+                          <b>.............</b>
+                        </t>
+                        <span class="mr-5">kg</span>
+                        <span>BMI:</span>
+                        <t t-if="o.bmi != 0">
+                          <b class="mr-5" t-field="o.bmi"/>
+                        </t>
+                        <t t-else="">
+                          <b>.............</b>
+                        </t>
+
+                    </div>
+                    <div class="col-12">
+                        <span>Địa chỉ:</span>
+                        <span t-field="o.patient.street"/>,
+                        <span t-field="o.patient.state_id.name"/>,
+                        <span t-field="o.patient.country_id.name"/>
+                    </div>
+
+                    <div class="col-12">
+                        <span>CMND/CCCD:</span>
+                        <t t-if="o.patient.partner_id.pass_port">
+                          <b class="mr-5" t-field="o.patient.partner_id.pass_port"/>
+                        </t>
+                        <t t-else="">
+                          <b>......................................</b>
+                        </t>
+
+                        <span>Ngày cấp:</span>
+                        <t t-if="o.patient.partner_id.pass_port_date">
+                          <span t-field="o.patient.partner_id.pass_port_date" class="mr-5"/>
+                        </t>
+                        <t t-else="">
+                          <b>......................................</b>
+                        </t>
+
+                        <span>Nơi cấp:</span>
+                        <t t-if="o.patient.partner_id.pass_port_issue_by">
+                            <span t-field="o.patient.partner_id.pass_port_issue_by"/>
+                        </t>
+                        <t t-else="">
+                          <b>......................................</b>
+                        </t>
+                    </div>
+                </t>
+
+                <div style="font-weight:bold;" class="mt32">II. Dịch vụ thực hiện</div>
+                <table class="table border border-dark text-center">
+                    <thead>
+                        <tr>
+                            <th class="border border-dark align-middle">
+                                <strong>STT</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Tên dịch vụ</strong>
+                            </th>
+                            <!--                            <th class="border border-dark align-middle">-->
+                            <!--                                <strong>Tình trạng hiện tại của khách hàng</strong>-->
+                            <!--                            </th>-->
+                            <!--                            <th class="border border-dark align-middle">-->
+                            <!--                                <strong>Mong muốn của khách hàng</strong>-->
+                            <!--                            </th>-->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-if="o.list_advisory_services">
+                            <t t-set="i" t-value="0"/>
+                            <t t-foreach="o.list_advisory_services" t-as="line">
+                                <t t-set="i" t-value="i + 1"/>
+                                <tr t-if="line">
+                                    <td class="border border-dark text-center align-middle">
+                                        <t t-esc="i"/>
+                                    </td>
+                                    <td class="border border-dark text-left align-middle">
+                                        <span t-field="line.service_advisory.name"/>
+                                    </td>
+                                    <!--                                    <td class="border border-dark align-middle">-->
+                                    <!--                                        <span t-field="line.current_state"/>-->
+                                    <!--                                    </td>-->
+                                    <!--                                    <td class="border border-dark align-middle">-->
+                                    <!--                                        <span t-field="line.desire"/>-->
+                                    <!--                                    </td>-->
+                                </tr>
+                            </t>
+                        </t>
+                    </tbody>
+                </table>
+
+                <!--            <div style="font-size:23px;font-weight:bold;" class="mt32">III. Xác nhận thông tin đã tư vấn cho khách hàng</div>-->
+                <!--            <table class="table border border-dark text-center">-->
+                <!--                <thead>-->
+                <!--                    <tr>-->
+                <!--                        <th class="border border-dark align-middle"><strong>STT</strong></th>-->
+                <!--                        <th class="border border-dark align-middle"><strong>Nội dung</strong></th>-->
+                <!--                        <th class="border border-dark align-middle"><strong>Có</strong></th>-->
+                <!--                        <th class="border border-dark align-middle"><strong>Không</strong></th>-->
+                <!--                    </tr>-->
+                <!--                </thead>-->
+                <!--                <tbody>-->
+                <!--                    <tr>-->
+                <!--                        <td class="border border-dark text-center align-middle">1</td>-->
+                <!--                        <td class="border border-dark text-left align-middle">Mức độ cải thiện</td>-->
+                <!--                        <t t-if="o.level_of_improvement">-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                        </t>-->
+                <!--                        <t t-else="">-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                        </t>-->
+                <!--                    </tr>-->
+                <!--                    <tr>-->
+                <!--                        <td class="border border-dark text-center align-middle">2</td>-->
+                <!--                        <td class="border border-dark text-left align-middle">Chi phí dịch vụ</td>-->
+                <!--                        <t t-if="o.service_costs">-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                        </t>-->
+                <!--                        <t t-else="">-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                        </t>-->
+                <!--                    </tr>-->
+                <!--                    <tr>-->
+                <!--                        <td class="border border-dark text-center align-middle">3</td>-->
+                <!--                        <td class="border border-dark text-left align-middle">Chi phí phát sinh khác: tiền giường khi ở lại bệnh viện, tiền giường người nhà…</td>-->
+                <!--                        <t t-if="o.other_costs_incurred">-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                        </t>-->
+                <!--                        <t t-else="">-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                        </t>-->
+                <!--                    </tr>-->
+                <!--                    <tr>-->
+                <!--                        <td class="border border-dark text-center align-middle">4</td>-->
+                <!--                        <td class="border border-dark text-left align-middle">Chế độ bảo hành và phiếu bảo hành</td>-->
+                <!--                        <t t-if="o.warranty">-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                        </t>-->
+                <!--                        <t t-else="">-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                        </t>-->
+                <!--                    </tr>-->
+                <!--                    <tr>-->
+                <!--                        <td class="border border-dark text-center align-middle">5</td>-->
+                <!--                        <td class="border border-dark text-left align-middle">Giấy ra viện</td>-->
+                <!--                        <t t-if="o.hospital_checkout">-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                        </t>-->
+                <!--                        <t t-else="">-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                        </t>-->
+                <!--                    </tr>-->
+                <!--                    <tr>-->
+                <!--                        <td class="border border-dark text-center align-middle">6</td>-->
+                <!--                        <td class="border border-dark text-left align-middle">Liệu trình</td>-->
+                <!--                        <t t-if="o.therapy">-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                        </t>-->
+                <!--                        <t t-else="">-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                        </t>-->
+                <!--                    </tr>-->
+                <!--                    <tr>-->
+                <!--                        <td class="border border-dark text-center align-middle">7</td>-->
+                <!--                        <td class="border border-dark text-left align-middle">Chế độ ăn</td>-->
+                <!--                        <t t-if="o.diet">-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                        </t>-->
+                <!--                        <t t-else="">-->
+                <!--                            <td class="border border-dark text-center align-middle"></td>-->
+                <!--                            <td class="border border-dark text-center align-middle"><span class="fa fa-check"></span></td>-->
+                <!--                        </t>-->
+                <!--                    </tr>-->
+                <!--                </tbody>-->
+                <!--            </table>-->
+
+                <div style="font-weight:bold;" class="mt32">III. TÌNH TRẠNG HIỆN TẠI CỦA KHÁCH HÀNG</div>
+                <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                </div>
+
+                <div style="font-weight:bold;" class="mt32">IV. MONG MUỐN CỦA KHÁCH HÀNG</div>
+                <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                </div>
+                <div style="font-weight:bold;" class="mt32">V. THÔNG TIN TƯ VẤN CỦA LỄ TÂN</div>
+                <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                </div>
+
+
+                <!--                <div class="row mt16 mb32">-->
+                <!--                    <div class="col-8"/>-->
+                <!--                    <div class="col-4 text-center">-->
+                <!--                        <div>-->
+                <!--                            <b>Xác nhận lễ tân tư vấn</b>-->
+                <!--                        </div>-->
+                <!--                        <div style="height:120px;"/>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+
+                <!--                <div style="font-weight:bold;" class="mt32">V. THÔNG TIN TƯ VẤN CỦA BÁC SĨ</div>-->
+                <!--                &lt;!&ndash;                <div class="mb32">&ndash;&gt;-->
+                <!--                &lt;!&ndash;                    <span t-field="o.doctor_advice"/>&ndash;&gt;-->
+                <!--                &lt;!&ndash;                </div>&ndash;&gt;-->
+                <!--                <div class="col-12" style="white-space: nowrap;-->
+                <!--                                              width: auto;-->
+                <!--                                              overflow: hidden;-->
+                <!--                                              text-overflow: ellipsis;">-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+
+                <!--                </div>-->
+                <!--                <div style="font-weight:bold;" class="mt32">VI. KẾT LUẬN</div>-->
+                <!--&lt;!&ndash;                <div class="mb32">&ndash;&gt;-->
+                <!--&lt;!&ndash;                    <span t-field="o.conclude"/>&ndash;&gt;-->
+                <!--&lt;!&ndash;                </div>&ndash;&gt;-->
+                <!--                <div class="col-12" style="white-space: nowrap;-->
+                <!--                                              width: auto;-->
+                <!--                                              overflow: hidden;-->
+                <!--                                              text-overflow: ellipsis;">-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+                <!--                    <div>-->
+                <!--                        <t t-esc="'.'*400"/>-->
+                <!--                    </div>-->
+
+                <!--                </div>-->
+
+                <!--                <div class="row">-->
+                <!--                    <div class="col-4 text-center">-->
+                <!--                        <strong>Xác nhận của bác sĩ</strong>-->
+                <!--                        <div style="height:120px;"/>-->
+                <!--                    </div>-->
+                <!--                    <div class="col-4 text-center">-->
+                <!--                        <strong>Xác nhận của điều dưỡng</strong>-->
+                <!--                        <div style="height:40px;"/>-->
+                <!--                    </div>-->
+                <!--                    <div class="col-4 text-center">-->
+                <!--                        <strong>Xác nhận của khách hàng</strong>-->
+                <!--                        <div style="height:40px;"/>-->
+                <!--                        <span class="m-0" style="font-size: 21px;" t-field="o.patient.name"/>-->
+                <!--                    </div>-->
+                <!--                </div>-->
+                <div class="oe_structure"/>
+            </div>
+        </t>
+        <t t-call="web.external_layout">
+            <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].patient.partner_id.lang})"/>
+            <t t-set="o" t-value="o.with_user(1)"/>
+            <div class="page" style="font-family:Times New Roman;font-size:18px;">
+                <div class="oe_structure"/>
+
+                <div style="font-weight:bold;" class="mt32">VI. THÔNG TIN TƯ VẤN CỦA BÁC SĨ</div>
+                <!--                <div class="mb32">-->
+                <!--                    <span t-field="o.doctor_advice"/>-->
+                <!--                </div>-->
+                <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+
+
+                </div>
+                <div style="font-weight:bold;" class="mt32">VII. KẾT LUẬN</div>
+                <!--                <div class="mb32">-->
+                <!--                    <span t-field="o.conclude"/>-->
+                <!--                </div>-->
+                <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+                    <div>
+                        <t t-esc="'.'*400"/>
+                    </div>
+<!--                    <div>-->
+<!--                        <t t-esc="'.'*400"/>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <t t-esc="'.'*400"/>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <t t-esc="'.'*400"/>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <t t-esc="'.'*400"/>-->
+<!--                    </div>-->
+                </div>
+                <br/>
+                <div class="row">
+                    <div class="col-4 text-center">
+                        <strong>Xác nhận của bác sĩ</strong>
+                        <div style="height:70px;"/>
+                    </div>
+                    <div class="col-4 text-center">
+                        <strong>Xác nhận của điều dưỡng</strong>
+                        <div style="height:70px;"/>
+                    </div>
+                    <div class="col-4 text-center">
+                        <strong>Xác nhận của khách hàng</strong>
+                        <div style="height:70px;"/>
+                        <span class="m-0" style="font-size: 21px;" t-field="o.patient.name"/>
+                    </div>
+                </div>
+                <div class="oe_structure"/>
+            </div>
+        </t>
+    </template>
+
+    <!--    PHIẾU TƯ VẤN DỊCH VỤ -->
+    <template id="report_sh_medical_assign_patient_services_advisory">
+        <t t-call="web.html_container">
+            <t t-if="docs">
+                <t t-call="shealth_all_in_one.report_sh_medical_assign_patient_services_advisory_document"
+                   t-lang="docs[0].patient.partner_id.lang"/>
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_phone_call_inherit_add_button_open_ticket" model="ir.ui.view">
+            <field name="name">view_form_phone_call_inherit_add_button_open_ticket</field>
+            <field name="model">crm.phone.call</field>
+            <field name="inherit_id" ref="crm_base.view_form_phone_call"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="action_open_ticket" class="btn-info" string="Mở ticket" type="object"/>
+                </xpath>
+                 <xpath expr="//header" position="inside">
+                    <button name="view_customer_persona" class="btn-info" string="Xem chân dung khách hàng" type="object"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

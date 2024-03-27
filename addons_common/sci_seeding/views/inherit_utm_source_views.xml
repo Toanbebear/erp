@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data>
+		<record id="seeding_utm_source_add_field_sync" model="ir.ui.view">
+			<field name="model">utm.source</field>
+			<field name="inherit_id" ref="crm_base.view_form_utm_source_crm"/>
+			<field name="arch" type="xml">
+				<xpath expr="//field[@name='extend_source']" position="after">
+					<field name="check_sync_seeding" groups="base.group_no_one"/>
+					<field name="check_sync_ctv" groups="base.group_no_one"/>
+				</xpath>
+			</field>
+		</record>
+	</data>
+</odoo>

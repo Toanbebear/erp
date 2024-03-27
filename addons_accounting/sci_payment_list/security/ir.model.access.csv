@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+UID_payment_list_account,name_payment_list_account,model_payment_list,shealth_all_in_one.group_sh_medical_accountant,1,1,1,0
+UID_payment_list_manager,name_payment_list_manager,model_payment_list,crm_base.manager_customer_service,1,1,1,1

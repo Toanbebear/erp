@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="pain_point_and_desires_partner" model="ir.ui.view">
+            <field name="name">customer_persona_view_inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='personal_information']/field[@name='year_of_birth']" position="after">
+                    <field name="marital_status"/>
+                </xpath>
+                <xpath expr="//group[@name='personal_information']/field[@name='email']" position="after">
+                    <field name="acc_facebook" widget="url" placeholder="https://www.facebook.com/..."
+                           string="Facebook"/>
+                    <field name="acc_zalo" placeholder="0123456789/Nguyễn Văn A" string="Zalo"/>
+                </xpath>
+
+                <xpath expr="//sheet/group" position="inside">
+                    <group>
+                        <group name="style_of_life" string="Phong cách sống" colspan="2">
+                            <field name="hobby" widget="many2many_tags" string="Sở thích"/>
+                            <field name="revenue_source" string="Tài chính/Thu nhập"/>
+                            <field name="term_goals" string="Mục tiêu"/>
+                            <field name="social_influence" string="Ảnh hưởng xã hội"/>
+                            <field name="behavior_on_the_internet" string="Hành vi trên Internet"/>
+                            <field name="affected_by" string="Bị tác động bởi ..."/>
+                        </group>
+                        <group name="daily_activities" string="Hoạt động hàng ngày" colspan="2">
+                            <div>
+                                <label for="work_start_time" string="Khung giờ làm việc"
+                                       style="font-weight: bold !important ;width:45%"/>
+                                <field name="work_start_time" style="width:15%" widget="float_time"/>
+                                <label for="work_end_time" string="-"
+                                       style="font-weight: bold !important ;width:5%"/>
+                                <field name="work_end_time" style="width:15%" widget="float_time"/>
+                            </div>
+                            <br/>
+                            <div>
+                                <label for="break_start_time" string="Khung giờ nghỉ trưa"
+                                       style="font-weight: bold !important ;width:45%"/>
+                                <field name="break_start_time" style="width:15%" widget="float_time"/>
+                                <label for="break_end_time" string="-"
+                                       style="font-weight: bold !important ;width:5%"/>
+                                <field name="break_end_time" style="width:15%" widget="float_time"/>
+                            </div>
+                            <br/>
+                            <div>
+                                <label for="transport" string="Phương thức di chuyển"
+                                       style="font-weight: bold !important; width:45%"/>
+                                <field name="transport" style="width:50%"/>
+                            </div>
+                        </group>
+                    </group>
+                </xpath>
+                <xpath expr="//page[1]" position="before">
+                    <page name="pain_point_and_desires" string="Mong muốn &amp; Điểm đau" autofocus="autofocus">
+                        <div>
+                            <label for="desires" string="Mong muốn" style="color: #2ecc71;font-size: 25px;"
+                                   class="fa fa-smile-o"/>
+                            <br/>
+                            <field name="desires"
+                                   context="{'default_partner_id':id, 'default_type':'desires'}">
+                                <tree editable="top">
+                                    <field name="partner_id" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="name" width="50%" required="True"/>
+                                    <field name="create_on" width="5%" readonly="1"/>
+                                    <field name="create_by" width="10%" readonly="1"/>
+                                    <field name="create_by_department" width="10%" readonly="1"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <div>
+                            <label for="pain_point" string="Điểm đau" style="color: #d35400;font-size: 25px;"
+                                   class="fa fa-frown-o"/>
+                            <field name="pain_point"
+                                   context="{'default_partner_id':id, 'default_type':'pain_point'}">
+                                <tree editable="top">
+                                    <field name="partner_id" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="name" width="50%" required="True"/>
+                                    <field name="solution" width="50%"/>
+                                    <field name="create_on" width="5%" readonly="1"/>
+                                    <field name="create_by" width="10%" readonly="1"/>
+                                    <field name="create_by_department" width="10%" readonly="1"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+        <record id="partner_extend" model="ir.ui.view">
+            <field name="name">Chân dung khách hàng</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//page[1]" position="before">
+                    <page name="customer_persona_page" string="Chân dung khách hàng" autofocus="autofocus">
+                        <group name="other">
+                            <group name="other_1">
+                                <field name="overseas_vietnamese"/>
+<!--                                <field name="marital_status" attrs="{'invisible':[('marital_status', '=',False)]}"/>-->
+                                <field name="term_goals" attrs="{'invisible':[('marital_status', '=',False)]}"/>
+                                <field name="behavior_on_the_internet" attrs="{'invisible':[('marital_status', '=',False)]}"/>
+                                <field name="affected_by" attrs="{'invisible':[('marital_status', '=',False)]}"/>
+                            </group>
+                            <group name="other_2">
+                                <field name="acc_facebook"/>
+                                <field name="acc_zalo"/>
+                            </group>
+                        </group>
+                        <div>
+                            <label for="desires" string="Mong muốn" style="color: #2ecc71;font-size: 25px;"
+                                   class="fa fa-smile-o"/>
+                            <br/>
+                            <field name="desires"
+                                   context="{'default_partner_id':id, 'default_type':'desires'}">
+                                <tree editable="top">
+                                    <field name="partner_id" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="name" width="50%" required="True"/>
+                                    <field name="create_on" width="5%" readonly="1"/>
+                                    <field name="create_by" width="10%" readonly="1"/>
+                                    <field name="create_by_department" width="10%" readonly="1" invisible="1"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <div>
+                            <label for="pain_point" string="Điểm đau" style="color: #d35400;font-size: 25px;"
+                                   class="fa fa-frown-o"/>
+                            <field name="pain_point"
+                                   context="{'default_partner_id':id, 'default_type':'pain_point'}">
+                                <tree editable="top">
+                                    <field name="partner_id" invisible="1"/>
+                                    <field name="type" invisible="1"/>
+                                    <field name="name" width="50%" required="True"/>
+                                    <field name="solution" width="50%"/>
+                                    <field name="create_on" width="5%" readonly="1"/>
+                                    <field name="create_by" width="10%" readonly="1"/>
+                                    <field name="create_by_department" width="10%" readonly="1" invisible="1"/>
+                                </tree>
+                            </field>
+                        </div>
+                        <div>
+                            <label for="persona" string="Thông tin khác" style="color: #2ecc71;font-size: 25px;"/>
+                            <br/>
+                            <field name="persona"
+                                   context="{'default_partner_id':id}">
+                                <tree editable="top" default_order="create_on desc">
+                                    <field name="partner_id" invisible="1"/>
+                                    <field name="type" required="1" width="5%"/>
+                                    <field name="description" width="50%" required="True"/>
+                                    <field name="create_on" width="5%" readonly="1"/>
+                                    <field name="create_uid" width="5%" readonly="1" string="Nhân sự khai thác"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='pain_point_and_desires']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+        <record id="pain_point_and_desires_partner_extend" model="ir.ui.view">
+            <field name="name">customer_persona_view_inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="customer_persona.pain_point_and_desires_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='marital_status']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='acc_facebook']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='acc_zalo']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//group[@name='style_of_life']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//page[@name='pain_point_and_desires']" position="attributes">
+                    <attribute name="invisible">0</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

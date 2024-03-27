@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="account_report_partner_ledger_view" model="ir.ui.view">
+        <field name="name">Partner Ledger</field>
+        <field name="model">account.report.partner.ledger</field>
+        <field name="inherit_id" ref="accounting_pdf_reports.account_report_partner_ledger_view"/>
+        <field name="arch" type="xml">
+            <data>
+                <xpath expr="//field[@name='amount_currency']" position="after">
+                    <field name="cbcnv"/>
+                </xpath>
+            </data>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="specialty_tool" model="ir.ui.view">
+            <field name="name">specialty_tool</field>
+            <field name="model">sh.medical.specialty</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_specialty_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="state_done" string="Chuyển trạng thái về kết thúc" class="btn-info"
+                            domain="[('state', '=', 'In Progress')]"
+                            type="object" help="Xử lý trường hợp Mở lại phiếu nhưng không trả hàng về kho"
+                            confirm="Bạn chắc chắn muốn dùng chức năng này để chuyển trạng thái phiếu về kết thúc.\nLưu ý: thao tác này KHÔNG sinh phiếu xuất kho"
+                            groups="crm_tool.quyen_xu_ly_lo_duy_nhat_tren_cong_ty"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="surgery_tool" model="ir.ui.view">
+            <field name="name">surgery_tool</field>
+            <field name="model">sh.medical.surgery</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_surgery_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="state_done" string="Chuyển trạng thái về kết thúc" class="btn-info"
+                            domain="[('state', '=', 'In Progress')]"
+                            type="object" help="Xử lý trường hợp Mở lại phiếu nhưng không trả hàng về kho"
+                            confirm="Bạn chắc chắn muốn dùng chức năng này để chuyển trạng thái phiếu về kết thúc.\nLưu ý: thao tác này KHÔNG sinh phiếu xuất kho"
+                            groups="crm_tool.quyen_xu_ly_lo_duy_nhat_tren_cong_ty"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="evaluation_tool" model="ir.ui.view">
+            <field name="name">evaluation_tool</field>
+            <field name="model">sh.medical.evaluation</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_evaluation_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="state_done" string="Chuyển trạng thái về kết thúc" class="btn-info"
+                            domain="[('state', '=', 'InProgress')]"
+                            type="object" help="Xử lý trường hợp Mở lại phiếu nhưng không trả hàng về kho"
+                            confirm="Bạn chắc chắn muốn dùng chức năng này để chuyển trạng thái phiếu về kết thúc.\nLưu ý: thao tác này KHÔNG sinh phiếu xuất kho"
+                            groups="crm_tool.quyen_xu_ly_lo_duy_nhat_tren_cong_ty"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

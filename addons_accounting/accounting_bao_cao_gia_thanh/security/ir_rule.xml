@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record model="ir.rule" id="tas_mrp_production_cost_line_rule">
+        <field name="name">Cost Line multi-company</field>
+        <field name="model_id" ref="model_tas_mrp_production_cost_line"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('sci_company_id','=',False),('sci_company_id', 'in', company_ids)]</field>
+    </record>
+
+    <record model="ir.rule" id="tas_product_cost_report_rule">
+        <field name="name">Cost report multi-company</field>
+        <field name="model_id" ref="model_tas_product_cost_report"/>
+        <field name="global" eval="True"/>
+        <field name="domain_force">['|',('company_id','=',False),('company_id', 'in', company_ids)]</field>
+    </record>
+  </data>
+</odoo>

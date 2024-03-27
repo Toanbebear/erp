@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_account_payment_search" model="ir.ui.view">
+            <field name="name">account.payment.search</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='outbound_filter']" position="after">
+                    <filter string="Thanh toán của CBCNV" name="employee_filter" domain="[('partner_type', '=', 'employee')]"/>
+                    <filter string="Loại đối tác" name="group_partner_type" context="{'group_by': 'partner_type'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="sh_walkin_payment_search" model="ir.ui.view">
+            <field name="name">account.payment.search</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_walkin_payment_search"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group" position="before">
+                    <filter string="Thanh toán của CBCNV" name="employee_filter" domain="[('partner_type', '=', 'employee')]"/>
+                </xpath>
+                <xpath expr="//group" position="inside">
+                    <filter string="Loại đối tác" name="group_partner_type" context="{'group_by': 'partner_type'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_move_line_filter" model="ir.ui.view">
+            <field name="name">account.move.line.filter</field>
+            <field name="model">account.move.line</field>
+            <field name="inherit_id" ref="account.view_account_move_line_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//filter[@name='misc_filter']" position="before">
+                    <filter string="CBCNV" name="cbcnv_filter" domain="[('partner_id.employee', '=', True)]"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

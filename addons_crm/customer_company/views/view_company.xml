@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+         <record id="view_form_custom_res_company" model="ir.ui.view">
+            <field name="name">Form custom res company</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="base.view_company_form"/>
+            <field name="arch" type="xml">
+               <xpath expr="//notebook" position="inside">
+                    <page name="sms" string="Tin nhắn SMS">
+                        <group>
+                            <group>
+                                <field name="location_shop"/>
+                            </group>
+                            <group>
+                                <field name="map_shop"/>
+                            </group>
+                            <field name="script_sms_id" nolabel="1" context="{'default_company_id': active_id}">
+                                <tree editable="bottom">
+                                    <field name="run"/>
+                                    <field name="type" width="10%"/>
+                                    <field name="time_send" width="10%"/>
+                                    <field name="content" width="80%"/>
+                                </tree>
+                                <form>
+                                    <group>
+                                        <group>
+                                            <field name="company_id" readonly="1" invisible="1"/>
+                                            <field name="type"/>
+                                            <field name="run"/>
+                                        </group>
+                                        <group>
+                                            <field name="time_send"/>
+                                        </group>
+                                        <field name="content" placeholder="Nội dung SMS"/>
+                                        <field name="note" placeholder="Ghi chú"/>
+                                        <group string="Lưu ý: Hệ thống chỉ hỗ trợ thay thế các keyword sau trong nội dung tin nhắn">
+                                            <ul class="text-info">
+                                                <li>
+                                                    <i><i class="text-warning">[Ten_KH]</i>: <b>Tên khách hàng</b>.</i>
+                                                </li>
+                                                <li>
+                                                    <i><i class="text-warning">[Ma_Booking]</i>: <b>Mã booking</b>.</i>
+                                                </li>
+                                                <li>
+                                                    <i><i class="text-warning">[Booking_Date]</i>: <b>Ngày hẹn lịch trên booking</b>.</i>
+                                                </li>
+                                                <li>
+                                                    <i><i class="text-warning">[Location_Shop]</i>: <b>Địa chỉ chi nhánh khách làm dịch vụ</b>.</i>
+                                                </li>
+                                                <li>
+                                                    <i><i class="text-warning">[Ban_Do]</i>: <b>Bản đồ đi đường tới chi nhánh</b>.</i>
+                                                </li>
+                                                <li>
+                                                    <i><i class="text-warning">[Khai_Bao]</i>: <b>Link/ App khai báo ý tế</b>.</i>
+                                                </li>
+                                                <li>
+                                                    <i><i class="text-warning">[Date_Recheck]</i>: <b>Ngày tái khám</b>.</i>
+                                                </li>
+                                            </ul>
+                                        </group>
+                                    </group>
+                                </form>
+                            </field>
+                        </group>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

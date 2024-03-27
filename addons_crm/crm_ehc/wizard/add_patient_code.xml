@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<record model="ir.ui.view" id="view_form_add_patient_code_ehc">
+		<field name="name">Thêm mã bệnh nhân EHC</field>
+		<field name="model">crm.ehc.add.patient.code</field>
+		<field name="arch" type="xml">
+			<form>
+				<group>
+					<field name="booking_id" readonly="True" force_save="True" options="{'no_open':True,'no_create':True}"/>
+					<field name="partner_id" readonly="True" force_save="True"
+						   options="{'no_open':True,'no_create':True}"/>
+					<field name="patient_code" required="True"/>
+				</group>
+				<footer class="text-center">
+					<button type="object" string="Cập nhật mã bệnh nhân" name="add_patient_code" class="btn-secondary"/>
+					<button string="Hủy" class="btn-secondary" special="cancel"/>
+				</footer>
+			</form>
+		</field>
+	</record>
+</odoo>

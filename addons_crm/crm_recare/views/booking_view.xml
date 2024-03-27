@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="booking_inherit_recare" model="ir.ui.view">
+        <field name="name">Booking tái chăm sóc</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_base.crm_lead_view_tree_booking"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="recare" string="Tái khai thác" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="search_booking_inherit_recare" model="ir.ui.view">
+        <field name="name">Booking tái chăm sóc</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_base.crm_base_view_crm_booking_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//filter[@name='bk_date']" position="before">
+                <filter string="Booking tái khai thác" name="recare" domain="[('recare', '=', True)]"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="filter_domain">['|','|','|','|','|',('name', 'ilike', self),('phone', 'ilike', self),('mobile', 'ilike', self),('mobile', 'ilike', self), ('contact_name', 'ilike', self), ('code_customer','ilike',self), ('pass_port','ilike',self)]</attribute>
+            </xpath>
+            <xpath expr="//filter[@name='stage']" position="before">
+                <filter string="Booking tái khai thác" name="recare" context="{'group_by':'recare'}"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="crm_lead_tool_view" model="ir.ui.view">
+        <field name="name">crm.lead.tool.view</field>
+        <field name="model">crm.lead</field>
+        <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+        <field name="arch" type="xml">
+            <xpath expr="//button[@name='select_service']" position="after">
+                <field name="access_wakin_share" invisible="1"/>
+                <button name="select_service_share" type="object"
+                        string="Tạo phiếu khám thuê phòng mổ" class="btn-info" attrs="{'invisible': [('access_wakin_share', '=', False)]}"/>
+
+            </xpath>
+        </field>
+    </record>
+</odoo>

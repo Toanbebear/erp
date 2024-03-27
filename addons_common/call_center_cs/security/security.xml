@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record model="res.groups" id="group_phone_display">
+            <field name="name">Hiển thị số điện thoại</field>
+        </record>
+    </data>
+</odoo>

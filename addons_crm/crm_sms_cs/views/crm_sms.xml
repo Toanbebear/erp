@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_sms_cs">
+            <field name="name">crm sms form</field>
+            <field name="model">crm.sms</field>
+            <field name="inherit_id" ref="crm_base.view_form_crm_sms"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='active']" position="after">
+                    <field name="type"  readonly="1"/>
+                    <field name="state" readonly="1"/>
+                    <field name="cs_response" readonly="1"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_tree_sms_cs">
+            <field name="name">crm sms tree</field>
+            <field name="model">crm.sms</field>
+            <field name="inherit_id" ref="crm_base.tree_view_crm_sms"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='send_date']" position="after">
+                    <field name="type" widget="label_selection"/>
+                    <field name="state" string="Trạng thái"/>
+                </xpath>
+                <xpath expr="//tree" position="attributes">
+                    <attribute name="decoration-success">state=='sent'</attribute>
+                    <attribute name="decoration-muted">state=='draft'</attribute>
+                    <attribute name="decoration-danger">state in ['error','cancelled']</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

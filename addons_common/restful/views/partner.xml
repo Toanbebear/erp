@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="connect_customer_persona_partner" model="ir.ui.view">
+            <field name="name">Partner: Xem chân dung khách hàng</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="custom_partner.view_form_crm_partner"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                        <button name="view_customer_persona" class="btn-info" string="Xem chân dung khách hàng" type="object"/>
+                        <button name="action_recache" class="btn-high" string="Recache" title="Recache API" type="object"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

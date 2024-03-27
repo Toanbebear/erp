@@ -1,0 +1,220 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="report_patient_evaluation_history_document">
+    <t t-call="web.external_layout">
+        <t t-set="o" t-value="o.with_context({'lang':o.patient.partner_id.lang})"/>
+        <t t-set="o" t-value="o.with_user(1)" style="font-family:Times New Roman;font-size: 24px;"/>
+        <div class="page">
+            <div class="oe_structure"/>
+
+            <div class="row mt32 mb32">
+                <div class="col-5">
+                    <img t-if="o.institution.image_256" t-att-src="image_data_uri(o.institution.image_256)" width="225" border="1"/>
+                </div>
+                <div class="col-7">
+                    <div style="font-size: 29px;"><b>PHIẾU TÁI KHÁM</b></div>
+                    <div class="ml-5" style="font-size: 20px;"><span t-field="o.evaluation_start_date"/></div>
+                </div>
+            </div>
+
+            <div class="row mt32" style="font-size: 20px;">
+                <div t-if="o.name" class="col-6">
+                    <span>Phiếu tái khám:</span>
+                    <strong class="m-0" t-field="o.name"/>
+                </div>
+                <div t-if="o.walkin" class="col-6">
+                    <span>Phiếu khám:</span>
+                    <strong class="m-0" t-field="o.walkin.name"/>
+                </div>
+            </div>
+            <div class="row" style="font-size: 20px;">
+                <div t-if="o.evaluation_services" class="col-6">
+                    <span>Loại tái khám:</span>
+                    <strong class="m-0" t-field="o.evaluation_services"/>
+                </div>
+                <div t-if="o.walkin.booking_id" class="col-6">
+                    <span>Booking:</span>
+                    <strong class="m-0" t-field="o.walkin.booking_id.name"/>
+                </div>
+            </div>
+            <div class="row" style="font-size: 20px;">
+                <div t-if="o.patient.name" class="col-6">
+                    <span>Họ tên khách hàng:</span>
+                    <strong class="m-0" t-field="o.patient.name"/>
+                </div>
+                <div t-if="o.patient.code_customer" class="col-6">
+                    <span>Mã:</span>
+                    <strong class="m-0" t-field="o.patient.code_customer"/>
+                </div>
+            </div>
+            <div class="row" style="font-size: 20px;">
+                <div t-if="o.patient" class="col-6">
+                    <span>Địa chỉ:</span>
+                    <span t-field="o.patient.street"/>,
+                    <span t-field="o.patient.state_id.name"/>,
+                    <span t-field="o.patient.country_id.name"/>
+                </div>
+                <div t-if="o.walkin" class="col-6">
+                    <span>Năm sinh:</span>
+                    <strong class="m-0" t-field="o.walkin.booking_id.year_of_birth"/>
+                    <strong class="ml-5" t-field="o.patient.gender"/>
+                </div>
+            </div>
+
+            <t t-if="o.surgery_history_ids">
+            <div class="mt32" style="font-size:22px;text-align:left;font-weight:bold;">Thành viên phẫu thuật:</div>
+            <table class="table table-condensed" style="font-size: 18px;">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Dịch vụ thực hiện</th>
+                        <th>Bác sĩ chính</th>
+                        <th>Bác sĩ phụ</th>
+                        <th>Ngày phẫu thuật</th>
+                    </tr>
+               </thead>
+               <tbody class="sale_tbody">
+                  <t t-set="i" t-value="0"/>
+                    <t t-foreach="o.surgery_history_ids" t-as="l">
+                        <t t-set="i" t-value="i + 1"/>
+                        <tr t-if="l.service_performances">
+                            <td>
+                               <t t-esc="i"/>
+                            </td>
+                            <td>
+                               <span t-field="l.service_performances.name"/>
+                            </td>
+                            <td>
+                                <span t-field="l.main_doctor.name"/>
+                            </td>
+                            <td>
+                                <span t-field="l.sub_doctor.name"/>
+                            </td>
+                            <td>
+                                <span t-field="l.surgery_date"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            </t>
+
+            <t t-if="o.evaluation_team">
+            <div class="mt32" style="font-size:22px;text-align:left;font-weight:bold;">Thành viên tái khám:</div>
+            <table class="table table-condensed" style="font-size: 18px;">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Dịch vụ thực hiện</th>
+                        <th>Thành viên</th>
+                        <th>Vai trò</th>
+                    </tr>
+               </thead>
+               <tbody class="sale_tbody">
+                  <t t-set="i" t-value="0"/>
+                    <t t-foreach="o.evaluation_team" t-as="l">
+                        <t t-set="i" t-value="i + 1"/>
+                        <tr t-if="l.service_performances">
+                            <td>
+                               <t t-esc="i"/>
+                            </td>
+                            <td>
+                              <t t-foreach="l.service_performances" t-as="s">
+                               <span t-field="s.name"/>,
+                              </t>
+                            </td>
+                            <td>
+                                <span t-field="l.team_member.name"/>
+                            </td>
+                            <td>
+                                <span t-field="l.role.name"/>
+                            </td>
+                        </tr>
+                    </t>
+                </tbody>
+            </table>
+            </t>
+
+            <t t-if="o.next_appointment_date">
+            <div class="row mb32" style="font-size:20px;">
+                <div class="col-12">
+                    <span style="font-size:22px;text-align:left;font-weight:bold;">Ngày hẹn TK tiếp theo:</span>
+                    <span class="ml-5" t-field="o.next_appointment_date"/>
+                </div>
+            </div>
+            </t>
+
+            <t t-if="o.warranty_appointment_date">
+            <div class="row mb32" style="font-size:20px;">
+                <div class="col-12">
+                    <div class="mt32 mb-2" style="font-size:22px;text-align:left;font-weight:bold;">Chỉ định BH:</div>
+                    <span>Bác sĩ chỉ định BH: </span><strong class="ml-5" t-field="o.doctor_bh.name"/><br/>
+                    <span>Ngày hẹn BH: </span><strong class="ml-5" t-field="o.warranty_appointment_date"/>
+                </div>
+            </div>
+            </t>
+
+            <t t-if="o.customer_reviews">
+            <div class="row" style="font-size:20px;">
+                <div class="col-12">
+                  <span style="font-size:22px;text-align:left;font-weight:bold;">Đánh giá của khách hàng:</span>
+                  <span class="ml-5" t-field="o.customer_reviews"/>
+                </div>
+            </div>
+            </t>
+
+            <t t-if="o.chief_complaint">
+            <div class="row" style="font-size: 18px;">
+                <div class="col-12">
+                  <div style="font-size:22px;text-align:left;font-weight:bold;">Chief Complaint:</div>
+                  <div t-field="o.chief_complaint"/>
+                </div>
+            </div>
+            </t>
+
+            <t t-if="o.info_diagnosis">
+            <div class="row" style="font-size: 18px;">
+                <div class="col-12">
+                  <div style="font-size:22px;text-align:left;font-weight:bold;">Chẩn đoán:</div>
+                  <div t-field="o.info_diagnosis"/>
+                </div>
+            </div>
+            </t>
+
+            <t t-if="o.directions">
+            <div class="row" style="font-size: 18px;">
+                <div class="col-12">
+                    <div style="font-size:22px;text-align:left;font-weight:bold;">Treatment Plan:</div>
+                    <div t-field="o.directions"/>
+                </div>
+            </div>
+            </t>
+
+            <t t-if="o.notes_complaint">
+            <div class="row" style="font-size: 18px;">
+                <div class="col-12">
+                    <div style="font-size:22px;text-align:left;font-weight:bold;">Tóm tắt tái khám:</div>
+                    <div t-field="o.notes_complaint"/>
+                </div>
+            </div>
+            </t>
+
+
+            <br/><br/>
+
+
+            <br/><br/><br/><br/>
+            <!--<p class="text-right"><strong>Chữ ký bác sĩ xác nhận</strong><br/><br/><br/>______________________</p>-->
+
+            <div class="oe_structure"/>
+        </div>
+    </t>
+</template>
+<template id="report_patient_evaluation_history">
+    <t t-call="web.html_container">
+        <t t-foreach="docs" t-as="o">
+            <t t-call="shealth_all_in_one.report_patient_evaluation_history_document" t-lang="o.patient.partner_id.lang"/>
+        </t>
+    </t>
+</template>
+</odoo>

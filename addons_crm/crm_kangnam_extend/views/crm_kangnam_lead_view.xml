@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_kangnam_lead_view_form_extend" model="ir.ui.view">
+            <field name="name">Form Lead</field>
+            <field name="model">crm.lead</field>
+            <field name="arch" type="xml">
+                <form string="Lead" delete="false">
+                    <header>
+                        <button type="object" name="qualify_partner" string="Đặt lịch" class="btn-success fa fa-plus"
+                                attrs="{'invisible':['|',('check_booking','=',True),('type_brand','=','academy')]}"/>
+                        <button type="object" name="clone_lead_2" string="Clone lead" class="btn-success fa fa-clone"
+                                attrs="{'invisible':[('re_open','=',True)]}" title="Nhân bản lead"/>
+                        <button type="object" name="update_info" string="Thông tin khách hàng"
+                                class="btn-success fa fa-pencil" attrs="{'invisible':[('re_open','=',False)]}"
+                                title="Cập nhật thông tin khách hàng"/>
+                        <button name="apply_coupon_new" type="object" string="Coupon" class="btn-warning fa fa-gift"
+                                title="Áp dụng coupon"/>
+                        <button name="action_open_ticket" class="btn-info fa fa-ticket" string="Ticket" type="object"
+                                title="Mở ticket trên hệ thống caresoft"/>
+                    </header>
+                    <sheet>
+                        <widget name="web_ribbon" title="V.I.P" text="V.I.P" bg_color="bg-danger"
+                                attrs="{'invisible': [('customer_classification', '!=', '5')]}"/>
+                        <field name="active" invisible="1"/>
+                        <div class="row">
+                            <div class="oe_title col-3">
+                                <label for="name" string="Lead"/>
+                                <h2>
+                                    <field name="name" placeholder="Describe the lead..." readonly="True"
+                                           force_save="True" attrs="{'invisible': [('partner_id', '!=', False)]}"/>
+                                    <field name="partner_id" options="{'no_open':False,'no_create':True}"
+                                           readonly="True" force_save="True"
+                                           attrs="{'invisible': [('partner_id', '=', False)]}"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-2">
+                                <label for="customer_classification" string="Phân loại:"/>
+                                <h2>
+                                    <field name="customer_classification"
+                                           options="{'classes': {'1': 'success', '2': 'info', '3': 'warning', '4': 'danger'}}"
+                                           class="oe_left" attrs="{'readonly':[('stage_id','=',18)]}"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-1">
+                                <label for="gender" string="Giới tính:"/>
+                                <h2>
+                                    <field name="gender" required="True"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-1">
+                                <label for="age" string="Tuổi:"/>
+                                <h2>
+                                    <field name="age"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page name="infor_customer" string="Thông tin" icon="fa fa-info">
+                                <group>
+                                    <group string="Thông tin khách hàng" class="col-4" style="width:70%">
+                                        <field name="is_clone" invisible="1"/>
+                                        <field name="phone" widget="phone" required="True" string=" Điện thoại 1"
+                                               icon="fa fa-phone"/>
+                                        <label for="mobile" string="Điện thoại 2" class="oe_edit_only"
+                                               attrs="{'invisible':[('mobile','!=',False)]}"/>
+                                        <div attrs="{'invisible':[('mobile','!=',False)]}">
+                                            <field name="mobile" widget="phone" string=" Điện thoại 2"
+                                                   icon="fa fa-phone"/>
+                                        </div>
+                                        <field name="mobile" widget="phone" string=" Điện thoại 2" icon="fa fa-phone"
+                                               attrs="{'invisible':[('mobile','=',False)]}"/>
+                                        <label for="phone_no_3" string="Điện thoại 3" class="oe_edit_only"
+                                               attrs="{'invisible':[('phone_no_3','!=',False)]}"/>
+                                        <div attrs="{'invisible':[('phone_no_3','!=',False)]}">
+                                            <field name="phone_no_3" widget="phone" icon="fa fa-phone"
+                                                   string=" Điện thoại 3"/>
+                                        </div>
+                                        <field name="phone_no_3" widget="phone" icon="fa fa-phone"
+                                               string=" Điện thoại 3" attrs="{'invisible':[('phone_no_3','=',False)]}"/>
+                                        <field name="contact_name" required="True" on_change="1"
+                                               icon="fa fa-user-circle"/>
+                                        <field name="aliases" icon="fa fa-user-circle"/>
+                                        <field name="code_customer" widget="copy_char" readonly="True" force_save="True"
+                                               icon="fa fa-user-circle"/>
+                                        <field name="loyalty_id" readonly="True" force_save="True"
+                                               icon="fa fa-id-card"/>
+                                        <field name="country_id" class="o_address_country"
+                                               options="{'no_open':True,'no_create':True}" required="True"
+                                               attrs="{'readonly':[('stage_id','=',18)]}" icon="fa fa-globe"/>
+                                        <field name="type_crm_id" readonly="True" invisible="1"/>
+                                        <field name="type" readonly="True" force_save="True" invisible="True"/>
+                                        <field name="birth_date" invisible="1"/>
+                                        <label for="birth_date" string="Ngày sinh" icon="fa fa-calendar"
+                                               style="font-size:14px"/>
+                                        <div class="o_row">
+                                            <field name="day_of_birth" placeholder="Ngày sinh"/>
+                                            <label for="month_of_birth" string="/" style="font-size:1.3rem"/>
+                                            <field name="month_of_birth" placeholder="Tháng sinh"/>
+                                            <label for="year_of_birth" string="/" style="font-size:1.3rem"/>
+                                            <field name="year_of_birth"/>
+                                        </div>
+                                        <field name="email_from" icon="fa fa-envelope"/>
+                                        <field name="overseas_vietnamese" string="Việt kiều" icon="fa fa-globe"/>
+                                        <label for="state_id" string="Địa chỉ" icon="fa fa-location-arrow"
+                                               style="font-size:14px"/>
+                                        <div>
+                                            <label for="state_id_2" string="Tỉnh/Thành"
+                                                   style="font-size:14px; font-weight: bold;" class="oe_edit_only"/>
+                                            <field name="state_id" title="Tỉnh/Thành" class="o_address_state"
+                                                   options="{'no_open':True,'no_create':True}"
+                                                   domain="[('country_id','=',country_id)]"
+                                                   icon="fa fa-location-arrow"/>
+                                            <label for="district_id" string="/" style="font-size:1.3rem"
+                                                   class="oe_read_only"
+                                                   attrs="{'invisible':[('state_id','=', False)]}"/>
+                                            <label for="district_id_2" string="Quận/Huyện"
+                                                   style="font-size:1.3rem;font-weight: bold;" class="oe_edit_only"/>
+                                            <field name="district_id" string="Quận/huyện"
+                                                   options="{'no_open':True,'no_create':True}"
+                                                   icon="fa fa-location-arrow" title="Quận/huyện"/>
+                                            <label for="ward_id" string="/" style="font-size:1.3rem"
+                                                   class="oe_read_only"
+                                                   attrs="{'invisible':[('district_id','=', False)]}"/>
+                                            <label for="ward_id_2" string="Phường/Xã"
+                                                   style="font-size:1.3rem;font-weight: bold;" class="oe_edit_only"/>
+                                            <field name="ward_id" icon="fa fa-location-arrow" title="Phường/Xã"/>
+                                        </div>
+                                        <field name="street" class="o_address_street" string="Số nhà, tên đường"
+                                               icon="fa fa-map"/>
+                                        <field name="pass_port" string="CMTND/CCCD" icon="fa fa-id-card"/>
+                                        <label for="pass_port_date" string="Ngày cấp" icon="fa fa-calendar"
+                                               style="font-size:14px"/>
+                                        <div>
+                                            <field name="pass_port_date" string="Ngày cấp" icon="fa fa-calendar"/>
+                                            <label for="pass_port_issue_by" string="/" style="font-size:1.3rem"
+                                                   class="oe_read_only"
+                                                   attrs="{'invisible':[('pass_port_date','=', False)]}"/>
+                                            <label for="pass_port_issue_by" string="Nơi cấp"
+                                                   style="font-size:1.3rem;font-weight: bold;" class="oe_edit_only"/>
+                                            <field name="pass_port_issue_by" string="Nơi cấp"/>
+                                        </div>
+                                        <field name="pass_port_address" string="Hộ khẩu thường trú" icon="fa fa-map"/>
+                                        <field name="career" attrs="{'readonly':[('stage_id','=',18)]}"/>
+                                    </group>
+                                    <group string="Tương tác" class="col-4" style="width:70%">
+                                        <field name="lead_insight" invisible="1"/>
+                                        <field name="type_data" readonly="True" force_save="True" invisible="True"/>
+                                        <field name="type_data_partner" readonly="True" force_save="True"/>
+                                        <field name="re_open" readonly="True" force_save="True" invisible="True"/>
+                                        <field name="check_booking" readonly="True" force_save="True" invisible="True"/>
+                                        <field name="stage_id" required="True"
+                                               options="{'no_open':True,'no_create':True}"
+                                               attrs="{'readonly':['|',('re_open', '=', True),('stage_id','=',18)]}"/>
+                                        <field name="reason_not_booking_date"
+                                               attrs="{'readonly':['|',('re_open', '=', True),('stage_id','=',18)]}"/>
+                                        <field name="type_brand" invisible="1"/>
+                                        <field name="company_id" required="True"
+                                               options="{'no_open':True,'no_create':True}"
+                                               domain="[('id', 'in', allowed_company_ids)]"
+                                               attrs="{'readonly':['|',('re_open', '=', True),('stage_id','=',18)]}"/>
+                                        <field name="brand_id" options="{'no_open':True,'no_create':True}"
+                                               required="True" force_save="True" readonly="True"/>
+                                        <field name="department_id" options="{'no_open':True,'no_create':True}"
+                                               invisible="True"/>
+                                        <field name="create_by_department" readonly="True" force_save="True"/>
+                                        <field name="price_list_id" options="{'no_open':True,'no_create':True}"
+                                               required="True" force_save="True"
+                                               attrs="{'readonly':['|',('re_open', '=', True),('stage_id','=',18)]}"/>
+                                        <field name="currency_id" options="{'no_open':True,'no_create':True}"
+                                               required="True" readonly="True"/>
+                                    </group>
+                                    <group class="col-4" style="width:80%">
+                                        <group string="Marketing" style="width:80%">
+                                            <field name="original_source_id" readonly="True" force_save="True"
+                                                   options="{'no_open':True,'no_create':True}"/>
+                                            <field name="category_source_id" options="{'no_open':True,'no_create':True}"
+                                                   readonly="True " required="True"
+                                                   attrs="{'readonly':['|',('re_open', '=', True),('stage_id','=',18)]}"
+                                                   force_save="True"/>
+                                            <field name="source_id" options="{'no_open':True,'no_create':True}"
+                                                   required="True" string="Nguồn Lead"
+                                                   attrs="{'readonly':['|',('re_open', '=', True),('stage_id','=',18)]}"
+                                                   force_save="True"/>
+                                            <field name="is_ctv" invisible="1"/>
+                                            <field name="collaborator_id"
+                                                   attrs="{'invisible': [('brand_id', 'not in', [1, 3])], 'readonly': [('id', '!=', False)], 'required': [('is_ctv', '=', True), ('id', '=', False), ('brand_id', '=', 1)]}"
+                                                   options="{'no_create':True}"/>
+                                            <field name="collaborators_id" options="{'no_create':True}"
+                                                   force_save="True"
+                                                   attrs="{'invisible': [('brand_id', 'not in', [4])], 'readonly':['|',('re_open', '=', True),('stage_id','=',18)]}"/>
+                                            <field name="check_ctv" readonly="True" invisible="True"
+                                                   modifiers="{'invisible':true,'readonly':true}"/>
+                                            <field name="is_khach_hang_gioi_thieu" invisible="1"
+                                                   modifiers="{'invisible':true,'readonly':true}"/>
+                                            <field name="khach_hang_gioi_thieu"
+                                                   options="{'no_open':True,'no_create':True}"
+                                                   attrs="{'invisible':[('is_khach_hang_gioi_thieu','!=', True)]}"
+                                                   force_save="True"/>
+                                            <field name="campaign_id" options="{'no_open':True,'no_create':True}"
+                                                   attrs="{'readonly':['|',('re_open', '=', True),('stage_id','=',18)]}"/>
+                                            <field name="medium_id" options="{'no_open':True,'no_create':True}"
+                                                   attrs="{'readonly':['|',('re_open', '=', True),('stage_id','=',18)]}"/>
+                                            <field name="ad_id" readonly="1"/>
+                                            <field name="gclid" readonly="1" invisible="True"/>
+                                            <field name="kept_coupon" widget="many2many_tags" readonly="True"
+                                                   force_save="True"/>
+                                            <field name="kept_campaign" widget="many2many_tags" readonly="True"
+                                                   force_save="True"/>
+                                        </group>
+                                        <group string="Tương tác" style="width:80%" invisible="1">
+                                            <field name="work_online" attrs="{'readonly':[('stage_id','=',18)]}"/>
+                                            <field name="seminar_customers" string="Khách hàng hội thảo"/>
+                                            <field name="online_counseling" string="Tư vấn trực tuyến"
+                                                   attrs="{'readonly':[('stage_id','=',18)]}" widget="radio"/>
+                                        </group>
+                                        <group string="Social" style="width:80%"
+                                               attrs="{'invisible':[('facebook_acc','=',False), ('send_info_facebook','=',False), ('zalo_acc','=',False), ('send_info_zalo','=',False)]}">
+                                            <field name="facebook_acc" readonly="True" force_save="True"
+                                                   attrs="{'invisible':[('facebook_acc','=',False)]}"/>
+                                            <field name="send_info_facebook" string="Gửi thông tin Facebook"
+                                                   readonly="True" force_save="True"
+                                                   attrs="{'invisible':[('send_info_facebook','=',False)]}"/>
+                                            <field name="zalo_acc" readonly="True" force_save="True"
+                                                   attrs="{'invisible':[('zalo_acc','=',False)]}"/>
+                                            <field name="send_info_zalo" string="Gửi thông tin Zalo" readonly="True"
+                                                   force_save="True"
+                                                   attrs="{'invisible':[('send_info_zalo','=',False)]}"/>
+                                        </group>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Sản phẩm/Dịch vụ" icon="fa fa-list">
+                                <field name="prg_ids" widget="crm_many2many_tags" readonly="True" force_save="True"/>
+                                <group>
+                                    <field name="product_category_ids" widget="many2many_tags"
+                                           options="{'no_open':True,'no_create':True}" context="{'s_product_cate':True}"
+                                           attrs="{'readonly':[('stage_id','=',18)]}"/>
+                                </group>
+                                <field name="crm_line_ids"
+                                       context="{'default_company_id':company_id,'default_price_list_id':price_list_id,'default_crm_id':id,'default_source_extend_id':source_id,}"
+                                       mode="tree" attrs="{'readonly':[('stage_id','=',18)]}">
+                                    <tree>
+                                        <field name="type_brand" optional="hide"/>
+                                        <field name="product_id" optional="hide"/>
+                                        <field name="service_id" width="40%"
+                                               attrs="{'column_invisible': [('parent.type_brand', '!=', 'hospital')]}"
+                                               options="{'no_open':True,'no_create':True}"/>
+                                        <field name="odontology" groups="base.group_erp_manager"
+                                               attrs="{'invisible':[('parent.type_brand','!=', 'hospital')]}"
+                                               optional="hide"/>
+                                        <field name="teeth_ids" attrs="{'invisible':[('odontology','=', False)]}"
+                                               widget="many2many_tags" optional="hide"/>
+                                        <field name="uom_price" optional="hide" string="Đơn vị xử lý(cm2/vùng/răng)"/>
+                                        <field name="quantity" optional="show" width="5%" string="Số lượng (lần/buổi)"/>
+                                        <field name="unit_price" optional="show" width="10%"/>
+                                        <field name="prg_ids" widget="many2many_tags" optional="show" width="15%"/>
+                                        <field name="prg_voucher_ids" widget="many2many_tags"/>
+                                        <field name="discount_percent" optional="show" width="10%"/>
+                                        <field name="discount_cash" optional="show" width="10%"/>
+                                        <field name="sale_to" optional="show" width="10%"/>
+                                        <field name="total_before_discount" optional="show" width="10%"/>
+                                        <field name="total" optional="show" width="10%"/>
+                                        <field name="crm_id" optional="hide"/>
+                                        <field name="company_id" optional="hide"/>
+                                        <field name="price_list_id" optional="hide"/>
+                                        <field name="currency_id" optional="hide"/>
+                                        <field name="source_extend_id" optional="hide"
+                                               options="{'no_open':True,'no_create':True}"/>
+                                        <field name="cancel" groups="base.group_system" optional="hide"/>
+                                        <field name="stage" optional="show" width="10%"/>
+                                    </tree>
+                                    <form>
+                                        <sheet>
+                                            <group>
+                                                <group string="Dịch vụ/Sản phẩm" name="service">
+                                                    <field name="stage" optional="show"/>
+                                                    <field name="type_brand" invisible="1"/>
+                                                    <field name="odontology" groups="base.group_erp_manager"
+                                                           attrs="{'invisible':[('parent.type_brand','!=', 'hospital')]}"/>
+                                                    <field name="institution_shared"
+                                                           attrs="{'invisible': [('type_brand', '!=', 'hospital')]}"
+                                                           widget="many2many_tags" invisible="True"/>
+                                                    <field name="service_id"
+                                                           attrs="{'invisible': [('type_brand', '!=', 'hospital')],'required': [('type_brand', '=', 'hospital')]}"
+                                                           domain="[('institution', 'in', institution_shared)]"
+                                                           options="{'no_open':True,'no_create':True}"/>
+                                                    <field name="teeth_ids"
+                                                           attrs="{'invisible':[('odontology','=', False)]}"
+                                                           widget="many2many_tags"/>
+                                                    <field name="exam_room_ids"
+                                                           attrs="{'invisible': [('type_brand', '!=', 'hospital')]}"
+                                                           widget="many2many_tags" invisible="True"/>
+                                                    <field name="allow_adjust_unit_price" invisible="1"/>
+                                                    <field name="product_id" options="{'no_open':True,'no_create':True}"
+                                                           groups="base.group_erp_manager" readonly="True"
+                                                           force_save="True" invisible="True"/>
+                                                    <field name="is_input_num" readonly="True" invisible="False"
+                                                           force_save="True"/>
+                                                    <field name="uom_price" string="Đơn vị xử lý(cm2/vùng/răng)"
+                                                           attrs="{'invisible':[('type_brand','=','academy')],'readonly':['|',('stage','not in',['new', 'chotuvan']),('is_input_num','=',False)]}"
+                                                           required="True" force_save="True"/>
+                                                    <field name="quantity" required="True" string="Số lượng (lần/buổi)"/>
+                                                    <field name="is_treatment"
+                                                           attrs="{'invisible': ['|',('type_brand', '!=', 'hospital'),('quantity','!=',1)]}"/>
+                                                    <field name="unit_price"
+                                                           attrs="{'readonly':[('allow_adjust_unit_price','=', False)]}"
+                                                           force_save="True"/>
+                                                    <field name="quantity_charged" width="40%"/>
+                                                    <field name="discount_percent" readonly="True" force_save="True"/>
+                                                    <field name="discount_cash" readonly="True" force_save="True"/>
+                                                    <field name="sale_to" readonly="True" force_save="True"/>
+                                                    <field name="total_before_discount"/>
+                                                    <field name="total_discount"/>
+                                                    <field name="total" string="Tổng tiền phải thu"/>
+                                                    <field name="sale_order_line_id" groups="base.group_system"
+                                                           invisible="True">
+                                                        <tree>
+                                                            <field name="product_id"/>
+                                                            <field name="state"/>
+                                                        </tree>
+                                                    </field>
+                                                </group>
+                                                <group string="General information">
+                                                    <field name="name" invisible="True"/>
+                                                    <field name="prg_voucher_ids" widget="many2many_tags"/>
+                                                    <field name="crm_id" readonly="True" force_save="True"
+                                                           options="{'no_open':True,'no_create':True}"
+                                                           string="Mã Booking" invisible="1"/>
+                                                    <field name="company_id" options="{'no_open':True,'no_create':True}"
+                                                           readonly="True" force_save="True"/>
+                                                    <field name="brand_id" invisible="True"/>
+                                                    <field name="price_list_id" required="True" force_save="True"
+                                                           options="{'no_open':True,'no_create':True}"/>
+                                                    <field name="currency_id"
+                                                           options="{'no_open':True,'no_create':True}"/>
+                                                    <!--                                                        <field name="voucher_id" invisible="1"/>-->
+                                                    <field name="source_extend_id"
+                                                           options="{'no_open':True,'no_create':True}" required="True"/>
+                                                    <field name="stage"/>
+                                                    <field name="consultants_1" string="Tư vấn viên 1"
+                                                           options="{'no_open':True,'no_create':True}"
+                                                           attrs="{'readonly':[('parent.brand_id','=',3)], 'required': [('parent.brand_id','!=',3)]}"/>
+                                                    <field name="consulting_role_1" string="Vai trò tư vấn viên 1"
+                                                           attrs="{'readonly':[('parent.brand_id','=',3)]}"/>
+                                                    <field name="consultants_2" string="Tư vấn viên 2"
+                                                           options="{'no_open':True,'no_create':True}"
+                                                           attrs="{'readonly':[('parent.brand_id','=',3)]}"/>
+                                                    <field name="consulting_role_2" string="Vai trò tư vấn viên 2"
+                                                           attrs="{'readonly':[('parent.brand_id','=',3)]}"/>
+                                                    <field name="consultants_3" string="Tư vấn viên 3"
+                                                           options="{'no_open':True,'no_create':True}"
+                                                           attrs="{'readonly':[('parent.brand_id','=',3)]}"/>
+                                                    <field name="consulting_role_3" string="Vai trò tư vấn viên 3"
+                                                           attrs="{'readonly':[('parent.brand_id','=',3)]}"/>
+                                                </group>
+                                                <group name="infor_cancel" string="Thông tin hủy dịch vụ"
+                                                       attrs="{'invisible':[('reason_line_cancel','=',False)]}">
+                                                    <field name="reason_line_cancel" string="Lý do hủy dịch vụ"
+                                                           attrs="{'invisible':[('reason_line_cancel','=',False)]}"/>
+                                                    <field name="cancel_user"
+                                                           options="{'no_open':True,'no_create':True}" readonly="True"
+                                                           attrs="{'invisible':[('cancel_user','=',False)]}"/>
+                                                    <field name="cancel_date" readonly="True"
+                                                           attrs="{'invisible':[('cancel_date','=',False)]}"/>
+                                                </group>
+                                            </group>
+                                            <group string="Thông tin tư vấn"
+                                                   attrs="{'invisible':[('parent.brand_id','!=',3)]}">
+                                                <field name="crm_information_ids" required="1">
+                                                    <tree editable="bottom">
+                                                        <field name="role" required="1"/>
+                                                        <field name="user_id" required="1"
+                                                               context="{'name_code_employee_of_user': True,}"
+                                                               string="Tư vấn viên"/>
+                                                    </tree>
+                                                </field>
+                                            </group>
+                                        </sheet>
+
+                                        <div class="crm_lead_box_change_infor">
+                                            <div class="col-lg-12">
+                                                <span>
+                                                    <i class="fa fa-clock-o"/>
+                                                    Thời điểm tạo:
+                                                    <strong>
+                                                        <field name="create_date" readonly="True" force_save="True"/>
+                                                    </strong>
+                                                </span>
+                                                <span>
+                                                    <i class="fa fa-user"/>
+                                                    Tạo bởi:
+                                                    <strong>
+                                                        <field name="create_uid" readonly="True" force_save="True"
+                                                               options="{'no_open':True,}"/>
+                                                    </strong>
+                                                </span>
+                                                <span>
+                                                    <i class="fa fa-clock-o"/>
+                                                    Thời điểm cập nhật:
+                                                    <strong>
+                                                        <field name="write_date"/>
+                                                    </strong>
+                                                </span>
+                                                <span>
+                                                    <i class="fa fa-user"/>
+                                                    Cập nhật bởi:
+                                                    <strong>
+                                                        <field name="write_uid"/>
+                                                    </strong>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </field>
+                            </page>
+                            <page string="Booking" attrs="{'invisible': [('check_booking', '=', False)],}">
+                                <field name="booking_ids">
+                                    <tree create="false">
+                                        <field name="name"/>
+                                        <field name="stage_id"/>
+                                        <field name="create_on"/>
+                                        <field name="create_by"/>
+                                        <button type="object" name="open_booking_new" class="btn-warning fa fa-external-link" title="Mở Booking"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="family_info" string="Thông tin người thân" icon="fa fa-user">
+                                <field name="fam_ids" nolabel="1" attrs="{'readonly':[('stage_id','=',18)]}">
+                                    <tree editable="bottom">
+                                        <field name="phone" string="Số điện thoại" required="True" width="15%"/>
+                                        <field name="type_relation_id" string="Mối quan hệ"
+                                               domain="[('symmetry_relative', '!=',False)]" width="15%"/>
+                                        <field name="partner_id" string="Khách hàng" readonly="True" width="15%"/>
+                                        <field name="member_name" string="Họ và Tên" width="15%"/>
+                                        <field name="address" width="40%"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page name="des" string="Ghi chú" icon="fa fa-note-sticky">
+                                <group>
+                                    <field name="description" attrs="{'readonly':[('stage_id','=',18)]}"/>
+                                </group>
+                            </page>
+                        </notebook>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"
+                                   options="{'post_refresh': 'recipients', 'display_log_button': True}"/>
+                        </div>
+                    </sheet>
+                    <footer>
+                        <div class="crm_box_change_infor">
+                            <div class="row pt-3">
+                                <div class="col-lg-12">
+                                    <span>
+                                        <i class="fa fa-clock-o"/>
+                                        Thời điểm tạo:
+
+                                        <strong>
+                                            <field name="create_on" readonly="True" force_save="True"/>
+                                        </strong>
+                                    </span>
+                                    <span>
+                                        <i class="fa fa-user"/>
+                                        Chuyên viên:
+
+                                        <strong>
+                                            <field name="user_id" readonly="True" force_save="True"
+                                                   options="{'no_open':True,}"/>
+                                        </strong>
+                                    </span>
+                                    <span modifiers="{}">
+                                        <i class="fa fa-user"/>
+                                        Tạo bởi:
+
+                                        <strong modifiers="{}">
+                                            <field name="create_by" readonly="True" force_save="True"
+                                                   options="{'no_open':True,}"/>
+                                        </strong>
+                                    </span>
+                                    <span modifiers="{}">
+                                        <i class="fa fa-clock-o"/>
+                                        Thời điểm cập nhật:
+
+                                        <strong modifiers="{}">
+                                            <field name="write_date"/>
+                                        </strong>
+                                    </span>
+                                    <span modifiers="{}">
+                                        <i class="fa fa-clock-o"/>
+                                        Thời điểm nhận:
+
+                                        <strong modifiers="{}">
+                                            <field name="assign_time" readonly="True" force_save="True"/>
+                                        </strong>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </footer>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="crm_kangnam_lead_all_leads">
+            <field name="name">Leads</field>
+            <field name="res_model">crm.lead</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type','=','lead')]</field>
+            <field name="search_view_id" ref="crm.view_crm_case_leads_filter"/>
+            <field name="context" eval="{
+                    'default_type_crm_id':ref('crm_base.type_lead_new'),
+                    'default_stage_id':ref('crm_base.crm_stage_no_process'),
+                    'default_type':'lead',
+                    'search_default_type': 'lead',
+                    's_product_cate': True,
+                    'search_default_to_process':1,}"/>
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('crm.crm_case_tree_view_leads')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('crm_kangnam_extend.crm_kangnam_lead_view_form_extend')})]"/>
+        </record>
+    </data>
+</odoo>

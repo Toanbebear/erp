@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+         <record model="ir.module.category" id="crm_ehc_manage_group_id">
+            <field name="name">CRM EHC</field>
+            <field name="description">Phân quyền CRM EHC</field>
+        </record>
+
+        <record id="group_crm_ehc_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="crm_ehc.crm_ehc_manage_group_id"/>
+        </record>
+
+         <record id="group_crm_ehc_manager" model="res.groups">
+            <field name="name">Admin</field>
+            <field name="category_id" ref="crm_ehc.crm_ehc_manage_group_id"/>
+            <field name="implied_ids" eval="[(4, ref('crm_ehc.group_crm_ehc_user'))]"/>
+        </record>
+        
+    </data>
+</odoo>

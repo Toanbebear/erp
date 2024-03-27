@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_open_view_collaborator_transaction_line" model="ir.actions.act_window">
+            <field name="name">Dòng giao dịch CTV</field>
+            <field name="res_model">collaborator.transaction</field>
+            <field name="context">{'search_default_group_create_date':True}</field>
+            <field name="view_mode">tree,form</field>
+            <!--            <field name="search_view_id" ref="collaborator_contract_search"/>-->
+        </record>
+
+        <record id="collaborator_transaction_line_view_tree" model="ir.ui.view">
+            <field name="name">collaborator_transaction_line_view_tree</field>
+            <field name="model">collaborator.transaction</field>
+            <field name="arch" type="xml">
+                <tree create="false" default_order="create_date desc">
+                    <field name="create_date"/>
+                    <field name="collaborator_id"/>
+                    <field name="company_id"/>
+                    <field name="brand_id" optional="hide"/>
+                    <field name="booking_id"/>
+                    <field name="sale_order"/>
+                    <field name="walkin_id"/>
+                    <field name="service_date"/>
+                    <field name="amount_total"/>
+                    <field name="discount_percent" optional="hide"/>
+                    <field name="amount_used"/>
+                    <field name="currency_id" optional="hide"/>
+                    <field name="service_id"/>
+                    <field name="company_id_so"/>
+                    <field name="note" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="collaborator_transaction_line_view_form" model="ir.ui.view">
+            <field name="name">collaborator_transaction_line_view_form</field>
+            <field name="model">collaborator.transaction</field>
+            <field name="arch" type="xml">
+                <form duplicate="false" edit="false" create="false" >
+                    <sheet>
+                        <group>
+                            <field name="collaborator_id" string="Ngày tạo"/>
+                            <field name="company_id"/>
+                            <field name="brand_id" optional="hide"/>
+                            <field name="booking_id"/>
+                            <field name="sale_order"/>
+                            <field name="walkin_id"/>
+                            <field name="service_date"/>
+                            <field name="amount_total"/>
+                            <field name="check_overseas" invisible="True"/>
+                            <label for="rate" string="Tỷ giá ngày" attrs="{'invisible':[('check_overseas','=', False)]}"/>
+                            <div class="o_row" attrs="{'invisible':[('check_overseas','=', False)]}">
+                                <field name="rate" readonly="True"/>
+                                <span>/ 1(USD)</span>
+                            </div>
+                            <label for="amount_total_usd" string="Tiền KH làm dịch vụ (USD)" attrs="{'invisible':[('check_overseas','=', False)]}"/>
+                            <div class="o_row" attrs="{'invisible':[('check_overseas','=', False)]}">
+                                <field name="amount_total_usd" readonly="True"/>
+                                <span>USD</span>
+                            </div>
+                            <field name="discount_percent"/>
+                            <field name="amount_used"/>
+                            <field name="currency_id"/>
+                            <field name="service_id"/>
+                            <field name="company_id_so"/>
+                            <field name="note" optional="hide"/>
+                            <field name="check_transaction" invisible="True"/>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                    <div class="crm_lead_box_change_infor">
+                        <div class="col-lg-12">
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm tạo:
+                                <strong>
+                                    <field name="create_date" readonly="True" force_save="True"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Tạo bởi:
+                                <strong>
+                                    <field name="create_uid" readonly="True" force_save="True"
+                                           options="{'no_open':True,}"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-clock-o"/>
+                                Thời điểm cập nhật:
+                                <strong>
+                                    <field name="write_date"/>
+                                </strong>
+                            </span>
+                            <span>
+                                <i class="fa fa-user"/>
+                                Cập nhật bởi:
+                                <strong>
+                                    <field name="write_uid"/>
+                                </strong>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="collaborator_transaction_line_view_filter" model="ir.ui.view">
+            <field name="name">Collaborator Transaction Search</field>
+            <field name="model">collaborator.transaction</field>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <search string="Search transaction">
+                    <separator orientation="vertical"/>
+                        <field name="collaborator_id" string="Cộng tác viên" select="1"/>
+                        <field name="booking_id" string="Booking" select="1"/>
+                        <field name="sale_order" string="Sale order" select="1"/>
+                        <field name="walkin_id" string="Phiếu khám" select="1"/>
+                    <newline/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter name="group_create_date" string="Ngày tạo" context="{'group_by':'create_date'}"/>
+                        <filter name="group_booking_id" string="Booking" context="{'group_by':'booking_id'}"/>
+                        <filter name="group_collaborator_id" string="Cộng tác viên" context="{'group_by':'collaborator_id'}"/>
+                        <filter name="group_company_id" string="Công ty ký hợp đồng" context="{'group_by':'company_id'}"/>
+                        <filter name="group_service_date" string="Ngày hoàn thành" context="{'group_by':'service_date'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <act_window id="collaborator_transaction_act_window_action_cancel"
+            name="Hủy giao dịch CTV"
+            binding_model="collaborator.transaction"
+            res_model="collaborator.transaction.cancel.wizard"
+            binding_views="form"
+            view_mode="form"
+            target="new"
+            context="{
+                'default_transaction_id': active_id,
+            }"
+            groups="base.group_system"
+        >
+        </act_window>
+    </data>
+</odoo>

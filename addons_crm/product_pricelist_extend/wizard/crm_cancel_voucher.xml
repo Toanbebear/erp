@@ -1,0 +1,22 @@
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="crm_cancel_voucher_view">
+            <field name="name">crm.cancel.voucher.view</field>
+            <field name="model">crm.cancel.voucher</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="crm_id" invisible="1"/>
+                            <field name="line_ids" widget="many2many_tags"/>
+                            <field name="line_product_ids" widget="many2many_tags"/>
+                        </group>
+                        <footer class="text-center">
+                            <button special="cancel" string="Hủy" class="btn-danger"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

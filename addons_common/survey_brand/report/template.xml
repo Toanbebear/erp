@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="survey_qr_template">
+            <t t-foreach="data" t-as="records">
+                <t t-foreach="records" t-as="record">
+                    <t t-call="web.html_container">
+                        <t t-call="web.internal_layout">
+                            <style>
+                                table{
+                                border:1px solid black !important;
+                                height:500px;
+                                width:500px;
+                                }
+                                tr{
+                                border:1px solid black !important;
+                                }
+                                td{
+                                border:1px solid black !important;
+                                font-size:30px;
+                                }
+                            </style>
+                            <div class="page">
+                                <center>
+                                    <table>
+                                        <tr>
+                                            <td style="text-align:center;">
+                                                <span t-esc="record.title" style="float:center;"/>
+                                                <center>
+                                                    <img t-att-src="'data:image/png;base64,%s' % to_text(record.qr)"
+                                                         style="height:300px;width:300px;float:center;"/>
+                                                    <br/>
+                                                </center>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </center>
+                            </div>
+                        </t>
+                    </t>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

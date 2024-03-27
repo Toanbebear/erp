@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="assets_backend" name="Auto refresh" inherit_id="web.assets_backend">
+            <xpath expr=".">
+<!--                <script type="text/javascript" src="/check_in_app/static/src/js/auto_refresh.js"/>-->
+                <script type="text/javascript" src="/check_in_app/static/src/js/kiosk_mode.js"/>
+                <script type="text/javascript" src="/check_in_app/static/src/js/kiosk_mode_checkout.js"/>
+                <link rel="stylesheet" type="text/scss" href="/check_in_app/static/src/scss/attendance.scss"/>
+                <link rel="stylesheet" type="text/scss" href="/check_in_app/static/src/scss/hr_attendance.scss"/>
+            </xpath>
+        </template>
+    </data>
+</odoo>

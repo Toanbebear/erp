@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    báo cáo vượt định mức tiêu hao -->
+<template id="report_over_material_document">
+    <t t-call="web.external_layout">
+        <div class="page" style="font-family:Times New Roman;font-size:20px;">
+            <div class="oe_structure"/>
+            <div class="row mt32 mb32">
+                <div class="col-3" style="font-size:17px;">
+<!--                    <div class="m-0" t-field="o.institution.name" style="text-transform: uppercase;font-weight:bold;"/>-->
+                    <img t-if="o.institution.image_256" t-att-src="image_data_uri(o.institution.image_256)" width="225" border="1"/>
+                </div>
+                <div class="col-9 text-center">
+                    <div style="font-size: 29px;"><b>DANH MỤC THUỐC/VTTH VƯỢT ĐỊNH MỨC</b></div>
+                    <div>Từ ngày: <strong t-field="o.start_date"/> đến ngày <strong t-field="o.end_date"/></div>
+                </div>
+            </div>
+
+             <div><strong t-esc="lines['dep_name']"/></div>
+             <table class="table border border-dark text-center">
+                 <thead>
+                     <tr>
+                         <th class="border border-dark align-middle"><strong>STT</strong></th>
+                         <th class="border border-dark align-middle"><strong>Ngày xuất</strong></th>
+                         <th class="border border-dark align-middle"><strong>Tên KH</strong></th>
+                         <th class="border border-dark align-middle"><strong>Dịch vụ</strong></th>
+                         <th class="border border-dark align-middle"><strong>Tên thuốc</strong></th>
+                         <th class="border border-dark align-middle"><strong>Đơn vị</strong></th>
+                         <th class="border border-dark align-middle"><strong>SL Định mức</strong></th>
+                         <th class="border border-dark align-middle"><strong>Số lượng thực tế dùng</strong></th>
+                         <th class="border border-dark align-middle"><strong>Tủ xuất</strong></th>
+                         <th class="border border-dark align-middle"><strong>Giải trình</strong></th>
+                     </tr>
+                 </thead>
+                 <t t-set="i" t-value="0"/>
+                 <t t-foreach="lines['mats']" t-as="line">
+                     <t t-set="i" t-value="i + 1"/>
+                     <tr t-if="line">
+                         <td class="border border-dark text-center align-middle"><div><t t-esc="i"/></div></td>
+                         <td class="border border-dark align-middle"><span t-esc="line.date_out.strftime('%d/%m/%Y')"/></td>
+                         <td class="border border-dark align-middle text-left"><span t-field="line.patient"/></td>
+                         <td class="border border-dark align-middle text-left"><span t-esc="'; '.join(map(str, line.services.mapped('name')))"/></td>
+                         <td class="border border-dark align-middle text-left"><span t-field="line.product_id"/></td>
+                         <td class="border border-dark align-middle"><span t-field="line.uom_id"/></td>
+                         <td class="border border-dark align-middle"><span t-field="line.init_quantity"/></td>
+                         <td class="border border-dark align-middle"><strong class="" t-field="line.quantity"/></td>
+<!--                            <td class="border border-dark align-middle"><span t-field="line.product_uom_qty" t-options="{'widget': 'float', 'precision': 0}"/></td>-->
+                         <td class="border border-dark align-middle text-left"><span t-field="line.location_id.name"/></td>
+                         <td class="border border-dark align-middle"><span t-field="line.interner_note"/></td>
+                    </tr>
+                 </t>
+             </table>
+
+            <div class="row">
+                <div class="col-8"/>
+                <div class="col-4 text-center">
+                    <div><span t-esc="context_timestamp(datetime.datetime.now()).strftime('%H:%M Ngày %d tháng %m năm %Y')"/>  </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-4 text-center">
+                    <strong style="font-size: 22px;">NGƯỜI LẬP PHIẾU</strong>
+                    <div style="height:120px;"/>
+                </div>
+<!--                <div class="col-3 text-center">-->
+<!--                    <strong style="font-size: 22px;">ĐIỀU DƯỠNG TRƯỞNG</strong>-->
+<!--                    <div style="height:120px;"/>-->
+<!--                </div>-->
+                <div class="col-4 text-center">
+                    <strong style="font-size: 22px;">TRƯỞNG KHOA LÂM SÀNG</strong>
+                    <div style="height:120px;"/>
+                </div>
+                <div class="col-4 text-center">
+                    <strong style="font-size: 22px;">GIÁM ĐỐC</strong>
+                    <div style="height:120px;"/>
+                </div>
+            </div>
+            <div class="oe_structure"/>
+        </div>
+   </t>
+</template>
+
+<!--    báo cáo vượt định mức tiêu hao-->
+<template id="report_over_material">
+    <t t-call="web.html_container">
+        <t t-if="docs">
+            <t t-set="o" t-value="docs[0].with_user(1)"/>
+            <t t-set="obj" t-value="o._get_material_data()"/>
+            <t t-foreach="obj" t-as="lines">
+                <t t-call="shealth_all_in_one.report_over_material_document"/>
+            </t>
+        </t>
+    </t>
+</template>
+
+</odoo>

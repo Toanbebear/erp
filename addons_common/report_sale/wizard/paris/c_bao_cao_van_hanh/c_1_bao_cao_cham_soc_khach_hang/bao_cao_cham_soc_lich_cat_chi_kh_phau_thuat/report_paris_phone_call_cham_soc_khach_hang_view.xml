@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="report_paris_phone_call_cham_soc_khach_hang_form">
+            <field name="name">Báo cáo Phone call chăm sóc khách hàng</field>
+            <field name="model">report.paris.phone.call.cham.soc.khach.hang</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo Phone call chăm sóc khách hàng">
+                    <group>
+                        <field name="start_date" required="True" string="Ngày gọi-Từ"/>
+                        <field name="end_date" required="True" string="Đến"/>
+                        <field name="care_type" required="True"/>
+                        <field name="company_id" required="True" string="Đơn vị" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_paris_bao_cao_phone_cal_cham_soc_khach_hang" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_paris_phone_call_cham_soc_khach_hang_act">
+            <field name="name">Báo cáo Phone call chăm sóc khách hàng</field>
+            <field name="res_model">report.paris.phone.call.cham.soc.khach.hang</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_paris_phone_call_cham_soc_khach_hang_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="report_paris_phone_call_cham_soc_khach_hang_menu"
+                  name="C.I.2 Báo cáo Phone call chăm sóc khách hàng"
+                  parent="report_sale.menu_report_brand_paris_van_hanh_cham_soc_khach_hang"
+                  sequence="1"
+                  action="report_paris_phone_call_cham_soc_khach_hang_act"
+        />
+
+        <record id="report_paris_phone_call_cham_soc_khach_hang_attachment" model="ir.attachment">
+            <field name="name">Báo cáo Phone call chăm sóc lịch Khách hàng</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/paris/report_paris_phone_call_cham_soc_khach_hang.xlsx"/>
+            <field name="store_fname">report_paris_phone_call_cham_soc_khach_hang.xlsx.xls</field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bao_cao_doanh_thu_thuc_hien_dich_vu_tai_kham_kangnam_form">
+            <field name="name">Báo cáo Doanh thu thực hiện Dịch vụ tái khám</field>
+            <field name="model">kpi.service.evaluation.perform.report.kangnam</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo doanh thu thực hiện dịch vụ tái khám">
+                    <group>
+                        <field name="start_date" required="True"/>
+                        <field name="end_date" required="True"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}" required="True"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_service_evaluation_perform_report" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_doanh_thu_thuc_hien_dich_vu_tai_kham_kangnam_act">
+            <field name="name">Báo cáo Doanh thu thực hiện Dịch vụ tái khám</field>
+            <field name="res_model">kpi.service.evaluation.perform.report.kangnam</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_doanh_thu_thuc_hien_dich_vu_tai_kham_kangnam_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_doanh_thu_thuc_hien_dich_vu_tai_kham_kangnam_menu"
+                  name="B.I.3 Báo cáo Doanh thu thực hiện Dịch vụ tái khám"
+                  parent="report_sale.menu_report_brand_kangnam_thuc_hien_dich_vu_van_hanh_kinh_doanh"
+                  sequence="3"
+                  action="bao_cao_doanh_thu_thuc_hien_dich_vu_tai_kham_kangnam_act"/>
+
+        <menuitem id="bao_cao_doanh_thu_thuc_hien_dich_vu_tai_kham_paris_menu"
+                  name="B.I.3 Báo cáo Doanh thu thực hiện Dịch vụ tái khám"
+                  parent="report_sale.menu_report_brand_paris_thuc_hien_dich_vu_van_hanh_kinh_doanh"
+                  sequence="3"
+                  action="bao_cao_doanh_thu_thuc_hien_dich_vu_tai_kham_kangnam_act"/>
+
+        <record id="bao_cao_doanh_thu_thuc_hien_dich_vu_tai_kham_kangnam_attachment" model="ir.attachment">
+            <field name="name">Báo cáo Doanh thu thực hiện Dịch vụ tái khám</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_doanh_thu_thuc_hien_dich_vu_tai_kham_kangnam.xlsx"/>
+            <field name="store_fname">bao_cao_doanh_thu_thuc_hien_dich_vu_tai_kham_kangnam.xls</field>
+        </record>
+
+
+    </data>
+</odoo>

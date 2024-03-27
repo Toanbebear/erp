@@ -1,0 +1,13 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+
+access_crm_voucher_program_list,access_crm_voucher_program_list,model_crm_voucher_program_list,,1,1,1,1
+access_voucher_program_discount_invoice,access_voucher_program_discount_invoice,model_crm_voucher_program_discount_invoice,,1,1,1,1
+
+access_prg_voucher_user_all_perm, all perm promotions voucher prg,model_crm_voucher_program,crm_base.promotion_user,1,1,1,1
+access_prg_voucher_promotion_read_user, all perm promotions voucher prg,model_crm_voucher_program,crm_base.promotion_read_user,1,1,0,0
+access_voucher_user_all_perm, all perm voucher,model_crm_voucher,crm_base.promotion_user,1,1,1,1
+access_voucher_promotion_read_user, all perm voucher,model_crm_voucher,crm_base.promotion_read_user,1,0,1,0
+
+access_user_read_voucher_prg, read voucher prg,model_crm_voucher_program,crm_base.promotion_read_user,1,0,0,0
+access_user_read_voucher, read voucher ,model_crm_voucher,crm_base.promotion_read_user,1,1,0,0
+access_sell_voucher,access sell voucher,model_sell_voucher,base.group_user,1,1,1,0

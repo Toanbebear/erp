@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bao_cao_co_hoi_form_da">
+            <field name="name">Báo cáo Lead KH</field>
+            <field name="model">sale.marketing.lead.da</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo Lead">
+                    <group>
+                        <field name="start_date" required="True" string="Ngày tạo: Từ"/>
+                        <field name="end_date" required="True" string="Ngày tạo: Đến"/>
+                        <field name="company_ids" required="True" string="Chi nhánh" widget="many2many_tags"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_da" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_co_hoi_act_da">
+            <field name="name">Báo cáo Lead KH</field>
+            <field name="res_model">sale.marketing.lead.da</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_co_hoi_form_da"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_co_hoi_menu"
+                  name="A.I.1 Báo cáo Lead KH"
+                  parent="report_sale.menu_report_brand_sale_marketing_and_accounting_marketing_dong_a"
+                  sequence="1"
+                  action="bao_cao_co_hoi_act_da"
+        />
+
+        <record id="bao_cao_co_hoi_attachment" model="ir.attachment">
+            <field name="name">Báo cáo Lead KH</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_co_hoi.xlsx"/>
+            <field name="store_fname">bao_cao_co_hoi.xls</field>
+        </record>
+
+    </data>
+</odoo>

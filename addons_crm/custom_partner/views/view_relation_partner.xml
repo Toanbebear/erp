@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="type_relative_view_form" model="ir.ui.view">
+            <field name="name">type.relative.view.form</field>
+            <field name="model">type.relative</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="name" required="True"/>
+                            <field name="symmetry_relative"/>
+                            <field name="desc" string="Mối quan hệ"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="type_relative_view_tree" model="ir.ui.view">
+            <field name="name">type.relative.view.tree</field>
+            <field name="model">type.relative</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="symmetry_relative"/>
+                    <field name="desc" string="Mối quan hệ"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="relation_partner_view_form" model="ir.ui.view">
+            <field name="name">relation.partner.view.form</field>
+            <field name="model">relation.partner</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="partner_id"/>
+                            <field name="phone"/>
+                            <field name="type_relative_id"/>
+                            <field name="partner_relative_id"/>
+                            <field name="name"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="relation_partner_view_tree" model="ir.ui.view">
+            <field name="name">relation.partner.view.tree</field>
+            <field name="model">relation.partner</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="partner_id" width="20%"/>
+                    <field name="type_relative_id" width="10%"/>
+                    <field name="partner_relative_id" width="20%"/>
+                    <field name="name" width="50%"/>
+                </tree>
+            </field>
+        </record>
+
+    </data>
+</odoo>

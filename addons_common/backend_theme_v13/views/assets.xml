@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    Copyright 2016, 2019 Openworx.
+    @author Mario Gielissen <mario@openworx.nl>
+    License LGPL-3.0 or later (http://www.gnu.org/licenses/lgpl.html).
+-->
+
+<odoo>
+    <data>
+        <template id="assets_backend" name="Openworx Backend Theme" inherit_id="web.assets_backend">
+            <xpath expr=".">
+                <link rel="stylesheet" href="/backend_theme_v13/static/src/scss/style.scss"/>
+                <link rel="stylesheet" href="/backend_theme_v13/static/src/scss/style_kn.scss"/>
+                <link rel="stylesheet" href="/backend_theme_v13/static/src/scss/style_da.scss"/>
+                <link rel="stylesheet" href="/backend_theme_v13/static/src/scss/style_pr.scss"/>
+                <link rel="stylesheet" href="/backend_theme_v13/static/src/scss/style_hh.scss"/>
+                <link rel="stylesheet" href="/backend_theme_v13/static/src/scss/style_sci.scss"/>
+<!--                <link rel="stylesheet" href="/backend_theme_v13/static/src/scss/style_da.scss"/>-->
+<!--                <link rel="stylesheet" href="/backend_theme_v13/static/src/scss/style_pr.scss"/>-->
+<!--                <link rel="stylesheet" href="/backend_theme_v13/static/src/scss/style_hh.scss"/>-->
+                <!--	<link rel="stylesheet" href="/backend_theme_v13/static/src/scss/sidebar.scss"/>
+                    <script type="application/javascript" src="/backend_theme_v13/static/src/js/sidebar.js"/>
+                    <script type="application/javascript" src="/backend_theme_v13/static/src/js/sidebar-toggle.js"/> -->
+                    <script type="application/javascript" src="/backend_theme_v13/static/src/js/switch_menu.js"/>
+            </xpath>
+        </template>
+        <template id="az_report_assets_common" name="Report Theme" inherit_id="web.report_assets_common">
+            <xpath expr=".">
+                <link rel="stylesheet" href="/backend_theme_v13/static/src/scss/style_report.scss"/>
+            </xpath>
+        </template>
+
+        <template id="assets_report" name="Report Pdf" inherit_id="web.report_assets_pdf">
+            <xpath expr=".">
+                <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&amp;display=swap" rel="stylesheet"/>
+            </xpath>
+        </template>
+
+        <template id="webclient_bootstrap"
+                  inherit_id="web.webclient_bootstrap"
+                  name="ERP Web Client">
+            <xpath expr="//t[@t-set='body_classname']" position="attributes">
+                <attribute name="t-value" add="+ ' o_brand_' + (session_info['brand_code'] or 'sci')" separator=" " />
+            </xpath>
+        </template>
+
+    </data>
+</odoo>

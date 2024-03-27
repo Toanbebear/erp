@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="inventory_report_form_inherit">
+            <field name="name">sh.inventory.report.form</field>
+            <field name="model">sh.inventory.report</field>
+            <field name="inherit_id" ref="shealth_all_in_one.inventory_report_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='end_datetime']" position="after">
+                    <field name="is_query"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

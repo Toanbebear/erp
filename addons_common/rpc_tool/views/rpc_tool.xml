@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.actions.act_window" id="rpc_tool_act">
+            <field name="name">Cập nhật dữ liệu</field>
+            <field name="res_model">rpc.tool</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain"/>
+            <field name="context"/>
+        </record>
+
+        <record id="rpc_tool_tree_view" model="ir.ui.view">
+            <field name="name">crm_check_in_list_tree_view</field>
+            <field name="model">rpc.tool</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="model_id"/>
+                    <field name="record_id"/>
+                    <field name="create_date"/>
+                    <field name="create_uid"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="rpc_tool_form_view" model="ir.ui.view">
+            <field name="name">crm_check_in_list_form_view</field>
+            <field name="model">rpc.tool</field>
+            <field name="arch" type="xml">
+                <form edit_expr="stage not in ['1']">
+                    <header>
+                        <button name="run_rpc" type="object" string="Cập nhật dữ liệu" class="btn-primary" attrs="{'invisible':[('stage','=','1')]}"/>
+                        <field name="stage" widget="statusbar"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="model_id" options="{'no_create': True}" required="True"/>
+                            <field name="record_id" required="True"/>
+                            <field name="create_date"/>
+                            <field name="create_uid"/>
+                            <field name="date_run" readonly="True"/>
+                            <field name="uid_run" readonly="True"/>
+                        </group>
+                        <notebook>
+                            <page name="rpc_tool_line" string="Trường dữ liệu cập nhật">
+                                <field name="line_ids" context="{'default_model_id':model_id}">
+                                    <tree editable="bottom">
+                                        <field name="model_id" options="{'no_create': True}" invisible="True" required="True"/>
+                                        <field name="field" options="{'no_create': True}" required="True"/>
+                                        <field name="type" options="{'no_create': True}" required="True" readonly="True" force_save="True"/>
+                                        <field name="new_value_date" attrs="{'invisible': ['|', ('type','!=', 'date'), ('type','=', False)]}"/>
+                                        <field name="new_value_datetime" attrs="{'invisible': ['|', ('type','!=', 'datetime'), ('type','=', False)]}"/>
+                                        <field name="new_value_boolean" attrs="{'invisible': ['|', ('type','!=', 'boolean'), ('type','=', False)]}"/>
+                                        <field name="new_value_text" attrs="{'invisible': ['|', ('type','not in', ['text', 'char', 'selection']), ('type','=', False)]}"/>
+                                        <field name="new_value_integer" attrs="{'invisible': ['|', ('type','not in', ['integer', 'many2one']), ('type','=', False)]}"/>
+                                        <field name="new_value_float" attrs="{'invisible': ['|', ('type','!=', 'float'), ('type','=', False)]}"/>
+                                        <field name="new_value_binary" attrs="{'invisible': ['|', ('type','!=', 'binary'), ('type','=', False)]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+    </data>
+</odoo>

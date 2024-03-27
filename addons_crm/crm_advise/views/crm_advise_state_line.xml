@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="crm_advise_state_line_action2" model="ir.actions.act_window">
+            <field name="name">Tình trạng</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.advise.state.line</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_add_service_guarantee">
+            <field name="name">Thêm dịch vụ bảo hành</field>
+            <field name="model">add.service.guarantee</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="partner" readonly="True" required="True"
+                               options="{'no_open':True,'no_create':True}"/>
+                        <field name="crm_id" force_save="True" readonly="True"
+                               options="{'no_open':True,'no_create':True}"/>
+                        <field name="brand_id" invisible="True"/>
+
+                        <field name="booking_ids" options="{'no_open':True,'no_create':True}" widget="many2many_tags"
+                               required="True"/>
+                        <field name="service_guarantee_line" options="{'no_open':True,'no_create':True}"
+                               widget="many2many_tags" invisible="True"/>
+
+                        <field name="pricelist_incurred" options="{'no_open':True,'no_create':True}"/>
+                    </group>
+                    <group string="Quy đổi dịch vụ bảo hành">
+                        <div>
+                            <field name="add_service_line_guarantee" context="{'default_add_service_guarantee_id':id,}"
+                                   mode="tree">
+                                <tree editable="bottom">
+                                    <field name="add_service_guarantee_id" optional="hide"/>
+                                    <field name="type_guarantee" optional="show" width="20"
+                                           attrs="{'readonly': [('crm_line_guarantee', '=', False)], 'required': [('crm_line_guarantee', '!=', False)]}"/>
+                                    <field name="crm_line_guarantee" optional="show" width="40"
+                                           options="{'no_open':True, 'no_create':True}"/>
+                                    <field name="product_incurred" optional="show" width="40"
+                                           options="{'no_open':True, 'no_create':True}"/>
+                                </tree>
+                            </field>
+                        </div>
+                    </group>
+                    <footer class="text-center">
+                        <button name="action_add_service_guarantee" type="object" string="Xác nhận"
+                                class="oe_highlight"/>
+
+                        <button string="Huỷ thao tác" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

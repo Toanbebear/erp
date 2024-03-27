@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crm_new_line_form_view_inherit" model="ir.ui.view">
+            <field name="name">Form crm line</field>
+            <field name="model">crm.line</field>
+            <field name="inherit_id" ref="crm_sale_payment.crm_new_line"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='quantity']" position="attributes">
+                    <attribute name="attrs">{'readonly':['|','|',('prg_voucher_ids','!=', []), ('prg_ids','!=', []),
+                        ('stage','not in',['chotuvan', 'new'])]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='uom_price']" position="attributes">
+                    <attribute name="attrs">
+                        {'invisible':[('type_brand','=','academy')],'readonly':['|','|',('prg_voucher_ids','!=', []),
+                        ('prg_ids','!=', []), ('stage','not in',['chotuvan', 'new'])]}
+                    </attribute>
+                </xpath>
+                <xpath expr="//field[@name='unit_price']" position="before">
+                    <field name="allow_adjust_unit_price" invisible="True"/>
+                </xpath>
+                <xpath expr="//field[@name='unit_price']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('allow_adjust_unit_price','=', True)]}
+                    </attribute>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

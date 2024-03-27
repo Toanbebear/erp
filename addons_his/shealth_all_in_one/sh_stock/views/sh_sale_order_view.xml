@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--		FORM SALE ORDER (chọn phòng xuất tại sale order)-->
+        <record model="ir.ui.view" id="view_order_form_inherit">
+            <field name="name">sale.order.form.his</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='partner_id']" position="after">
+                    <field name="sh_room_id"
+                           attrs="{'invisible':[('pricelist_type', '!=', 'product')]}"
+                           options="{'no_create': True,'no_open':True}"/>
+                </xpath>
+                <xpath expr="//div[hasclass('o_td_label')][1]" position="replace">
+                    <div class="o_td_label" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}">
+                        <label for="date_order" string="Ngày báo giá"/>
+                    </div>
+                </xpath>
+                <xpath expr="//field[@name='date_order'][1]" position="replace">
+                    <field name="date_order" nolabel="1" attrs="{'invisible': [('state', 'in', ['sale', 'done', 'cancel'])]}"/>
+                </xpath>
+                <xpath expr="//field[@name='validity_date']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--		TREE SALE ORDER -->
+        <record model="ir.ui.view" id="view_quotation_tree_his_inherit">
+            <field name="name">sale.order.tree.his</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_quotation_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='create_date']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='commitment_date']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='expected_date']" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='expected_date']" position="after">
+                    <field name="date_order"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="sh_room_id" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
+

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="report_brand_sale_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO DOANH THU THƯƠNG HIỆU THEO NGÀY</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_report/static/xls/bao_cao_doanh_so_thuong_hieu_theo_ngay.xlsx"/>
+            <field name="store_fname">bao_cao_doanh_thu_thuong_hieu_theo_ngay.xls</field>
+        </record>
+
+        <record model="ir.ui.view" id="bao_cao_doanh_so_thuong_hieu_theo_ngay_form">
+            <field name="name">report.brand.sale</field>
+            <field name="model">report.brand.sale</field>
+            <field name="arch" type="xml">
+                <form string="Brand Overview Report">
+                    <group>
+                        <field name="start_date" required="True"/>
+                        <field name="end_date" required="True"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_brand_sale" type="object" string="Báo cáo" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_doanh_so_thuong_hieu_theo_ngay_act">
+            <field name="name">Báo cáo doanh thu thương hiệu theo ngày</field>
+            <field name="res_model">report.brand.sale</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_doanh_so_thuong_hieu_theo_ngay_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="bao_cao_doanh_so_thuong_hieu_theo_ngay_menu"
+                  name="Báo cáo doanh thu theo thương hiệu theo ngày"
+                  parent="crm_report.menu_crm_report_sales"
+                  action="bao_cao_doanh_so_thuong_hieu_theo_ngay_act"
+        />
+    </data>
+</odoo>

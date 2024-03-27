@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Employee -->
+        <record id="view_task_form2_inherited" model="ir.ui.view">
+            <field name="name">project.task.form.inherited</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="arch" type="xml">
+
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="internal"/>
+                    <field name="employee_id" attrs="{'invisible': [('internal', '=', False)]}"/>
+                </xpath>
+
+            </field>
+        </record>
+
+        <record id="view_task_tree2_employee_inherited" model="ir.ui.view">
+            <field name="name">project.task.tree.inherited</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="sci_project.project_tree2_views_inherit"/>
+            <field eval="5" name="priority"/>
+            <field name="arch" type="xml">
+                <field name="department_user_id" position="after">
+                    <field name="employee_display_id" optional="show"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_update_line_consultants">
+            <field name="name">Đổi tư vấn viên hàng loạt</field>
+            <field name="model">update.line.consultants</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="booking" options="{'no_open':True,'no_create':True}" required="1" invisible="1"/>
+                        <field name="consultant_id" options="{'no_open':True,'no_create':True}" required="1"
+                               readonly="0" context="{'name_code_employee_of_user': True,}"/>
+                        <field name="line_ids" options="{'no_open':True,'no_create':True}" required="1"
+                               widget="many2many_tags"/>
+                    </group>
+                    <footer class="text-center">
+                        <button name="confirm" type="object" string="Xác nhận" class="btn-info"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

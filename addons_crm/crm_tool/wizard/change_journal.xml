@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_change_journal">
+            <field name="name">Đổi sổ phiếu thu/chi</field>
+            <field name="model">change.journal</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="type" required="1" readonly="1" force_save="1"/>
+                        <field name="payment_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'required':[('type','=','payment')],'invisible':[('type','!=','payment')]}"
+                               readonly="1"/>
+                        <field name="move_id" options="{'no_open':True,'no_create':True}"
+                               attrs="{'required':[('type','=','move')],'invisible':[('type','!=','move')]}"
+                               readonly="1"/>
+                        <field name="journal_id" options="{'no_open':True,'no_create':True}" required="1" readonly="0"/>
+                    </group>
+                    <footer class="text-center">
+                        <button name="confirm" type="object" string="Xác nhận" class="btn-info"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

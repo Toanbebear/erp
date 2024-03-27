@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Inheriting Physician screen to add Walkin Schedule -->
+            <record id="sh_medical_physician_walkin_view" model="ir.ui.view">
+                <field name="name">Physicians</field>
+                <field name="model">sh.medical.physician</field>
+                <field name="inherit_id" ref="shealth_all_in_one.sh_medical_physician_view"/>
+                <field name="arch" type="xml">
+                    <xpath expr="//notebook" position="inside">
+                        <page string="Walkin Schedule" groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_manager">
+                            <field name="walkin" nolabel="1">
+<!--                                <tree string="Walkin Schedule" nolabel="1" editable="bottom">-->
+<!--                                    <field name="name"/>-->
+<!--                                    <field name="end_date"/>-->
+<!--                                </tree>-->
+                            </field>
+                        </page>
+                    </xpath>
+                </field>
+            </record>
+    </data>
+</odoo>

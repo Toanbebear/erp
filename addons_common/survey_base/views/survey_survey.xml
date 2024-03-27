@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <!-- Inherit Form View to Modify it -->
+    <record id="inherit_survey_form" model="ir.ui.view">
+        <field name="name">inherit.survey.form</field>
+        <field name="model">survey.survey</field>
+        <field name="inherit_id" ref="survey.survey_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/button[3]" position="replace">
+                <button name="print_qr" string="Print QR" type="object" class="oe_highlight"/>
+            </xpath>
+            <xpath expr="//page[3]" position="after">
+                <page string="Company">
+                    <group>
+                        <field name="company_id"/>
+                    </group>
+                </page>
+            </xpath>
+            <xpath expr="//field[@name='title']" position="after">
+                <h2>
+                    <field name="brand_logo" widget="image" style="width:200px;"/>
+                </h2>
+            </xpath>
+            <xpath expr="//field[@name='users_can_go_back']" position="before">
+                <field name="thank_you_message"/>
+            </xpath>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="remove_product_bom_form" model="ir.ui.view">
+            <field name="name">remove.product.bom.form</field>
+            <field name="model">remove.product.bom</field>
+            <field name="arch" type="xml">
+                <form string="Xóa sản phẩm trong BOM">
+                    <sheet>
+                        <group>
+                            <field name="type" required="True"/>
+                            <field name="import_data" required="True"/>
+                        </group>
+                        <group>
+                            <field name="bom_ids" widget="many2many_tags" required="True"/>
+                        </group>
+                    </sheet>
+                    <footer>
+                        <button name="disable" string="Xóa" type="object" class="btn-primary" confirm="Bạn có chắc chắn muốn xóa tất cả sản phẩm của các BOM này???"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel" />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_remove_product_bom" model="ir.actions.act_window">
+            <field name="name">Xóa sản phẩm BOM</field>
+            <field name="res_model">remove.product.bom</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="remove_product_bom_menu"
+                  action="action_remove_product_bom"
+                  groups="base.group_erp_manager"
+                  name="Xóa sản phẩm BOM"
+                  parent="shealth_all_in_one.sh_medical_hospital_menu"
+                  sequence="100"/>
+    </data>
+</odoo>

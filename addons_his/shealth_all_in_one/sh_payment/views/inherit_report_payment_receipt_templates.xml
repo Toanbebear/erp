@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data>
+		
+		<template id="report_payment_receipt_document_multi">
+			<t t-call="web.html_container">
+				<t t-call="web.external_layout">
+					<t t-set="lang" t-value="docs[0].partner_id.lang"/>
+					<t t-set="o" t-value="docs[0].with_context(lang=lang)"/>
+					<t t-set="total" t-value="sum(docs.mapped('amount_vnd'))"/>
+					<t t-set="vnd_currency" t-value="request.env.ref('base.VND')"/>
+					<div class="page" style="font-family:Times New Roman;font-size:23px;">
+						<div class="oe_structure"/>
+						<t t-if="'draft' in docs.mapped('state') or 'cancelled' in docs.mapped('state')">
+							<h2>Phiếu ở trạng thái nháp không thể in.</h2>
+						</t>
+						<t t-elif="len(docs.mapped('partner_id')) > 1">
+							<h2>Các phiếu không cùng khách hàng.</h2>
+						</t>
+						<t t-elif="len(docs.mapped('crm_id')) > 1">
+							<h2>Các phiếu không cùng booking.</h2>
+						</t>
+						<t t-elif="len(set(docs.mapped('payment_type'))) > 1">
+							<h2>Các phiếu không cùng loại thu chi.</h2>
+						</t>
+						<t t-elif="len(set(docs.mapped('payment_date'))) > 1">
+							<h2>Các phiếu không cùng ngày.</h2>
+						</t>
+						<t t-else="">
+							<div class="row" style="padding-top:32px !important;">
+								<div class="col-7">
+									<!--                                <div class="m-0" t-field="o.walkin.institution.company_name" style="text-transform: uppercase;font-family:Times New Roman - Bold;font-weight:bolder;"/>-->
+									<strong>Đơn vị:</strong>
+									<span class="m-0" t-field="o.company_id.name"
+										  style="text-transform: uppercase;font-family:Times New Roman - Bold;font-weight:bolder;"/>
+									<br/>
+									<strong>Địa chỉ:</strong>
+									<span style="font-size:20px;"><span class="m-0" t-field="o.company_id.street"/>,
+										<span class="m-0" t-field="o.company_id.street2"/>,
+										<span class="m-0" t-field="o.company_id.city"/>
+									</span>
+									<div class="m-0" t-if="o.company_id.phone">Hotline:
+										<span t-field="o.company_id.phone"/>
+									</div>
+								</div>
+								<div class="col-5 text-center" style="font-size:18px;">
+									<div style="font-family:Times New Roman - Bold;font-weight:bolder;">Mẫu số 01 - TT
+									</div>
+									<div>
+										<i>(Ban hành theo thông tư số 200/2014/TT-BTC<br/>Ngày 22/12/2014 của Bộ tài
+											chính)
+										</i>
+									</div>
+								</div>
+							</div>
+							<div class="pt-2 pb-2">
+								<div class="row">
+									<div class="col-4">
+										<!--                                <t t-if="o.patient">-->
+										<!--                                    <strong style="font-size:19px;font-family:Times New Roman;font-weight:bolder;">Mã BN: <span t-field="o.patient.code_customer"/></strong><br/>-->
+										<!--                                    <img style="margin-left: -80px;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.code_customer, 320, 50)"/>-->
+										<!--                                </t>-->
+									</div>
+									<div class="col-5 text-center"
+										 style="font-family:Times New Roman;font-weight:bolder;">
+										<t t-if="o.payment_type == 'inbound'">
+											<div style="font-size: 37px;">PHIẾU THU</div>
+										</t>
+										<t t-elif="o.payment_type == 'outbound'">
+											<div style="font-size: 37px;">PHIẾU HOÀN</div>
+										</t>
+										<t t-else="">
+											<div style="font-size: 37px;">PHIẾU CHUYỂN TIỀN</div>
+										</t>
+										
+										<div t-if="o.payment_date">
+											<b>
+												<!--                                                <i>Ngày chứng từ,</i>-->
+												<i t-esc="o.payment_date.strftime('Ngày %d tháng %m năm %Y')"/>
+											</b>
+										</div>
+									</div>
+									<div class="col-3 text-left">
+										<div style="font-size: 20px;">
+											<t t-set="var" t-value="o.get_account()"/>
+											Nợ:
+											<t t-foreach="var['debit']" t-as="deb"><t t-esc="deb"/>,
+											</t>
+											<br/>
+											Có:
+											<t t-foreach="var['credit']" t-as="cre"><t t-esc="cre"/>,
+											</t>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-8">
+									<t t-if="o.payment_type == 'inbound'">
+										<div>
+											<span>Họ tên người nộp tiền:</span>
+											<t t-if="o.walkin">
+												<span t-field="o.walkin.patient.name"/>
+											</t>
+											<t t-else="">
+												<span t-field="o.partner_id.name"/>
+											</t>
+										</div>
+									</t>
+									<t t-if="o.payment_type == 'outbound'">
+										<div>
+											<span>Họ tên người nhận tiền:</span>
+											<t t-if="o.walkin">
+												<span t-field="o.walkin.patient.name"/>
+											</t>
+											<t t-else="">
+												<span t-field="o.partner_id.name"/>
+											</t>
+										</div>
+									</t>
+								</div>
+								<div class="col-4">
+									<!--                                <div t-if="o.walkin">-->
+									<!--                                    <span class="ml-5">Tuổi:-->
+									<!--                                        <span t-field="o.walkin.patient.age"/>-->
+									<!--                                    </span>-->
+									<!--                                    - <span t-field="o.walkin.patient.gender"/>-->
+									<!--                                </div>-->
+								</div>
+							</div>
+							<div>
+								<span>Địa chỉ:</span>
+								<t t-if="o.patient">
+									<t t-if="o.patient.street">
+										<span t-field="o.patient.street"/>,
+									</t>
+									<span t-field="o.patient.state_id"/>
+								</t>
+								<t t-else="">
+									<t t-if="o.partner_id.street">
+										<span t-field="o.partner_id.street"/>,
+									</t>
+									<span t-field="o.partner_id.state_id"/>
+								</t>
+							</div>
+							
+							<div t-if="o.crm_id">
+								<t>
+									<span>Booking:</span>
+								</t>
+								<i t-field="o.crm_id"/>
+							</div>
+							
+							<div class="mt16">
+								<t>
+									<span>Chi tiết thanh toán</span>
+								</t>
+							</div>
+							<table class="table table-condensed">
+								<thead>
+									<th class="text-center border border-dark" width="8%">STT</th>
+									<th class="text-center border border-dark" width="15%">Số phiếu</th>
+									<th class="text-center border border-dark" width="10%">Hình thức</th>
+									<th class="text-center border border-dark">Nội dung giao dịch</th>
+									<th class="text-center border border-dark" width="12%">Số tiền</th>
+									<th class="text-center border border-dark" width="8%">Tiền tệ</th>
+									<th class="text-center border border-dark" width="12%">Tỉ giá</th>
+									<th class="text-center border border-dark" width="12%">Tổng tiền thanh toán</th>
+								</thead>
+								<tbody style="font-family:Times New Roman;font-size:20px;">
+									<t t-set="i" t-value="1"/>
+									<t t-foreach="docs" t-as="o_details">
+										<t t-if="o_details.currency_rate_id">
+											<t t-set="rate_str"
+											   t-value="'{0:,.2f}'.format(1/o_details.currency_rate_id.rate)"/>
+											<t t-set="rate_trans"
+											   t-value="rate_str.translate(rate_str.maketrans(',.', '.,', ' '))"/>
+										</t>
+										<t t-else="">
+											<t t-set="rate_trans" t-value="1"/>
+										</t>
+										<tr class="text-left">
+											<td class="text-center border border-dark py-0">
+												<span t-esc="i"/>
+											</td>
+											<td class="text-left border border-dark py-0">
+												<span class="m-0" t-field="o_details.name"/>
+											</td>
+											<td class="text-left border border-dark py-0">
+												<span class="m-0" t-field="o_details.payment_method"/>
+											</td>
+											<td class="text-left border border-dark py-0">
+												<span class="m-0" t-field="o_details.communication"/>
+											</td>
+											<td class="text-center border border-dark py-0">
+												<span class="m-0" t-field="o_details.amount"
+													  t-options="{'widget': 'float', 'precision': 0}"/>
+											</td>
+											<td class="text-center border border-dark py-0">
+												<span class="m-0" t-field="o_details.currency_id"/>
+											</td>
+											<td class="text-center border border-dark py-0">
+												<span class="m-0" t-esc="rate_trans"/>
+											</td>
+											<td class="text-center border border-dark py-0">
+												<span class="m-0" t-field="o_details.amount_vnd"/>
+											</td>
+											<t t-set="i" t-value="i+1"/>
+										</tr>
+									</t>
+									<tr>
+										<td class="text-center border border-dark py-0">
+											<span>Tổng</span>
+										</td>
+										<td class="text-center border border-dark py-0"/>
+										<td class="text-center border border-dark py-0"/>
+										<td class="text-center border border-dark py-0"/>
+										<td class="text-center border border-dark py-0"/>
+										<td class="text-center border border-dark py-0"/>
+										<td class="text-center border border-dark py-0"/>
+										<td class="text-center border border-dark py-0">
+											<span style="font-family:Times New Roman - Bold;font-weight:bolder;"
+												  t-esc="total"
+												  t-options='{"widget": "monetary", "display_currency": vnd_currency}'/>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+							<div class="mt24">
+								Đã nhận đủ số tiền (Viết bằng chữ):
+								<span t-esc="docs.total_amount_to_words(lang)"/>
+								đồng chẵn.
+							</div>
+							<div class="mt24">
+								<t t-if="o.brand_id.code == 'DA'">
+									<i style="font-size:14px">Dịch vụ điều trị thẩm mỹ da: thu phí 300.000đ/ 1 dịch vụ đăng ký - Dịch vụ Đại phẫu tại Bệnh viện: 3.000.000đ + 2.000.000đ (nếu đã khám sức khỏe)</i><br/>
+									<i style="font-size:14px">Dịch vụ phẫu thuật tiểu phẫu dưới 15 triệu đồng: 500.000đ/ 1 dịch vụ đăng ký - Dịch vụ phẫu thuật thẩm mỹ từ 15 triệu đồng: 1.000.000đ/ 1 dịch vụ đăng ký</i>
+								</t>
+								<t t-else=""></t>
+							</div>
+							<div style="page-break-inside: avoid">
+								<div class="row">
+									<div class="col-8"/>
+									<div class="col-4 text-center">
+										<div t-if="o.payment_date">
+											<div style="font-size:22px">
+												<i>Ngày in:</i>
+												<i t-esc="datetime.datetime.now().strftime('Ngày %d tháng %m năm %Y')"/>
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="row text-center">
+									<div class="text-center col-3">
+										<div>
+											<span style="font-family:Times New Roman - Bold;font-weight:bolder;">Giám
+												đốc
+											</span>
+										</div>
+										<div>
+											<i>(Ký, họ tên, đóng dấu)</i>
+										</div>
+									</div>
+									<div class="text-center col-2">
+										<div>
+											<span style="font-family:Times New Roman - Bold;font-weight:bolder;">Kế toán
+												trưởng
+											</span>
+										</div>
+										<div>
+											<i>(Ký, họ tên)</i>
+										</div>
+									</div>
+									<div class="text-center col-2">
+										<div>
+											<span style="font-family:Times New Roman - Bold;font-weight:bolder;">Thủ
+												quỹ
+											</span>
+										</div>
+										<div>
+											<i>(Ký, họ tên)</i>
+										</div>
+									</div>
+									<div class="text-center col-2">
+										<div>
+											<span style="font-family:Times New Roman - Bold;font-weight:bolder;">Người
+												lập phiếu
+											</span>
+										</div>
+										<div>
+											<i>(Ký, họ tên)</i>
+										</div>
+									</div>
+									<div class="text-center col-3">
+										<div>
+											<span style="font-family:Times New Roman - Bold;font-weight:bolder;">
+												<t t-if="o.payment_type == 'outbound'">Người nhận tiền</t>
+												<t t-else="">Người nộp tiền</t>
+											</span>
+										</div>
+										<div>
+											<i>(Ký, họ tên)</i>
+										</div>
+									</div>
+								</div>
+							</div>
+						</t>
+					</div>
+				</t>
+			</t>
+		</template>
+		
+		<template id="inherit_report_payment_receipt_templates" inherit_id="account.report_payment_receipt_document">
+			<xpath expr="//div[@class='page']" position="replace">
+				<div class="page" style="font-family:Times New Roman;font-size:23px;">
+					<div class="oe_structure"/>
+					<t t-if="o.state == 'draft' or o.state == 'cancelled'">
+						<h2>Phiếu ở trạng thái nháp không thể in</h2>
+					</t>
+					<t t-else="">
+						<div class="row" style="padding-top:32px !important;">
+							<div class="col-7">
+								<!--                                <div class="m-0" t-field="o.walkin.institution.company_name" style="text-transform: uppercase;font-family:Times New Roman - Bold;font-weight:bolder;"/>-->
+								<strong>Đơn vị:</strong>
+								<span class="m-0" t-field="o.company_id.name"
+									  style="text-transform: uppercase;font-family:Times New Roman - Bold;font-weight:bolder;"/>
+								<br/>
+								<strong>Địa chỉ:</strong>
+								<span style="font-size:20px;"><span class="m-0" t-field="o.company_id.street"/>,
+									<span class="m-0" t-field="o.company_id.street2"/>,
+									<span class="m-0" t-field="o.company_id.city"/>
+								</span>
+								<div class="m-0" t-if="o.company_id.phone">Hotline:
+									<span t-field="o.company_id.phone"/>
+								</div>
+							</div>
+							<div class="col-5 text-center" style="font-size:18px;">
+								<div style="font-family:Times New Roman - Bold;font-weight:bolder;">Mẫu số 01 - TT</div>
+								<div>
+									<i>(Ban hành theo thông tư số 200/2014/TT-BTC<br/>Ngày 22/12/2014 của Bộ tài chính)
+									</i>
+								</div>
+							</div>
+						</div>
+						<!--                        <div class="row">-->
+						<!--                            <div class="col-2">-->
+						<!--                                <img t-if="o.walkin.institution.image" t-att-src="image_data_uri(o.walkin.institution.image)"-->
+						<!--                                     width="220"-->
+						<!--                                     border="1"/>-->
+						<!--                            </div>-->
+						<!--                            <div class="col-7 text-center">-->
+						<!--                                <h2 class="m-0" t-field="o.walkin.institution.name"-->
+						<!--                                     style="text-transform: uppercase;font-weight:bold;"/>-->
+						<!--                                <div style="font-size:27px;"><span class="m-0" t-field="o.walkin.institution.street"/>,-->
+						<!--                                    <span class="m-0" t-field="o.walkin.institution.street2"/>,-->
+						<!--                                    <span class="m-0" t-field="o.walkin.institution.city"/>-->
+						<!--                                </div>-->
+						<!--&lt;!&ndash;                                <div>Hotline:&ndash;&gt;-->
+						<!--&lt;!&ndash;                                    <span class="m-0" t-field="o.walkin.institution.phone"/>&ndash;&gt;-->
+						<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+						<!--&lt;!&ndash;                                <div style="font-weight: bold;text-decoration: underline;">Website:&ndash;&gt;-->
+						<!--&lt;!&ndash;                                    <span class="m-0" t-field="o.walkin.institution.website"/>&ndash;&gt;-->
+						<!--&lt;!&ndash;                                </div>&ndash;&gt;-->
+						<!--                            </div>-->
+						<!--                            <div class="col-3">-->
+						<!--                                <strong style="font-size:24px;margin-left:35px;">Mã BN:-->
+						<!--                                    <span t-field="o.walkin.patient.code_customer"/>-->
+						<!--                                </strong>-->
+						<!--                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.walkin.patient.code_customer, 300, 40)"/>-->
+						<!--                            </div>-->
+						<!--                        </div>-->
+						
+						<!--                        <h1 class="text-center mt16">-->
+						<!--                            <strong>PHIẾU THU</strong>-->
+						<!--                        </h1>-->
+						
+						<!--                        <div t-if="o.name">-->
+						<!--                            <span>- Số phiếu:</span>-->
+						<!--                            <strong t-field="o.name"/>-->
+						<!--                        </div>-->
+						<div class="pt-2 pb-2">
+							<div class="row">
+								<div class="col-4">
+									<!--                                <t t-if="o.patient">-->
+									<!--                                    <strong style="font-size:19px;font-family:Times New Roman;font-weight:bolder;">Mã BN: <span t-field="o.patient.code_customer"/></strong><br/>-->
+									<!--                                    <img style="margin-left: -80px;" t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.patient.code_customer, 320, 50)"/>-->
+									<!--                                </t>-->
+								</div>
+								<div class="col-5 text-center" style="font-family:Times New Roman;font-weight:bolder;">
+									<t t-if="o.payment_type == 'inbound'">
+										<div style="font-size: 37px;">PHIẾU THU</div>
+									</t>
+									<t t-elif="o.payment_type == 'outbound'">
+										<div style="font-size: 37px;">PHIẾU HOÀN</div>
+									</t>
+									<t t-else="">
+										<div style="font-size: 37px;">PHIẾU CHUYỂN TIỀN</div>
+									</t>
+									
+									<div t-if="o.payment_date">
+										<b>
+											<i t-esc="o.payment_date.strftime('Ngày %d tháng %m năm %Y')"/>
+										</b>
+									</div>
+								</div>
+								<div class="col-3 text-left">
+									<div style="font-size: 20px;">
+										<t t-if="o.name">
+											Số:
+											<span t-field="o.name"/>
+											<br/>
+										</t>
+										<t t-set="var" t-value="o.get_account()"/>
+										Nợ:
+										<t t-foreach="var['debit']" t-as="deb"><t t-esc="deb"/>,
+										</t>
+										<br/>
+										Có:
+										<t t-foreach="var['credit']" t-as="cre"><t t-esc="cre"/>,
+										</t>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row">
+								<div class="col-8">
+									<t t-if="o.payment_type == 'inbound'">
+										<div>
+											<span>Họ tên người nộp tiền:</span>
+											<t t-if="o.walkin">
+												<span t-field="o.walkin.patient.name"/>
+											</t>
+											<t t-else="">
+												<span t-field="o.partner_id.name"/>
+											</t>
+										</div>
+									</t>
+									<t t-if="o.payment_type == 'outbound'">
+										<div>
+											<span>Họ tên người nhận tiền:</span>
+											<t t-if="o.walkin">
+												<span t-field="o.walkin.patient.name"/>
+											</t>
+											<t t-else="">
+												<span t-field="o.partner_id.name"/>
+											</t>
+										</div>
+									</t>
+								</div>
+								<div class="col-4">
+									<!--                                <div t-if="o.walkin">-->
+									<!--                                    <span class="ml-5">Tuổi:-->
+									<!--                                        <span t-field="o.walkin.patient.age"/>-->
+									<!--                                    </span>-->
+									<!--                                    - <span t-field="o.walkin.patient.gender"/>-->
+									<!--                                </div>-->
+								</div>
+							</div>
+							<div>
+								<span>Địa chỉ:</span>
+								<t t-if="o.patient">
+									<span t-field="o.patient.street"/>,
+									<span t-field="o.patient.state_id"/>
+								</t>
+								<t t-else="">
+									<span t-field="o.partner_id.street"/>,
+									<span t-field="o.partner_id.state_id"/>
+								</t>
+							</div>
+							
+							<div t-if="o.communication">
+								<t t-if="o.payment_type == 'inbound'">
+									<span>Lý do nộp:</span>
+								</t>
+								<t t-elif="o.payment_type == 'outbound'">
+									<span>Lý do chi:</span>
+								</t>
+								<t t-else="">
+									<span>Lý do:</span>
+								</t>
+								
+								<i t-field="o.communication"/>
+							</div>
+							
+							<div>
+								<t t-if="o.amount">
+									<span>Số tiền:</span>
+									<span style="font-family:Times New Roman;font-weight:bolder;"
+										  t-field="o.amount_vnd"/>
+									VNĐ
+								</t>
+								<t t-if="o.text_total">
+									<span style="margin-left:50px">Viết bằng chữ:</span>
+									<span style="font-weight:bolder;font-family:Times New Roman;font-style:italic">
+										<i style="" t-field="o.text_total"/>
+										chẵn.
+									</span>
+								</t>
+							</div>
+						</div>
+						
+						<div class="pb-2">
+							<div class="row">
+								<div class="col-7">
+									<div>
+										<span>Kèm theo:</span>
+										<span style="margin-left:200px">chứng từ gốc</span>
+									</div>
+								</div>
+								<div class="col-5 text-center">
+									<!--                                    <div t-if="o.payment_date">-->
+									<!--                                        <div>-->
+									<!--                                            &lt;!&ndash;                                        <i t-esc="o.payment_date.strftime('Ngày %d tháng %m năm %Y')"/>&ndash;&gt;-->
+									<!--                                            <i>Ngày ... tháng ... năm</i>-->
+									<!--                                        </div>-->
+									<!--                                    </div>-->
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-9"/>
+							<div class="col-3 text-center">
+								<div t-if="o.payment_date">
+									<div>
+										<i t-esc="o.payment_date.strftime('Ngày %d tháng %m năm %Y')"/>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="row text-center">
+							<div class="text-center col-3">
+								<div>
+									<span style="font-family:Times New Roman - Bold;font-weight:bolder;">Giám đốc</span>
+								</div>
+								<div>
+									<i>(Ký, họ tên, đóng dấu)</i>
+								</div>
+								<div style="height:100px;"/>
+							</div>
+							<div class="text-center col-2">
+								<div>
+									<span style="font-family:Times New Roman - Bold;font-weight:bolder;">Kế toán trưởng
+									</span>
+								</div>
+								<div>
+									<i>(Ký, họ tên)</i>
+								</div>
+								<div style="height:100px;"/>
+							</div>
+							<div class="text-center col-2">
+								<div>
+									<span style="font-family:Times New Roman - Bold;font-weight:bolder;">Thủ quỹ</span>
+								</div>
+								<div>
+									<i>(Ký, họ tên)</i>
+								</div>
+								<div style="height:100px;"/>
+							</div>
+							<div class="text-center col-2">
+								<div>
+									<span style="font-family:Times New Roman - Bold;font-weight:bolder;">Người lập phiếu
+									</span>
+								</div>
+								<div>
+									<i>(Ký, họ tên)</i>
+								</div>
+								<div style="height:100px;"/>
+							</div>
+							<div class="text-center col-3">
+								<div>
+									<span style="font-family:Times New Roman - Bold;font-weight:bolder;">
+										<t t-if="o.payment_type == 'outbound'">Người nhận tiền</t>
+										<t t-else="">Người nộp tiền</t>
+									</span>
+								</div>
+								<div>
+									<i>(Ký, họ tên)</i>
+								</div>
+								<div style="height:100px;"/>
+							</div>
+						</div>
+						<div class="mt16">
+							Đã nhận đủ số tiền (Viết bằng chữ):
+							<span t-field="o.text_total"/>
+							chẵn.
+							<br/>
+							+ Tỷ giá ngoại tệ:
+							<t t-if="o.currency_rate_id">
+								<t t-set="var" t-value="1 / o.currency_rate_id.rate"/>
+							</t>
+							<br/>
+							+ Tỷ giá quy đổi:
+							<t t-if="o.currency_rate_id">
+								<t t-esc="o.currency_rate_id.rate"/>
+							</t>
+						</div>
+					</t>
+				</div>
+			</xpath>
+		</template>
+		
+		<record id="account.action_report_payment_receipt" model="ir.actions.report">
+			<field name="paperformat_id" ref="shealth_all_in_one.sh_paperformat_medical_payment"/>
+			<field name="report_name">shealth_all_in_one.report_payment_receipt_document_multi</field>
+			<field name="report_file">shealth_all_in_one.report_payment_receipt_document_multi</field>
+		</record>
+	
+	</data>
+</odoo>

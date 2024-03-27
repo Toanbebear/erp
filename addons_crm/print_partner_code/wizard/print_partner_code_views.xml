@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="print_partner_code_view_form" model="ir.ui.view">
+        <field name="name">print.partner.code.view.form</field>
+        <field name="model">print.partner.code</field>
+        <field name="arch" type="xml">
+            <form create="false" string="In QR code">
+                <header>
+                    <button name="action_print" string="Print"
+                        help="Print product labels"
+                        type="object" icon="fa-print"
+                        class="btn-primary mt8 mb8"/>
+                </header>
+<!--                     attrs="{'invisible':[('message', '=', False)]}"-->
+                <div class="alert alert-info text-center mb-3"
+                     role="alert">
+                    <field name="partner_ids">
+<!--                        <tree create="0">-->
+<!--                            <field name="name"/>-->
+<!--                            <field name="code_customer"/>-->
+<!--                            <field name="birth_date"/>-->
+<!--                            <field name="gender"/>-->
+<!--                        </tree>-->
+                    </field>
+                    <field name="message"/>
+                </div>
+                <group name="settings">
+                    <group name="global">
+                        <field name="output" widget="radio" options="{'horizontal': true}"/>
+                    </group>
+                    <group name="pdf" attrs="{'invisible':[('output', '!=', 'pdf')]}">
+                        <field name="template" string="Label template" widget="radio"/>
+                    </group>
+                </group>
+                <div>
+
+                </div>
+                <div>
+                    <field name="qty_per_product" class="oe_left mr8"
+                        help="Label quantity per product"
+                        style="width: 40px !important; text-align: right;"/>
+                    <button name="action_set_qty" string="Set quantity"
+                        help="Set a certain quantity for each line."
+                        type="object" class="btn-xs mr8 mb4"/>
+                    <button name="action_restore_initial_qty" string=""
+                        help="Restore initial quantity."
+                        icon="fa-undo" type="object" class="btn-xs mr8 mb4"/>
+                </div>
+            </form>
+        </field>
+    </record>
+
+    <act_window id="action_print_partner_code"
+        name="In QR partner code"
+        res_model="print.partner.code"
+        binding_model="res.partner"
+  		view_mode="form"
+        binding_type="report"
+        target="new"/>
+
+</odoo>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+	<record id="dvhc_res_state_inherit" model="ir.ui.view">
+		<field name="name">dvhc.res.country.state.inherit</field>
+		<field name="model">res.country.state</field>
+		<field name="inherit_id" ref="base.view_country_state_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='name']" position="after">
+				<field name="id_dvhc"/>
+			</xpath>
+		</field>
+	</record>
+	
+	<record id="dvhc_res_district_inherit" model="ir.ui.view">
+		<field name="name">dvhc.res.country.district.inherit</field>
+		<field name="model">res.country.district</field>
+		<field name="inherit_id" ref="base_unit_vn.res_country_district_form_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='name']" position="after">
+				<field name="id_dvhc"/>
+			</xpath>
+		</field>
+	</record>
+	
+	<record id="dvhc_res_ward_inherit" model="ir.ui.view">
+		<field name="name">res.country.ward.inherit</field>
+		<field name="model">res.country.ward</field>
+		<field name="inherit_id" ref="base_unit_vn.res_country_ward_form_view"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='name']" position="after">
+				<field name="id_dvhc"/>
+			</xpath>
+		</field>
+	</record>
+	
+	<record id="crm_hh_ehc_crm_view_inherit_booking_address" model="ir.ui.view">
+		<field name="name">crm.lead.hh</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='district_id']" position="after">
+				<field name="ward_id" required="False"/>
+			</xpath>
+		</field>
+	</record>
+	
+	<record id="crm_hh_ehc_crm_view_inherit_lead_address" model="ir.ui.view">
+		<field name="name">crm.lead.hh</field>
+		<field name="model">crm.lead</field>
+		<field name="inherit_id" ref="crm.crm_lead_view_form"/>
+		<field name="arch" type="xml">
+			<xpath expr="//field[@name='district_id']" position="after">
+				<field name="ward_id"/>
+			</xpath>
+		</field>
+	</record>
+</odoo>

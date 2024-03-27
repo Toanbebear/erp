@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem
+            id="menu_all_menu"
+            name="All menu"
+            parent="base.menu_administration"
+            sequence="100"
+            groups="base.group_erp_manager"
+    />
+
+    <record model="ir.ui.view" id="menu_customer_view_attendance_tree">
+        <field name="name">hr.attendance.tree</field>
+        <field name="model">hr.attendance</field>
+        <field name="arch" type="xml">
+            <tree string="Employee attendances" decoration-danger="state == 'refuse'"
+                  decoration-success="state == 'validate'"
+                  decoration-info="state == 'confirm'" editable="bottom">
+                <field name="employee_id" optional="show"/>
+                <field name="check_in" string="Vào" optional="show"/>
+                <field name="checkin_device_id"/>
+                <field name="check_out" string="Ra"/>
+                <field name="checkout_device_id"/>
+                <field name="reason" attrs="{'readonly' : [('state', '!=', 'draft')] }" optional="show"/>
+                <field name="type_workday" optional="show" attrs="{'readonly' : [('state', '!=', 'draft')] }"/>
+                <field name="worked_hours" optional="show" string="Giờ làm việc"
+                       groups="om_hr_payroll.group_hr_payroll_manager"/>
+                <field name="workday" attrs="{'readonly' : [('state', '!=', 'draft')] }" optional="show"/>
+                <button string="Phê duyệt" name="action_attendance_approve" type="object"
+                        icon="fa-check text-success" states="draft"
+                        groups="om_hr_payroll.group_hr_payroll_manager"/>
+                <button string="Từ chối" name="action_attendance_refuse" type="object" icon="fa-ban text-danger"
+                        states="draft" groups="om_hr_payroll.group_hr_payroll_manager"/>
+                <button string="Quay lại" name="action_attendance_cancel" type="object" icon="fa-refresh text-muted"
+                        states="refuse,confirm" groups="om_hr_payroll.group_hr_payroll_manager"/>
+                <button string="Phê duyệt" name="manager_validate_workday" type="object"
+                        icon="fa-check text-success" states="confirm"
+                        groups="hr_attendance.group_hr_attendance_manager"/>
+                <button string="Từ chối" name="manager_cancel_workday" type="object" icon="fa-ban text-danger"
+                        states="confirm" groups="hr_attendance.group_hr_attendance_manager"/>
+                <button string="Quay lại" name="manager_refuse_workday" type="object" icon="fa-refresh text-muted"
+                        states="validate" groups="hr_attendance.group_hr_attendance_manager"/>
+                <field name="state" optional="show"/>
+            </tree>
+        </field>
+    </record>
+    <record id="menu_customer_work_attendance_action" model="ir.actions.act_window">
+        <field name="name">Bảng công</field>
+        <field name="res_model">hr.attendance</field>
+        <field name="context">{'search_default_month': 1, 'search_default_group_department': 1,
+            'search_default_employee': 1, 'show_name': 1}
+        </field>
+        <field name="domain">[]</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('menu_customer_view_attendance_tree')})]"/>
+    </record>
+    <menuitem id="menu_customer_attendance" sequence="15" name="Dữ liệu công" parent="menu_all_menu"
+              action="menu_customer_work_attendance_action"/>
+
+    <menuitem
+            name="Tuyển dụng"
+            id="menu_hr_recruitment_root"
+            parent="menu_all_menu"
+            groups="base.group_erp_manager"
+            action="hr_recruitment.action_hr_job_config"
+            sequence="16"/>
+
+    <menuitem
+            name="Quản lý vào ra"
+            id="menu_hr_attendance_root"
+            parent="menu_all_menu"
+            groups="base.group_erp_manager"
+            action="hr_attendance.hr_attendance_action"
+            sequence="17"/>
+
+    <menuitem
+            name="Nhân viên"
+            id="menu_hr_root"
+            parent="menu_all_menu"
+            groups="base.group_erp_manager"
+            action="sci_hrms.open_view_employee"
+            sequence="18"/>
+
+    <menuitem
+            name="Quản lý thiết bị"
+            id="menu_sci_device_management"
+            parent="menu_all_menu"
+            groups="base.group_erp_manager"
+            action="sci_device.act_sci_device_main_view"
+            sequence="19"/>
+
+    <menuitem
+            name="Bảo trì"
+            id="menu_maintenance_title"
+            parent="menu_all_menu"
+            groups="base.group_erp_manager"
+            action="sci_maintenance.hr_equipment_request_action"
+            sequence="20"/>
+
+    <menuitem id="mail.menu_root_discuss" name="Discuss" sequence="2" groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+    <menuitem id="base.menu_board_root" name="Board" sequence="2" groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+    <menuitem id="calendar.mail_menu_calendar" name="Calendar" sequence="2" groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+    <menuitem id="website.menu_website_configuration" name="website" sequence="3" groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+    <menuitem id="utm.menu_link_tracker_root" name="utm" sequence="4" groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+    <menuitem id="event.event_main_menu" name="Event" sequence="4" groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+    <menuitem id="hr_timesheet.timesheet_menu_root" name="Thời gian biểu" sequence="4" groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+    <menuitem id="hr_gamification.menu_hr_gamification" name="Thử thách" sequence="4" groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+    <!--    <menuitem id="project.menu_main_pm" name="Dự án" sequence="4" groups="base.group_erp_manager"-->
+    <!--              parent="menu_all_menu"/>-->
+    <menuitem id="hr_recruitment.menu_crm_case_categ_all_app" name="All Applications" sequence="4"
+              groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+    <menuitem id="ms_templates.create_temp_menu_root" name="MS template" sequence="4" groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+    <menuitem id="hr_holidays.menu_hr_holidays_my_leaves" sequence="5" groups="base.group_erp_manager"
+              parent="menu_all_menu"/>
+</odoo>

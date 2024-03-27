@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="crm_line_booking_add_amount_owed">
+            <field name="name">Thêm số tiền nợ trên line dịch vụ</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='crm_id']" position="before">
+                    <field name="amount_owed" optional="hide"/>
+                </xpath>
+                <xpath expr="//button[@name='open_case']" position="after">
+                    <button name="request_debt_review" type="object" string="Yêu cầu duyệt nợ" class="btn-danger"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_line_productbooking_add_amount_owed">
+            <field name="name">Thêm số tiền nợ trên line sản phẩm</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_sale_payment.view_booking_create_sale_payment_product"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='remaining_amount']" position="after">
+                    <field name="amount_owed" optional="hide"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

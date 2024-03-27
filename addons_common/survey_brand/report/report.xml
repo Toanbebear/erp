@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <report id="survey_base.print_qr"
+            model="res.partner"
+            name="survey_base.survey_qr_template"
+            file="survey_base.survey_qr_template"
+            string="Survey QR"
+            report_type="qweb-pdf"
+                menu="False"
+        />
+
+        <record id="survey_base.print_qr" model="ir.actions.report">
+            <field name="paperformat_id" ref="survey_base.survey_paperformat"/>
+        </record>
+    </data>
+</odoo>

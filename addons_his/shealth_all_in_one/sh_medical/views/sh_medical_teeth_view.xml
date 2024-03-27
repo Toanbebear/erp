@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sh_medical_teeth_tree">
+            <field name="name">Quản lý mã răng</field>
+            <field name="model">sh.medical.teeth</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Quản lý mã răng' editable="top">
+                    <field name="code" readonly="1" force_save="1"/>
+                    <field name="dental_arch" required="1"/>
+                    <field name="teeth_index" required="1"/>
+                    <field name="name" required="1"/>
+                    <field name="info"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="sh_medical_teeth_action_tree" model="ir.actions.act_window">
+            <field name="name">Quản lý mã răng</field>
+            <field name="res_model">sh.medical.teeth</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Quản lý mã răng
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="sh_medical_teeth_action_tree" id="sh_medical_teeth_list"
+                  parent="sh_medical_hospital_menu" sequence="4"/>
+    </data>
+</odoo>

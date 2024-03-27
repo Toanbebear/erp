@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_update_loyalty">
+            <field name="name">Cập nhật thẻ thành viên</field>
+            <field name="model">update.loyalty</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="loyalty" options="{'no_open':True,'no_create':True}" required="1" invisible="0"
+                               readonly="1" force_save="1"/>
+                        <field name="amount" required="1"/>
+                        <field name="date_interaction" required="1"/>
+                    </group>
+                    <footer class="text-center">
+                        <button name="confirm" type="object" string="Xác nhận" class="btn-info"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

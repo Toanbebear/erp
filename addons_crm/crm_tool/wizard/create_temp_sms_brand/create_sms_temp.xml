@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <act_window id="create_sms_temp_act_window"
+                name="Thêm mới sms"
+                binding_model="res.brand"
+                res_model="create.sms.temp"
+                binding_views="form,list"
+                view_mode="form"
+                groups="base.group_user"
+                target="new"
+                context="{
+            'default_brand_id': active_id,
+        }"
+    />
+
+    <record model="ir.ui.view" id="view_create_sms_temp">
+        <field name="name">view_create_sms_temp</field>
+        <field name="model">create.sms.temp</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="brand_id" invisible="1" readonly="1"/>
+                        <field name="type" required="1"/>
+                        <field name="content" required="1"/>
+                        <field name="time_send"/>
+                        <field name="note"/>
+                        <field name="run"/>
+                    </group>
+                    <footer class="text-center">
+                        <button name="create_temp_sms" type="object" string="Tạo sms" class="btn-info"/>
+                        <button special="cancel" string="Cancel" class="btn-danger"/>
+                    </footer>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

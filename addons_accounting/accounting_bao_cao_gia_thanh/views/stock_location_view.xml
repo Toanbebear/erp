@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<odoo>
+    <record model="ir.ui.view" id="view_stock_location_default_production_location_form">
+        <field name="name">Địa điểm</field>
+        <field name="model">stock.location</field>
+        <field name="inherit_id" ref="stock.view_location_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='return_location']" position="after">
+                <field name="is_default_production_location"/>
+                <field name="account_621"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

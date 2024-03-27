@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_sale_payment_form_view" model="ir.ui.view">
+            <field name="name">crm.sale.payment.form</field>
+            <field name="model">crm.sale.payment</field>
+            <field name="arch" type="xml">
+                <form create="false" edit="false" string="Thông tin điều chuyển">
+                    <sheet>
+                        <group string="Thông tin chung">
+                            <group>
+                                <field name="booking_id"/>
+                                <field name="partner_id"/>
+                                <field name="create_date" string="Ngày tạo"/>
+                                <field name="account_payment_id"/>
+                                <field name="payment_type"/>
+                                <field name="internal_payment_type"/>
+                                <field name="company_id"/>
+                                <field name="transaction_company_id"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page name="detail_infor" string="Thông tin chi tiết">
+                                <group>
+                                    <group>
+                                        <field name="consultants_1"/>
+                                        <field name="consulting_role_1"/>
+                                        <field name="consultants_2"/>
+                                        <field name="consulting_role_2"/>
+                                    </group>
+                                    <group>
+                                        <field name="over_discount"/>
+                                        <field name="not_sale"/>
+                                        <field name="amount_proceeds"/>
+                                        <field name="communication"/>
+                                    </group>
+
+                                    <field name="crm_line_id"
+                                           attrs="{'invisible' : [('crm_line_id', '=', False)]}"/>
+                                    <field name="crm_line_product_id"
+                                           attrs="{'invisible' : [('crm_line_product_id', '=', False)]}"/>
+                                </group>
+
+                            </page>
+                            <page name="transfer_infor" string="Thông tin điều chuyển">
+                                <group>
+                                    <field name="transfer_payment_id"/>
+                                    <field name="transfer_payment_line_id"/>
+                                    <field name="payment_type"/>
+                                    <field name="department"/>
+                                    <field name="service_id"/>
+                                    <field name="product_id"/>
+
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="crm_sale_payment_tree_view" model="ir.ui.view">
+            <field name="name">crm.sale.payment.tree</field>
+            <field name="model">crm.sale.payment</field>
+            <field name="arch" type="xml">
+                <tree create="false" default_order="write_date desc">
+                    <field name="create_date"/>
+                    <field name="payment_date"/>
+                    <field name="partner_id" optional="show"/>
+                    <field name="booking_id"/>
+                    <field name="booking_create_user"/>
+                    <field name="transfer_payment_id" domain="[()]"/>
+                    <field name="service_id" optional="show"/>
+                    <field name="product_id" optional="show"/>
+                    <field name="payment_type"/>
+                    <field name="amount_proceeds" optional="show"/>
+                    <field name="company_id"/>
+                    <field name="over_discount"/>
+                    <field name="not_sale"/>
+<!--                    <field name="check_permissions"/>-->
+                </tree>
+            </field>
+        </record>
+
+        <record id="crm_sale_payment_search" model="ir.ui.view">
+            <field name="name">crm.sale.payment.search</field>
+            <field name="model">crm.sale.payment</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="booking_id"/>
+                    <field name="partner_id"/>
+                    <field name="account_payment_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="crm_sale_payment_transfer_search" model="ir.ui.view">
+            <field name="name">crm.sale.payment.transfer.search</field>
+            <field name="model">crm.sale.payment</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="booking_id"/>
+                    <field name="partner_id"/>
+                    <field name="transfer_payment_id"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_sale_payment" model="ir.actions.act_window">
+            <field name="name">Danh sách điều chuyển</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.sale.payment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="crm_sale_payment_transfer_search"> </field>
+            <field name="domain">[('transfer_payment_id', '!=', False)]</field>
+        </record>
+
+        <record id="action_sale_payment_all" model="ir.actions.act_window">
+            <field name="name">Danh sách thanh toán</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">crm.sale.payment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id" ref="crm_sale_payment_search"> </field>
+            <field name="domain">[('transfer_payment_id', '=', False)]</field>
+        </record>
+
+        <menuitem id="menu_crm_sale_payment"
+                  name="Danh sách điều chuyển"
+                  parent="crm_base.crm_menu_payment"
+                  action="action_sale_payment"
+                  groups="base.group_erp_manager"
+                  sequence="10"/>
+
+        <menuitem id="menu_crm_sale_payment_all"
+                  name="Danh sách thanh toán"
+                  parent="crm_base.crm_menu_payment"
+                  action="action_sale_payment_all"
+                  groups="base.group_erp_manager"
+                  sequence="11"/>
+
+<!--        <record id="crm_sale_payment_filter" model="ir.ui.view">-->
+<!--            <field name="model">crm.sale.payment</field>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <search string="Search object">-->
+<!--                    <group expand="1" string="Group By">-->
+<!--                        <filter string="Nhóm dịch vụ" name='objective_group_by' context="{'group_by': 'service_category'}"/>-->
+<!--                    </group>-->
+<!--                </search>-->
+<!--            </field>-->
+<!--        </record>-->
+
+    </data>
+</odoo>

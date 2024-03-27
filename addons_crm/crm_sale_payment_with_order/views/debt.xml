@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_debt_review_inherit">
+            <field name="name">view_form_debt_review_inherit</field>
+            <field name="model">crm.debt.review</field>
+            <field name="inherit_id" ref="crm_base.debt_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="readonly">False</attribute>
+                    <attribute name="required">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='currency_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('stage', '!=', 'offer')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('stage', '!=', 'offer')], 'invisible': [('order_id', '=',False)]}</attribute>
+                    <attribute name="required">False</attribute>
+                </xpath>
+                <xpath expr="//field[@name='walkin_id']" position="attributes">
+                    <attribute name="attrs">{'readonly': [('stage', '!=', 'offer')], 'invisible': [('walkin_id', '=',False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="debt_type" required="True" attrs="{'readonly': [('stage', '!=', 'offer')]}"/>
+                    <field name="crm_line"
+                           attrs="{'readonly': [('stage', '!=', 'offer')], 'invisible': ['|',('debt_type', '!=', 'service'),('booking_id', '=', False)], 'required': [('debt_type', '=', 'service')]}"
+                           options="{'no_open':True,'no_create':True}"/>
+                    <field name="line_product"
+                           attrs="{'readonly': [('stage', '!=', 'offer')], 'invisible': ['|',('debt_type', '!=', 'product'),('booking_id', '=', False)], 'required': [('debt_type', '=', 'product')]}"
+                           options="{'no_open':True,'no_create':True}"/>
+                    <field name="total" readonly="True" force_save="True" attrs="{'readonly': [('stage', '!=', 'offer')], 'invisible': [('crm_line', '=', False),('line_product', '=', False)]}" widget="monetary_format"/>
+                    <field name="amount_remain" readonly="True" force_save="True" attrs="{'invisible': [('crm_line', '=', False),('line_product', '=', False)]}" widget="monetary_format"/>
+                </xpath>
+                <xpath expr="//field[@name='amount_total']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//field[@name='amount_owed']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('crm_line', '=', False),('line_product', '=', False)], 'readonly': [('stage', '!=', 'offer')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('crm_line', '=', False),('line_product', '=', False)],'readonly': [('stage', '!=', 'offer')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='create_uid']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('create_uid', '=', False)]}</attribute>
+                    <attribute name="string">Người yêu cầu</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_approve']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('user_approve', '=', False)]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_approve']" position="attributes">
+                    <attribute name="attrs">{'invisible': [('date_approve', '=', False)]}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

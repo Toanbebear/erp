@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="label_57x35">
+         <div class="container-fluid" style="float:center;">
+              <div class="row">
+                <div class="col text-center">
+                    <img t-attf-src="data:image/png;base64, #{label.product_id.qr_image}" style="width:43%;"/>
+                </div>
+              </div>
+             <div class="row text-center">
+                <div class="col-md-12" style="font-size: 12px;width: 100%;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;text-transform: capitalize;">
+                    <div t-field="label.product_id.default_code"/>
+                    <div t-field="label.product_id.name"/>
+                </div>
+              </div>
+        </div>
+    </template>
+
+    <template id="label_77x25_1">
+         <div class="col-6" style="float:left;">
+             <div class="row">
+                  <div class="col-4">
+                    <img t-attf-src="data:image/png;base64, #{label.product_id.qr_image}" style="width:155%;"/>
+                  </div>
+                 <div class="col-8 text-center mt-3" style="font-size: 13px;text-transform: capitalize;">
+                    <div t-field="label.product_id.default_code"/>
+                    <div t-field="label.product_id.name"/>
+                  </div>
+             </div>
+         </div>
+    </template>
+
+    <template id="label_77x25_2">
+         <div class="col-6" style="float:right;">
+             <div class="row">
+                  <div class="col-4">
+                    <img t-attf-src="data:image/png;base64, #{label.product_id.qr_image}" style="width:155%;"/>
+                  </div>
+                 <div class="col-8 text-center mt-3" style="font-size: 13px;text-transform: capitalize;">
+                    <div t-field="label.product_id.default_code"/>
+                    <div t-field="label.product_id.name"/>
+                  </div>
+             </div>
+         </div>
+    </template>
+
+    <template id="report_product_label_58x27_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-set="count" t-value="0" />
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <t t-foreach="docs" t-as="label">
+                        <t t-set="qty" t-value="1" />
+                        <t t-if="label.qty">
+                            <t t-set="qty" t-value="label.qty" />
+                        </t>
+                        <t t-foreach="list(range(qty))" t-as="index_qty">
+                            <div t-if="count % 21 == 0" style="page-break-after:always;"/>
+                            <div t-if="count % 6 == 0" style="page-break-after:always;"/>
+                            <t t-call="garazd_product_label.label_57x35"/>
+                            <t t-set="count" t-value="count+1" />
+                        </t>
+                    </t>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_product_label_77x25_template">
+        <t t-call="web.html_container">
+            <t t-call="web.basic_layout">
+                <t t-set="count" t-value="0" />
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <div class="container-fluid" style="height:100%">
+                        <t t-foreach="docs" t-as="label">
+                            <t t-set="qty" t-value="1" />
+                            <t t-if="label.qty">
+                                <t t-set="qty" t-value="label.qty" />
+                            </t>
+                            <t t-foreach="list(range(qty))" t-as="index_qty">
+                                <t t-if="count % 2 == 0">
+                                    <t t-call="garazd_product_label.label_77x25_1"/>
+                                </t>
+                                <t t-if="count % 2 != 0">
+                                    <t t-call="garazd_product_label.label_77x25_2"/>
+                                </t>
+                                <t t-set="count" t-value="count+1" />
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

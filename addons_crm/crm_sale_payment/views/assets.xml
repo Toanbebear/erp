@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="assets_backend" name="crm_sale_payment assets" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" href="/crm_sale_payment/static/src/css/crm_sale_payment.css"/>
+        </xpath>
+    </template>
+</odoo>

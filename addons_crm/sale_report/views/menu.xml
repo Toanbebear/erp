@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <menuitem
+                id="sale_report_menu_root"
+                name="Tổng hợp doanh số"
+                web_icon="sale_report,static/description/icon.png"
+                sequence="6"/>
+
+        <menuitem
+                id="sale_report_menu"
+                name="Tổng hợp doanh số"
+                action="action_sale_report"
+                parent="sale_report_menu_root"
+                sequence="0" groups="sale_report.group_sale_report"/>
+
+        <menuitem
+                id="bc_thu_chi_menu"
+                name="Báo cáo thu chi"
+                action="action_bc_thu_chi"
+                parent="sale_report_menu_root"
+                sequence="2" groups="sale_report.group_sale_report"/>
+    </data>
+</odoo>

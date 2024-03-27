@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="seq_wallet" model="ir.sequence">
+            <field name="name">Wallet</field>
+            <field name="code">partner.wallet</field>
+            <field name="prefix">WL-</field>
+            <field name="padding">6</field>
+            <field name="company_id" eval="False"/>
+        </record>
+
+        <record id="view_form_wallet" model="ir.ui.view">
+            <field name="name">Form wallet</field>
+            <field name="model">partner.wallet</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="partner_id"/>
+                                <field name="company_id"/>
+                                <field name="currency_id"/>
+                                <field name="amount_used"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_wallet" model="ir.ui.view">
+            <field name="name">Tree wallet</field>
+            <field name="model">partner.wallet</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                    <field name="partner_id"/>
+                    <field name="company_id"/>
+                    <field name="currency_id"/>
+                    <field name="amount_used"/>
+                </tree>
+            </field>
+        </record>
+
+         <record model="ir.actions.act_window" id="open_view_wallet">
+            <field name="name">Wallet</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">partner.wallet</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+<!--        <menuitem-->
+<!--                id="mn_wallet"-->
+<!--                name="Wallet"-->
+<!--                parent="contacts.menu_contacts"-->
+<!--                action="open_view_wallet"-->
+<!--                sequence="22"/>-->
+    </data>
+</odoo>

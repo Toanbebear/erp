@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+   <data>
+       <record id="res_users_form_inherit" model="ir.ui.view">
+           <field name="name">res.users.form.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/field[@name='partner_id']" position="before">
+                    <field name="cs_ip_phone" invisible="1"/>
+                </xpath>
+                <xpath expr="//page[@name='access_rights']" position="after">
+                    <page string="Caresoft Token">
+                        <field name="cs_token_ids">
+                            <tree create="true">
+                                <field name="id"/>
+                                <field name="token"/>
+                                <field name="phone"/>
+                                <field name="expires"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="IP phone">
+                        <field name="brand_ip_phone_ids" context="{'default_user_id': active_id}">
+                            <tree>
+                                <field name="user_id"/>
+                                <field name="ip_phone"/>
+                                <field name="brand_id"/>
+                            </tree>
+                            <form>
+                                <sheet>
+                                    <group>
+                                        <field name="user_id" invisible="True"/>
+                                        <field name="ip_phone" required="True"/>
+                                        <field name="brand_id" required="True"/>
+                                    </group>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+       <record id="res_users_tree_inherit" model="ir.ui.view">
+            <field name="name">res.users.tree.inherit</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='login']" position="after">
+                    <field name="cs_ip_phone" invisible="1"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

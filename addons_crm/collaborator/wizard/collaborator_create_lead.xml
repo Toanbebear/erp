@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="collaborator_collaborator_create_lead">
+            <field name="name">Tạo Lead CTV</field>
+            <field name="model">collaborator.collaborator.create.lead</field>
+            <field name="arch" type="xml">
+                <form string="Tạo lead CTV">
+                    <group>
+                        <group string="Thông tin khách hàng">
+                            <field name="phone" required="True"/>
+                            <field name="partner_id" string="Khách hàng" readonly="1" force_save="True"/>
+                            <field name="name" string="Tên khách hàng" required="True" attrs="{'invisible': [('phone', '=', False)]}"/>
+                            <field name="gender" string="Giới tính" required="True" attrs="{'invisible': [('phone', '=', False)]}"/>
+                            <field name="country_id" options="{'no_create': True, 'no_open': True}" string="Quốc gia" required="True" attrs="{'invisible': [('phone', '=', False)]}"/>
+                            <field name="birth_date" string="Ngày sinh" attrs="{'invisible': [('phone', '=', False)]}"/>
+                        </group>
+                        <group string="Thông tin Lead">
+                            <field name="company_id" options="{'no_create': True, 'no_open': True}" string="Chi nhánh" required="True" attrs="{'readonly': [('check_company_kxd_pa', '=', False)]}"/>
+                            <field name="brand_id" string="Thương hiệu" readonly="1"/>
+                            <field name="stage_id" options="{'no_create': True, 'no_open': True}" string="Trạng thái" required="True"/>
+                            <field name="price_list_id" options="{'no_create': True, 'no_open': True}" string="Bảng giá" required="True"/>
+                            <field name="check_company_kxd_pa" invisible="True"/>
+                        </group>
+                        <footer>
+                            <button name="create_lead" type="object" string="Tạo Lead" class="oe_highlight"/>
+                            <button string="Cancel" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </group>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_collaborator_create_lead_act">
+            <field name="name">Tạo Lead CTV</field>
+            <field name="res_model">collaborator.collaborator.create.lead</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="collaborator_collaborator_create_lead"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+    </data>
+</odoo>

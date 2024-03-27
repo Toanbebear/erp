@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!--Loại bỏ time sheet ở list view-->
+        <record id="hr_timesheet_project_views_inherit" model="ir.ui.view">
+            <field name="name">Hr timesheet project views inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="hr_timesheet.view_task_tree2_inherited"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='planned_hours']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='remaining_hours']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+                <xpath expr="//field[@name='progress']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Chỉnh sửa tree view-->
+        <record id="project_tree2_views_inherit" model="ir.ui.view">
+            <field name="name">Project tree2 views inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_tree2"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='sequence']" position="after">
+                    <xpath expr="//field[@name='project_id']" position="move"/>
+                </xpath>
+                <xpath expr="//field[@name='project_id']" position="attributes">
+                    <attribute name="string">Phân loại</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='project_id']" position="after">
+                    <xpath expr="//field[@name='stage_id']" position="move"/>
+                </xpath>
+                <xpath expr="//field[@name='stage_id']" position="attributes">
+                    <attribute name="string">Trạng thái</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='stage_id']" position="after">
+                    <xpath expr="//field[@name='date_deadline']" position="move"/>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="attributes">
+                    <attribute name="string">Deadline</attribute>
+                </xpath>
+                <xpath expr="//field[@name='date_deadline']" position="attributes">
+                    <attribute name="optional">show</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='date_deadline']" position="after">
+                    <xpath expr="//field[@name='name']" position="move"/>
+                </xpath>
+                <xpath expr="//field[@name='name']" position="attributes">
+                    <attribute name="string">Tiêu đề</attribute>
+                </xpath>
+
+                <xpath expr="//field[@name='name']" position="after">
+                    <field name="create_uid" string="Người yêu cầu"/>
+                    <field name="department_create_uid" string="Phòng ban yêu cầu"/>
+                    <field name="create_date" string="Ngày giờ yêu cầu"/>
+                </xpath>
+
+                <xpath expr="//field[@name='create_date']" position="after">
+                    <xpath expr="//field[@name='user_id']" position="move"/>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="attributes">
+                    <attribute name="string">Người phụ trách</attribute>
+                </xpath>
+                <xpath expr="//field[@name='user_id']" position="after">
+                    <field name="department_user_id" string="Đơn vị phụ trách"/>
+                </xpath>
+                <xpath expr="//field[@name='company_id']" position="attributes">
+                    <attribute name="optional">hide</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--Chỉnh sửa form view-->
+        <record id="project_form2_views_inherit" model="ir.ui.view">
+            <field name="name">Project form2 views inherit</field>
+            <field name="model">project.task</field>
+            <field name="inherit_id" ref="project.view_task_form2"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group/group[1]" position="replace">
+                    <group>
+                        <field name="project_id" domain="[('active', '=', True), ('company_id', '=', company_id)]"/>
+                        <field name="create_uid" string="Người yêu cầu"/>
+                        <field name="department_create_uid" string="Bộ phận yêu cầu"/>
+                    </group>
+                </xpath>
+                <xpath expr="//group/group[2]" position="replace">
+                    <group>
+                        <field name="active" invisible="1"/>
+                        <field name="department_user_id" string="Đơn vị phụ trách"/>
+                        <field name="user_id" class="o_task_user_field" options="{&quot;no_open&quot;: True}" string="Người phụ trách"/>
+                        <field name="date_deadline"/>
+                        <field name="tag_ids" widget="many2many_tags" options="{'color_field': 'color', 'no_create_edit': True}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Thêm group by department ở view search-->
+        <record id="view_project_project_filter_inherit" model="ir.ui.view">
+            <field name="name">project.project.select.inherit</field>
+            <field name="model">project.project</field>
+            <field name="inherit_id" ref="project.view_project_project_filter"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search/group" position="inside">
+                    <filter string="Phòng ban" name="Department" context="{'group_by': 'department_display'}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <!-- Đặt mặc định kanban view group theo department-->
+        <record id="project.open_view_project_all" model="ir.actions.act_window">
+            <field name="name">Projects</field>
+            <field name="res_model">project.project</field>
+            <field name="domain">[]</field>
+            <field name="view_mode">kanban,form</field>
+            <field name="view_id" ref="project.view_project_kanban"/>
+            <field name="search_view_id" ref="project.view_project_project_filter"/>
+            <field name="context">{'search_default_Department': True}</field>
+            <field name="target">main</field>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Create a new project
+                </p>
+                <p>
+                    Or <a type="action" name="%(project.ir_actions_server_project_sample)d" tabindex="-1">activate a sample project</a> to play with.
+                </p>
+            </field>
+        </record>
+
+        <!-- Đưa kanban view lên trước tree view -->
+        <record id="project.act_project_project_2_project_task_all" model="ir.actions.act_window">
+            <field name="name">Tasks Inherit</field>
+            <field name="res_model">project.task</field>
+            <field name="view_mode">tree,form,kanban,calendar,pivot,graph,activity</field>
+        </record>
+    </data>
+</odoo>

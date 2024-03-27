@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="walkin_labtest_result_view_form" model="ir.ui.view">
+        <field name="name">walkin.labtest.result.view.form</field>
+        <field name="model">walkin.labtest.result</field>
+        <field name="arch" type="xml">
+            <form string="Kết quả xét nghiệm">
+                <group>
+                    <field name="patient"/>
+                    <field name="service" widget="many2many_tags"/>
+                    <field name="pathologist" required="1" options="{'no_create': True,'no_open': True}"/>
+                    <field name="perform_room" required="1" options="{'no_create': True,'no_open': True}"/>
+                    <field name="date_exam"/>
+                    <field name="date_requested" readonly="1" force_save="1"/>
+                    <field name="date_analysis" required="1"/>
+                    <field name="date_done" required="1"/>
+                    <field name="supply_domain" invisible="1"/>
+                </group>
+                <notebook>
+                    <page string="Kết quả" name="result" invisible="1"></page>
+                    <page string="Vật tư">
+                        <group>
+                            <group>
+                                <field name="other_bom" widget="many2many_tags" options="{'no_create': True}"/>
+                            </group>
+                            <group string="Lưu ý:">
+                                <ul class="text-info">
+                                    <li>
+                                        <i><i class="text-warning">Màu vàng</i>: Vật tư/Thuốc <b>vượt quá định mức</b> hoặc <b>
+                                            không có trong BOM</b>.
+                                        </i>
+                                    </li>
+                                    <li>
+                                        <i><i class="text-danger">Màu đỏ</i>: Vật tư/Thuốc <b>hết toàn viện</b>.
+                                        </i>
+                                    </li>
+                                    <li>
+                                        <i><i class="fa fa-warning text-warning"/>: Vật tư/Thuốc <b>hết tại khoa
+                                            phòng</b>.
+                                        </i>
+                                    </li>
+                                </ul>
+                            </group>
+                        </group>
+                        <group string="Vật tư">
+                            <field name="supplies" nolabel="1" widget="one2many" context="{'room': perform_room, 'ignore_expired': date_analysis}">
+                                <tree editable="bottom" decoration-danger="quantity > qty_avail"
+                                      decoration-warning="quantity > init_quantity">
+                                    <field name="sequence" invisible="1"/>
+                                    <field name="product_id" domain="[('id', 'in', parent.supply_domain)]" required="1"
+                                           force_save="1" attrs="{'readonly': [('is_init','=',True)]}"
+                                           options="{'no_create': True,'no_open': True}"/>
+                                    <field name="init_quantity" force_save="1" optional="hide"/>
+                                    <field name="is_init" invisible="1" force_save="1"/>
+                                    <field name="quantity" required="1"/>
+                                    <field name="qty_avail" required="1" force_save="1" optional="hide"/>
+                                    <field name="uom_id" readonly="1" force_save="1" required="1"
+                                           options="{'no_create':True,'no_open': True}"/>
+                                    <field name="location_id" optional="hide" readonly="1" force_save="1"/>
+                                    <field name="is_warning_location" invisible="1"/>
+                                    <field name="notes" optional="show" attrs="{'required':[('is_diff_bom', '=', True)]}"/>
+                                    <field name="is_diff_bom" invisible="1"/>
+                                    <field name="services" optional="hide" widget="many2many_tags"/>
+                                    <button readonly="True" icon="fa-warning text-warning"
+                                            title="Tủ trực không đủ số lượng"
+                                            attrs="{'invisible': [('is_warning_location', '=', False)]}"/>
+                                </tree>
+                            </field>
+                        </group>
+                    </page>
+                </notebook>
+            </form>
+        </field>
+    </record>
+
+    <record id="walkin_labtest_result_action" model="ir.actions.act_window">
+        <field name="name">Kết quả xét nghiệm</field>
+        <field name="res_model">walkin.labtest.result</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="walkin_labtest_result_view_form"/>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- new layout for surveys -->
+        <template id="survey.layout" name="Survey Layout" inherit_id="web.frontend_layout" primary="True">
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+            <xpath expr="//head/t[@t-call-assets][last()]" position="after">
+                <t t-call-assets="survey.survey_assets" lazy_load="True"/>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+            </xpath>
+            <xpath expr="//nav[@id='oe_main_menu_navbar']" position="replace">
+            </xpath>
+            <xpath expr="//header[@id='top']" position="replace">
+            </xpath>
+            <xpath expr="//main" position="replace">
+                <body style="margin:0px;background-image: url('/survey_kangnam/static/src/img/bg_survey_kn.png'); background-repeat: round;background-attachment: fixed;">
+                    <div class="text-center">
+                        <img src="/survey_kangnam/static/src/img/logo_survey_kn.png" alt="Logo"
+                             style="height:150px;"/>
+                    </div>
+                    <div id="wrap" class="oe_structure oe_empty"/>
+                    <main>
+                        <t t-raw="0"/>
+                    </main>
+                </body>
+            </xpath>
+        </template>
+
+        <template id="website_survey_kangnam" name="Website survey Kangnam">
+            <t t-call="survey.layout">
+                <meta name="viewport" content="width=device-width, initial-scale=1"/>
+                <body>
+                    <div class="container-fluid mb32">
+                        <t t-foreach="walkin_detail" t-as="wd">
+                            <div class="row">
+                                <div class="col-12 col-sm-12 col-md-6 offset-md-3 col-lg-6 offset-lg-3 mt32">
+                                    <section class="mb32">
+                                        <h2 style="color:#fff">CẢM ƠN BẠN ĐÃ SỬ DỤNG DỊCH VỤ CỦA BỆNH VIỆN THẨM MỸ
+                                            KANGNAM
+                                        </h2>
+                                    </section>
+                                    <section class="element_02 mb-32">
+                                        <div class="box2">
+                                            <table style="width:100%">
+                                                <tr>
+                                                    <th>
+                                                        <span>Khách hàng:</span>
+                                                    </th>
+                                                    <td>
+                                                        <t t-esc="wd.patient.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <span>Ngày khám:</span>
+                                                    </th>
+                                                    <td>
+                                                        <t t-esc="wd.date" t-options='{"widget": "date"}'/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <span>Dịch vụ:</span>
+                                                    </th>
+                                                    <td>
+                                                        <t t-esc="wd.service.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <span>Bác sĩ:</span>
+                                                    </th>
+                                                    <td>
+                                                        <t t-esc="wd.doctor.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <span>Phòng khám:</span>
+                                                    </th>
+                                                    <td>
+                                                        <t t-esc="wd.service_room.name"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <th>
+                                                        <span>Cơ sở y tế:</span>
+                                                    </th>
+                                                    <td>
+                                                        <t t-esc="wd.institution.name"/>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </section>
+                                    <section class="element_03 mt32">
+                                        <div>
+                                            <center>
+                                                <a class="btn btn-primary btn-lg"
+                                                   t-att-href="'/survey/start/%s/walkin_id=%s?answer_token' %(wd.booking_id.survey_id.access_token, wd.id)">
+                                                    Xác nhận
+                                                </a>
+                                            </center>
+                                        </div>
+                                    </section>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </body>
+            </t>
+        </template>
+        <template id="survey_inits" name="Survey" inherit_id="survey.survey_init" primary="True">
+            <xpath expr="//div//div[2]//div//form" position="replace">
+                <form role="form" method="post" class="js_surveyform"
+                      t-att-action="'/survey/fill/%s/%s' % (survey.access_token, answer.token)"
+                      t-att-data-submit="'/survey/submit-creator/%s/%s' % (survey.access_token, answer.token)">
+                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                    <div>
+                        <div class="row" style="font-size:20px">
+                            <!--                            <table cellpadding="10" style="width:100%;height:100%;font-size:20px; text-align;center;">-->
+                            <!--                            <div class="col-md-4"></div>-->
+                            <div class="col-md-12 text-center">
+                                <table cellpadding="10">
+                                    <tr>
+                                        <td>Ngày khám:</td>
+                                        <td>
+                                            <t t-esc="date"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Khách hàng:</td>
+                                        <td>
+                                            <t t-esc="customer_name"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Dịch vụ:</td>
+                                        <td>
+                                            <t t-esc="service"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Bác sĩ:</td>
+                                        <td>
+                                            <t t-esc="doctor"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Phòng khám:</td>
+                                        <td>
+                                            <t t-esc="room"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>Người làm khảo sát:</td>
+                                        <td>
+                                            <select name="user" id="user" style="width: 400px;">
+                                                <option disabled="1" selected="1"/>
+                                                <t t-foreach='user_ids' t-as='user'>
+                                                    <option t-att-name="'%s' % user.id"
+                                                            t-att-value="'%s' % user.id">
+                                                        <span t-esc='user.name'/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <!--                            <div class="col-md-4"></div>-->
+                        </div>
+                    </div>
+                    <t t-if="user_ids">
+                        <button type="submit" id="submit_user" class="btn btn btn-lg"
+                                style="margin-top:20px;background-color: #fe5931;color: #f6e6db;"
+                                name="button_start" value="start">Start Survey
+                        </button>
+                    </t>
+                    <!--                    <t t-else="">-->
+                    <!--                        <button type="submit" class="btn btn btn-lg"-->
+                    <!--                                style="margin-top:20px;background-color: #fe5931;color: #f6e6db;"-->
+                    <!--                                name="button_start" value="start">Start Surveyiiiiiiiii-->
+                    <!--                        </button>-->
+                    <!--                    </t>-->
+                </form>
+            </xpath>
+        </template>
+
+
+    </data>
+</odoo>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <template id="report_payment_list_print_view">
+            <t t-call="web.html_container">
+                <t t-foreach="docs" t-as="doc">
+                    <div class="article" t-att-data-oe-model="doc and doc._name" t-att-data-oe-id="doc and doc.id" t-att-data-oe-lang="doc and doc.env.context.get('lang')">
+                        <t t-call="web.external_layout">
+                            <div class="page" style="font-family:Times New Roman;font-size:22px;">
+                                <div class="row mt32 mb32">
+                                    <div class="col-5" style="font-size:17px;">
+                                        <img t-if="doc.company_id.favicon" t-att-src="image_data_uri(doc.company_id.favicon)" width="35" border="0"/>
+                                        <div class="m-0" t-field="doc.company_id.name" style="text-transform: uppercase;font-weight:bold;"/>
+
+                                        <div>
+                                            <span class="m-0" t-field="doc.company_id.street"/>,
+                                            <span class="m-0" t-field="doc.company_id.street2"/>,
+                                            <span class="m-0" t-field="doc.company_id.city"/>
+                                        </div>
+
+                                        <div class="m-0" t-if="doc.company_id.phone">Hotline: <span t-field="doc.company_id.phone"/></div>
+                                    </div>
+                                </div>
+
+                                <div class="col-12 text-center">
+                                    <div style="font-size: 30px;"><b>BẢNG KÊ THANH TOÁN</b></div>
+                                </div>
+
+                                <div class="col-12 text-center" t-if="doc.payment_date">
+                                    <i><span t-esc="doc.payment_date.strftime('Ngày %d tháng %m năm %Y')"/></i>
+                                </div>
+                                <div>
+                                    <br/>
+                                </div>
+                                <div class="col-12 text-left">
+                                    <span>Số bảng kê: </span><t t-esc="doc.name"/>
+                                </div>
+
+                                <div class="col-12 text-left">
+                                    <span>Người nộp: </span><b t-esc="doc.partner_id.name"/>
+                                </div>
+                                <div class="col-12 text-left">
+                                    <span>Địa chỉ: </span>
+                                    <span t-esc="doc.partner_id.street"/>,
+                                    <span t-esc="doc.partner_id.state_id.name"/>,
+                                    <span t-esc="doc.partner_id.country_id.name"/>
+                                </div>
+
+                                <div class="col-12 text-left">
+                                    <span>Nhân viên thu: </span><b t-esc="doc.user.name"/>
+                                </div>
+
+                                <div class="col-12 text-left">
+                                    <span>Phòng ban: </span><b t-esc="doc.user.employee_id.department_id.name"/>
+                                </div>
+
+                                <table class="table table-condensed">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-center border border-dark" width="5%"><strong>STT</strong></th>
+                                            <th class="text-center border border-dark" width="30%"><strong>Hình thức thanh toán</strong></th>
+                                            <th class="text-center border border-dark" width="15%"><strong>Số tiền</strong></th>
+                                            <th class="text-center border border-dark" width="15%"><strong>Loại tiền</strong></th>
+                                            <th class="text-center border border-dark" width="10%"><strong>Tỷ giá</strong></th>
+                                            <th class="text-center border border-dark" width="25%"><strong>Thành tiền</strong></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-if="doc.payment_ids">
+                                            <t t-set="i" t-value="0"/>
+                                            <t t-foreach="doc.payment_ids" t-as="line">
+                                                <t t-if="line.state=='posted'">
+                                                    <t t-set="i" t-value="i + 1"/>
+                                                    <tr t-if="line">
+                                                        <td class="border border-dark text-center">
+                                                            <t t-esc="i"/>
+                                                        </td>
+                                                        <td class="border border-dark text-left">
+                                                            <span t-field="line.payment_method"/>
+                                                        </td>
+                                                        <td class="border border-dark text-right">
+                                                            <span t-field="line.amount" t-options="{'widget': 'float', 'precision': 0}"/>
+                                                        </td>
+                                                        <td class="border border-dark text-right">
+                                                            <span t-field="line.currency_id.name"/>
+                                                        </td>
+                                                        <td class="border border-dark text-right" t-if="line.currency_id.name != 'VND'">
+                                                            <span t-esc="round(line.amount_vnd / line.amount)" t-options="{'widget': 'float', 'precision': 0}"/>
+                                                        </td>
+                                                        <td class="border border-dark text-right" t-else="line.currency_id.name == 'VND'">
+                                                            1
+                                                        </td>
+                                                        <td class="border border-dark text-right">
+                                                            <span t-field="line.amount_vnd"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </t>
+                                        </t>
+                                        <tr>
+                                            <td colspan="5" class="border border-dark text-left">
+                                                <strong>
+                                                    <span>Tổng tiền khách nộp</span>
+                                                </strong>
+                                            </td>
+                                            <td class="border border-dark text-right">
+                                                <strong>
+                                                    <span t-esc="sum(line.amount_vnd for line in doc.payment_ids)" t-options="{'widget': 'float', 'precision': 0}"/>
+                                                </strong>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div class="row text-center">
+                                    <div class="text-center col-3">
+                                        <div>
+                                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;">Giám đốc</span>
+                                        </div>
+                                        <div>
+                                            <i>(Ký, đóng dấu)</i>
+                                        </div>
+                                        <div style="height:100px;"/>
+                                    </div>
+                                    <div class="text-center col-2">
+                                        <div>
+                                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;">Kế toán
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <i>(Ký, họ tên)</i>
+                                        </div>
+                                        <div style="height:100px;"/>
+                                    </div>
+                                    <div class="text-center col-2">
+                                        <div>
+                                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;">Thủ quỹ</span>
+                                        </div>
+                                        <div>
+                                            <i>(Ký, họ tên)</i>
+                                        </div>
+                                        <div style="height:100px;"/>
+                                    </div>
+                                    <div class="text-center col-2">
+                                        <div>
+                                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;">Người lập
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <i>(Ký, họ tên)</i>
+                                        </div>
+                                        <div style="height:100px;"/>
+                                    </div>
+                                    <div class="text-center col-3">
+                                        <div>
+                                            <span style="font-family:Times New Roman - Bold;font-weight:bolder;">
+                                                <t t-if="doc.payment_type == 'outbound'">Người nhận tiền</t>
+                                                <t t-else="">Người nộp tiền</t>
+                                            </span>
+                                        </div>
+                                        <div>
+                                            <i>(Ký, họ tên)</i>
+                                        </div>
+                                        <div style="height:100px;"/>
+                                    </div>
+                                </div>
+                                <div class="mt16">
+                                    Đã nhận đủ số tiền (Viết bằng chữ):
+                                    <span t-esc="doc.number_to_words(doc.amount_subtotal)"/>
+                                    chẵn.
+                                </div>
+                                <div class="oe_structure"/>
+                            </div>
+                            <div t-attf-class="footer">
+                                <div class="text-center" style="border-top: 1px solid black;">
+                                    <ul class="list-inline mb4 text-nowrap">
+                                        <li t-if="doc.company_id.phone" class="list-inline-item d-inline">Phone: <span class="o_force_ltr" t-esc="doc.company_id.phone"/></li>
+                                        <li t-if="doc.company_id.email" class="list-inline-item d-inline">Email: <span class="o_force_ltr" t-esc="doc.company_id.email"/></li>
+                                        <li t-if="doc.company_id.website" class="list-inline-item d-inline">Web: <span class="o_force_ltr" t-field="doc.company_id.website"/></li>
+                                        <li class="list-inline-item d-inline">
+                                            <i class="o_force_ltr" t-esc="context_timestamp(datetime.datetime.now()).strftime('Phiếu in ngày %d tháng %m năm %Y')"/>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

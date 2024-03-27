@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="res_config_settings_view_form" model="ir.ui.view">
+            <field name="name">res.config.settings.view.form.inherit.internal.account</field>
+            <field name="model">res.config.settings</field>
+            <field name="priority" eval="40"/>
+            <field name="inherit_id" ref="account.res_config_settings_view_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='has_accounting_entries']" position="after">
+                    <h2>Internal Account</h2>
+                    <div class="row mt16 o_settings_container">
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label for="internal_transfer_account" class="col-lg-3 o_form_label"/>
+                                        <field name="internal_transfer_account" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label for="x_internal_payable_account_id" class="col-lg-3 o_form_label"/>
+                                        <field name="x_internal_payable_account_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label for="x_journal_internal_id" class="col-lg-3 o_form_label"/>
+                                        <field name="x_journal_internal_id"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+<!--                        <div class="col-12 col-lg-6 o_setting_box">-->
+<!--                            <div class="o_setting_left_pane"/>-->
+<!--                            <div class="o_setting_right_pane">-->
+<!--                                <div class="content-group">-->
+<!--                                    <div class="row mt16">-->
+<!--                                        <label for="x_service_referral_allocation_rate" class="col-lg-3 o_form_label"/>-->
+<!--                                        <field name="x_service_referral_allocation_rate"/>-->
+<!--                                    </div>-->
+<!--                                </div>-->
+<!--                            </div>-->
+<!--                        </div>-->
+                        <div class="col-12 col-lg-6 o_setting_box">
+                            <div class="o_setting_left_pane"/>
+                            <div class="o_setting_right_pane">
+                                <div class="content-group">
+                                    <div class="row mt16">
+                                        <label for="service_allocation_rate_id" class="col-lg-3 o_form_label"/>
+                                        <field name="service_allocation_rate_id" domain="[('company_id','=',company_id)]" attrs="{'readonly':[('has_service_allocation_rate','=', True)]}" />
+                                        <field name="has_service_allocation_rate" invisible="1" />
+<!--                                        options="{'no_create_edit':[('company_allocation_rate_id','!=', False)]}"-->
+<!--                                         domain="[('company_id', '=', context.get('company_id'))]" -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

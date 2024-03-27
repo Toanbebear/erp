@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="collaborator_overseas_type_view_form" model="ir.ui.view">
+            <field name="name">Chính sách Cộng tác viên Việt kiều</field>
+            <field name="model">collaborator.overseas.type</field>
+            <field name="arch" type="xml">
+                <form delete="false">
+                    <header>
+                    </header>
+                    <sheet>
+                        <group string="Thông tin">
+                            <group>
+                                <label for="sales_begin"/>
+                                <div class="o_row">
+                                    <field name="sales_begin"  options="{'currency_symbol': '$'}" force_save="1" required="True" widget="monetary"/>
+                                    <field name="currency_id" readonly="True"/>
+
+                                    <label style="margin-left: 35px" for="sales_final" string="Đến"/>
+
+                                    <field style="margin-left: 35px" name="sales_final" force_save="1" options="{'currency_symbol': '$'}" widget="monetary" required="True"/>
+                                    <field name="currency_id" readonly="True"/>
+                                </div>
+                            </group>
+                            <group>
+                                <field name="rate" required="True" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="collaborator_overseas_type_view_tree" model="ir.ui.view">
+            <field name="name">Chính sách Cộng tác viên Việt kiểu</field>
+            <field name="model">collaborator.overseas.type</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc" delete="false">
+                    <field name="sales_begin" widget="monetary" options="{'currency_symbol': '$'}"/>
+                    <field name="sales_final" widget="monetary" options="{'currency_symbol': '$'}"/>
+                    <field name="currency_id"/>
+                    <field name="rate"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="collaborator_overseas_type_action" model="ir.actions.act_window">
+            <field name="name">Chính sách Cộng tác viên Việt kiều</field>
+            <field name="res_model">collaborator.overseas.type</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

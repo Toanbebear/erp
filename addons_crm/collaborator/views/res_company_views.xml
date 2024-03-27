@@ -1,0 +1,77 @@
+<odoo>
+    <data>
+
+<!--        &lt;!&ndash;Thêm trường short code vào công ty&ndash;&gt;-->
+<!--        <record id="inherit_res_company_view_form_inherit" model="ir.ui.view">-->
+<!--            <field name="name">res.company</field>-->
+<!--            <field name="model">res.company</field>-->
+<!--            <field name="inherit_id" ref="base.view_company_form"/>-->
+<!--            <field name="arch" type="xml">-->
+<!--                <xpath expr="//field[@name='code']" position="after">-->
+<!--                    <field name="short_code"/>-->
+<!--                    <field name="short_name"/>-->
+<!--                </xpath>-->
+<!--            </field>-->
+<!--        </record>-->
+
+        <!--    Hiển thị trong module collaborator -->
+        <record id="res_company_view_tree" model="ir.ui.view">
+            <field name="name">res.company.view.tree</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="sequence" widget="handle"/>
+                    <field name="name"/>
+                    <field name="short_code"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="res_company_view_form" model="ir.ui.view">
+            <field name="name">res.company.view.form</field>
+            <field name="model">res.company</field>
+            <field name="arch" type="xml">
+                <form>
+                    <header>
+                    </header>
+                    <sheet>
+                        <field name="active" invisible="1"/>
+                        <group string="Thông tin">
+                            <group>
+                                <field name="name" readonly="True"/>
+                                <field name="short_code"/>
+                                <field name="check_collaborator" widget="radio"/>
+                            </group>
+                            <group>
+                                <field name="collaborator_legal_name"/>
+                                <field name="collaborator_legal_name_company"/>
+                                <field name="collaborator_legal"/>
+
+                                <field name="collaborator_position" attrs="{'invisible':[('check_collaborator','=', '1')]}"/>
+                                <field name="collaborator_phone" attrs="{'invisible':[('check_collaborator','=', '2')]}"/>
+                                <field name="collaborator_date_of_birth" attrs="{'invisible':[('check_collaborator','=', '2')]}"/>
+                                <field name="collaborator_passport" attrs="{'invisible':[('check_collaborator','=', '2')]}"/>
+                                <field name="collaborator_passport_date" attrs="{'invisible':[('check_collaborator','=', '2')]}"/>
+                                <field name="collaborator_passport_issue_by" attrs="{'invisible':[('check_collaborator','=', '2')]}"/>
+
+                                <field name="collaborator_registry" attrs="{'invisible':[('check_collaborator','=', '1')]}"/>
+                                <field name="collaborator_street"/>
+                                <field name="collaborator_state_id"/>
+                                <field name="logo" widget="image" class="oe_identity" />
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="res_company_action" model="ir.actions.act_window">
+            <field name="name">Công ty</field>
+            <field name="res_model">res.company</field>
+            <field name="view_mode">tree,form</field>
+			<field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('collaborator.res_company_view_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('collaborator.res_company_view_form')})]"/>
+        </record>
+    </data>
+</odoo>

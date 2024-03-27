@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sh_walkin_evaluation_view">
+            <field name="name">evaluation</field>
+            <field name="model">sh.medical.evaluation</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_evaluation_walkin_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[1]/group[2]/field[@name='chief_complaint']" position="before">
+                    <field name="check_state" readonly="True" attrs="{'invisible': [('department_type', '!=', 'Surgery')]}"/>
+                </xpath>
+            </field>
+        </record>
+        <record model="ir.ui.view" id="view_sh_walkin_evaluation_filter">
+            <field name="name">evaluation</field>
+            <field name="model">sh.medical.evaluation</field>
+            <field name="inherit_id" ref="shealth_all_in_one.view_sh_medical_evaluation_filter"/>
+            <field name="type">search</field>
+            <field name="arch" type="xml">
+                <xpath expr="//search/group" position="inside">
+                    <filter string="Khảo sát" name="group_check_state" context="{'group_by':'check_state'}"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

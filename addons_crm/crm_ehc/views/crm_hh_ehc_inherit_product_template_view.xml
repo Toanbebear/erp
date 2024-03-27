@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+	<data>
+		
+		<record id="crm_hh_ehc_product_template_view_inherit" model="ir.ui.view">
+			<field name="name">product.product.hh</field>
+			<field name="model">product.template</field>
+			<field name="inherit_id" ref="product.product_template_only_form_view"/>
+			<field name="arch" type="xml">
+				<xpath expr="//notebook" position="inside">
+					<page string="Thông tin EHC">
+						<group>
+							<group string="Dịch vụ" attrs="{'invisible':[('type','!=','service')]}">
+								<field name="service_id_ehc"/>
+								<field name="service_code_ehc"/>
+								<field name="service_price_bhyt"/>
+								<field name="service_code_bhyt"/>
+								<field name="service_type"/>
+								<field name="stage"/>
+							</group>
+							<group string="Thuốc - Vật tư" attrs="{'invisible':[('type','!=','consu')]}">
+								<field name="material_code"/>
+								<field name="material_unit"/>
+								<field name="material_category"/>
+								<field name="material_specifications"/>
+								<field name="material_route_of_use"/>
+								<field name="material_brand_name"/>
+								<field name="material_content"/>
+								<field name="material_active_ingredient"/>
+							</group>
+						</group>
+					</page>
+				</xpath>
+			</field>
+		</record>
+	
+	</data>
+</odoo>

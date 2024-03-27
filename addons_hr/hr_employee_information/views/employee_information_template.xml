@@ -1,0 +1,654 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="employee_information_asset" name="Information Employee">
+            <t t-call="web._assets_helpers"/>
+            <t t-call="web._assets_bootstrap"/>
+            <script type="text/javascript" src="/hr_employee_information/static/src/js/custom.js"/>
+            <meta charset="utf-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <link href="/hr_employee_information/static/src/css/information_employee.css" rel="stylesheet"/>
+        </template>
+
+        <!-- new layout for surveys -->
+        <template id="employee_information_layout" name="Information Employee Layout" inherit_id="web.frontend_layout"
+                  primary="True">
+            <xpath expr="//head" position="after">
+                <t t-call-assets="hr_employee_information.employee_information_asset" lazy_load="True"/>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+
+            <xpath expr="//footer" position="replace">
+            </xpath>
+
+            <xpath expr="//nav[@id='oe_main_menu_navbar']" position="replace">
+            </xpath>
+
+            <xpath expr="//header[@id='top']" position="replace">
+            </xpath>
+
+            <xpath expr="//main" position="replace">
+                <body style="margin:0px;background-image: url('/hr_employee_information/static/src/img/background.jpg'); background-repeat: round;background-attachment: fixed;">
+                    <div class="text-center">
+                        <img src="/hr_employee_information/static/src/img/logo_sci.png" alt="Logo"
+                             style="height:150px;"/>
+                    </div>
+                    <!--                    <div id="wrap" class="oe_structure oe_empty"/>-->
+                    <main class="o_information_employee_main">
+                        <t t-raw="0"/>
+                    </main>
+                </body>
+            </xpath>
+        </template>
+
+        <template id="employee_information" name="Information Employee">
+            <t t-call="hr_employee_information.employee_information_layout">
+                <div class="wrap">
+                    <div class="container-fluid">
+                        <div class="oe_structure" id="oe_structure_survey_init_1"/>
+                        <div class="container-fluid">
+                            <div style="font-weight: bold;">
+                                <form role="form" method="post" class="js_surveyform"
+                                      t-att-action="'/information-submit/%s' % (hr_employee.token)"
+                                      t-att-data-submit="'/information-submit/%s' % (hr_employee.token)">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <br/>
+                                    <div>
+                                        <br/>
+                                        <h1 class="text-center">THÔNG TIN NHÂN SỰ</h1>
+                                        <div class="">
+                                            <h2>1. Thông tin cá nhân</h2>
+                                            <form class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label for="name_employee" class="col-sm-2 control-label">Họ và
+                                                        tên:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" name="employee_name" class="form-control"
+                                                               id="employee_name" placeholder="Họ và tên"
+                                                               t-att-value="'%s' % name_employee" required="1"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="birth_day" class="col-sm-2 control-label">Ngày sinh:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <input type="date" id="birth_day" name="birth_day"
+                                                               class="form-control" placeholder="Ngày sinh"
+                                                               required="1"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="birthplace" class="col-sm-2 control-label">Nơi sinh:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <select name="birthplace" id="birthplace" class="form-control"
+                                                                placeholder="Nơi sinh" required="1">
+                                                            <option disabled="1" selected="1"/>
+                                                            <t t-foreach='countries' t-as='country'>
+                                                                <option t-att-name="'%s' % country.id"
+                                                                        t-att-value="'%s' % country.id">
+                                                                    <span t-esc='country.name'/>
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="gender_employee" class="col-sm-2 control-label">Giới
+                                                        tính:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <select name="gender_employee" id="gender_employee"
+                                                                class="form-control"
+                                                                placeholder="Giới tính" required="1">
+                                                            <option value="male">Nam</option>
+                                                            <option value="female">Nữ</option>
+                                                            <option value="other">Khác</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="identification" class="col-sm-2 control-label">CMT:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <input type="number" id="identification" name="identification"
+                                                               class="form-control"
+                                                               placeholder="CMT" required="1"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="date_issue" class="col-sm-2 control-label">Ngày cấp:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <input type="date" id="date_issue" name="date_issue"
+                                                               class="form-control" placeholder="Ngày cấp"
+                                                               required="1"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="issued_by" class="col-sm-2 control-label">Nơi cấp:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <select name="issued_by" id="issued_by" class="form-control"
+                                                                placeholder="Nơi cấp" required="1">
+                                                            <option disabled="1" selected="1"/>
+                                                            <option value="Cục trưởng Cục Cảnh sát Quản lý Hành chính về Trật tự xã hội">
+                                                                Cục trưởng Cục Cảnh sát Quản lý Hành chính về Trật tự xã
+                                                                hội
+                                                            </option>
+                                                            <option value="Cục trưởng Cục Cảnh sát ĐKQL cư trú và DLQG về dân cư">
+                                                                Cục trưởng Cục Cảnh sát ĐKQL cư trú và DLQG về dân cư
+                                                            </option>
+                                                            <t t-foreach='countries' t-as='country'>
+                                                                <option t-att-name="'%s' % country.id"
+                                                                        t-att-value="'%s' % country.name">
+                                                                    <span t-esc='country.name'/>
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="issue_place" class="col-sm-2 control-label">Dân tộc:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <select name="nation" id="nation" class="form-control"
+                                                                placeholder="Dân tộc:" required="1">
+                                                            <option disabled="1" selected="1"/>
+                                                            <t t-foreach='nation' t-as='nation'>
+                                                                <option t-att-name="'%s' % nation.id"
+                                                                        t-att-value="'%s' % nation.id">
+                                                                    <span t-esc='nation.name'/>
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="matrimony" class="col-sm-2 control-label">Hôn nhân:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <select name="matrimony" id="matrimony" class="form-control"
+                                                                placeholder="Hôn nhân" required="1">
+                                                            <option value="alone">Độc thân</option>
+                                                            <option value="already_married">Đã kết hôn</option>
+                                                            <option value="other">Khác</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="emergency_contact" class="col-sm-2 control-label">Hộ
+                                                        khẩu thường trú:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" name="emergency_contact" class="form-control"
+                                                               id="emergency_contact"
+                                                               placeholder="Hộ khẩu thường trú"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="emergency_contact_district"
+                                                           class="col-sm-2 control-label">Tỉnh thành:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <select name="emergency_contact_district" id="sl_state"
+                                                                class="form-control"
+                                                                placeholder="Tỉnh thành" required="1">
+                                                            <option disabled="1" selected="1"/>
+                                                            <t t-foreach='countries' t-as='country'>
+                                                                <option t-att-name="'%s' % country.id"
+                                                                        t-att-value="'%s' % country.id">
+                                                                    <span t-esc='country.name'/>
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="district" class="col-sm-2 control-label">Quận/huyện:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <select name="district" id="district" class="form-control"
+                                                                placeholder="Quận/huyện" required="1">
+
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="wards" class="col-sm-2 control-label">Phường/xã:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <select name="wards" id="sl_wards" class="form-control"
+                                                                placeholder="Phường/xã" required="1">
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="emergency_address" class="col-sm-2 control-label">Chỗ ở
+                                                        hiện tại:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" name="emergency_address" class="form-control"
+                                                               id="emergency_address"
+                                                               placeholder="Chỗ ở hiện tại"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="employee_phone" class="col-sm-2 control-label">Số điện
+                                                        thoại:
+                                                    </label>
+                                                    <div class="col-sm-12">
+                                                        <input type="number" id="employee_phone" name="employee_phone"
+                                                               class="form-control"
+                                                               placeholder="Số điện thoại"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="email" class="col-sm-2 control-label">Email:</label>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" name="email" class="form-control" id="email"
+                                                               placeholder="Email"/>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <span>Trong trường hợp khẩn cấp báo, có thể liên lạc với người
+                                                            sau:
+                                                        </span>
+                                                        <table class="table table-bordered form-group">
+                                                            <thead>
+                                                                <th id="relationship"
+                                                                    style="width: 20%; text-align: center;">Quan hệ
+                                                                </th>
+                                                                <th id="name_relative"
+                                                                    style="width: 40%; text-align: center;">Họ và tên
+                                                                </th>
+                                                                <th id="phone_relative"
+                                                                    style="width: 40%; text-align: center;">Số điện
+                                                                    thoại
+                                                                </th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="employee_relations_row">
+                                                                    <th>
+                                                                        <select name="employee_relations"
+                                                                                id="employee_relations"
+                                                                                style="width: 100%;">
+                                                                            <option value="father">Bố</option>
+                                                                            <option value="mother">Mẹ</option>
+                                                                            <option value="wife">Vợ</option>
+                                                                            <option value="husband">Chồng</option>
+                                                                            <option value="son">Con trai</option>
+                                                                            <option value="daughter">Con gái</option>
+                                                                            <option value="other">Khác</option>
+                                                                        </select>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="text"
+                                                                               id="name_relatives"
+                                                                               name="name_relatives"
+                                                                               style="width: 100%;"/>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="text"
+                                                                               id="phone_relatives"
+                                                                               name="phone_relatives"
+                                                                               style="width: 100%;"
+                                                                        />
+                                                                    </th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <h2>2. Thông tin gia đình</h2>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <table class="table table-bordered form-group"
+                                                               id="tbl_employee_relations_row">
+                                                            <thead>
+                                                                <th style="width: 15%; text-align: center;">Quan hệ</th>
+                                                                <th style="width: 40%; text-align: center;">Họ và tên
+                                                                </th>
+                                                                <th style="width: 20%; text-align: center;">Năm sinh
+                                                                </th>
+                                                                <th style="width: 25%; text-align: center; ">Nghề
+                                                                    nghiệp
+                                                                </th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr id="tr_delete_relation__0"
+                                                                    class="employee_relations_row" data-id="0">
+                                                                    <th>
+                                                                        <select name="employee_relations__0"
+                                                                                id="employee_relations"
+                                                                                style="width: 100%">
+                                                                            <option value="father">Bố</option>
+                                                                            <option value="mother">Mẹ</option>
+                                                                            <option value="wife">Vợ</option>
+                                                                            <option value="husband">Chồng</option>
+                                                                            <option value="son">Con trai</option>
+                                                                            <option value="daughter">Con gái</option>
+                                                                            <option value="other">Khác</option>
+                                                                        </select>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="text" name="name__0"
+                                                                               style="width: 100%"/>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="number"
+                                                                               name="birth__0" style="width: 100%"/>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="text"
+                                                                               name="occupation__0" style="width: 100%"
+                                                                        />
+                                                                    </th>
+                                                                    <th>
+                                                                        <button data-id="0"
+                                                                                name="btn_delete_relation__0"
+                                                                                id="btn_delete_relation__0"
+                                                                                type="button"
+                                                                                class="button_delete_relations">Xóa
+                                                                        </button>
+                                                                    </th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <button id="btn_add_relation" type="button"
+                                                                class="button_add_relations">Thêm
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <h2>3. Quá trình đào tạo</h2>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <table class="table table-bordered form-group"
+                                                               id="tbl_employee_training_process_row">
+                                                            <thead>
+                                                                <th style="width: 17%; text-align: center;">Thời gian
+                                                                    bắt đầu
+                                                                </th>
+                                                                <th style="width: 18%; text-align: center;">Thời gian
+                                                                    kết thúc
+                                                                </th>
+                                                                <th style="width: 20%; text-align: center;">Tên trường
+                                                                </th>
+                                                                <th style="width: 20%; text-align: center;">Chuyên
+                                                                    ngành
+                                                                </th>
+                                                                <th style="width: 15%; text-align: center;">Trình độ
+                                                                </th>
+                                                                <th style="width: 10%; text-align: center;">Xếp loại
+                                                                </th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr class="employee_training_process_row_infor">
+                                                                    <th>
+                                                                        <input type="number"
+                                                                               name="start_year" style="width: 100%"/>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="number"
+                                                                               name="graduation_year"
+                                                                               style="width: 100%"/>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="text" name="name_school"
+                                                                               style="width: 100%"/>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="text" name="specialized"
+                                                                               style="width: 100%"/>
+                                                                    </th>
+                                                                    <th>
+                                                                        <select name="academic_level"
+                                                                                style="width: 100%">
+                                                                            <option value="bachelor">Cử nhân</option>
+                                                                            <option value="master">Thạc sĩ</option>
+                                                                            <option value="colleges">cao đẳng</option>
+                                                                            <option value="intermediate">Trung cấp
+                                                                            </option>
+                                                                            <option value="high_school">THPT</option>
+                                                                        </select>
+                                                                    </th>
+                                                                    <th>
+                                                                        <select name="classification"
+                                                                                style="width: 100%">
+                                                                            <option value="weak">Yếu</option>
+                                                                            <option value="medium">Trung bình</option>
+                                                                            <option value="rather">Khá</option>
+                                                                            <option value="great">Giỏi</option>
+                                                                            <option value="excellent">Xuất sắc</option>
+                                                                        </select>
+                                                                    </th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <h2>4. Trình độ tin học, ngoại ngữ</h2>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <input id="data_skills" name="skills" type="hidden"
+                                                               t-att-value="skills"></input>
+                                                        <input id="list_skills" name="list_skills" type="hidden"
+                                                               t-att-value="list_skills"></input>
+                                                        <table class="table table-bordered form-group"
+                                                               id="tbl_employee_skill_row">
+                                                            <thead>
+                                                                <th style="text-align: center;">Loại Kỹ năng</th>
+                                                                <th style="text-align: center;">Kỹ năng</th>
+                                                                <th style="text-align: center;">Khả năng</th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr id="employee_skill_row__0"
+                                                                    class="employee_skill_row" data-id="0">
+                                                                    <th>
+                                                                        <select name="type_skill__0" data-id="0"
+                                                                                class="sl_skill_type"
+                                                                                style="width: 100%">
+                                                                            <option disabled="1" selected="1"/>
+                                                                            <t t-foreach='skill_type' t-as='skill_type'>
+                                                                                <option t-att-name="'%s' % skill_type.id"
+                                                                                        t-att-value="'%s' % skill_type.id">
+                                                                                    <span t-esc='skill_type.name'/>
+                                                                                </option>
+                                                                            </t>
+                                                                        </select>
+                                                                    </th>
+                                                                    <th>
+                                                                        <select id="skill__0" name="skill__0"
+                                                                                class="sl_skill" style="width: 100%">
+                                                                        </select>
+                                                                    </th>
+                                                                    <th>
+                                                                        <select id="ability__0" name="ability__0"
+                                                                                class="sl_level" style="width: 100%">
+                                                                        </select>
+                                                                    </th>
+                                                                    <th>
+                                                                        <button data-id="0" name="btn_delete_skill__0"
+                                                                                id="btn_delete_skill__0" type="button"
+                                                                                class="button_delete_skills">Xóa
+                                                                        </button>
+                                                                    </th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <button id="btn_add_skill" type="button"
+                                                                class="button_add_skill">Thêm
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <h2>5. Kinh nghiệm làm việc</h2>
+                                                <div class="form-group">
+                                                    <div class="col-sm-12">
+                                                        <input id="data_skills" name="skills" type="hidden"
+                                                               t-att-value="skills"></input>
+                                                        <table class="table table-bordered form-group"
+                                                               id="tbl_employee_work_experience_row">
+                                                            <thead>
+                                                                <th style="width: 25%; text-align: center;">Ngày bắt
+                                                                    đầu
+                                                                </th>
+                                                                <th style="width: 25%; text-align: center;">Ngày kết
+                                                                    thúc
+                                                                </th>
+                                                                <th style="width: 30%; text-align: center;">Tên đơn
+                                                                    vị/doanh nghiệp
+                                                                </th>
+                                                                <th style="width: 20%; text-align: center;">Lý do nghỉ
+                                                                    việc
+                                                                </th>
+                                                            </thead>
+                                                            <tbody>
+                                                                <tr id="employee_work_experience_row_infor__0"
+                                                                    class="employee_work_experience_row_infor"
+                                                                    data-id="0">
+                                                                    <th>
+                                                                        <input type="month"
+                                                                               name="start_date__0"
+                                                                               style="width: 100%"/>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="month"
+                                                                               name="end_date__0" style="width: 100%"/>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="text" name="name_company__0"
+                                                                               style="width: 100%"/>
+                                                                    </th>
+                                                                    <th>
+                                                                        <input type="text"
+                                                                               name="reason_to_leave__0"
+                                                                               style="width: 100%"
+                                                                        />
+                                                                    </th>
+                                                                    <th>
+                                                                        <button data-id="0"
+                                                                                name="btn_delete_work_experience__0"
+                                                                                id="btn_delete_work_experience__0"
+                                                                                type="button"
+                                                                                class="button_delete_work_experience">
+                                                                            Xóa
+                                                                        </button>
+                                                                    </th>
+                                                                </tr>
+                                                            </tbody>
+                                                        </table>
+                                                        <button id="btn_add_work_experience" type="button"
+                                                                class="btn_add_work_experiences">Thêm
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                                <h2>6. Nguồn tuyển dụng</h2>
+                                                <div class="form-group">
+                                                    <span>Anh/Chị biết đến thông tin tuyển dụng của công ty thông qua
+                                                        kênh nào?
+                                                    </span>
+                                                    <div class="col-sm-12">
+                                                        <select name="source" id="source" class="form-control"
+                                                                required="1">
+                                                            <option disabled="1" selected="1"/>
+                                                            <t t-foreach='source' t-as='source'>
+                                                                <option t-att-name="'%s' % source.id"
+                                                                        t-att-value="'%s' % source.id">
+                                                                    <span t-esc='source.name'/>
+                                                                </option>
+                                                            </t>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                                <h2>7. Thông tin bảo hiểm xã hội</h2>
+                                                <div class="form-group">
+                                                    <span>Anh/Chị vui lòng cung cấp chính xác số BHXH nếu có:</span>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" name="social_insurance"/>
+                                                    </div>
+                                                </div>
+                                                <h2>8. Thông tin mã số thuế thu nhập</h2>
+                                                <div class="form-group">
+                                                    <span>Anh/Chị vui lòng cung cấp mã số thuế thu nhập cá nhân nếu
+                                                        có:
+                                                    </span>
+                                                    <div class="col-sm-12">
+                                                        <input type="text" name="personal_income_tax"/>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <t>
+                                            <button type="submit" id="submit_employee" class="btn btn btn-lg"
+                                                    style="background-color: #eb461d; color: #ffffff; margin-left:42%;"
+                                                    name="button_start" value="start">Hoàn thành
+                                            </button>
+                                        </t>
+                                    </div>
+                                    <br/>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="oe_structure " id="oe_structure_survey_init_2"/>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+
+        <template id="welcome_employee" name="Welcome Employee">
+            <t t-call="hr_employee_information.employee_information_layout">
+                <div class="wrap">
+                    <div class="container-fluid">
+                        <div class="oe_structure" id="oe_structure_survey_init_1"/>
+                        <div class="container-fluid">
+                            <div style="font-weight: bold;">
+                                <form role="form" method="post" class="js_surveyform"
+                                      t-att-action="'/information-employee/%s' % (token)"
+                                      t-att-data-submit="'/information-employee/%s' % (token)">
+                                    <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                    <br/>
+                                    <div>
+                                        <h1 class="text-center" style="color: #007ac1;">Thay mặt Ban Lãnh đạo, chào mừng bạn
+                                            gia nhập Tập đoàn SCI. Xin vui lòng hoàn thiện bảng thông tin sau đây để giúp
+                                            chúng tôi hiểu thêm về bạn và hỗ trợ bạn tốt hơn trong thời gian làm việc tại
+                                            SCI.
+                                        </h1>
+                                        <button type="submit" id="continue" class="btn btn btn-lg"
+                                                style="background-color: #eb461d; color: #ffffff; margin-left:42%;"
+                                                name="button_continue" value="start">Tiếp tục
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                        <div class="oe_structure " id="oe_structure_survey_init_2"/>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="sfinished" name="Finished">
+            <t t-call="hr_employee_information.employee_information_layout">
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <h1 class="text-center" style="color: #007ac1;">Cảm ơn bạn đã dành thời gian để cung cấp thông tin. Chúc
+                    bạn có khoảng thời gian làm việc lâu dài và nhiều thành tựu phát triển nghề nghiệp tại SCI.
+                </h1>
+                <br/>
+            </t>
+        </template>
+
+    </data>
+</odoo>

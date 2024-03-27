@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record model="ir.ui.view" id="bao_cao_doanh_so_ban_san_pham_kpi_form">
+            <field name="name">Báo cáo Doanh thu bán Sản phẩm</field>
+            <field name="model">kpi.product.sale.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo doanh số bán sản phẩm">
+                    <group>
+                        <field name="start_date" required="True"/>
+                        <field name="end_date" required="True"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}" required="True"/>
+                    </group>
+                    <footer>
+                        <button name="create_kpi_product_sale_report" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="bao_cao_doanh_so_ban_san_pham_kpi_act">
+            <field name="name">Báo cáo Doanh thu bán Sản phẩm</field>
+            <field name="res_model">kpi.product.sale.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="bao_cao_doanh_so_ban_san_pham_kpi_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+<!--        <menuitem id="bao_cao_doanh_so_ban_san_pham_menu"-->
+<!--                  name="A.II.1 Báo cáo Doanh thu bán Sản phẩm"-->
+<!--                  parent="report_sale.menu_report_brand_donga_kinh_doanh_thu_doanh_so_kpi"-->
+<!--                  sequence="1"-->
+<!--                  action="bao_cao_doanh_so_ban_san_pham_act"/>-->
+
+        <menuitem id="bao_cao_doanh_so_ban_san_pham_menu_kangnam"
+                  name="A.III.2 Báo cáo Doanh thu bán Sản phẩm"
+                  parent="report_sale.menu_report_brand_kangnam_tai_chinh_ke_toan"
+                  sequence="2"
+                  action="bao_cao_doanh_so_ban_san_pham_kpi_act"/>
+        <menuitem id="bao_cao_doanh_so_ban_san_pham_menu_donga"
+                  name="A.III.2 Báo cáo Doanh thu bán Sản phẩm"
+                  parent="report_sale.menu_report_brand_donga_kinh_doanh_tai_chinh_ke_toan"
+                  sequence="2"
+                  action="bao_cao_doanh_so_ban_san_pham_kpi_act"/>
+        <menuitem id="bao_cao_doanh_so_ban_san_pham_menu_paris"
+                  name="A.III.2 Báo cáo Doanh thu bán Sản phẩm"
+                  parent="report_sale.menu_report_brand_paris_kinh_doanh_doanh_tai_chinh_ke_toan"
+                  sequence="2"
+                  action="bao_cao_doanh_so_ban_san_pham_kpi_act"/>
+        <record id="bao_cao_doanh_so_ban_san_pham_kpi_attachment" model="ir.attachment">
+            <field name="name">Báo cáo Doanh thu bán Sản phẩm</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="report_sale/static/xls/bao_cao_doanh_so_ban_san_pham.xlsx"/>
+            <field name="store_fname">bao_cao_doanh_so_ban_san_pham.xls</field>
+        </record>
+
+    </data>
+</odoo>

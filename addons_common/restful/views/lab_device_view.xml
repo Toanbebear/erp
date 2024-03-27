@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="lab_device_tree_view" model="ir.ui.view">
+            <field name="name">lab_device_tree_view</field>
+            <field name="model">lab.devices</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="code"/>
+                    <field name="name"/>
+                    <field name="company"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="lab_devices_form_view" model="ir.ui.view">
+            <field name="name">lab_devices_form_view</field>
+            <field name="model">lab.devices</field>
+            <field name="arch" type="xml">
+                <form string="Thiết bị kết nối">
+                    <sheet>
+                        <group>
+                            <field name="code" required="1"/>
+                            <field name="name" required="1"/>
+                            <field name="company" required="1" options="{'no_create':True,'no_open':True}"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="lab_device_action" model="ir.actions.act_window">
+            <field name="name">Thiết bị xét nghiệm</field>
+            <field name="res_model">lab.devices</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+            <field name="view_id" eval="False"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new lab group type.
+                </p>
+            </field>
+        </record>
+
+        <menuitem action="lab_device_action" id="lab_device_menu"
+                  parent="shealth_all_in_one.sh_medical_conf_laboratory" sequence="12"/>
+    </data>
+</odoo>

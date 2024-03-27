@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="note_account_plan_cost_form_view" model="ir.ui.view">
+            <field name="name">Chi phí kế hoạch</field>
+            <field name="model">plan.cost</field>
+            <field name="arch" type="xml">
+                <form string="Chi phí kế hoạch form view">
+                    <header>
+                        <button name="action_confirm" type="object" string="Xác nhận" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <button name="action_cancel" type="object" string="Hủy" class="oe_highlight" attrs="{'invisible': [('state', '!=', 'draft')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,confirm,allotment,cancel"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="company_id"/>
+                                <field name="year"/>
+                                <field name="month"/>
+                                <field name="cost_source_ids"/>
+                                <field name="cost_items_ids"/>
+                            </group>
+                            <group>
+                                <field name="plan_amount" widget="monetary_format"/>
+                                <field name="text_plan_amount"/>
+                                <field name="currency_id" invisible="1"/>
+                                <field name="note"/>
+                                <button name="create_plan_detail"
+                                        string="Phân bổ chi phí"
+                                        class="oe_highlight"
+                                        attrs="{'invisible': [('state', '!=', 'confirm')]}"
+                                        type="object"/>
+                                <button name="reset_to_draft"
+                                        string="Hủy phân bổ"
+                                        class="oe_highlight"
+                                        attrs="{'invisible': [('state', 'in', ('draft', 'confirm'))]}"
+                                        type="object"/>
+                            </group>
+                        </group>
+                        <notebook name="plan_line">
+                            <page name="page_plan_line" string="Chi phí chi tiết">
+                                <field name="sale_by_source_line">
+                                    <tree>
+                                        <field name="cost_source_ids" string="Nguồn/Khối"/>
+                                        <field name="cost_items_ids" string="Nhóm chi phí"/>
+                                        <field name="amount_cost" string="Số tiền"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="note_account_plan_cost_tree_view" model="ir.ui.view">
+            <field name="name">Chi phí kế hoạch</field>
+            <field name="model">plan.cost</field>
+            <field name="arch" type="xml">
+                <tree string="Chi phí kế hoạch tree view">
+                    <field name="company_id"/>
+                    <field name="year"/>
+                    <field name="month"/>
+                    <field name="state"/>
+                    <field name="cost_source_ids"/>
+                    <field name="cost_items_ids"/>
+                    <field name="plan_amount"/>
+                    <field name="state" invisible="1"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="note_account_plan_cost_search_view" model="ir.ui.view">
+            <field name="name">Search chi phí kế hoạch</field>
+            <field name="model">plan.cost</field>
+            <field name="arch" type="xml">
+                <search string="ModelTitle">
+                    <group expand="1" string="Group By">
+                        <filter string="Chi nhánh" name="group_company" domain="[]" context="{'group_by':'company_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="note_account_plan_cost_act_window" model="ir.actions.act_window">
+            <field name="name">Chi phí kế hoạch</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">plan.cost</field>
+            <field name="context">{'default_type': '01', 'default_is_automatic': True, 'search_default_group_company': True}</field>
+            <field name="search_view_id" ref="note_account_plan_cost_search_view"/>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>

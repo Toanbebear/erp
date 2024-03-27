@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_company_allocation_rate_form" model="ir.ui.view">
+        <field name="name">service.allocation.rate.form</field>
+        <field name="model">service.allocation.rate</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="company_id" />
+                        </group>
+                    </group>
+                    <field name="line_ids" nolabel="1" />
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+
+    <record id="view_company_allocation_rate_line_tree" model="ir.ui.view">
+        <field name="name">service.allocation.rate.line.tree</field>
+        <field name="model">service.allocation.rate.line</field>
+        <field name="arch" type="xml">
+            <tree editable="bottom">
+                <field name="introduced_company" />
+                <field name="rate" />
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_company_allocation_rate_line_form" model="ir.ui.view">
+        <field name="name">service.allocation.rate.line.form</field>
+        <field name="model">service.allocation.rate.line</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="introduced_company"/>
+                        </group>
+                        <group>
+                            <field name="rate"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+</odoo>

@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="voucher_program_form_view" model="ir.ui.view">
+        <field name="name">Voucher program</field>
+        <field name="model">crm.voucher.program</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <button name="check_sequence" type="object" string="Create voucher" class="btn-info"
+                            attrs="{'invisible':[('stage_prg_voucher','!=','active')]}"
+                            groups="crm_base.promotion_user"
+                    />
+                    <button name="set_new" class="btn-danger" string="Đặt là Mới" groups="crm_base.promotion_user"
+                            type="object" attrs="{'invisible' : [('stage_prg_voucher', '=', 'new')]}"/>
+                    <button name="set_active" class="oe_highlight" string="Đặt là Có hiệu lực"
+                            groups="crm_base.promotion_user" type="object"
+                            attrs="{'invisible' : [('stage_prg_voucher', '=', 'active')]}"/>
+                    <button name="set_expire" class="oe_highlight" string="Đặt là hết hạn"
+                            groups="crm_base.promotion_user" type="object"
+                            attrs="{'invisible' : [('stage_prg_voucher', '=', 'expire')]}"/>
+                    <button name="voucher_program_renew" class="btn-danger" string="Gia hạn chương trình voucher"
+                            groups="crm_base.promotion_user" type="object"/>
+                    <field name="stage_prg_voucher" widget="statusbar"/>
+                </header>
+                <sheet>
+                    <field name="active" groups="base.group_system" attrs=""/>
+                    <div class="oe_title">
+                        <label for="name" string="Tên" style="color: #002050;font-size: 25px;"/>
+                        <h1>
+                            <field name="name" required="True"
+                                   attrs="{'readonly':[('stage_prg_voucher','in',('active','expire'))]}"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="brand_id" required="True"
+                                   readonly="True" force_save="True"
+                                   options='{"no_open": True, "no_create": True}' string="Thương hiệu"/>
+                            <field name="company_id" string="Chi nhánh"
+                                   attrs="{'readonly':[('stage_prg_voucher','in',('active','expire'))]}"
+                                   widget="many2many_tags"
+                                   placeholder="Nếu trường chi nhánh không có giá trị, hệ thống sẽ tự động áp dụng cho toàn bộ chi nhánh trong thương hiệu"
+                                   options='{"no_open": True, "no_create": True}'/>
+                            <field name="campaign_id"
+                                   attrs="{'readonly':[('stage_prg_voucher','in',('active','expire'))]}"
+                                   options='{"no_open": True, "no_create": True}' required="True" string="Chiến dịch"/>
+                            <field name="start_date" required="True"
+                                   attrs="{'readonly':[('stage_prg_voucher','in',('active','expire'))]}"
+                                   force_save="True"/>
+                            <field name="end_date" required="True"
+                                   attrs="{'readonly':[('stage_prg_voucher','in',('active','expire'))]}"
+                                   force_save="True"/>
+                        </group>
+                        <group>
+                            <field name="apply_for" required="True"/>
+                            <field name="type_voucher" required="True"/>
+                            <field name="type_discount_invoice" width="10%"
+                                   attrs="{'invisible':[('type_voucher','!=','discount_invoice')], 'required':[('type_voucher','=','discount_invoice')]}"/>
+                            <field name="prefix" required="True"
+                                   attrs="{'readonly':[('stage_prg_voucher','in',('active','expire'))]}"/>
+                            <field name="quantity" required="True"/>
+                            <field name="current_number_voucher"/>
+                            <field name="currency_id" invisible="True"/>
+                            <field name="price"/>
+                            <field name="loyalty_active"
+                                   attrs="{'readonly':[('stage_prg_voucher','in',('active','expire'))]}"/>
+                        </group>
+
+                    </group>
+                    <notebook>
+                        <page string="Quy tắc áp dụng" name="rule_discount">
+                            <group>
+                                <group>
+                                    <field name="country_id" attrs="{'readonly': [('stage_prg_voucher','!=', 'new')]}"/>
+                                    <field name="state_ids" widget="many2many_tags"
+                                           attrs="{'readonly': [('stage_prg_voucher','!=', 'new')]}"
+                                           options="{'no_open':True,'no_create':True}"/>
+                                    <field name="product_cate_ids" widget="many2many_tags"
+                                           attrs="{'readonly': [('stage_prg_voucher','!=', 'new')]}"
+                                           help="Điều kiện áp dụng voucher"
+                                           options="{'no_open':True,'no_create':True}"/>
+                                    <field name="product_ids" widget="many2many_tags"
+                                           attrs="{'readonly': [('stage_prg_voucher','!=', 'new')], 'invisible': [('type_voucher','=', 'discount_invoice')]}"
+                                           help="Điều kiện áp dụng voucher"
+                                           options="{'no_open':True,'no_create':True}"/>
+                                </group>
+                                <field name="voucher_program_list" context="{'default_voucher_program':id,}"
+                                       mode="tree"
+                                       attrs="{'readonly': [('stage_prg_voucher','!=', 'new')], 'invisible': [('type_voucher','=', 'discount_invoice')]}">
+                                    <tree editable="1">
+                                        <field name="gift" width="5%"/>
+                                        <field name="type_product" width="10%"
+                                               attrs="{'readonly': [('gift', '!=', 0)]}"/>
+                                        <field name="brand_id" invisible="1"/>
+                                        <field name="voucher_program" invisible="1"/>
+                                        <field name="product_ctg_id" width="40%"
+                                               attrs="{'readonly': ['|',('gift', '!=', 0), ('type_product', '=', 'product')]}"
+                                               options="{'no_open':True,'no_create':True}"/>
+                                        <field name="product_id" width="40%"
+                                               attrs="{'readonly': [('type_product', '=', 'product_ctg')]}"
+                                               options="{'no_open':True,'no_create':True}"/>
+                                        <field name="type_discount" width="10%"
+                                               attrs="{'readonly': [('gift', '!=', 0)]}"/>
+                                        <field name="discount" width="10%" attrs="{'readonly': [('gift', '!=', 0)]}"
+                                               widget="monetary_format"/>
+                                    </tree>
+                                </field>
+                                <field name="voucher_program_discount_invoice" context="{'default_voucher_program':id,}"
+                                       mode="tree"
+                                       attrs="{'readonly': [('stage_prg_voucher','!=', 'new')], 'invisible': [('type_voucher','!=', 'discount_invoice')]}">
+                                    <tree editable="1">
+                                        <field name="currency_id" width="20%" invisible="1"/>
+                                        <field name="brand_id" invisible="1"/>
+                                        <field name="voucher_program" invisible="1"/>
+                                        <field name="invoice_value_minimum" width="40%" widget="monetary_format"/>
+                                        <field name="discount" width="40%" widget="monetary_format"/>
+                                    </tree>
+                                </field>
+
+                            </group>
+                        </page>
+                        <page string="Danh sách voucher đã tạo" name="list_voucher">
+                            <field name="voucher_ids" options='{"no_open": True, "no_create": True}' mode="tree">
+                                <tree default_order="create_date desc" decoration-muted="stage_voucher in ['used','expire']" editable="top">
+                                    <field name="name" widget="copy_char" readonly="1"/>
+                                    <field name="stage_voucher" readonly="1"/>
+                                    <field name="partner2_id" readonly="1"/>
+                                    <field name="create_date" invisible="1"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="tree_voucher_program">
+        <field name="name">Voucher program</field>
+        <field name="model">crm.voucher.program</field>
+        <field name="arch" type="xml">
+            <tree default_order="create_date desc" decoration-muted="stage_prg_voucher =='expire'">
+                <field name="name"/>
+                <field name="start_date"/>
+                <field name="end_date"/>
+                <field name="prefix"/>
+                <field name="current_number_voucher"/>
+                <field name="stage_prg_voucher"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="crm_voucher_program_search_view" model="ir.ui.view">
+        <field name="name">Voucher Search</field>
+        <field name="model">crm.voucher.program</field>
+        <field name="arch" type="xml">
+            <search string="Tìm kiếm voucher">
+                <field name="name" string="Dịch vụ"/>
+                <filter string="Trạng thái Mới" name="stage_prg_voucher_new"
+                        domain="[('stage_prg_voucher', '=', 'new')]"/>
+                <filter string="Trạng thái Có hiệu lực" name="stage_prg_voucher_active"
+                        domain="[('stage_prg_voucher', '=', 'active')]"/>
+                <filter string="Trạng thái Hết hạn" name="stage_prg_voucher_expire"
+                        domain="[('stage_prg_voucher', '=', 'expire')]"/>
+                <group expand="0" string="Group By...">
+                    <filter name="brand" string="Thương hiệu" context="{'group_by':'brand_id'}"/>
+                    <filter name="type_voucher" string="Loại voucher" context="{'group_by':'type_voucher'}"/>
+                    <filter name="stage_voucher" string="Trạng thái" context="{'group_by':'stage_prg_voucher'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="open_voucher_program" model="ir.actions.act_window">
+        <field name="name">Chương trình Voucher</field>
+        <field name="view_mode">tree,form</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">crm.voucher.program</field>
+        <field name="domain">[('brand_id.company_ids', 'in', allowed_company_ids)]</field>
+        <field name="context">{'search_default_stage_prg_voucher_active': 1, 'search_default_stage_prg_voucher_new':
+            1}
+        </field>
+    </record>
+    <menuitem id="tab_voucher_program"
+              name="Voucher"
+              parent="crm_base.tab_discount_program"
+              sequence="10"/>
+    <record id="tab_voucher_program" model="ir.ui.menu">
+        <field name="web_icon_class">fa ticket-alt</field>
+    </record>
+
+    <menuitem id="menu_crm_voucher_program_2"
+              name="Voucher program"
+              parent="tab_voucher_program"
+              action="open_voucher_program"
+              sequence="1"
+    />
+
+
+</odoo>

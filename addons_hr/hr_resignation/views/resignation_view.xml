@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="employee_resignation_tree" model="ir.ui.view">
+            <field name="name">hr.resignation.tree</field>
+            <field name="model">hr.resignation</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <tree string="Yêu cầu từ chức">
+                    <field name="employee_id"/>
+                    <field name="department_id"/>
+                    <field name="joined_date"/>
+                    <field name="expected_revealing_date"/>
+                    <field name="resign_confirm_date"/>
+                    <field name="type_reason"/>
+                    <field name="check_resignation"/>
+                    <field name="state" invisible="1"/>
+                    <button name="print_decision" class="btn-primary" type="object" string="In quyết định" attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+                </tree>
+            </field>
+        </record>
+        <record id="employee_resignation_form" model="ir.ui.view">
+            <field name="name">hr.resignation.form</field>
+            <field name="model">hr.resignation</field>
+            <field name="priority" eval="8" />
+            <field name="arch" type="xml">
+                <form string="Yêu cầu từ chức">
+                    <header>
+                        <button string="Xác nhận" type="object" name="confirm_resignation" states='draft' class="oe_highlight"/>
+                        <button string="Hủy" type="object" name="cancel_resignation" states='draft'/>
+                        <button name="print_decision" class="btn-primary" type="object" string="In quyết định" attrs="{'invisible': [('state', '!=', 'approved')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,approved,cancel"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_button_box" name="button_box">
+                        </div>
+                        <group>
+                            <group>
+                                <field name="employee_id" options="{'no_create': True}"/>
+                                <field name="job"/>
+                                <field name="department_id"/>
+                                <field name="joined_date"/>
+                            </group>
+                            <group>
+                                <field name="revealing_date"/>
+                                <field name="expected_revealing_date"/>
+                                <field name="resign_confirm_date"/>
+                                <field name="check_resignation"/>
+                                <field name="type_reason"/>
+                            </group>
+                        </group>
+                        <field name="reason"/>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="view_employee_resignation">
+            <field name="name">Yêu cầu từ chức</field>
+            <field name="res_model">hr.resignation</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('state', '=', 'draft')]</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">Mẫu đơn xin nghỉ việc của nhân viên
+                </p>
+            </field>
+        </record>
+
+          <!-- hr_resignation_reason Tree View -->
+        <record model="ir.ui.view" id="hr_resignation_reason_tree">
+            <field name="name">hr.resignation.reason.tree</field>
+            <field name="model">hr.resignation.reason</field>
+            <field name="arch" type="xml">
+                <tree string="Reason" editable="bottom">
+                    <field name="sequence" width="10%"/>
+                    <field name="point_kpi" width="10%"/>
+                    <field name="name" width="30%"/>
+                </tree>
+            </field>
+        </record>
+
+        <!-- hr_resignation_reason Action -->
+        <record id="hr_resignation_reason_action" model="ir.actions.act_window">
+            <field name="name">Reason</field>
+            <field name="res_model">hr.resignation.reason</field>
+            <field name="view_id" ref="hr_resignation_reason_tree"/>
+        </record>
+
+        <menuitem id="employee_resignation" name="Từ chức/Nghỉ việc"
+              groups="base.group_user"
+              web_icon="hr_resignation,static/description/resignation_web.png"
+               parent="hr.menu_hr_root"
+              sequence="5"/>
+
+         <menuitem id="employee_resignation_request" parent="employee_resignation" name="Yêu cầu từ chức/Nghỉ việc"
+                  action="view_employee_resignation" groups="base.group_user" sequence="4"/>
+
+         <menuitem
+                id="menu_hr_recruitment_degree"
+                name="Lý do nghỉ"
+                action="hr_resignation_reason_action" parent="hr.menu_human_resources_configuration"
+                sequence="6" groups="base.group_user"/>
+    </data>
+</odoo>
+
+

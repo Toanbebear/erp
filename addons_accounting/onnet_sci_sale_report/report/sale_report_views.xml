@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<odoo>
+    <record id="view_service_order_tree" model="ir.ui.view">
+         <field name="name">service.sale.report.pivot</field>
+         <field name="model">sale.report</field>
+         <field name="arch" type="xml">
+             <tree string="BÁO CÁO DOANH THU DỊCH VỤ" default_order="crm_line_id">
+                 <field name="crm_line_id" invisible="1"/>
+                 <field name="date"/>
+                 <field name="booking_id" />
+                 <field name="code_customer"/>
+                 <field name="partner_id"/>
+                 <field name="walkin_id"/>
+                 <field name="specialty_id"/>
+                 <field name="service_id"/>
+                 <field name="order_id"/>
+                 <field name="product_uom_qty"/>
+                 <field name="product_uom"/>
+                 <field name="surgery_date"/>
+                 <field name="surgery_end_date"/>
+                 <field name="price_subtotal"/>
+                 <field name="service_room"/>
+                 <field name="company_id"/>
+             </tree>
+         </field>
+    </record>
+
+    <record id="action_order_report_service" model="ir.actions.act_window">
+        <field name="name">Báo cáo doanh thu thực hiện dịch vụ</field>
+        <field name="res_model">sale.report</field>
+        <field name="view_mode">tree</field>
+        <field name="view_id" ref="view_service_order_tree"/>
+        <field name="help"></field>
+    </record>
+
+    <menuitem
+            id="sale_report_all_service_menu"
+            string="Báo cáo doanh thu dịch vụ"
+            parent="sale.menu_sale_report"
+            sequence="10"
+            action="action_order_report_service"/>
+</odoo>

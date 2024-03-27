@@ -1,0 +1,26 @@
+<odoo>
+    <data>
+        <record id="res_company_view_form_inherit" model="ir.ui.view">
+            <field name="name">res.company.view.form</field>
+            <field name="model">res.company</field>
+            <field name="inherit_id" ref="collaborator.res_company_view_form"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='collaborator_legal']" position="after">
+                    <field name="collaborator_position" attrs="{'invisible':[('check_collaborator','=', '1')]}"/>
+                    <field name="collaborator_phone" attrs="{'invisible':[('check_collaborator','=', '2')]}"/>
+                    <field name="collaborator_date_of_birth" attrs="{'invisible':[('check_collaborator','=', '2')]}"/>
+                    <field name="collaborator_passport" attrs="{'invisible':[('check_collaborator','=', '2')]}"/>
+                    <field name="collaborator_passport_date" attrs="{'invisible':[('check_collaborator','=', '2')]}"/>
+                    <field name="collaborator_passport_issue_by" attrs="{'invisible':[('check_collaborator','=', '2')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='collaborator_registry']" position="attributes">
+                    <attribute name="attrs">{'invisible':[('check_collaborator','=', '1')]}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='short_code']" position="after">
+                    <field name="check_collaborator" widget="radio"/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

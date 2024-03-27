@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+  <data>
+    <record id="view_tas_plan_cost_driver_form" model="ir.ui.view">
+      <field name="name">Plan Cost Driver</field>
+      <field name="model">tas.plan.cost.driver</field>
+      <field name="arch" type="xml">
+        <form>
+          <header>
+              <button type="object" name="action_update_plan_price" string="Update planned price" class="oe_highlight"/>
+          </header>
+          <sheet>
+            <group>
+              <group>
+                 <field name="name"/>
+              </group>
+              <group>
+              </group>
+                <field name="lines_ids">
+                    <tree editable="bottom">
+                      <field name="cost_driver_id"/>
+                      <field name="plan_cost_per_unit"/>
+                      <field name="sci_company_id"/>
+                    </tree>
+                </field>
+            </group>
+          </sheet>
+        </form>
+      </field>
+    </record>
+
+    <record id="view_tas_plan_cost_driver_tree" model="ir.ui.view">
+      <field name="name">Plan Cost Driver</field>
+      <field name="model">tas.plan.cost.driver</field>
+      <field name="arch" type="xml">
+        <tree string="Plan Cost Driver" default_order="id desc" >
+            <field name="name"/>
+        </tree>
+      </field>
+    </record>
+
+    <record id="action_tas_plan_cost_driver" model="ir.actions.act_window">
+      <field name="name">Plan Cost driver</field>
+      <field name="res_model">tas.plan.cost.driver</field>
+      <field name="view_mode">tree,form</field>
+      <field name="help" type="html">
+        <p class="o_view_nocontent_smiling_face">
+          Create new Record
+        </p>
+      </field>
+    </record>
+    <menuitem id="menu_tas_plan_cost_driver" action="action_tas_plan_cost_driver" name="Plan Cost driver" parent="shealth_all_in_one.sh_medical_conf_menu" sequence="100"/>
+  </data>
+</odoo>

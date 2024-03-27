@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+
+        <record id="decision_resignation_sci_report_attachment" model="ir.attachment">
+            <field name="name">Quyết định nghỉ việc SCI</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="hr_resignation/data/decision_resignation/QD_nghi_viec_SCI.docx"/>
+            <field name="store_fname">quyet_dinh_nghi_viec_sci.docx</field>
+        </record>
+
+        <record id="decision_resignation_pr_report_attachment" model="ir.attachment">
+            <field name="name">Quyết định nghỉ việc Paris</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="hr_resignation/data/decision_resignation/QD_nghi_viec_PR.docx"/>
+            <field name="store_fname">quyet_dinh_nghi_viec_paris.docx</field>
+        </record>
+
+        <record id="decision_resignation_kn_report_attachment" model="ir.attachment">
+            <field name="name">Quyết định nghỉ việc KangNam</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="hr_resignation/data/decision_resignation/QD_nghi_viec_KN.docx"/>
+            <field name="store_fname">quyet_dinh_nghi_viec_kangnam.docx</field>
+        </record>
+
+        <record id="decision_resignation_da_report_attachment" model="ir.attachment">
+            <field name="name">Quyết định nghỉ việc Đông Á</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="hr_resignation/data/decision_resignation/QD_nghi_viec_DA.docx"/>
+            <field name="store_fname">quyet_dinh_nghi_viec_donga.docx</field>
+        </record>
+
+        <record id="decision_resignation_hv_report_attachment" model="ir.attachment">
+            <field name="name">Quyết định nghỉ việc Academy</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="hr_resignation/data/decision_resignation/QD_nghi_viec_ACA.docx"/>
+            <field name="store_fname">quyet_dinh_nghi_viec_aca.docx</field>
+        </record>
+
+        <record id="decision_resignation_hh_report_attachment" model="ir.attachment">
+            <field name="name">Quyết định nghỉ việc Hồng Hà</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="hr_resignation/data/decision_resignation/QD_nghi_viec_HH.doc"/>
+            <field name="store_fname">quyet_dinh_nghi_viec_hh.docx</field>
+        </record>
+
+    </data>
+</odoo>

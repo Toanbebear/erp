@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+		<record id="report_payment_listdetails" model="ir.actions.report">
+			<field name="name">Bảng kê thanh toán</field>
+			<field name="model">payment.list</field>
+			<field name="report_type">qweb-pdf</field>
+			<field name="report_name">sci_payment_list.report_payment_list_print_view</field>
+			<field name="report_file">sci_payment_list.report_payment_list_print_view</field>
+			<field name="binding_model_id" ref="model_payment_list"/>
+			<field name="binding_type">report</field>
+		</record>
+    </data>
+</odoo>

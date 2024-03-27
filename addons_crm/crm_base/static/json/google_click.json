@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "pelagic-bastion-318409",
+  "private_key_id": "a53c4ea49209b6ffea8b98c9351de6e54a935d8c",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvAIBADANBgkqhkiG9w0BAQEFAASCBKYwggSiAgEAAoIBAQClo60tTJOQ4Sa6\nvEOVX2SkOc60XjE/cWDvMTd0vWCJd9jFvGSlrJ1XdRXr7wTRet6LykIvAqqNK3e3\nYkXSQanyRKefSX7f/uFG/8vcFpbwNUEI86siUh7MG4M1GC9d39iNlgFzr/UoSxsJ\nDUfWvXYpJoMLuOeH0jE6hsVyCowDhUxKl23Vp7xjzPlCwc/xGcj9Oa+NpWswsNwA\n/23Rzw/4faeBJYn5q6pBedDCIfjVP9zAaKYmpNxKuh0UcOcQzr5vbfHoZ3a8f5ip\nUSrO/TbnjbneB9qmYXik0kLIW7jIAk9HF3KVUEr9eAaVTOF3bZc56qJE+MzpfZ//\nVi5B2sTlAgMBAAECggEAHlBYL0QmdYtfJSmzTLEKoCucMtJSPQQo812Ugp7t/fqb\nB4U0/kUa/piFDIrP3O6ZsAeyGRxpzjA4Vq17jcFKsvXxn2s59xCUdgP2cS8JLKjy\nYAsINN3GmSAn4R2t/YYsAa2EUoHPYjJsnjl5/kjqSRmtPgX3CZpkPAvSMs7PVQ1S\nyEcRfFfMFfCUPs6R37lVEwZa6NQFqQgoCDwFNmEorhvV66Y8/IINhHMf4jlvb/iU\nglXpy9cL1KEZdouceTS6OplkRD1ydQFLdVhjtehU2Jfy6IZEJJjeaggFLfyQ7mif\nDgzbqX+YMnF3h9EoJsCK14n/71X/n02xsO1wtXUaeQKBgQDRwKQv5TazmDyg0kA1\nTGPPaWns8EsrEuv6HyJ8VruBiey9pRWfFpWhdmy+aqiB131GJAEGyi/6Xa117X9s\nbdp7GEVktw3ooyL7AC1iBKVu0TasvMBNwJYmAuShZ5mY7Mm05fogZ+n+1iF0fwNZ\nCebiIx3b4OeFu0jOmNZ9puRYpwKBgQDKKRghIyuSYl3MhXLct9odV6I2qHlm+4mF\n93ZKWUJyqFrI1IDFZBwYcu3m/A0hPmOuwLknXtRBK3ttJY3oqzXCLlBnVhw9fpSR\n6Gga9V8bm6NCkLZ7dmZNJjWIqVVV9sOxKREpO1/bq4HmSHlCQC098fEy9e8QgxWt\nW8KMC5PbkwKBgGBI0hW6XnXquEoKuba9rkOT3DALzjWjpfdXO3lgRwqbybT0hwxU\nTbOkrR5rz5Zq2PLNrDr1rTh8sBemQgwAEX7YEWK+NQBJgtE9r5eDEn3gQ/zfWFdY\nxJQGV/VPnU55w83qk/s0OFHm8cyMUXkZ9oZwIFDC2QSmiDFuL2fWqJOZAoGARtbx\nmqMNYKVRgxp8LnXKW5/autZ8fCbGgQg/DjyK+UyfS2KToRe8dKDJVriaDT0khxcH\nipFDRXbsMEoJmS9tjhbWm+9jw/S4MQzEdjXnVvBJ3EiDeW362Sv7dGEKAy6OUmU2\nm0EwDPTjdwOMYjfE4sEGKTpexGV60h2mZZalADsCgYBpV+XkmXdq+3HdkvbzKa8v\n8vfPEM4U6U3sx5okrjBpy4+sYVwuzilMlp+JI5I1W65DDe0ln5pzirz6OTSRv4vo\n/KgLMf41PpDUxmBNg7swNJYdN6klowH03HCV/3akJ0AqSrYT059kQSJKNofBWVdT\neIRBQrH40j+HuMxtVOzcbg==\n-----END PRIVATE KEY-----\n",
+  "client_email": "chi-nguyen@pelagic-bastion-318409.iam.gserviceaccount.com",
+  "client_id": "116774943290718761262",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/chi-nguyen%40pelagic-bastion-318409.iam.gserviceaccount.com"
+}

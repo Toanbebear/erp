@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_inherit_crm_line">
+            <field name="name">Crm Line</field>
+            <field name="model">crm.line</field>
+            <field name="inherit_id" ref="crm_base.form_crm_line"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_id']" position="after">
+                    <field name="odontology"/>
+                    <field name="teeth_ids" attrs="{'invisible':[('odontology','=', False)]}"/>
+                    <field name="service_id"/>
+                    <field name="is_treatment"/>
+                    <field name="exam_room_ids" widget="many2many_tags" groups="base.group_erp_manager"
+                           force_save="True"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_form_inherit_crm_line_form_booking">
+            <field name="name">Booking</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='product_id']" position="before">
+                    <field name="service_id" width="40%"/>
+                    <field name="odontology" groups="base.group_erp_manager"
+                           attrs="{'invisible':[('parent.type_brand','!=', 'hospital')]}" optional="hide"/>
+
+                    <field name="teeth_ids" attrs="{'invisible':[('odontology','=', False)]}" widget="many2many_tags"
+                           optional="hide"/>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='number_used']" position="after">
+                    <field name="come_number" optional="hide"/>
+                    <field name="prg_ids" widget="many2many_tags" optional="hide"/>
+                </xpath>
+                <xpath expr="//button[@name='create_phone_call_info']" position="after">
+                    <button name="request_deposit" type="object" string="Yêu cầu thu/hoàn tiền" class="btn-info"/>
+                    <button name="request_refund" type="object" string="Yêu cầu hoàn tiền" class="btn-danger" invisible="1"/>
+                </xpath>
+                <xpath expr="//button[@name='create_booking_guarantee']" position="after">
+                    <button name="add_service_guarantee" type="object"
+                            attrs="{'invisible': [('type_price_list', '!=', 'guarantee')]}"
+                            string="Thêm dịch vụ bảo hành" class="btn-info"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='product_id']" position="before">
+                    <field name="odontology" groups="base.group_erp_manager"
+                           attrs="{'invisible':[('parent.type_brand','!=', 'hospital')]}"/>
+                    <field name="institution" invisible="True"/>
+                    <field name="institution_shared" attrs="{'invisible': [('type_brand', '!=', 'hospital')]}"
+                           widget="many2many_tags"/>
+<!--                    <field name="service_id"-->
+<!--                           attrs="{'required': [('type_brand', '=', 'hospital')],'readonly':['|',('prg_ids','!=', []), ('stage','!=','chotuvan')]}"-->
+<!--                           domain="[('institution', 'in', institution_shared)]"-->
+<!--                           options="{'no_open':True,'no_create':True}"/>-->
+                    <field name="service_id"
+                           attrs="{'required': [('type_brand', '=', 'hospital')],'readonly':['|',('prg_ids','!=', []), ('stage','!=','new')]}"
+                           domain="[('institution', 'in', institution_shared)]"
+                           options="{'no_open':True,'no_create':True}"/>
+                    <field name="teeth_ids"
+                           attrs="{'invisible':[('odontology','=', False)],'readonly':['|',('prg_ids','!=', []), ('stage','!=','new')]}"
+                           widget="many2many_tags"/>
+                    <field name="exam_room_ids" attrs="{'invisible': [('type_brand', '!=', 'hospital')]}"
+                           widget="many2many_tags" groups="base.group_erp_manager"/>
+                    <field name="allow_adjust_unit_price" invisible="1"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='unit_price']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('allow_adjust_unit_price','=', False)]}</attribute>
+                    <attribute name="readonly">False</attribute>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='quantity']" position="after">
+                    <field name="is_treatment"
+                           attrs="{'invisible': ['|',('type_brand', '!=', 'hospital'),('quantity','!=',1)]}"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='product_id']" position="attributes">
+                    <attribute name="groups">base.group_erp_manager</attribute>
+                    <attribute name="readonly">True</attribute>
+                    <attribute name="force_save">True</attribute>
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+                <xpath expr="//page[1]" position="after">
+                    <page string="Lịch sử khám" attrs="{'invisible': [('type_brand', '!=', 'hospital')]}">
+                        <field name="walkin_ids">
+                            <tree create="false">
+                                <field name="name"/>
+                                <field name="state"/>
+                                <field name="service_room"/>
+                                <field name="doctor"/>
+                                <field name="date"/>
+                                <field name="service_date"/>
+                                <field name="service" widget="many2many_tags"/>
+                                <field name="reason_check"/>
+                                <button name="view_walkin" type="object" icon="fa-file-text-o" title="Chi tiết"
+                                        style="font-size: 20px;"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+                <xpath expr="//page[@name='statement']/div/field[@name='statement_service_ids']/tree/field[@name='product_ids']"
+                       position="after">
+                    <field name="service_ids" widget="many2many_tags" width="30%" required="True"/>
+                </xpath>
+                <xpath expr="//group[@name='infor_guarantee']/field[@name='type_pricelist']" position="after">
+                    <label for="warranty_period"/>
+                    <div class="row col-12">
+                        <div class="col-3">
+                            <field name="warranty_period"
+                                   attrs="{'invisible':[('parent.type_price_list','=','guarantee')]}"/>
+                        </div>
+                        <div class="col-9">
+                            <field name="uom_warranty"
+                                   attrs="{'invisible':[('parent.type_price_list','=','guarantee')]}"
+                                   options="{'no_open':True,'no_create':True}"/>
+                        </div>
+                    </div>
+                    <field name="note_warranty" attrs="{'invisible':[('parent.type_price_list','=','guarantee')]}"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_form_inherit_crm_line_form_lead">
+            <field name="name">Lead</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.form_crm_lead"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='unit_price']" position="after">
+                    <field name="prg_ids" widget="many2many_tags" optional="show" width="15%"/>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='product_id']" position="after">
+                    <field name="service_id" width="40%"
+                           attrs="{'column_invisible': [('parent.type_brand', '!=', 'hospital')]}"
+                           options="{'no_open':True,'no_create':True}"/>
+                    <field name="odontology" groups="base.group_erp_manager"
+                           attrs="{'invisible':[('parent.type_brand','!=', 'hospital')]}" optional="hide"/>
+                    <field name="teeth_ids" attrs="{'invisible':[('odontology','=', False)]}" widget="many2many_tags"
+                           optional="hide"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='product_id']" position="before">
+                    <field name="odontology" groups="base.group_erp_manager"
+                           attrs="{'invisible':[('parent.type_brand','!=', 'hospital')]}"/>
+                    <field name="institution_shared" attrs="{'invisible': [('type_brand', '!=', 'hospital')]}"
+                           widget="many2many_tags" invisible="True"/>
+                    <field name="service_id"
+                           attrs="{'invisible': [('type_brand', '!=', 'hospital')],'required': [('type_brand', '=', 'hospital')]}"
+                           domain="[('institution', 'in', institution_shared)]"
+                           options="{'no_open':True,'no_create':True}"/>
+                    <field name="teeth_ids" attrs="{'invisible':[('odontology','=', False)]}" widget="many2many_tags"/>
+                    <field name="exam_room_ids" attrs="{'invisible': [('type_brand', '!=', 'hospital')]}"
+                           widget="many2many_tags" invisible="True"/>
+                    <field name="allow_adjust_unit_price" invisible="1"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='unit_price']" position="attributes">
+                    <attribute name="attrs">{'readonly':[('allow_adjust_unit_price','=', False)]}</attribute>
+                    <attribute name="readonly">False</attribute>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='quantity']" position="after">
+                    <field name="is_treatment"
+                           attrs="{'invisible': ['|',('type_brand', '!=', 'hospital'),('quantity','!=',1)]}"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='unit_price']" position="after">
+                    <field name="quantity_charged" width="40%"/>
+                </xpath>
+                <xpath expr="//group[@name='service']/field[@name='product_id']" position="attributes">
+                    <attribute name="groups">base.group_erp_manager</attribute>
+                    <attribute name="readonly">True</attribute>
+                    <attribute name="force_save">True</attribute>
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        #chỉnh view tree phiếu thu-->
+        <record id="sh_walkin_payment_view_tree_crm" model="ir.ui.view">
+            <field name="name">Payment</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_walkin_payment_view_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='amount']" position="after">
+                    <field name="amount_vnd" string="Số tiền VNĐ"/>
+                </xpath>
+                <xpath expr="//field[@name='amount']" position="attributes">
+                    <attribute name="invisible">True</attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <!--        <record id="inherit_crm_base_view_crm_booking_filter" model="ir.ui.view">-->
+        <!--            <field name="name">inherit_crm_base_view_crm_booking_filter</field>-->
+        <!--            <field name="model">crm.lead</field>-->
+        <!--            <field name="inherit_id" ref="crm_base.crm_base_view_crm_booking_filter"/>-->
+        <!--            <field name="arch" type="xml">-->
+        <!--                <xpath expr="//filter[@name='creation_date']" position="after">-->
+        <!--                    <filter string="Tùy chỉnh Ngày hẹn lịch" name="filter_booking_date_cus" date="booking_date"/>-->
+        <!--                    <filter string="Booking chứa dịch vụ : Spa" name="booking_spa" domain="[('crm_line_ids.his_service_type', '=', 'Spa'),('type', '=', 'opportunity')]"/>-->
+        <!--                    <filter string="Booking chứa dịch vụ : Laser" name="booking_laser" domain="[('crm_line_ids.his_service_type', '=', 'Laser'),('type', '=', 'opportunity')]"/>-->
+        <!--                    <filter string="Booking chứa dịch vụ : Phẫu thuật" name="booking_surgery" domain="[('crm_line_ids.his_service_type', '=', 'Surgery'),('type', '=', 'opportunity')]"/>-->
+        <!--                    <filter string="Booking chứa dịch vụ : Nha" name="booking_odontology" domain="[('crm_line_ids.his_service_type', '=', 'Odontology'),('type', '=', 'opportunity')]"/>-->
+        <!--                    <filter string="Booking chứa dịch vụ : Chi phí khác" name="booking_chiphi" domain="[('crm_line_ids.his_service_type', '=', 'ChiPhi'),('type', '=', 'opportunity')]"/>-->
+        <!--                </xpath>-->
+        <!--            </field>-->
+        <!--        </record>-->
+        <record id="crm_line_form_inherit" model="ir.ui.view">
+            <field name="name">crm.line.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_his_13.view_form_inherit_crm_line_form_booking"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='service']/field[@name='service_id']" position="attributes">
+                    <attribute name="context">{'name_service_with_price': True, 'pricelist': price_list_id, 'only_name': True,}</attribute>
+                </xpath>
+                <xpath expr="//field[@name='crm_line_ids']/tree/field[@name='service_id']" position="attributes">
+                    <attribute name="context"></attribute>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_line_form_lead_inherit" model="ir.ui.view">
+            <field name="name">crm.line.lead.form</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_his_13.view_form_inherit_crm_line_form_lead"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//group[@name='service']/field[@name='service_id']" position="attributes">
+                    <attribute name="context">{'name_service_with_price': True, 'pricelist': price_list_id}</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

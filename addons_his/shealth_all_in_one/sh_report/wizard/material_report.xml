@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="material_report_form">
+            <field name="name">sh.material.report.form</field>
+            <field name="model">sh.material.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo VT vượt định mức">
+                    <group>
+                        <field name="institution" required="1" options="{'no_quick_create':True,'no_create_edit':True}"/>
+                        <field name="start_date" required="1"/>
+                        <field name="end_date" required="1"/>
+<!--                        <field name="products" options="{'no_quick_create':True,'no_create_edit':True}" context="{'active_test': False}"-->
+<!--                              widget="many2many_tags" attrs="{'invisible': [('report_type', 'not in', ('supply', 'medicine'))]}"/>-->
+                        <field name="locations" options="{'no_quick_create':True,'no_create_edit':True}"
+                              widget="many2many_tags" required="1"/>
+                        <field name="start_datetime" invisible="1"/>
+                        <field name="end_datetime" invisible="1"/>
+                        <field name="print_excel"/>
+                    </group>
+                    <footer>
+                        <button name="report_material" type="object" string="Report" class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="material_report_act">
+            <field name="name">Báo cáo VT vượt định mức</field>
+            <field name="res_model">sh.material.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="material_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <record id="report_over_material_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO VT vượt định mức</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="shealth_all_in_one/static/xls/bc_vt_vuot_dinh_muc.xlsx"/>
+            <field name="store_fname">bc_vt_vuot_dinh_muc.xlsx</field>
+        </record>
+
+        <menuitem id="material_report"
+                  name="Báo cáo VT vượt định mức"
+                  parent="shealth_all_in_one.sh_medical_report_menu"
+                  action="material_report_act"
+                  sequence="11"/>
+    </data>
+</odoo>

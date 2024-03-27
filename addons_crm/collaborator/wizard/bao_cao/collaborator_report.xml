@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="collaborator_report_form">
+            <field name="name">crm.ctv.report</field>
+            <field name="model">crm.ctv.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo ">
+                    <group>
+                        <field name="type_report" required="1"/>
+                        <field name="collaborator_id" attrs="{'invisible':[('type_report','!=','type_2')]}"
+                               options="{'no_create': True, 'no_open': True}"/>
+                        <field name="start_date" required="1"/>
+                        <field name="end_date" required="1"/>
+                        <field name="company_id" required="1" options="{'no_open':True,'no_create':True}"/>
+                    </group>
+                    <footer>
+                        <!--                        <button name="create_report" type="object" string="Báo cáo" class="oe_highlight" attrs="{'invisible':[('type_report','!=','type_2')]}"/>-->
+                        <button name="create_report" type="object" string="Báo cáo" class="oe_highlight"
+                                attrs="{'invisible':[('type_report','!=','type_1')]}"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="action_collaborator_report_act">
+            <field name="name">Báo cáo chi tiết doanh số cộng tác viên</field>
+            <field name="res_model">crm.ctv.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="collaborator_report_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <!--        <record id="bao_cao_doanh_thu_hoa_hong_attachment" model="ir.attachment">-->
+        <!--            <field name="name">BÁO CÁO DOANH SỐ HOA HỒNG CTV</field>-->
+        <!--            <field name="type">binary</field>-->
+        <!--            <field name="datas" type="base64" file="crm_collaborator/static/xls/bao_cao_doanh_so_thang_ctv.xlsx"/>-->
+        <!--            <field name="store_fname">bao_cao_doanh_so_thang_ctv.xls</field>-->
+        <!--        </record>-->
+
+        <record id="bao_cao_chi_tiet_doanh_so_attachment" model="ir.attachment">
+            <field name="name">BÁO CÁO CHI TIẾT DOANH SỐ CTV</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_collaborator/static/xls/bao_cao_chi_tiet_doanh_so.xlsx"/>
+            <field name="store_fname">bao_cao_chi_tiet_doanh_so.xls</field>
+        </record>
+    </data>
+</odoo>

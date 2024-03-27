@@ -1,0 +1,609 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <template id="template_customer_information_sheet_qr">
+            <t t-call="web.external_layout">
+                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].partner_id.lang})"/>
+                <t t-set="o" t-value="o.with_user(1)"/>
+                <div class="page" style="font-family:Times New Roman;font-size:19px;">
+
+                    <div class="oe_structure"/>
+                    <div class="row mt32 mb32" style="font-family:Times New Roman;font-size:18px;">
+                        <div class="col-4">
+                            <img t-if="o.company_id.favicon" t-att-src="image_data_uri(o.company_id.favicon)"
+                                 width="60%"/>
+
+                        </div>
+                        <div class="col-6">
+                            <div>
+                                <b>
+                                    <t t-if="o.company_id.id == 12">
+                                        BỆNH VIỆN THẨM MỸ ĐÔNG Á
+                                    </t>
+                                    <t t-else="">
+                                        <span t-field="o.company_id.name" style="font-size:10px;"/>
+                                    </t>
+                                </b>
+
+                            </div>
+                            <div>
+                                <strong>Địa chỉ:</strong>
+                                <span class="m-0" t-field="o.company_id.street"/>,
+                                <span class="m-0" t-field="o.company_id.street2"/>,
+                                <span class="m-0" t-field="o.company_id.city"/>
+                            </div>
+                            <div>
+                                <strong>HOTLINE:</strong>
+                                <span t-field="o.company_id.phone"/>
+
+                            </div>
+                            <div>
+                                <strong>WEBSITE:</strong>
+                                <span t-field="o.company_id.website"/>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <img t-if="o.qr_code_id" t-att-src="image_data_uri(o.qr_code_id)" width="100"
+                                 border="1"/>
+                        </div>
+
+                    </div>
+                    <div class="text-center" style="font-family:Times New Roman;font-weight:bolder;">
+                        <div style="font-size: 24px;">PHIẾU THÔNG TIN KHÁCH HÀNG</div>
+                    </div>
+                    <div class="row col-12">
+                        <div class="col-6 text-right">
+                            <span>Mã Booking:</span>
+                            <b>
+                                <i t-field="o.name"/>
+                            </b>
+                        </div>
+                        <div class="col-1">
+
+                        </div>
+                        <div class="col-7 text-left">
+                            Thời gian đến cửa:
+                            <strong>
+                                <!--                            <span t-field="o.arrival_date"/>-->
+                                <t t-if="o.arrival_date">
+                                    <span t-esc="(o.arrival_date + relativedelta(hours=7)).strftime('%H:%M, Ngày %d/ %m/ %Y')"/>
+                                </t>
+                                <t t-else="">
+                                    Khách chưa đến
+                                </t>
+                            </strong>
+
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="row col-12">
+                        <div class="col-6">Họ và tên:
+                            <strong>
+                                <span t-field="o.partner_id.name"/>
+                            </strong>
+                        </div>
+                        <div class="col-6">
+                            Phân loại khách hàng:
+                            <strong>
+                                <span t-field="o.type_data_partner"/>
+                            </strong>
+                        </div>
+                    </div>
+                    <div class="row col-12">
+                        <div class="col-6">Ngày/tháng/năm sinh:
+                            <t t-if="o.partner_id.birth_date">
+                                <strong>
+                                    <span t-field="o.partner_id.birth_date"/>
+                                </strong>
+                            </t>
+                            <t t-elif="o.partner_id.year_of_birth">
+                                <strong>
+                                    <span t-field="o.partner_id.year_of_birth"/>
+                                </strong>
+                            </t>
+                            <t t-else="">
+                            </t>
+                        </div>
+                        <div class="col-6">
+                            Quốc tịch:
+                            <!--<strong>-->
+                            <!--    <span t-field="o.phone"/>-->
+                            <!--</strong>-->
+                            <t t-if="o.country_id">
+                                <strong>
+                                    <span t-field="o.country_id.name"/>
+                                </strong>
+                            </t>
+                            <t t-else="">
+                                <span>...........................................</span>
+                            </t>
+                        </div>
+
+                    </div>
+                    <div class="col-12">
+                        Nguồn Booking :
+                        <strong>
+                            <span t-field="o.source_id.name"/>
+                        </strong>
+                    </div>
+                    <div class="col-12">
+                        Địa chỉ :
+                        <t t-if="o.pass_port_address">
+                            <span t-field="o.pass_port_address"/>
+                        </t>
+                        <t t-else="">
+                            <strong>
+                                <span t-field="o.street"/>,
+                                <span t-field="o.district_id.name"/>,
+                                <span t-field="o.state_id.name"/>,
+                                <span t-field="o.country_id.name"/>
+                            </strong>
+                        </t>
+                    </div>
+
+                    <div class="col-12">Khuyến mãi S&amp;M đã sử dụng:
+                        <t t-if="o.prg_ids">
+                            <strong>
+                                <span t-esc="', '.join(o.prg_ids.mapped('name'))"/>
+                            </strong>
+                        </t>
+                        <t t-else="">Chưa có</t>
+                    </div>
+                    <div class="col-12">Trạng thái:
+
+                    </div>
+                    <div class="d-flex justify-content-center">
+                        <div style="width:50px;"/>
+                        <div class="mr-2">
+                            <span style="margin-right:10px">Thực hiện dịch vụ
+                            </span>
+                            <input class="mr-2" type="checkbox"/>
+                        </div>
+                        <div class="mr-2">
+                            <span style="margin-right:10px">Đặt cọc
+                            </span>
+                            <input type="checkbox"/>
+                        </div>
+                        <div class="mr-2">
+                            <span style="margin-right:10px">Hẹn ngày làm DV
+                            </span>
+                            <input type="checkbox"/>
+                            ( ..../ ..../ 20...)
+                        </div>
+                        <div class="mr-2">
+                            <span style="margin-right:10px">Out sold
+                            </span>
+                            <input type="checkbox"/>
+                        </div>
+                    </div>
+                    <div class="col-12" style="font-family:Times New Roman;font-size:18px;">
+                        DỊCH VỤ TƯ VẤN
+                    </div>
+                    <style>
+                        .border.border-dark.align-middle{padding:2px}
+                    </style>
+                    <table class="table border border-dark text-center">
+                        <tr>
+                            <th class="border border-dark align-middle">
+                                <strong>STT</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Dịch vụ</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Số buổi</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Đơn giá</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Khuyến mãi</strong>
+                            </th>
+                            <th class="border border-dark align-middle">
+                                <strong>Thành tiền</strong>
+                            </th>
+                        </tr>
+
+                        <t t-if="o.crm_line_ids">
+                            <t t-set="i" t-value="0"/>
+                            <t t-foreach="o.crm_line_ids" t-as="line">
+                                <t t-set="i" t-value="i + 1"/>
+                                <tr t-if="line.stage not in ['cancel', 'done']">
+                                    <td style="text-align:center;" class="border border-dark align-middle">
+                                        <span t-esc="i"/>
+                                    </td>
+                                    <td style="text-align:left;" class="border border-dark align-middle">
+                                        <strong>
+                                            <span t-field="line.service_id.name"/>
+                                        </strong>
+                                    </td>
+                                    <td style="text-align:center;" class="border border-dark align-middle">
+                                        <span t-field="line.quantity"/>
+                                    </td>
+                                    <td style="text-align:right;" class="border border-dark align-middle">
+                                        <span t-field="line.unit_price"/>
+                                    </td>
+                                    <td style="text-align:center;" class="border border-dark align-middle">
+                                        <t t-if="line.total_before_discount != line.total">
+                                            <span>Có</span>
+                                        </t>
+                                        <t t-else="">
+                                            <span>Không</span>
+                                        </t>
+                                    </td>
+                                    <td style="text-align:right;" class="border border-dark align-middle">
+                                        <span t-field="line.total"/>
+                                    </td>
+                                </tr>
+                            </t>
+                        </t>
+                    </table>
+                    <div class="col-12" style="white-space: nowrap;
+                                              width: auto;
+                                              overflow: hidden;
+                                              text-overflow: ellipsis;">
+                        <!--                        <div>-->
+                        <!--                            <t t-esc="'Dịch vụ chi nhánh tư vấn:' + '.'*400"/>-->
+                        <!--                        </div>-->
+                        <t t-foreach="range(14-len(o.crm_line_ids))" t-as="i">
+                            <div>
+                                <t t-esc="'.'*400"/>
+                            </div>
+                        </t>
+                        <div>
+                            <t t-esc="'Ghi chú cần lưu ý:' + '.'*400"/>
+                        </div>
+                        <div>
+                            <t t-esc="'.'*400"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <div class="col-12" style="font-size:14px;">
+                        <style>.indent{ padding-left: 1.8em }</style>
+                        Tôi đồng ý tiến hành làm xét nghiệm cận lâm sàng trước phẫu thuật mà Bác sĩ gây tê/mê chỉ định
+                        để đảm bảo an toàn và giảm thiểu rủi ro tối đa
+                        cho sức khoẻ của bản thân tôi. Trường hợp sức khoẻ của tôi đảm bảo tốt để thực hiện được phẫu
+                        thuật nhưng vì lý do cá nhân tôi KHÔNG thể tham
+                        gia thì tôi đồng ý thanh toán chi phí huỷ dịch vụ, chi phí xét nghiệm cụ thể như sau:
+                        <br/>
+                        Dịch vụ phẫu thuật gây tê:
+                        <br/>
+                        <span class="indent">- Trên 15.000.000vnđ (mười lăm triệu đồng) là 1.000.000vnđ (một triệu đồng)
+                            + phí xét nghiệm (nếu có)
+                        </span>
+                        <br/>
+                        <span class="indent">- Dưới 15.000.000vnđ (mười lăm triệu đồng) là 500.000vnđ (năm trăm ngàn
+                            đồng) + phí xét nghiệm (nếu có)
+                        </span>
+                        <br/>
+                        Dịch vụ phẫu thuật gây mê: 5.000.000vnđ (Năm triệu đồng) bao gồm phí xét nghiệm.
+                        <br/>
+                        Trong trường hợp bệnh nhân không đủ điều kiện sức khoẻ để làm dịch vụ, mà đã làm xét nghiệm thì
+                        phải đóng tiền xét nghiệm là : 3.000.000vnđ (Ba triệu đồng).
+                        Đối với bệnh nhân đăng ký tham gia DV nếu có bệnh lý không đủ điều kiện sức khoẻ để thực hiện
+                        phẫu thuật, bệnh viện sẽ thu một khoản phí hợp lý 500.000vnđ/bệnh nhân
+                        (Bao gồm phí thăm khám, tư vấn, phí phục vụ, phí hồ sơ, phí khám sức khoẻ, xét nghiệm tại Bệnh
+                        viện) + phí xét nghiệm khác (nếu có).
+                    </div>
+
+
+                    <div class="row">
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 16px;">Khách hàng đồng ý ký tên</strong>
+                            <div>
+                                <i>(Ký, ghi rõ họ tên)</i>
+                            </div>
+                        </div>
+                        <div class="col-6 text-center">
+                            <strong style="font-size: 16px;">Ngày ..... tháng ..... năm .........</strong>
+                            <br/>
+                            Nhân viên: ..........................................
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="oe_structure"/>
+            </t>
+        </template>
+
+
+        <template id="customer_information_sheet_qr">
+            <t t-call="web.html_container">
+                <t t-if="docs">
+                    <t t-call="check_in_app.template_customer_information_sheet_qr" t-lang="docs[0].partner_id.lang"/>
+                </t>
+            </t>
+        </template>
+        <report
+                string="PHIẾU THÔNG TIN KHÁCH HÀNG QR (KN)"
+                id="action_customer_info_sheet_qr"
+                model="crm.lead"
+                report_type="qweb-pdf"
+                name="check_in_app.customer_information_sheet_qr"
+                file="check_in_app.customer_information_sheet_qr"
+                paperformat="shealth_all_in_one.sh_paperformat_medicine_public"
+                menu="True"
+        />
+
+        <!--        <template id="template_service_information_checkin">-->
+        <!--            <t t-call="web.external_layout">-->
+        <!--                <t t-set="o" t-value="docs[0].with_context({'lang':docs[0].partner_id.lang})"/>-->
+        <!--                <t t-set="o" t-value="o.with_user(1)"/>-->
+        <!--                <div class="page" style="font-family:Times New Roman;font-size:25px;">-->
+
+        <!--                    <div class="oe_structure"/>-->
+        <!--                    <div class="row mt32 mb32">-->
+        <!--                        <div class="col-4">-->
+        <!--                            <img t-if="o.company_id.favicon" t-att-src="image_data_uri(o.company_id.favicon)"-->
+        <!--                                 width="60%"/>-->
+
+        <!--                        </div>-->
+        <!--                        <div class="col-6">-->
+        <!--                            <div>-->
+        <!--                                <strong>-->
+        <!--                                    <span t-field="o.company_id.name"/>-->
+        <!--                                </strong>-->
+
+        <!--                            </div>-->
+        <!--                            <div>-->
+        <!--                                <strong>Địa chỉ:</strong>-->
+        <!--                                <span class="m-0" t-field="o.company_id.street"/>,-->
+        <!--                                <span class="m-0" t-field="o.company_id.street2"/>,-->
+        <!--                                <span class="m-0" t-field="o.company_id.city"/>-->
+        <!--                            </div>-->
+        <!--                            <div>-->
+        <!--                                <strong>HOTLINE:</strong>-->
+        <!--                                <span t-field="o.company_id.phone"/>-->
+
+        <!--                            </div>-->
+        <!--                            <div>-->
+        <!--                                <strong>WEBSITE:</strong>-->
+        <!--                                <span t-field="o.company_id.website"/>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-2">-->
+        <!--                            <img t-if="o.qr_code_id" t-att-src="image_data_uri(o.qr_code_id)" width="100"-->
+        <!--                                 border="1"/>-->
+        <!--                        </div>-->
+
+        <!--                    </div>-->
+        <!--                    <div class="text-center" style="font-family:Times New Roman;font-weight:bolder;">-->
+        <!--                        <div style="font-size: 36px;">PHIẾU THÔNG TIN DỊCH VỤ TƯ VẤN</div>-->
+        <!--                    </div>-->
+        <!--                    <br/>-->
+        <!--                    <t t-if="o.partner">-->
+        <!--                        <div class="row col-12">-->
+        <!--                            <div class="col-8">Họ và tên:-->
+        <!--                                <strong>-->
+        <!--                                    <span t-field="o.partner_id.name"/>-->
+        <!--                                </strong>-->
+        <!--                            </div>-->
+        <!--                            <div class="col-8">Năm sinh:-->
+        <!--                                <t t-if="o.partner_id.birth_date">-->
+        <!--                                    <strong>-->
+        <!--                                        <span t-field="o.partner_id.birth_date"/>-->
+        <!--                                    </strong>-->
+        <!--                                </t>-->
+        <!--                                <t t-elif="o.partner_id.year_of_birth">-->
+        <!--                                    <strong>-->
+        <!--                                        <span t-field="o.partner_id.year_of_birth"/>-->
+        <!--                                    </strong>-->
+        <!--                                </t>-->
+        <!--                                <t t-else="">-->
+        <!--                                </t>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-12">-->
+        <!--                            Địa chỉ :-->
+        <!--                            <t t-if="o.pass_port_address">-->
+        <!--                                <strong>-->
+        <!--                                    <span t-field="o.pass_port_address"/>-->
+        <!--                                </strong>-->
+        <!--                            </t>-->
+        <!--                            <t t-else="">-->
+        <!--                                <strong>-->
+        <!--                                    <span t-field="o.street"/>,-->
+        <!--                                    <span t-field="o.district_id.name"/>,-->
+        <!--                                    <span t-field="o.state_id.name"/>,-->
+        <!--                                    <span t-field="o.country_id.name"/>-->
+        <!--                                </strong>-->
+        <!--                            </t>-->
+        <!--                        </div>-->
+        <!--                    </t>-->
+        <!--                    <t t-else="">-->
+        <!--                        <div class="row col-12">-->
+        <!--                            <div class="col-8">Họ và tên:-->
+        <!--                                <strong>-->
+        <!--                                    <span t-field="o.name"/>-->
+        <!--                                </strong>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                    </t>-->
+        <!--                    <div class="col-12">-->
+        <!--                        Thời gian đến cửa:-->
+        <!--                        <strong>-->
+        <!--                            <span t-field="o.create_date"/>-->
+        <!--                        </strong>-->
+        <!--                    </div>-->
+        <!--                    <table class="table border border-dark text-center">-->
+        <!--                        <tr>-->
+        <!--                            <th class="border border-dark align-middle">-->
+        <!--                                <strong>STT</strong>-->
+        <!--                            </th>-->
+        <!--                            <th class="border border-dark align-middle">-->
+        <!--                                <strong>Dịch vụ</strong>-->
+        <!--                            </th>-->
+        <!--                            &lt;!&ndash;                        <th class="border border-dark align-middle"><strong>Đơn vị xử lý</strong></th>&ndash;&gt;-->
+        <!--                            <th class="border border-dark align-middle">-->
+        <!--                                <strong>Số buổi</strong>-->
+        <!--                            </th>-->
+        <!--                            <th class="border border-dark align-middle">-->
+        <!--                                <strong>Đơn giá</strong>-->
+        <!--                            </th>-->
+        <!--                            &lt;!&ndash;                        <th class="border border-dark align-middle"><strong>Tổng tiền ban đâu</strong></th>&ndash;&gt;-->
+        <!--                            <th class="border border-dark align-middle">-->
+        <!--                                <strong>Giảm %</strong>-->
+        <!--                            </th>-->
+        <!--                            <th class="border border-dark align-middle">-->
+        <!--                                <strong>Giảm tiền mặt</strong>-->
+        <!--                            </th>-->
+        <!--                            <th class="border border-dark align-middle">-->
+        <!--                                <strong>Giảm còn</strong>-->
+        <!--                            </th>-->
+        <!--                            <th class="border border-dark align-middle">-->
+        <!--                                <strong>Giảm khác</strong>-->
+        <!--                            </th>-->
+        <!--                            <th class="border border-dark align-middle">-->
+        <!--                                <strong>Tổng tiền phải thu</strong>-->
+        <!--                            </th>-->
+        <!--                        </tr>-->
+
+        <!--                        <t t-set="total_price" t-value="0"/>-->
+        <!--                        <t t-set="total_discount" t-value="0"/>-->
+
+        <!--                        <t t-if="o.crm_line_ids">-->
+        <!--                            <t t-set="i" t-value="0"/>-->
+        <!--                            <t t-foreach="o.crm_line_ids" t-as="line">-->
+        <!--                                <t t-set="i" t-value="i + 1"/>-->
+        <!--                                <tr t-if="line">-->
+        <!--                                    <td style="text-align:center;" class="border border-dark align-middle">-->
+        <!--                                        <span t-esc="i"/>-->
+        <!--                                    </td>-->
+        <!--                                    <td style="text-align:left;" class="border border-dark align-middle">-->
+        <!--                                        <span t-field="line.service_id.name"/>-->
+        <!--                                    </td>-->
+        <!--                                    &lt;!&ndash;                                <td style="text-align:left;" class="border border-dark align-middle"><span t-field="line.uom_price"/></td>&ndash;&gt;-->
+        <!--                                    <td style="text-align:left;" class="border border-dark align-middle">-->
+        <!--                                        <span t-field="line.quantity"/>-->
+        <!--                                    </td>-->
+        <!--                                    <td style="text-align:left;" class="border border-dark align-middle">-->
+        <!--                                        <span t-field="line.unit_price"/>-->
+        <!--                                    </td>-->
+        <!--                                    &lt;!&ndash;                                <td style="text-align:left;" class="border border-dark align-middle"><span t-field="line.total_before_discount"/></td>&ndash;&gt;-->
+        <!--                                    <td style="text-align:left;" class="border border-dark align-middle">-->
+        <!--                                        <span t-field="line.discount_percent"/>-->
+        <!--                                    </td>-->
+        <!--                                    <td style="text-align:left;" class="border border-dark align-middle">-->
+        <!--                                        <span t-field="line.discount_cash"/>-->
+        <!--                                    </td>-->
+        <!--                                    <td style="text-align:left;" class="border border-dark align-middle">-->
+        <!--                                        <span t-field="line.sale_to"/>-->
+        <!--                                    </td>-->
+        <!--                                    <td style="text-align:left;" class="border border-dark align-middle">-->
+        <!--                                        <span t-field="line.other_discount"/>-->
+        <!--                                    </td>-->
+        <!--                                    <td style="text-align:left;" class="border border-dark align-middle">-->
+        <!--                                        <span t-field="line.total"/>-->
+        <!--                                    </td>-->
+        <!--                                </tr>-->
+        <!--                            </t>-->
+        <!--                        </t>-->
+        <!--                    </table>-->
+        <!--                    <div class="col-12" style="white-space: nowrap;-->
+        <!--                                              width: auto;-->
+        <!--                                              overflow: hidden;-->
+        <!--                                              text-overflow: ellipsis;">-->
+        <!--                        <div>-->
+        <!--                            <t t-esc="'Dịch vụ chi nhánh tư vấn:' + '.'*200"/>-->
+        <!--                        </div>-->
+        <!--                        <div>-->
+        <!--                            <t t-esc="'.'*200"/>-->
+        <!--                        </div>-->
+        <!--                        <div>-->
+        <!--                            <t t-esc="'.'*200"/>-->
+        <!--                        </div>-->
+        <!--                        <div>-->
+        <!--                            <t t-esc="'.'*200"/>-->
+        <!--                        </div>-->
+        <!--                        <div>-->
+        <!--                            <t t-esc="'.'*200"/>-->
+        <!--                        </div>-->
+        <!--                        <div>-->
+        <!--                            <t t-esc="'.'*200"/>-->
+        <!--                        </div>-->
+        <!--                        <div>-->
+        <!--                            <t t-esc="'.'*200"/>-->
+        <!--                        </div>-->
+        <!--                        <div>-->
+        <!--                            <t t-esc="'.'*200"/>-->
+        <!--                        </div>-->
+        <!--                        &lt;!&ndash;                    <div><t t-esc="'Số thứ tự dịch vụ sửa lại:' + '.'*200"/></div>&ndash;&gt;-->
+        <!--                        &lt;!&ndash;                    <div><t t-esc="'Số thứ tự dịch vụ tham gia:' + '.'*200"/></div>&ndash;&gt;-->
+        <!--                        <div>-->
+        <!--                            <t t-esc="'Ghi chú cần lưu ý:' + '.'*200"/>-->
+        <!--                        </div>-->
+        <!--                        <div>-->
+        <!--                            <t t-esc="'.'*200"/>-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+        <!--                    <br/>-->
+        <!--                    <div class="col-12" style="font-size:18px;">-->
+        <!--                        <style>.indent{ padding-left: 1.8em }</style>-->
+        <!--                        Tôi đồng ý tiến hành làm xét nghiệm cận lâm sàng trước phẫu thuật mà Bác sĩ gây tê/mê chỉ định-->
+        <!--                        để đảm bảo an toàn và giảm thiểu rủi ro tối đa-->
+        <!--                        cho sức khoẻ của bản thân tôi. Trường hợp sức khoẻ của tôi đảm bảo tốt để thực hiện được phẫu-->
+        <!--                        thuật nhưng vì lý do cá nhân tôi KHÔNG thể tham-->
+        <!--                        gia thì tôi đồng ý thanh toán chi phí huỷ dịch vụ, chi phí xét nghiệm cụ thể như sau:-->
+        <!--                        <br/>-->
+        <!--                        Dịch vụ phẫu thuật gây tê:-->
+        <!--                        <br/>-->
+        <!--                        <span class="indent">- Trên 15.000.000vnđ (mười lăm triệu đồng) là 1.000.000vnđ (một triệu đồng)-->
+        <!--                            + phí xét nghiệm (nếu có)-->
+        <!--                        </span>-->
+        <!--                        <br/>-->
+        <!--                        <span class="indent">- Dưới 15.000.000vnđ (mười lăm triệu đồng) là 500.000vnđ (năm trăm ngàn-->
+        <!--                            đồng) + phí xét nghiệm (nếu có)-->
+        <!--                        </span>-->
+        <!--                        <br/>-->
+        <!--                        Dịch vụ phẫu thuật gây mê: 5.000.000vnđ (Năm triệu đồng) bao gồm phí xét nghiệm.-->
+        <!--                        <br/>-->
+        <!--                        Trong trường hợp bệnh nhân không đủ điều kiện sức khoẻ để làm dịch vụ, mà đã làm xét nghiệm thì-->
+        <!--                        phải đóng tiền xét nghiệm là : 3.000.000vnđ (Ba triệu đồng).-->
+        <!--                        Đối với bệnh nhân đăng ký tham gia DV nếu có bệnh lý không đủ điều kiện sức khoẻ để thực hiện-->
+        <!--                        phẫu thuật, bệnh viện sẽ thu một khoản phí hợp lý 500.000vnđ/bệnh nhân-->
+        <!--                        (Bao gồm phí thăm khám, tư vấn, phí phục vụ, phí hồ sơ, phí khám sức khoẻ, xét nghiệm tại Bệnh-->
+        <!--                        viện) + phí xét nghiệm khác (nếu có).-->
+        <!--                    </div>-->
+
+
+        <!--                    <div class="row">-->
+        <!--                        <div class="col-6 text-center">-->
+        <!--                            <strong style="font-size: 22px;">Khách hàng đồng ý ký tên</strong>-->
+        <!--                            <div>-->
+        <!--                                <i>(Ký, ghi rõ họ tên)</i>-->
+        <!--                            </div>-->
+        <!--                        </div>-->
+        <!--                        <div class="col-6 text-center">-->
+        <!--                            <strong style="font-size: 22px;">Ngày ..... tháng ..... năm .........</strong>-->
+        <!--                            <br/>-->
+        <!--                            Nhân viên: ..........................................-->
+        <!--                        </div>-->
+        <!--                    </div>-->
+
+        <!--                </div>-->
+
+        <!--                <div class="oe_structure"/>-->
+        <!--            </t>-->
+        <!--        </template>-->
+
+        <!--        <template id="service_information_checkin">-->
+        <!--            <t t-call="web.html_container">-->
+        <!--                <t t-if="docs">-->
+        <!--                    <t t-call="check_in_app.template_service_information_checkin" t-lang="docs[0].partner_id.lang"/>-->
+        <!--                </t>-->
+        <!--            </t>-->
+        <!--        </template>-->
+
+        <!--        <report-->
+        <!--                string="PHIẾU THÔNG TIN DỊCH VỤ (KN)"-->
+        <!--                id="action_service_info_checkin"-->
+        <!--                model="crm.lead"-->
+        <!--                report_type="qweb-pdf"-->
+        <!--                name="check_in_app.service_information_checkin"-->
+        <!--                file="check_in_app.service_information_checkin"-->
+        <!--                paperformat="shealth_all_in_one.sh_paperformat_medicine_public"-->
+        <!--                menu="True"-->
+        <!--        />-->
+    </data>
+</odoo>

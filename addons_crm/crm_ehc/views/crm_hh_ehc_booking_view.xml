@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="crm_hh_ehc_crm_view_inherit_statement" model="ir.ui.view">
+            <field name="name">crm.lead.hh</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page name="ehc_tab" string="Thông tin EHC" attrs="{'invisible': [('is_hh', '!=', True)]}">
+                        <group>
+                            <div>
+                                <button name="open_form_add_patinet_code" string="Thêm mã bệnh nhân" class="btn-info"
+                                        type="object"/>
+                            </div>
+                        </group>
+                        <field name="statement_payment_ehc_ids"
+                               context="{'default_booking_id':id, 'default_currency_id': currency_id}"
+                               options='{"no_create": True}'>
+                            <tree decoration-muted="invoice_status == '1'">
+                                <field name="booking_id" invisible="True"/>
+                                <field name="currency_id" invisible="True"/>
+                                <field name="invoice_code"/>
+                                <field name="invoice_date"/>
+                                <field name="invoice_group_code"/>
+                                <field name="invoice_method"/>
+                                <field name="invoice_type"/>
+                                <field name="invoice_user"/>
+                                <field name="invoice_status" invisible="1"/>
+                                <field name="amount_paid"/>
+                            </tree>
+                            <form>
+                                <group>
+                                    <group>
+                                        <field name="booking_id"/>
+                                        <field name="currency_id"/>
+                                        <field name="invoice_code"/>
+                                        <field name="invoice_date"/>
+                                        <field name="invoice_group_code"/>
+                                        <field name="invoice_method"/>
+                                        <field name="invoice_type"/>
+                                        <field name="invoice_status"/>
+                                        <field name="amount_paid"/>
+                                        <field name="contract_code"/>
+                                        <field name="payment_code_erp"/>
+                                    </group>
+                                    <group>
+                                        <field name="patient_code"/>
+                                        <field name="patient_name"/>
+                                    </group>
+                                </group>
+                            </form>
+                        </field>
+                        <field name="material_ehc_ids" options='{"no_create": True}'>
+                            <tree editable="bottom">
+                                <field name="material_id"/>
+                                <field name="quantity"/>
+                                <field name="unit_price"/>
+                                <field name="total_discount"/>
+                                <field name="total"/>
+                            </tree>
+                        </field>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_hh_ehc_crm_view_inherit_add_button_booking" model="ir.ui.view">
+            <field name="name">crm_hh_ehc_crm_view_inherit_add_button_booking</field>
+            <field name="model">crm.lead</field>
+            <field name="inherit_id" ref="crm_base.crm_lead_form_booking"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button class="btn-warning" name="create_booking_re_exam_ehc" type="object"
+                            string="Tạo Booking tái khám" attrs="{'invisible': [('is_hh', '!=', True)]}"/>
+                </xpath>
+            </field>
+        </record>
+
+    </data>
+</odoo>

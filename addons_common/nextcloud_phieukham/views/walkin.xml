@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <record id="walkin_form_inherit" model="ir.ui.view">
+            <field name="name">Hình ảnh</field>
+            <field name="model">sh.medical.appointment.register.walkin</field>
+            <field name="inherit_id" ref="shealth_all_in_one.sh_medical_register_for_walkin_view"/>
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook" position="inside">
+                    <page string="Hình ảnh mô tả">
+
+                        <field name="nc_image_ids" mode="kanban">
+                            <kanban string="" edit="0">
+                                <field name="image_link"/>
+                                <field name="create_datetime"/>
+                                <field name="image_name"/>
+
+                                <field name="image" context="{'image_link':image_link}" widget="image_cloud"/>
+
+                                <templates>
+                                    <t t-name="kanban-box">
+                                        <div class="oe_kanban_global_click">
+                                            <a t-if="!read_only_mode" type="delete" class="fa fa-trash pull-right"/>
+                                            <div class="o_kanban_image">
+                                                <img t-if="record.image_link.raw_value"
+                                                     t-att-src="record.image_link.raw_value"/>
+
+                                            </div>
+                                            <div class="oe_kanban_details">
+                                                <ul>
+                                                    <li style="overflow: hidden;text-overflow: ellipsis;height:16px">
+                                                        <strong t-if="record.image_name" t-esc="record.image_name.value"
+                                                                style="line-height:16px"/>
+                                                    </li>
+                                                    <li class="mt-2">
+                                                        <strong t-if="record.create_datetime"
+                                                                t-esc="record.create_datetime.value"/>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </t>
+                                </templates>
+                            </kanban>
+                            <form edit="0">
+                                <sheet>
+                                    <div class="text-center">
+                                        <field name="image_link" invisible="1"/>
+                                        <field name="create_date" invisible="1"/>
+                                        <field name="image" attrs="{'readonly': [('image_link','!=',False)]}"
+                                               widget="image_cloud" filename="image_name"/>
+                                        <field name="image_name" attrs="{'invisible': [('create_date','=',False)]}"/>
+                                    </div>
+                                    <script>
+                                        $( document ).ready(function() {
+                                        var check = $( ".o_form_image_controls" ).hasClass( "o_form_image_controls" );
+                                        if (check == false) {
+                                        $('.btn-save-close').css('display','none');
+                                        }
+                                        });
+                                    </script>
+                                </sheet>
+                            </form>
+                        </field>
+                    </page>
+
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

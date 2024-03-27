@@ -1,0 +1,30 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_hr_group_job_mgr,hr.group.job.mgr,model_hr_group_job,,1,1,1,1
+access_hr_recruitment_period_user,hr.recruitment.period.user,model_hr_recruitment_period,hr.group_hr_user,1,0,0,0
+access_hr_recruitment_period_sci_admin_hr,hr.recruitment.period.sci.admin.hr,model_hr_recruitment_period,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_applicant_state_sci_admin_hr,hr.applicant.state.sci.admin.hr,model_hr_applicant_state,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_contract_sci_admin_hr,hr.hr.contract.sci.admin.hr,model_hr_contract,hr_recruitment.group_hr_recruitment_manager,1,1,1,1
+access_hr_recruitment_period_admin,hr.recruitment.period.admin,model_hr_recruitment_period,base.group_system,1,1,1,1
+access_hr_recruitment_period_public,hr.recruitment.period.public,model_hr_recruitment_period,,1,0,0,0
+access_hr_industry_job_mgr,hr.industry.job.mgr,model_hr_industry_job,,1,1,1,1
+access_hr_job_welfare,hr_job_welfare,model_hr_job_welfare,,1,1,1,1
+access_ms_template_temp_creation,temp_creation,ms_templates.model_temp_creation,hr.group_hr_manager,1,1,1,1
+access_ms_template_fields_line,fields_line,ms_templates.model_fields_line,hr.group_hr_manager,1,1,1,1
+access_hr_contract_type_manager,hr.contract.type.manager,model_hr_contract_type,hr_contract.group_hr_contract_manager,1,1,1,1
+access_hr_salary_history_manager,hr.salary.history.manager,model_hr_salary_history,hr_contract.group_hr_contract_manager,1,1,1,1
+access_hr_insurance_history_manager,hr.insurance.history.manager,model_hr_insurance_history,hr_contract.group_hr_contract_manager,1,1,1,1
+access_hr_salary_history_group_hr_manager,hr.salary.history.group_hr_manager,model_hr_salary_history,hr.group_hr_manager,1,1,1,1
+access_hr_insurance_history_group_hr_manager,hr.insurance.history.group_hr_manager,model_hr_insurance_history,hr.group_hr_manager,1,1,1,1
+access_hr_salary_history_group_hr_user,hr.salary.history.group_hr_user,model_hr_salary_history,hr.group_hr_user,1,0,0,0
+access_hr_insurance_history_group_hr_user,hr.insurance.history.group_hr_user,model_hr_insurance_history,hr.group_hr_user,1,0,0,0
+access_hr_insurance_policy_employee,hr.insurance_policy.employee,model_hr_insurance_policy,hr.group_hr_manager,1,1,1,1
+access_hr_insurance_policy_manager,hr.insurance_policy.manager,model_hr_insurance_policy,base.group_user,1,0,0,0
+access_hr_contract_manager,hr.contract_manager.employee,model_hr_contract,hr.group_hr_manager,1,1,1,1
+access_hr_contract_user,hr.contract_user.manager,model_hr_contract,base.group_user,1,0,0,0
+access_sync_user_system,System access sync user,model_user_sync,base.group_system,1,1,1,1
+access_history_sync_user_system,System access history sync user,model_user_record_history,base.group_system,1,1,1,1
+access_hr_applicant_state_sci_employee_area_hr,hr.applicant.state.sci.employee.area.hr,model_hr_applicant_state,hr.group_hr_user,1,1,1,1
+
+access_group_user_hr_job_position,group.user.hr.job.position,model_hr_job_position,base.group_user,1,0,0,0
+access_group_hr_user_hr_job_position,group.hr.user.hr.job.position,model_hr_job_position,hr.group_hr_user,1,1,1,0
+access_group_hr_manager_hr_job_position,group.hr.manager.hr.job.position,model_hr_job_position,hr.group_hr_manager,1,1,1,0

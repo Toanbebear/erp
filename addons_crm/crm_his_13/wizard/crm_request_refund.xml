@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="form_request_refund_wizard" model="ir.ui.view">
+            <field name="name">Form request refund Wizard</field>
+            <field name="model">crm.request.refund</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="booking_id" options="{'no_open':True,'no_create':True}" readonly="True"
+                                       force_save="True"/>
+                                <field name="partner_id" options="{'no_open':True,'no_create':True}" readonly="True"
+                                       force_save="True"/>
+<!--                                <field name="brand_id" options="{'no_open':True,'no_create':True}" readonly="True"-->
+<!--                                       force_save="True"/>-->
+                                <field name="company_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                                <field name="currency_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                                <field name="journal_id" options="{'no_open':True,'no_create':True}" required="True"/>
+                            </group>
+                            <group>
+<!--                                <field name="currency_id" options="{'no_open':True,'no_create':True}" required="True"/>-->
+                                <field name="amount" required="True" widget="monetary_format"/>
+                                <field name="name" required="True"/>
+                            </group>
+                        </group>
+                        <footer class="text-center">
+                            <button name="convert_payment" string="Tạo phiếu hoàn tiền" type="object"
+                                    class="btn-info"/>
+                            <button string="Hủy" class="btn-secondary" special="cancel"/>
+                        </footer>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+    </data>
+</odoo>

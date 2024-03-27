@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<!--    <template id="assets_backend" name="collaborator assets" inherit_id="web.assets_backend">-->
+<!--        <xpath expr="." position="inside">-->
+<!--            <link rel="stylesheet" href="/crm/static/src/css/crm.css"/>-->
+<!--        </xpath>-->
+<!--    </template>-->
+    <template id="assets_tests" name="Collaborator Assets Tests" inherit_id="web.assets_tests">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/collaborator/static/src/js/tours/collaborator.js"></script>
+        </xpath>
+    </template>
+</odoo>

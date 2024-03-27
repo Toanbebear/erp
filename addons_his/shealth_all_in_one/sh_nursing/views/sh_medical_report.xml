@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+            string="Patient Rounding Report"
+            id="action_report_patient_rounding_evaluation"
+            model="sh.medical.patient.rounding"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_patient_rounding_evaluation"
+            file="shealth_all_in_one.report_patient_rounding_evaluation"
+        />
+
+        <record id="sh_paperformat_nursings" model="report.paperformat">
+            <field name="name">Phiếu theo dõi lưu bệnh nhân - Bệnh viện</field>
+            <field name="default" eval="True"/>
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+<!--            <field name="orientation">Landscape</field>-->
+            <field name="margin_top">8</field>
+            <field name="margin_bottom">8</field>
+            <field name="margin_left">10</field>
+            <field name="margin_right">8</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">90</field>
+        </record>
+
+        <report
+            string="Phiếu theo dõi bệnh nhân lưu - Tờ điều trị"
+            id="action_report_nursings_inpatient"
+            model="sh.medical.inpatient"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_sh_medical_nursings_inpatient"
+            file="shealth_all_in_one.report_sh_medical_nursings_inpatient"
+            paperformat="shealth_all_in_one.sh_paperformat_nursings"
+            menu="True"
+        />
+
+        <report
+            string="Phiếu theo dõi bệnh nhân lưu - Phiếu chăm sóc"
+            id="action_report_nursings_inpatient_chamsoc"
+            model="sh.medical.inpatient"
+            report_type="qweb-pdf"
+            name="shealth_all_in_one.report_sh_medical_nursings_inpatient_chamsoc"
+            file="shealth_all_in_one.report_sh_medical_nursings_inpatient_chamsoc"
+            paperformat="shealth_all_in_one.sh_paperformat_nursings"
+            menu="True"
+        />
+    </data>
+</odoo>

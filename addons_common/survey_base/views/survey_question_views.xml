@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- QUESTIONS -->
+        <record id="survey_question_form_base" model="ir.ui.view">
+            <field name="name">Form view for survey question base</field>
+            <field name="model">survey.question</field>
+            <field name="inherit_id" ref="survey.survey_question_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='validation_email']" position="before">
+                    <field name="validation_phone_number"
+                           attrs="{'invisible': [('question_type', '!=', 'textbox')]}"/>
+                    <label for="validation_phone_number"
+                           attrs="{'invisible': [('question_type', '!=', 'textbox')]}"/>
+                </xpath>
+                <xpath expr="//field[@name='value']" position="after">
+                    <field name="icon" widget="image" style="width:100px;"
+                           attrs="{'column_invisible': ['|',('parent.display_mode', '!=', 'icon'),('parent.multiple_display_mode', '!=', 'icon')]}"/>
+                </xpath>
+                <xpath expr="//notebook/page[2]/group[2]" position="replace">
+                    <group string="Display mode"
+                           attrs="{'invisible':[('question_type','not in',['simple_choice', 'multiple_choice','matrix'])]}">
+                        <field name="display_mode" string="Format"
+                               attrs="{'invisible':[('question_type','not in',['simple_choice'])],'required':[('question_type','in',['simple_choice'])]}"/>
+                        <field name="multiple_display_mode" string="Format"
+                               attrs="{'invisible':[('question_type','not in',['multiple_choice'])],'required':[('question_type','in',['multiple_choice'])]}"/>
+                        <field name="matrix_display_mode" string="Format"
+                               attrs="{'invisible':[('question_type','not in',['matrix'])],'required':[('question_type','in',['matrix'])]}"/>
+                        <field name="column_nb" string="Number of columns"
+                               attrs="{'invisible':['|',('question_type','=','matrix'),'&amp;',('display_mode','=','dropdown'), ('question_type','=','simple_choice')]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

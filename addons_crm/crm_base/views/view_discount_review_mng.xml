@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_discount_review_manager" model="ir.ui.view">
+            <field name="name">Discount review manager</field>
+            <field name="model">crm.discount.review</field>
+            <field name="arch" type="xml">
+                <form edit_expr="stage_id not in ['approve','refuse']" duplicate="false">
+                    <header>
+                        <button name="approve" string="Xác nhận duyệt" class="btn-info" type="object"
+                                attrs="{'invisible': [('stage_id', 'in', ['approve', 'refuse'])]}"/>
+                        <!--                                groups="crm_base.branch_management"-->
+
+                        <button name="refuse" string="Không duyệt/Hủy" class="btn-warning" type="object"
+                                attrs="{'invisible': [('stage_id', 'in', ['approve', 'refuse'])]}"/>
+                        <field name="stage_id" widget="statusbar" statusbar_visible="offer,approve,refuse"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="company_id" options="{'no_open':True,'no_create':True}" readonly="True"
+                                       force_save="True"/>
+                                <field name="partner_id" options="{'no_open':True,'no_create':True}" readonly="True"
+                                       force_save="True"/>
+                                <field name="booking_id" force_save="True"
+                                       attrs="{'required': [('type', '=', 'booking')], 'invisible': [('type', '=', 'so')]}"
+                                       options="{'no_create': True}" readonly="True"/>
+                                <field name="type" invisible="True"/>
+                                <field name="crm_line_id"
+                                       attrs="{'required': [('type', '=', 'booking')], 'invisible': [('type', '=', 'so')]}"
+                                       options="{'no_open': True, 'no_create': True}" readonly="True"/>
+                                <field name="rule_discount_id" readonly="True" force_save="True"/>
+                                <field name="order_id" options="{'no_create':True}"
+                                       force_save="True"
+                                       attrs="{'required': [('type', '=', 'so')], 'invisible': [('type', '=', 'booking')]}"
+                                       string="Hóa đơn"/>
+                                <field name="order_line_id" options="{'no_open':True,'no_create':True}"
+                                       force_save="True"
+                                       attrs="{'required': [('type', '=', 'so')], 'invisible': [('type', '=', 'booking')]}"
+                                       string="Dòng hóa đơn"/>
+                                <field name="reason" required="True" string="Lý do xin giảm"/>
+                                <field name="name" force_save="True" string="Ghi chú"/>
+                                <field name="type_discount" attrs="{'readonly': [('stage_id', '!=', 'offer')]}"/>
+                                <field name="discount" attrs="{'readonly': [('stage_id', '!=', 'offer')], 'invisible': [('type_discount', '=', 'discount_cash')]}"
+                                       force_save="True"/>
+                                <!--                                <field name="stage_id" readonly="True" force_save="True" invisible="True"/>-->
+                                <field name="color" groups="base.group_no_one" invisible="1"/>
+                                <field name="active" groups="base.group_no_one" invisible="1"/>
+                                <field name="currency_id" invisible="True"/>
+                                <field name="total_amount" widget="monetary_format" readonly="True"/>
+                                <field name="total_amount_before_deep_discount" widget="monetary_format" readonly="True"/>
+                                <field name="total_discount_cash" widget="monetary_format"/>
+                                <field name="total_amount_after_discount" widget="monetary_format"/>
+                                <field name="user_approve" attrs="{'invisible': [('user_approve', '=', False)]}" readonly="True"/>
+                                <field name="user_refuse" readonly="1" attrs="{'invisible': ('stage_id', 'in', ['approve', 'refuse'])}"/>
+                                <field name="note_refuse" readonly="1" attrs="{'invisible': ('stage_id', 'in', ['approve', 'refuse'])}"/>
+                            </group>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"
+                                   options="{'post_refresh': 'recipients'}"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_form_discount_review_manager_note_refuse" model="ir.ui.view">
+            <field name="name">Hủy duyệt giảm giá sâu</field>
+            <field name="model">crm.discount.review</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="note_refuse" required="1"/>
+                    </group>
+                    <footer>
+                        <button class="btn-primary" name="add_note_refuse" type="object" string="Gửi lý do hủy"/>
+                        <button string="Hủy" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_discount_review_manager" model="ir.ui.view">
+            <field name="name">Discount review manager</field>
+            <field name="model">crm.discount.review</field>
+            <field name="arch" type="xml">
+                <tree default_order="create_date desc" decoration-danger="stage_id == 'refuse'"
+                      decoration-success="stage_id == 'approve'" duplicate="false">
+                    <field name="order_id"/>
+                    <field name="booking_id"/>
+                    <field name="partner_id"/>
+                    <field name="reason"/>
+                    <field name="name" string="Ghi chú"/>
+<!--                    <field name="total_amount_before_deep_discount" optional="show"/>-->
+                    <field name="total_discount_cash" optional="show"/>
+                    <field name="total_amount_after_discount" optional="show"/>
+                    <field name="stage_id"/>
+                    <field name="company_id" string="Chi nhánh" optional="hide"/>
+                    <field name="create_uid" string="Người tạo" optional="hide"/>
+                    <field name="create_date" string="Thời điểm tạo" optional="hide"/>
+                    <field name="user_approve" string="Người duyệt"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="crm_discount_review_search">
+            <field name="name">Tìm kiếm yêu cầu duyệt</field>
+            <field name="model">crm.discount.review</field>
+            <field name="arch" type="xml">
+                <search string="Tìm kiếm yêu cầu duyệt">
+                    <separator orientation="vertical"/>
+                    <field name="partner_id" string="Khách hàng" select="1"/>
+                    <field name="booking_id" string="Booking" select="1"/>
+                    <filter string="Trạng thái Đề xuất" name="stage_offer" domain="[('stage_id', '=', 'offer')]"/>
+                    <filter string="Trạng thái Duyệt" name="stage_approve" domain="[('stage_id', '=', 'approve')]"/>
+                    <filter string="Trạng thái Từ chối" name="stage_refuse" domain="[('stage_id', '=', 'refuse')]"/>
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter name="group_partner_id" string="Khách hàng" context="{'group_by':'partner_id'}"/>
+                        <filter name="group_booking_id" string="Booking"
+                                context="{'group_by':'booking_id'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_open_view_discount_rv" model="ir.actions.act_window">
+            <field name="name">Discount review</field>
+            <field name="res_model">crm.discount.review</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('company_id', 'in', allowed_company_ids)]</field>
+            <field name="context">{'search_default_stage_offer': 1,}</field>
+        </record>
+
+        <!--        <menuitem id="crm_menu_discount_rv_root"-->
+        <!--                  name="Discount review"-->
+        <!--                  parent="crm.crm_menu_root"-->
+        <!--                  sequence="12"-->
+        <!--        />-->
+
+        <!--        <menuitem id="crm_menu_discount_review"-->
+        <!--                  name="Discount review"-->
+        <!--                  parent="crm_menu_discount_rv_root"-->
+        <!--                  action="action_open_view_discount_rv"-->
+        <!--                  groups="crm_base.receptionist_crm"-->
+        <!--                  sequence="1"/>-->
+
+        <record id="view_form_rule_discount" model="ir.ui.view">
+            <field name="name">Form rule discount</field>
+            <field name="model">crm.rule.discount</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="active" groups="base.group_no_one"/>
+                            <field name="name" readonly="True" force_save="True"/>
+                            <field name="discount" required="True"/>
+                            <field name="discount2" required="True"/>
+                            <field name="user_ids">
+                                <tree>
+                                    <field name="name"/>
+                                </tree>
+                            </field>
+                            <field name="create_uid" string="Người tạo"/>
+                            <field name="create_date" string="Thời gian tạo"/>
+                            <field name="write_uid" string="Người sửa"/>
+                            <field name="write_date" string="Thời gian sửa"/>
+                        </group>
+                        <div class="oe_chatter">
+                            <field name="message_follower_ids" widget="mail_followers"/>
+                            <field name="activity_ids" widget="mail_activity"/>
+                            <field name="message_ids" widget="mail_thread"/>
+                        </div>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tree_rule_discount" model="ir.ui.view">
+            <field name="name">Tree rule discount</field>
+            <field name="model">crm.rule.discount</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="action_open_view_rule_dis" model="ir.actions.act_window">
+            <field name="name">Rule discount</field>
+            <field name="res_model">crm.rule.discount</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{}</field>
+        </record>
+
+
+        <!--        <menuitem id="crm_menu_discount_rule"-->
+        <!--                  name="Discount rule"-->
+        <!--                  parent="crm_menu_discount_rv_root"-->
+        <!--                  action="action_open_view_rule_dis"-->
+        <!--                  groups="base.group_system"-->
+        <!--                  sequence="2"/>-->
+
+    </data>
+</odoo>

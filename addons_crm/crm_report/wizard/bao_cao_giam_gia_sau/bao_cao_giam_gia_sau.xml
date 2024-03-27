@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="report_discount_review_attachment" model="ir.attachment">
+            <field name="name">Báo cáo duyệt giảm giá sâu</field>
+            <field name="type">binary</field>
+            <field name="datas" type="base64" file="crm_report/static/xls/bao_cao_duyet_giam_gia_sau.xlsx"/>
+            <field name="store_fname">bao_cao_duyet_giam_gia_sau.xls</field>
+        </record>
+
+        <record model="ir.ui.view" id="report_discount_review_form">
+            <field name="name">discount.review.report</field>
+            <field name="model">discount.review.report</field>
+            <field name="arch" type="xml">
+                <form string="Báo cáo duyệt giảm giá sâu">
+                    <group>
+                        <field name="start_date" required="True"/>
+                        <field name="end_date" required="True"/>
+                        <field name="company_id" options="{'no_create': True, 'no_open': True}"/>
+                    </group>
+                    <footer>
+                        <button name="create_report_discount_review" type="object" string="Báo cáo"
+                                class="oe_highlight"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record model="ir.actions.act_window" id="report_discount_review_act">
+            <field name="name">Báo cáo duyệt giảm giá sâu</field>
+            <field name="res_model">discount.review.report</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="report_discount_review_form"/>
+            <field name="context">{}</field>
+            <field name="target">new</field>
+        </record>
+
+        <menuitem id="report_discount_review_menu"
+                  name="Báo cáo duyệt giảm giá sâu"
+                  parent="crm_report.menu_crm_report"
+                  action="report_discount_review_act"
+        />
+
+    </data>
+</odoo>

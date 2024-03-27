@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+account_register_payment_behalf,name_account_register_payment_behalf,model_account_register_payment_behalf,account.group_account_invoice,1,1,1,1
+account_register_payment_behalf_line,name_account_register_payment_behalf_line,model_account_register_payment_behalf_line,account.group_account_invoice,1,1,1,1

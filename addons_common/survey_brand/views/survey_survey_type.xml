@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="survey_survey_type_view_tree" model="ir.ui.view">
+        <field name="name">survey.survey.type.view.tree</field>
+        <field name="model">survey.survey.type</field>
+        <field name="arch" type="xml">
+            <tree string="Phân loại khảo sát">
+                <field name="name"/>
+                <field name="type"/>
+                <field name="is_bk"/>
+                <field name="is_pk"/>
+                <field name="is_tk"/>
+                <field name="is_pc"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="survey_survey_type_view_form" model="ir.ui.view">
+        <field name="name">survey.survey.type.view.form</field>
+        <field name="model">survey.survey.type</field>
+        <field name="arch" type="xml">
+            <form string="Phân loại khảo sát">
+                <sheet>
+                    <div class="oe_button_box" name="button_box"/>
+                        <group>
+                            <group>
+                                <field name="name"/>
+                                <field name="type"/>
+                            </group>
+                            <group>
+                                <field name="is_bk"/>
+                                <field name="is_pk"/>
+                                <field name="is_tk"/>
+                                <field name="is_pc"/>
+                            </group>
+                        </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="survey_time_view_search" model="ir.ui.view">
+        <field name="name">survey.time.view.search</field>
+        <field name="model">survey.survey.type</field>
+        <field name="arch" type="xml">
+            <search string="Phân loại khảo sát">
+                <field name="name"/>
+                <field name="type"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="survey_time_action" model="ir.actions.act_window">
+        <field name="name">Phân loại khảo sát</field>
+        <field name="res_model">survey.survey.type</field>
+        <field name="view_mode">tree,form</field>
+        <field name="search_view_id" ref="survey_time_view_search"/>
+        <field name="context"></field>
+        <field name="view_ids"
+               eval="[(5, 0, 0),
+                      (0, 0, {'view_mode': 'tree', 'view_id': ref('survey_survey_type_view_tree')}),
+                      (0, 0, {'view_mode': 'form', 'view_id': ref('survey_survey_type_view_form')})
+                      ]"/>
+        <field name="help">Phân loại khảo sát khảo sát</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,351 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="register_payment_tree_view" model="ir.ui.view">
+            <field name="name">Account payment outbound tree view</field>
+            <field name="model">account.register.payment.behalf</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <tree string="_tree">
+                    <field name="name"/>
+                    <field name="date_register"/>
+                    <field name="company_id"/>
+                    <field name="payment_method_id" string="Loại thanh toán"/>
+                    <field name="journal_id"/>
+                    <field name="communication"/>
+                    <field name="amount_total" sum="Total"/>
+                    <field name="amount_total_approval" sum="Total"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="register_payment_censorship_tree_view" model="ir.ui.view">
+            <field name="name">Account payment outbound tree view</field>
+            <field name="model">account.register.payment.behalf</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <tree string="_tree" duplicate="false" create="false">
+                    <field name="label" string="Mức độ ưu tiên" widget="label_selection" options="{'classes': {'1': 'success', '2': 'warning', '3': 'danger'}}"/>
+                    <field name="name"/>
+                    <field name="date_register"/>
+                    <field name="payment_method_id" string="Loại thanh toán"/>
+                    <field name="journal_id"/>
+                    <field name="communication"/>
+                    <field name="amount_total" sum="Total"/>
+                    <field name="amount_total_approval" sum="Total"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="register_payment_form_view" model="ir.ui.view">
+            <field name="name">Account payment outbound form view</field>
+            <field name="model">account.register.payment.behalf</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <form string="_form">
+                    <header>
+                        <button name="action_confirm" string="Xác nhận" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('draft',))]}"/>
+                        <button name="action_draft" string="Đưa về dự thảo" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('wait',))]}"/>
+                        <button name="action_sent" string="Gửi đề nghị" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('wait',))]}"/>
+                        <button name="create_payments" string="Tạo phiếu thanh toán" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|', '|', ('state', 'in', ('draft',)), ('type', '=', 'dn'), ('is_debt', '=' , False)]}"/>
+                        <button name="create_payment_cost" string="Tạo phiếu thanh toán chi phí" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|', '|', ('state', 'in', ('draft',)), ('type', '=', 'dn'), ('is_debt', '=' , True)]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,wait,sent,posted,cancel" nolabel="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="date_register"/>
+                            <h3>
+                                <field name="date_register"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id" readonly="1"/>
+                                <field name="type" invisible="1"/>
+                                <field name="is_debt" invisible="1"/>
+                                <field name="payment_method_id" string="Phương thức thanh toán"/>
+                                <field name="user_id" readonly="1" options="{'no_create': True}" required="1"/>
+                            </group>
+                            <group>
+                                <field name="journal_id" required="1"/>
+                                <field name="amount_total" invisible="1"/>
+                                <field name="amount_total_approval" invisible="1"/>
+                                <field name="communication"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page id="invoice_tab" string="Bảng kê thanh toán">
+                                <field name="behalf_lines">
+                                    <tree editable="bottom">
+                                        <field name="sequence" invisible="1"/>
+                                        <field name="partner_id" options="{'no_create': True}"/>
+                                        <field name="invoice" options="{'no_create': True}"/>
+                                        <field name="invoice_date"/>
+                                        <field name="state_invoice"/>
+                                        <field name="amount_total" force_save="True"/>
+                                        <field name="amount_paid" force_save="True"/>
+                                        <field name="amount_residual" force_save="True"/>
+                                        <field name="amount_register" widget="monetary_format" sum="Total" optional="show"/>
+                                        <field name="approval" invisible="1"/>
+                                        <field name="amount_approval" widget="monetary_format" sum="Total" optional="show" invisible="1"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="register_payment_cost_form_view" model="ir.ui.view">
+            <field name="name">Account payment outbound form view</field>
+            <field name="model">account.register.payment.behalf</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <form string="_form">
+                    <header>
+                        <button name="action_confirm" string="Xác nhận" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('draft',))]}"/>
+                        <button name="action_draft" string="Đưa về dự thảo" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('wait',))]}"/>
+                        <button name="action_sent" string="Gửi đề nghị" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('wait',))]}"/>
+                        <button name="create_payments" string="Tạo phiếu thanh toán" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|', '|', ('is_debt', '=', False), ('state', 'not in', ('wait',)), ('type', '=' , 'dn')]}"/>
+                        <button name="create_payment_cost" string="Tạo phiếu thanh toán chi phí" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|', '|', ('is_debt', '=', True), ('state', 'not in', ('wait',)), ('type', '=' , 'dn')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,wait,sent,posted,cancel" nolabel="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="date_register"/>
+                            <h3>
+                                <field name="date_register"/>
+                            </h3>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="company_id"/>
+                                <field name="type" invisible="1"/>
+                                <field name="is_debt" invisible="1"/>
+                                <field name="payment_method_id" string="Phương thức thanh toán"/>
+                                <field name="user_id" readonly="1" options="{'no_create': True}" required="1"/>
+                            </group>
+                            <group>
+                                <field name="journal_id" required="1"/>
+                                <field name="amount_total" invisible="1"/>
+                                <field name="amount_total_approval" invisible="1"/>
+                                <field name="communication"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Thanh toán chi phí">
+                                <field name="behalf_lines">
+                                    <tree editable="bottom">
+                                        <field name="communication"/>
+                                        <field name="currency_id" invisible="1"/>
+                                        <field name="state" invisible="1"/>
+                                        <field name="amount_register" force_save="True" widget="monetary_format" sum="Total" optional="show"/>
+                                        <field name="approval" invisible="1"/>
+                                        <field name="amount_approval" force_save="True" widget="monetary_format" sum="Total" optional="hide"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="register_payment_censorship_cost_form_view" model="ir.ui.view">
+            <field name="name">Account payment outbound form view</field>
+            <field name="model">account.register.payment.behalf</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <form string="_form" create="false">
+                    <header>
+                        <button name="action_confirm" string="Xác nhận" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('draft',))]}"/>
+                        <button name="action_draft" string="Đưa về dự thảo" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('wait',))]}"/>
+                        <button name="create_payments" string="Tạo phiếu thanh toán" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|', '|', ('is_debt', '=', False),('state', 'not in', ('wait',)), ('type', '=' , 'dn')]}"/>
+                        <button name="create_payment_cost" string="Tạo phiếu thanh toán chi phí" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|', '|', ('is_debt', '=', True), ('state', 'not in', ('wait',)), ('type', '=' , 'dn')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,wait,wait_payment,posted,cancel" nolabel="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="date_register"/>
+                            <h3>
+                                <field name="date_register" attrs="{'readonly': [('state', 'not in', ('draft',))]}"/>
+                            </h3>
+                        </div>
+                        <label for="label" string="Mức ưu tiên:"/>
+                        <h2>
+                            <field name="label" widget="label_selection" options="{'classes': {'1': 'success', '2': 'warning', '3': 'danger'}}"/>
+                        </h2>
+                        <group>
+                            <group>
+                                <field name="company_id" domain="[('id', 'in', allowed_company_ids)]" readonly="1"/>
+                                <field name="type" invisible="1"/>
+                                <field name="is_debt" invisible="1"/>
+                                <field name="payment_method_id" string="Phương thức thanh toán" attrs="{'readonly': [('state', 'not in', ('draft',))]}"/>
+                                <field name="user_id" readonly="1" options="{'no_create': True}" required="1"/>
+                            </group>
+                            <group>
+                                <field name="journal_id" required="1" attrs="{'readonly': [('state', 'not in', ('draft',))]}"/>
+                                <field name="amount_total" invisible="1"/>
+                                <field name="amount_total_approval" invisible="1"/>
+                                <field name="communication" attrs="{'readonly': [('state', 'not in', ('draft',))]}"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page id="invoice_tab" string="Bảng kê thanh toán">
+                                <field name="behalf_lines" attrs="{'readonly': [('state', 'not in', ('draft',))]}">
+                                    <tree editable="bottom" mode="tree" delete="false">
+                                        <field name="sequence" invisible="1"/>
+                                        <field name="partner_id" options="{'no_create': True}" invisible="1"/>
+                                        <field name="invoice" options="{'no_create': True}" invisible="1"/>
+                                        <field name="communication" readonly="1"/>
+                                        <field name="amount_register" force_save="True" widget="monetary_format" readonly="1" sum="Total" optional="show"/>
+                                        <field name="approval"/>
+                                        <field name="amount_approval" force_save="True" widget="monetary_format" attrs="{'readonly': [('approval', 'in' ,('all', 'refuse'))]}" sum="Total" optional="show"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="register_payment_censorship_form_view" model="ir.ui.view">
+            <field name="name">Account payment outbound form view</field>
+            <field name="model">account.register.payment.behalf</field>
+            <field name="priority" eval="20"/>
+            <field name="arch" type="xml">
+                <form string="_form" create="false">
+                    <header>
+                        <button name="action_confirm" string="Xác nhận" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('draft',))]}"/>
+                        <button name="action_draft" string="Đưa về dự thảo" class="oe_highlight" type="object" attrs="{'invisible': [('state', 'not in', ('wait',))]}"/>
+                        <button name="create_payments" string="Tạo phiếu thanh toán" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|', '|', ('is_debt', '=', False),('state', 'not in', ('wait',)), ('type', '=' , 'dn')]}"/>
+                        <button name="create_payment_cost" string="Tạo phiếu thanh toán chi phí" class="oe_highlight" type="object"
+                                attrs="{'invisible': ['|', '|', ('is_debt', '=', True), ('state', 'not in', ('wait',)), ('type', '=' , 'dn')]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,wait,wait_payment,posted,cancel" nolabel="1"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <label for="date_register"/>
+                            <h3>
+                                <field name="date_register"/>
+                            </h3>
+                        </div>
+                        <label for="label" string="Mức ưu tiên:"/>
+                        <h2>
+                            <field name="label" widget="label_selection" options="{'classes': {'1': 'success', '2': 'warning', '3': 'danger'}}"/>
+                        </h2>
+                        <group>
+                            <group>
+                                <field name="company_id" readonly="1"/>
+                                <field name="type" invisible="1"/>
+                                <field name="is_debt" invisible="1"/>
+                                <field name="payment_method_id" string="Phương thức thanh toán"/>
+                                <field name="user_id" readonly="1" options="{'no_create': True}" required="1"/>
+                            </group>
+                            <group>
+                                <field name="journal_id" required="1"/>
+                                <field name="amount_total" invisible="1"/>
+                                <field name="amount_total_approval" invisible="1"/>
+                                <field name="communication"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page id="invoice_tab" string="Bảng kê thanh toán">
+                                <field name="behalf_lines">
+                                    <tree editable="bottom">
+                                        <field name="sequence" invisible="1"/>
+                                        <field name="partner_id" options="{'no_create': True}" readonly="1"/>
+                                        <field name="invoice" options="{'no_create': True}" readonly="1"/>
+                                        <field name="communication" invisible="1"/>
+                                        <field name="amount_register" force_save="True" widget="monetary_format" readonly="1" sum="Total" optional="show"/>
+                                        <field name="approval"/>
+                                        <field name="amount_approval" force_save="True" widget="monetary_format" attrs="{'readonly': [('approval', 'in' ,('all', 'refuse'))]}" sum="Total" optional="show"/>
+                                        <field name="currency_id" invisible="1"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <!--Search-->
+        <record model="ir.ui.view" id="sci_account_payment_search">
+            <field name="name">Tìm kiếm thanh toán</field>
+            <field name="model">account.register.payment.behalf</field>
+            <field name="arch" type="xml">
+                <search string="Tìm phiếu">
+                    <group expand="0" string="Group By..." colspan="11" col="11">
+                        <filter name="by_month" string="Tháng tạo" context="{'group_by':'date_register:month'}"/>
+                        <filter name="by_date" string="Ngày tạo" context="{'group_by':'date_register:day'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="act_register_payment_behalf" model="ir.actions.act_window">
+            <field name="name">Đề nghị thanh toán hộ: công nợ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.register.payment.behalf</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'default_type': 'dn', 'default_is_debt': True}</field>
+            <field name="domain">[('type', '=', 'dn'), ('is_debt', '=', True)]</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('sci_accounting.register_payment_tree_view')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('sci_accounting.register_payment_form_view')})]"/>
+        </record>
+
+        <record id="act_register_payment_cost_behalf" model="ir.actions.act_window">
+            <field name="name">Đề nghị thanh toán hộ: chi phí</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.register.payment.behalf</field>
+            <field name="view_mode">tree,form</field>
+            <field name="context">{'default_type': 'dn', 'default_is_debt': False}</field>
+            <field name="domain">[('type', '=', 'dn'), ('is_debt', '=', False)]</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('sci_accounting.register_payment_tree_view')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('sci_accounting.register_payment_cost_form_view')})]"/>
+        </record>
+
+        <record id="act_register_payment_censorship_behalf" model="ir.actions.act_window">
+            <field name="name">Duyệt đề nghị thanh toán: công nợ</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.register.payment.behalf</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type', '=', 'dc'), ('is_debt', '=', True)]</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('sci_accounting.register_payment_censorship_tree_view')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('sci_accounting.register_payment_censorship_form_view')})]"/>
+            <field name="context">{'search_default_by_month': True, 'search_default_by_date': True}</field>
+        </record>
+
+        <record id="act_register_payment_cost_censorship_behalf" model="ir.actions.act_window">
+            <field name="name">Duyệt đề nghị thanh toán: chi phí</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">account.register.payment.behalf</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[('type', '=', 'dc'), ('is_debt', '=', False)]</field>
+            <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('sci_accounting.register_payment_censorship_tree_view')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('sci_accounting.register_payment_censorship_cost_form_view')})]"/>
+            <field name="context">{'search_default_by_month': True, 'search_default_by_date': True}</field>
+        </record>
+
+    </data>
+</odoo>

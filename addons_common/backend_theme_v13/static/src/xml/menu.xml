@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+        <t t-jquery=".dropdown-divider" t-operation="before">
+        <a role="menuitem" href="#" data-menu="shortcuts" class="dropdown-item d-none d-md-inline-block">Shortcuts</a>
+    </t>
+
+    <t t-name="SwitchCompanyMenuAction">
+        <div class="menu-footer">
+            <span class="btn btn-primary btn-success menu-switch-apply">
+                <i class="fa fa-check" title="Áp dụng"></i>
+                Áp dụng</span>
+        </div>
+    </t>
+
+</templates>

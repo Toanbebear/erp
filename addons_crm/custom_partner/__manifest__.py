@@ -1,0 +1,36 @@
+{
+    'name': 'Custom Partner',
+    'version': '1.0.5',
+    'category': 'Sales/CRM',
+    'author': 'SCI-IT',
+    'sequence': '10',
+    'summary': 'add customer codes for each company, and some basic fields of customer information',
+    'depends': [
+        'contacts',
+        'crm',
+        'purchase',
+        'account',
+        'sale',
+        'utm',
+        # 'customer_company',
+        # 'custom_partner_extend'
+    ],
+    'data': [
+        'data/default_data.xml',
+        'data/sequence.xml',
+        'security/security.xml',
+        'security/ir.model.access.csv',
+        'views/menu.xml',
+        'views/view_relation_partner.xml',
+        'views/purchase_order_views.xml',
+        'views/res_partner.xml',
+        'views/res_company.xml',
+        'views/res_currency.xml',
+        'views/wallet.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'auto_install': False,
+    'qweb': [],
+}
+

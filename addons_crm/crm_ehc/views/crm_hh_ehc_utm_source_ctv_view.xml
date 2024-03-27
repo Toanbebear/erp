@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="crm_hh_ehc_utm_source_ctv_view_inherit" model="ir.ui.view">
+            <field name="name">crm.collaborators</field>
+            <field name="model">crm.collaborators</field>
+            <field name="inherit_id" ref="crm_collaborators.view_form_collaborators"/>
+            <field name="arch" type="xml">
+                <xpath expr="//notebook//page[@name='booking_id']" position="before">
+                    <page name="ehc_tab" string="Thông tin EHC">
+                        <form>
+                            <button string="SYNC EHC"
+                                    type="object" name="post_source_ctv_to_ehc"/>
+                            <group>
+                                <field name="sync_ehc"/>
+                                <field name="check_ehc"/>
+                                <field name="ehc_category_source_id" options='{"no_open": True, "no_create": True}'/>
+                                <field name="ehc_source_id" options='{"no_open": True, "no_create": True}'/>
+                                <field name="source_map" options="{'no_create': True}"/>
+                                <field name="address_ehc"/>
+                                <field name="log" readonly="1"/>
+                            </group>
+                        </form>
+                    </page>
+                </xpath>
+            </field>
+        </record>
+
+        <record id="crm_hh_ehc_utm_source_ctv_view_tree_inherit" model="ir.ui.view">
+            <field name="name">crm.collaborators</field>
+            <field name="model">crm.collaborators</field>
+            <field name="inherit_id" ref="crm_collaborators.view_tree_collaborators"/>
+            <field name="arch" type="xml">
+                <xpath expr="field[@name='collaborators']" position="after">
+                    <field name='ehc_source_id'/>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

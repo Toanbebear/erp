@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="brand_ip_phone_tree_view" model="ir.ui.view">
+            <field name="name">brand.ip.phone.treeview</field>
+            <field name="model">brand.ip.phone</field>
+            <field name="arch" type="xml">
+                <tree string="Lưu trữ IP Phone">
+                    <field name="user_id"/>
+                    <field name="ip_phone"/>
+                    <field name="brand_id"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="brand_ip_phone_form_view" model="ir.ui.view">
+            <field name="name">booking.form.seeding.form.view</field>
+            <field name="model">brand.ip.phone</field>
+            <field name="arch" type="xml">
+                <form>
+                    <sheet>
+                        <group>
+                            <field name="user_id" required="True"/>
+                            <field name="ip_phone" required="True"/>
+                            <field name="brand_id" required="True"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="brand_ip_phone_view_search" model="ir.ui.view">
+            <field name="name">brand.ip.phone.view.search</field>
+            <field name="model">brand.ip.phone</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="ip_phone"/>
+                    <field name="user_id"/>
+                </search>
+            </field>
+        </record>
+        <record model="ir.actions.act_window" id="brand_ip_phone_act">
+            <field name="name">IP phone</field>
+            <field name="search_view_id" ref="brand_ip_phone_view_search"/>
+            <field name="res_model">brand.ip.phone</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem id="brand_ip_phone_sub_menu"
+                  name="IP Phone"
+                  parent="base.menu_users"
+                  action="brand_ip_phone_act"
+                  sequence="1"
+        />
+    </data>
+</odoo>

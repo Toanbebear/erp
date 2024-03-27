@@ -1,0 +1,708 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="survey_brand_assets" name="account assets" inherit_id="survey.survey_assets">
+            <xpath expr="." position="inside">
+                <link href="/survey_brand/static/src/css/survey.css" rel="stylesheet"/>
+                <link href="/survey_brand/static/src/css/survey_result.css" rel="stylesheet"/>
+                <script type="text/javascript" src="/survey_brand/static/src/js/survey.js"/>
+            </xpath>
+        </template>
+
+        <template id="survey_brand_layout" name="Survey Layout" inherit_id="web.frontend_layout" primary="True">
+            <xpath expr="//header" position="before">
+                <t t-set="no_header" t-value="no_header"/>
+                <t t-set="no_footer" t-value="no_footer"/>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+            <xpath expr="//head/t[@t-call-assets][last()]" position="after">
+                <t t-call-assets="survey.survey_assets" lazy_load="True"/>
+            </xpath>
+            <xpath expr="//header" position="after">
+                <div id="wrap" class="oe_structure oe_empty"/>
+            </xpath>
+            <xpath expr="//footer" position="replace">
+            </xpath>
+            <xpath expr="//nav[@id='oe_main_menu_navbar']" position="replace">
+            </xpath>
+            <xpath expr="//header[@id='top']" position="replace">
+            </xpath>
+            <xpath expr="//main" position="replace">
+                <body class="body_survey">
+                    <div id="wrap" class="oe_structure oe_empty"/>
+                    <main class="o_survey_main_brand">
+                        <t t-raw="0"/>
+                    </main>
+                </body>
+            </xpath>
+        </template>
+
+       <!--  Thông tin khách hàng và chọn survey -->
+        <template id="survey_brand_init_survey" name="Khảo sát">
+            <t t-call="survey_brand.survey_brand_layout">
+                <div class="wrap survey_container">
+                    <div class="oe_structure" id="oe_structure_survey_init_1"/>
+                    <div class="container">
+                        <div id="survey_container">
+                            <h3>Khảo sát cho khách hàng</h3>
+                            <form role="form" method="post" class="js_surveyform"
+                                  t-att-data-submit="data_submit">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <input type="hidden" id="survey_token" name="survey_token"/>
+                                <input type="hidden" id="booking_id" name="booking_id" t-att-value="booking"/>
+                                <input type="hidden" id="walkin_id" name="walkin_id" t-att-value="walkin"/>
+                                <input type="hidden" id="evaluation_id" name="evaluation_id" t-att-value="evaluation"/>
+                                <input type="hidden" id="phone_call_id" name="phone_call_id" t-att-value="phone_call"/>
+                                <div id="middle-wizard">
+                                    <div class="form-group">
+                                        <label class="form-label" for="customer_phone">
+                                            <i class="fa fa-mobile"></i> Số điện thoại:</label>
+                                        <input type="text"
+                                               class="form-control form-input"
+                                               id="customer_phone"
+                                               readonly="1"
+                                               name="customer_phone"
+                                               t-att-value="customer_phone_x"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="customer_name">
+                                            <i class="fa fa-user"></i> Tên khách hàng:</label>
+                                        <input type="text" name="customer_name"
+                                               id="customer_name"
+                                               readonly="1"
+                                               class="form-control form-input"
+                                               t-att-value="customer_name"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="branch">
+                                            <i class="fa fa-building"></i> Địa chỉ cơ sở Khách hàng thực hiện dịch vụ:</label>
+                                        <input type="text"
+                                               name="branch"
+                                               readonly="1"
+                                               id="branch"
+                                               class="form-control form-input"
+                                               t-att-value="branch"/>
+                                        <input type="hidden" id="brand" name="brand" t-att-value="brand"/>
+                                        <input type="hidden" id="branch_id" name="branch_id" t-att-value="branch_id"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <t t-if="len(group_services) &gt; 1">
+                                            <p class="form-label">Hãy lựa chọn 01 dịch vụ anh/chị đã sử dụng và muốn đánh giá:</p>
+                                              <t t-set="index_service" t-value="1"/>
+                                              <t t-foreach="group_services" t-as="group_service">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio"
+                                                           t-attf-id="group_service_#{group_service.id}"
+                                                           name="group_service"
+                                                           t-att-checked="index_service"
+                                                           class="custom-control-input control-group-service"
+                                                           t-att-value="group_service.id"/>
+                                                    <label t-attf-for="group_service_#{group_service.id}"
+                                                           class="custom-control-label">
+                                                        <t t-esc="group_service.name"/></label>
+                                                </div>
+
+                                                  <t t-set="index_service" t-value="index_service - 1"/>
+                                              </t>
+                                        </t>
+                                        <t t-else="">
+                                            <p class="form-label"
+                                               title="Nhóm dịch vụ khách hàng thực hiện trong lịch hẹn hoặc phiếu khám">
+                                                <i class="fa fa-check-square-o"></i>
+                                                Dịch vụ anh/chị đã sử dụng và sẽ đánh giá:
+                                            </p>
+                                              <t t-foreach="group_services" t-as="group_service">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio"
+                                                           name="group_service"
+                                                           t-attf-id="group_service_#{group_service.id}"
+                                                           checked="checked"
+                                                           class="custom-control-input control-group-service"
+                                                           t-att-value="group_service.id"/>
+                                                    <label t-attf-for="group_service_#{group_service.id}"
+                                                           class="custom-control-label">
+                                                        <t t-esc="group_service.name"/></label>
+                                                </div>
+                                              </t>
+                                        </t>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <p class="form-label"
+                                           title="Tiêu chí để lựa chọn bộ khảo sát phù hợp như thời điểm hay đối tượng thực hiện khảo sát">
+                                            <i class="fa fa-check-square-o"></i>
+                                            Lựa chọn tiêu chí:</p>
+                                          <t t-foreach="timing" t-as="time">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio"
+                                                       t-attf-id="time_#{time.id}"
+                                                       name="time"
+                                                       class="custom-control-input control-time"
+                                                       t-att-value="time.id"/>
+                                                <label t-attf-for="time_#{time.id}" class="custom-control-label">
+                                                    <t t-esc="time.name"/></label>
+                                            </div>
+                                          </t>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <p class="form-label" title="Bộ khảo sát phù hợp với các tiêu chí">
+                                            <i class="fa fa-filter"></i> Chọn bộ khảo sát</p>
+                                        <div id="survey_survey_select">
+                                          <t t-foreach="survey_surveys" t-as="survey_survey">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" t-attf-id="survey_survey_#{survey_survey.id}"
+                                                       name="survey_survey"
+                                                       class="custom-control-input control-survey-survey"
+                                                       t-att-value="survey_survey.id"/>
+                                                <label t-attf-for="survey_survey_#{survey_survey.id}"
+                                                       class="custom-control-label">
+                                                    <t t-esc="survey_survey.name"/></label>
+                                            </div>
+                                          </t>
+                                        </div>
+                                    </div>
+
+                                    <div class="text-center mt16">
+                                        <button type="submit"
+                                                class="fa fa-tasks btn btn-lg btn-primary btn-start-survey"
+                                                name="button_start"
+                                                title="Chọn bộ khảo sát để bắt đầu khảo sát"
+                                                value="start" disabled="disabled">
+                                            Bắt đầu khảo sát
+                                        </button>
+
+                                        <button type="button"
+                                                class="fa fa-plus btn btn-lg btn-success btn-create-survey"
+                                                name="button_create_survey"
+                                                title="Chọn bộ khảo sát để bắt đầu khảo sát cho khách hàng"
+                                                value="create" disabled="disabled">
+                                            Tạo khảo sát cho khách hàng
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="oe_structure" id="oe_structure_survey_init_2"/>
+                </div>
+            </t>
+        </template>
+
+        <!--  Thông tin khách hàng và chọn survey -->
+        <template id="survey_brand_select_survey" name="Survey Brand Select Survey">
+            <t t-call="survey_brand.survey_brand_layout">
+                <div class="wrap survey_container">
+                    <div class="oe_structure" id="oe_structure_survey_init_1"/>
+                    <div class="container">
+                        <div id="survey_container">
+                            <h3>Khảo sát cho khách hàng</h3>
+
+                            <form role="form" method="post" class="js_surveyform"
+                                  t-att-action="'/survey_brand/booking/%s' % (booking)"
+                                  t-att-data-submit="'/survey_brand/booking/%s' % (booking)">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                                <div id="middle-wizard">
+                                    <div class="form-group">
+                                        <label class="form-label" for="customer_phone">Số điện thoại:</label>
+                                        <input type="text"
+                                               class="form-control form-input"
+                                               id="customer_phone"
+                                               readonly="1"
+                                               name="customer_phone"
+                                               t-att-value="customer_phone_x"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="customer_name">Tên khách hàng:</label>
+                                        <input type="text" name="customer_name"
+                                               id="customer_name"
+                                               readonly="1"
+                                               class="form-control form-input"
+                                               t-att-value="customer_name"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="branch">Địa chỉ cơ sở KH làm dịch vụ:</label>
+                                        <input type="text"
+                                               name="branch"
+                                               readonly="1"
+                                               id="branch"
+                                               class="form-control form-input"
+                                               t-att-value="branch"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <t t-if="len(group_services) &gt; 1">
+                                            <label class="form-label" for="branch">
+                                                Hãy lựa chọn 01 dịch vụ anh/chị đã sử dụng và muốn đánh giá:
+                                            </label>
+                                              <t t-foreach="group_services" t-as="group_service">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio"
+                                                           t-attf-id="group_service_#{group_service.id}"
+                                                           name="group_service"
+                                                           class="custom-control-input"
+                                                           t-att-value="group_service.id"/>
+                                                    <label t-attf-for="group_service_#{group_service.id}"
+                                                           class="custom-control-label">
+                                                        <t t-esc="group_service.name"/></label>
+                                                </div>
+                                              </t>
+                                        </t>
+                                        <t t-else="">
+                                            <label class="form-label" for="branch">Dịch vụ anh/chị đã sử dụng và sẽ đánh giá:</label>
+                                              <t t-foreach="group_services" t-as="group_service">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio"
+                                                           name="group_service"
+                                                           t-attf-id="group_service_#{group_service.id}"
+                                                           checked="checked"
+                                                           class="custom-control-input"
+                                                           t-att-value="group_service.id"/>
+                                                    <label t-attf-for="group_service_#{group_service.id}"
+                                                           class="custom-control-label">
+                                                        <t t-esc="group_service.name"/></label>
+                                                </div>
+                                              </t>
+                                        </t>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="branch">Lựa chọn thời điểm:</label>
+                                          <t t-foreach="timing" t-as="time">
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" t-attf-id="time_#{time.id}" name="time"
+                                                       class="custom-control-input"
+                                                       t-att-value="time.id"/>
+                                                <label t-attf-for="time_#{time.id}" class="custom-control-label">
+                                                    <t t-esc="time.name"/></label>
+                                            </div>
+                                          </t>
+                                    </div>
+
+                                    <div class="text-center mt16">
+                                        <button type="submit"
+                                                class="btn btn-lg btn-primary btn-start-survey"
+                                                name="button_start"
+                                                value="start">
+                                            Bắt đầu khảo sát
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="oe_structure" id="oe_structure_survey_init_2"/>
+                </div>
+            </t>
+        </template>
+
+        <!--  Thông tin khách hàng -->
+        <template id="survey_brand_init" name="Survey Brand">
+            <t t-call="survey_brand.survey_brand_layout">
+                <div class="wrap survey_container">
+                    <div class="oe_structure" id="oe_structure_survey_init_1"/>
+                    <div class="container">
+                        <div id="survey_container">
+                            <h3 t-field='survey.title'/>
+                            <div t-field='survey.description' class="oe_no_empty text-center"/>
+
+                            <form role="form" method="post" class="js_surveyform"
+                                  t-att-action="'/survey_brand/fill/booking/%s/%s/%s' % (booking, survey.access_token, answer.token)"
+                                  t-att-data-submit="'/survey_brand/submit-creator/booking/%s/%s/%s' % (booking, survey.access_token, answer.token)">
+                                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+
+                                <div id="middle-wizard">
+                                    <div class="form-group">
+                                        <label class="form-label" for="customer_phone">Số điện thoại:</label>
+                                        <input type="text"
+                                               class="form-control form-input"
+                                               id="customer_phone"
+                                               readonly="1"
+                                               name="customer_phone"
+                                               t-att-value="customer_phone_x"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="customer_name">Tên khách hàng:</label>
+                                        <input type="text" name="customer_name"
+                                               id="customer_name"
+                                               readonly="1"
+                                               class="form-control form-input"
+                                               t-att-value="customer_name"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="form-label" for="branch">Địa chỉ cơ sở KH làm dịch vụ:</label>
+                                        <input type="text"
+                                               name="branch"
+                                               readonly="1"
+                                               id="branch"
+                                               class="form-control form-input"
+                                               t-att-value="branch"/>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <t t-if="len(group_services) &gt; 1">
+                                            <label class="form-label" for="branch">Hãy lựa chọn 01 dịch vụ anh/chị đã sử dụng và muốn đánh giá:</label>
+                                              <t t-foreach="group_services" t-as="group_service">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" t-attf-id="group_service" name="group_service"
+                                                           class="custom-control-input"
+                                                           t-att-value="group_service.id"/>
+                                                    <label t-attf-for="group_service" class="custom-control-label">
+                                                        <t t-esc="group_service.name"/></label>
+                                                </div>
+                                              </t>
+                                        </t>
+                                        <t t-else="">
+                                            <label class="form-label" for="branch">Dịch vụ anh/chị đã sử dụng và sẽ đánh giá:</label>
+                                              <t t-foreach="group_services" t-as="group_service">
+                                                <div class="custom-control custom-radio">
+                                                    <input type="radio" t-attf-id="group_service"
+                                                           name="group_service"
+                                                           checked="checked"
+                                                           class="custom-control-input"
+                                                           t-att-value="group_service.id"/>
+                                                    <label t-attf-for="group_service" class="custom-control-label">
+                                                        <t t-esc="group_service.name"/></label>
+                                                </div>
+                                              </t>
+                                        </t>
+                                    </div>
+
+                                    <div class="text-center mt16">
+                                        <button type="submit"
+                                                class="btn btn-lg btn-primary btn-start-survey"
+                                                name="button_start"
+                                                value="start">
+                                            Bắt đầu khảo sát
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </form>
+                        </div>
+                    </div>
+                    <div class="oe_structure" id="oe_structure_survey_init_2"/>
+                </div>
+            </t>
+        </template>
+
+        <template id="survey_brand" name="Survey">
+            <t t-call="survey_brand.survey_brand_layout">
+                <div class="wrap">
+                    <div class="oe_structure" id="oe_structure_survey_survey_1"/>
+                    <div class="container">
+                        <div id="survey_container">
+                            <t t-if="answer.test_entry" t-call="survey.back"/>
+                            <t t-call="survey_brand.survey_header_inherit"/>
+                            <t t-call="survey_brand.page"/>
+                        </div>
+                    </div>
+                    <div class="oe_structure" id="oe_structure_survey_survey_2"/>
+                </div>
+            </t>
+        </template>
+
+        <template id="survey_header_inherit" inherit_id="survey.survey_header" name="Header">
+            <xpath expr="//div//ol" position="replace">
+                <ol t-if="survey.questions_layout == 'page_per_section'" class="nav nav-pills justify-content-center">
+                    <t t-set="can_go_back" t-value="survey.users_can_go_back"/>
+                    <t t-foreach='survey.page_ids' t-as='breadcrumb_page'>
+                        <t t-if="breadcrumb_page.service_room_page">
+                            <t t-if="breadcrumb_page.service_room_page.name == service_room">
+                                <li t-attf-class="card card-default background-color:transparent #{'active' if breadcrumb_page == page else ''}">
+                                    <t t-if="page == breadcrumb_page">
+                                        <t t-set="can_go_back" t-value="False"/>
+                                    </t>
+                                </li>
+                            </t>
+                            <t t-else="">
+                            </t>
+                        </t>
+                        <t t-else="">
+                            <li t-attf-class="card card-default background-color:transparent #{'active' if breadcrumb_page == page else ''}">
+                                <t t-if="page == breadcrumb_page">
+                                    <t t-set="can_go_back" t-value="False"/>
+                                </t>
+                            </li>
+                        </t>
+                    </t>
+                </ol>
+            </xpath>
+        </template>
+
+        <template id="page" name="Page">
+            <t t-if="survey.questions_layout == 'one_page'" t-set="page_or_question_id" t-value="None"/>
+            <t t-if="survey.questions_layout == 'page_per_section'" t-set="page_or_question_id" t-value="page.id"/>
+            <t t-if="survey.questions_layout == 'page_per_question'" t-set="page_or_question_id" t-value="question.id"/>
+
+            <form role="form" method="post" class="js_surveyform" t-att-name="survey.id"
+                  t-att-action="'/survey_brand/fill/booking/%s/%s/%s' % (booking, survey.access_token, answer.token)"
+                  t-att-data-prefill="'/survey_brand/prefill/%s/%s?page_or_question_id=%s' % (survey.access_token, answer.token, page_or_question_id)"
+                  t-att-data-validate="'/survey_brand/validate/%s/%s' % (survey.access_token, answer.token)"
+                  t-att-data-submit="'/survey_brand/submit/booking/%s/%s/%s' % (booking, survey.access_token, answer.token)">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <input type="hidden" name="token" t-att-value="answer.token"/>
+                <input type="hidden" name="user" t-att-value="answer.survey_creator"/>
+                <input type="hidden" name="booking" t-att-value="booking"/>
+
+                <t t-if="survey.questions_layout == 'one_page'">
+                    <t t-foreach='survey.question_and_page_ids' t-as='question'>
+                        <h2 t-if="question.is_page" t-field='question.title' class="o_survey_title"/>
+                        <t t-if="not question.is_page and question in answer.question_ids" t-call="survey.question"/>
+                    </t>
+
+                    <div class="text-center mt16 mb256">
+                        <button type="submit" class="btn btn-lg btn-primary" name="button_submit" value="finish">Submit
+                            Survey
+                        </button>
+                    </div>
+                </t>
+
+                <t t-if="survey.questions_layout == 'page_per_section'">
+                    <h2 t-field='page.title' class="o_survey_title text-center" style="Color: white"/>
+                    <div t-field='page.description' class="oe_no_empty"/>
+
+                    <input type="hidden" name="page_id" t-att-value="page.id"/>
+                    <t t-if="page.service_room_page">
+                        <t t-if="page.service_room_page.name == service_room">
+                            <t t-foreach='page.question_ids' t-as='question'>
+                                <t t-if="question in answer.question_ids" t-call="survey.question"/>
+                            </t>
+                            <div class="text-center mt16 mb256">
+                                <button t-if="survey.users_can_go_back and page != survey.page_ids[0]" type="submit"
+                                        class="btn btn-lg btn-secondary" name="button_submit" value="previous">Quay lại
+                                </button>
+                                <button type="submit" class="btn btn-lg btn-primary" name="button_submit" value="finish">Tiếp tục
+                                </button>
+                            </div>
+                        </t>
+                        <t t-else="">
+
+                        </t>
+                    </t>
+                    <t t-else="">
+                        <t t-foreach='page.question_ids' t-as='question'>
+                            <t t-if="question in answer.question_ids" t-call="survey.question"/>
+                        </t>
+                        <div class="text-center mt16 mb256">
+                            <button t-if="not last" type="submit" class="btn btn-lg btn-primary" name="button_submit"
+                                    value="next">Trang tiếp
+                            </button>
+                        </div>
+                    </t>
+                </t>
+
+                <t t-if="survey.questions_layout == 'page_per_question'">
+                    <input type="hidden" name="question_id" t-att-value="question.id"/>
+                    <t t-call="survey.question"/>
+
+                    <div class="text-center mt16 mb256">
+                        <button t-if="survey.users_can_go_back and question != answer.question_ids[0]" type="submit"
+                                class="btn btn-lg btn-secondary" name="button_submit" value="previous">Quay lại
+                        </button>
+                        <button t-if="not last" type="submit" class="btn btn-lg btn-primary" name="button_submit" value="next">
+                            Tiếp tục
+                        </button>
+                        <button t-if="last" type="submit" class="btn btn-lg btn-primary" name="button_submit" value="finish">
+                            Hoàn thành
+                        </button>
+                    </div>
+                </t>
+            </form>
+
+            <!-- Modal used to display error message, i.c.o. ajax error -->
+            <div role="dialog" class="modal fade" id="AJAXErrorModal">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <header class="modal-header">
+                            <h4 class="modal-title">Có lỗi xảy ra</h4>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">&amp;times;
+                            </button>
+                        </header>
+                        <main class="modal-body">
+                            <p>Kết nối tới máy chủ gặp vấn đề. <strong class="text-danger">Câu trả lời của bạn chưa được
+                                lưu lại.
+                            </strong> Hãy thử lại.
+                            </p>
+                        </main>
+                        <footer class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Đóng</button>
+                        </footer>
+                    </div>
+                </div>
+            </div>
+        </template>
+
+        <template id="survey_finished" name="Survey Finished">
+            <t t-call="survey_brand.survey_brand_layout">
+                <div class="wrap">
+                    <div class="container">
+                        <div id="survey_container">
+                            <t t-if="answer.test_entry" t-call="survey.back"/>
+                            <div class="jumbotron mt32 text-center">
+                                <h1 t-field="survey.thank_you_title"></h1>
+                                <div t-field="survey.thank_you_message" class="oe_no_empty p15"/>
+                            </div>
+                            <div class="text-center">
+                                <a href="#" onclick="window.close();" class="btn btn-lg btn-primary">Đóng</a>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="container js_surveyresult p-4" t-if="graph_data">
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active survey_graph"
+                                 t-att-quizz-score="answer.quizz_score" t-att-id="'graph_question_%d' % answer.id"
+                                 t-att-data-question_id="answer.id" data-graph_type="doughnut"
+                                 t-att-graph-data="graph_data">
+                                <canvas id="doughnut_chart"></canvas>
+                                <span class="o_overall_performance"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="oe_structure"/>
+                </div>
+            </t>
+        </template>
+
+        <!--  View cho phép gửi SMS hoặc QR code cho khách hàng -->
+        <template id="create_survey_customer" name="Survey Brand Create Survey">
+            <t t-call="survey_brand.survey_brand_layout">
+                <div class="wrap survey_container">
+                    <div class="oe_structure" id="oe_structure_survey_init_1"/>
+                    <div class="container">
+                        <div id="survey_container">
+                            <h3>Tạo khảo sát cho khách hàng: <t t-esc="customer_name"></t></h3>
+                                <div id="middle-wizard">
+                                    <div class="row">
+                                        <div class="col-md-5">
+                                            <div class="form-group text-center">
+                                                <label class="form-label" for="customer_phone">Số điện thoại:</label>
+                                                <input type="text"
+                                                       class="form-control form-input"
+                                                       id="customer_phone"
+                                                       readonly="1"
+                                                       name="customer_phone"
+                                                       t-att-value="customer_phone_x"/>
+                                                <input type="hidden" id="customer_phone_to" t-att-value="customer_phone"/>
+                                                <input type="hidden" id="brand_id" t-att-value="brand_id"/>
+                                                <input type="hidden" id="company_id" t-att-value="company_id"/>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <textarea name="content_sms"
+                                                          class="form-control form-input content-sms"><t t-esc="content_sms"/></textarea>
+                                                <i class="sms-info"></i>
+                                            </div>
+
+                                            <div class="text-center mt16">
+                                                <button class="btn btn-lg btn-primary btn-send-sms-survey"
+                                                        name="button_send_sms"
+                                                        value="send">
+                                                    Gửi SMS cho khách hàng
+                                                </button>
+                                                <div class="message text-success"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2 text-center">Hoặc</div>
+                                        <div class="col-md-5 col-qr ">
+                                            <p>Copy đường dẫn gửi khách hàng hoặc quét mã QR</p>
+                                            <div class="form-group text-center">
+                                                <i class="fa fa-link"/>
+                                                <input id="link_survey" class="no-link-style"
+                                                       t-att-title="link_survey"
+                                                       t-att-value="link_survey"></input>
+                                                <button class="btn btn-info btn_shorten_url_clipboard mt8"
+                                                        title="Copy"
+                                                        t-att-data-clipboard-text="link_survey">Copy</button>
+                                            </div>
+
+                                            <div class="form-group text-center">
+                                                <img t-att-src="qr_survey" width="100%"/>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+
+        <template id="survey_error" name="Survey Brand Error">
+            <t t-call="survey_brand.survey_brand_layout">
+                <div class="wrap survey_container">
+                    <div class="container">
+                        <div id="survey_container">
+                                <div id="middle-wizard">
+                                    <div class="row">
+                                        <div class="col-md-12 text-center">
+                                            <h2 class="title form-group"><t t-esc="title"></t></h2>
+                                            <div class="form-group text-center">
+                                                <t t-esc="message"></t>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
+            </t>
+        </template>
+        <template id="survey_question_multiple_choice" name="Câu hỏi nhiều lưa chọn"
+                  inherit_id="survey.multiple_choice">
+            <xpath expr="//div[@t-as='label']" position="replace">
+                <div t-foreach='question.labels_ids' t-as='label' t-attf-class="col-lg-#{question.column_nb}">
+                    <label t-att-class="' bg-success ' if quizz_correction and label.answer_score > 0.0 else None">
+                        <input type="checkbox" t-att-name="'%s_%s' % (prefix, label.id)" t-att-value='label.id'/>
+                        <span t-field='label.value' style="font-size: 16px"/>
+                        <p t-if='question.has_description and label.value_description'
+                           style="font-size: 15px;font-weight: normal">
+                            (<i t-field='label.value_description' style="font-size: 15px;font-weight: normal"></i>)
+                        </p>
+                        <input t-if="question.has_note" type="text" class="form-control" t-att-name="'%s_%s' % (label.id, 'comment')"/>
+                    </label>
+                </div>
+            </xpath>
+        </template>
+        <template id="survey_question_matrix_choice" name="Câu hỏi ma trận"
+                  inherit_id="survey.matrix">
+            <xpath expr="//thead" position="replace">
+                <thead style="text-align:center;">
+                    <tr>
+                        <th> </th>
+                        <th t-if="question.matrix_display_mode == 'icon'" t-foreach="question.labels_ids" t-as="col_label"><img t-if="col_label.icon" t-att-src="'data:image/png;base64,%s' % to_text(col_label.icon)"
+                                 class="img img-responsive" style="width:46px;height:46px"/></th>
+                        <th t-if="question.matrix_display_mode == 'no_icon'" t-foreach="question.labels_ids" t-as="col_label"><span t-field="col_label.value"/></th>
+                    </tr>
+                </thead>
+            </xpath>
+            <xpath expr="//tbody" position="replace">
+                <tbody>
+                    <tr t-foreach="question.labels_ids_2" t-as="row_label">
+                        <th><span t-field="row_label.value" /></th>
+                        <td t-foreach="question.labels_ids" t-as="col_label" style="text-align:center;">
+                            <input t-if="question.matrix_subtype == 'simple'" type="radio" t-att-name="'%s_%s' % (prefix, row_label.id)" t-att-value='col_label.id' />
+                            <input t-if="question.matrix_subtype == 'multiple'" type="checkbox" t-att-name="'%s_%s_%s' % (prefix, row_label.id, col_label.id)" t-att-value='col_label.id' />
+                        </td>
+                    </tr>
+                </tbody>
+            </xpath>
+        </template>
+    </data>
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="view_form_sol_crm_his">
+            <field name="name">Sale order line</field>
+            <field name="model">sale.order.line</field>
+            <field name="inherit_id" ref="sale.sale_order_line_view_form_readonly"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='discount']" position="after">
+                    <field name="stage_sol"/>
+                    <field name="odontology"/>
+                </xpath>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="view_form_sale_order_crm_his">
+            <field name="name">Sale order</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="after">
+                    <field name="odontology" optional="hide"/>
+                    <field name="teeth_ids" widget="many2many_tags" readonly="True" attrs="{'column_invisible': [('parent.odontology', '=', False)]}"/>
+                </xpath>
+                <xpath expr="//field[@name='pricelist_id']" position="after">
+                    <field name="odontology" invisible="True"/>
+                </xpath>
+            </field>
+        </record>
+
+
+
+
+    </data>
+</odoo>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_form_create_booking_guarantee_extend" model="ir.ui.view">
+            <field name="name">view.form.create.booking.guarantee.extend</field>
+            <field name="model">crm.create.guarantee</field>
+            <field name="inherit_id" ref="crm_base.view_form_create_booking_guarantee"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="replace">
+                    <footer>
+                        <button name="confirm" type="object" string="Xác nhận" class="btn-primary btn-lg fa fa-check"/>
+                        <button string="Hủy thao tác" special="cancel" class="btn-secondary btn-lg fa fa-times"/>
+                    </footer>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

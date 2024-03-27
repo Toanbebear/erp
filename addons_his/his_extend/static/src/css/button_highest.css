@@ -1,0 +1,12 @@
+.btn-highest {
+  font-weight: normal;
+  width: 132px !important;
+  height: 40px;
+  color: #ffffff;
+  margin: 0px -1px -1px 0px;
+  padding: 0;
+  border: 1px solid #dddddd;
+  border-radius: 0;
+  box-shadow: none;
+  background: #000000;
+}

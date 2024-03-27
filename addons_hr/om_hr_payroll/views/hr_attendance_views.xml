@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+	 <menuitem id="menu_hr_payroll_work_entries_root" name="Bảng công" parent="menu_hr_payroll_root"
+        sequence="1" groups="om_hr_payroll.group_hr_payroll_user"/>
+	 <menuitem id="menu_gt_attendance" name="Giải trình công" action="hr_attendance.hr_attendance_action"
+        parent="menu_hr_payroll_work_entries_root" groups="om_hr_payroll.group_hr_payroll_user"
+        sequence="1"/>
+	 <menuitem id="menu_work_entry" name="Bảng công" action="to_attendance_device.hr_work_attendance_action"
+        parent="menu_hr_payroll_work_entries_root" groups="om_hr_payroll.group_hr_payroll_user"
+        sequence="2"/>
+</odoo>

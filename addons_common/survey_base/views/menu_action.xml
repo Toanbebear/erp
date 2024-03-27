@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="survey_survey_action" model="ir.actions.act_window">
+        <field name="name">Surveys</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.survey</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record id="survey_question_action" model="ir.actions.act_window">
+        <field name="name">Survey.Question</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.question</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="survey_user_input_action" model="ir.actions.act_window">
+        <field name="name">survey.user.input</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.user_input</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="survey_user_input_line_action" model="ir.actions.act_window">
+        <field name="name">survey.user.input.line.action</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.user_input_line</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+    <record id="survey_label_action_window" model="ir.actions.act_window">
+        <field name="name">survey.label</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">survey.label</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+
+    <!--    <menuitem id="surveys" name="Khảo sát" sequence="1"/>-->
+    <!-- Hidden menu -->
+    <menuitem id="survey.menu_survey_form" name="Khảo sát"
+              parent="survey.menu_surveys" action="survey_survey_action"
+              sequence="2"/>
+
+    <menuitem id="survey_user_input_menu_item" name="Bản trả lời" parent="survey.menu_surveys"
+              action="survey_user_input_action"
+              sequence="2"/>
+
+    <menuitem id="config_menu" name="Cấu hình" parent="survey.menu_surveys" sequence="3"/>
+    <menuitem id="survey.survey_menu_questions" name="Câu hỏi" parent="config_menu" action="survey_question_action"/>
+    <menuitem id="survey.survey_menu_user_inputs" name="Participations" parent="config_menu" sequence="90"/>
+    <menuitem id="survey_label_menu_action" name="Nhãn" parent="config_menu" action="survey_label_action_window"/>
+    <menuitem id="survey_user_input_line_menu_item" name="Nhập liệu các dòng của người dùng" parent="config_menu"
+              action="survey_user_input_line_action"/>
+
+
+</odoo>

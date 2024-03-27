@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record model="ir.ui.view" id="sh_medical_prescription_tree_view_extend">
+            <field name="name">Prescription List</field>
+            <field name="model">sh.medical.prescription</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <tree string='Prescriptions' limit="10" decoration-info="state=='Draft'"
+                      decoration-danger="state=='Sent to Pharmacy'" decoration-success="state=='Đã xuất thuốc'"
+                      default_order="date_out desc">
+                    <field name="name" force_save="1"/>
+                    <field name="patient" class="text-uppercase"/>
+                    <field name="services" widget="many2many_tags" optional="show"/>
+                    <field name="date_out" widget="date"/>
+                    <field name="doctor" optional="show"/>
+                    <field name="pharmacy" invisible="1"/>
+                    <field name="institution" optional="hide"/>
+                    <field name="room_request" optional="hide"/>
+                    <field name="room_stock_out" optional="show"/>
+                    <field name="state" optional="show"/>
+                </tree>
+            </field>
+        </record>
+
+        <record model="ir.ui.view" id="sh_medical_prescription_form_view_extend">
+            <field name="name">Prescriptions</field>
+            <field name="model">sh.medical.prescription</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="Prescriptions" options="{'reload_on_button': True}" duplicate="false"
+                      edit_expr="state not in ['Đã xuất thuốc']"
+                      delete_expr="state not in ['Sent to Pharmacy','Đã xuất thuốc']">
+                    <header>
+                        <button confirm="Bạn có chắc muốn gửi đơn thuốc này?"
+                                name="action_prescription_send_to_pharmacy" title="Gửi đơn thuốc"
+                                attrs="{'invisible': ['|',('name','=','/'),('state','in',['Đã xuất thuốc','Sent to Pharmacy', 'Cancel'])]}"
+                                string="Gửi đơn thuốc" type="object" class="btn-warning fa fa-step-forward"/>
+                        <button confirm="Bạn có chắc muốn xuất đơn thuốc này?" name="action_prescription_out"
+                                attrs="{'invisible': ['|', ('buttons_visible', '=', False), ('state', '!=', 'Sent to Pharmacy')]}"
+                                string="Xuất thuốc" type="object" class="btn-warning fa fa-step-forward"
+                                context="{'ignore_expired': date}" title="Xuất đơn thuốc"/>
+                        <button confirm="Bạn có chắc muốn đặt đơn thuốc là nháp?" name="set_to_draft"
+                                attrs="{'invisible':['|', ('buttons_visible', '=', False), ('state', '!=', 'Sent to Pharmacy')]}"
+                                string="Đặt là nháp" type="object" class="btn-warning fa fa-step-forward"
+                                title="Chuyển đơn thuốc về trạng thái 'Nháp'"/>
+                        <button confirm="Bạn có chắc muốn mở lại đơn thuốc này (Admin Only)?"
+                                name="set_to_send_pharmacy" title="Mở lại đơn thuốc"
+                                attrs="{'invisible':['|', ('check_current_company', '!=', True), ('state', 'not in', ('Đã xuất thuốc'))]}"
+                                string="Mở lại đơn" type="object" class="btn-warning fa fa-step-forward"
+                                groups="base.group_system,shealth_all_in_one.group_sh_medical_manager"/>
+                        <button name="action_cancel" class="btn-warning fa fa-step-forward" string="Hủy đơn thuốc này"
+                                type="object" states="Draft" title="Hủy đơn thuốc"
+                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_stock_manager"/>
+                        <button name="print_patient_prescription" class="btn-success fa fa-print"
+                                string="In đơn thuốc"
+                                type="object" title="In đơn thuốc"
+                                attrs="{'invisible': [('state','=','Cancel')]}"
+                                groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse,shealth_all_in_one.group_sh_medical_stock_manager"/>
+                        <field name="check_current_company" invisible="1"/>
+                        <field name="buttons_visible" invisible="1"/>
+                        <field name="state" widget="statusbar" statusbar_visible="Draft,Sent to Pharmacy,Đã xuất thuốc"
+                               statusbar_colors='{"Draft":"blue","Sent to Pharmacy":"red","Đã xuất thuốc":"green"}'/>
+                    </header>
+                    <sheet>
+                        <div class="row">
+                            <div class="oe_title col-2">
+                                <label for="name" string="Mã phiếu:"/>
+                                <h2>
+                                    <field name="name" class="oe_inline" widget="copy_char"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-2">
+                                <label for="partner_id" string="Tên khách hàng:"/>
+                                <h2>
+                                    <field name="partner_id"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-1">
+                                <label for="dob" string="Ngày sinh:"/>
+                                <h2>
+                                    <field name="dob" force_save="1" readonly="1"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-4">
+                                <label for="address" string="Địa chỉ:"/>
+                                <h2>
+                                    <field name="address" style="white-space: unset;overflow:unset"/>
+                                </h2>
+                            </div>
+                            <div class="oe_title col-2">
+                                <label for="name" string="Phiếu khám:"/>
+                                <h2>
+                                    <field name="walkin"/>
+                                </h2>
+                            </div>
+                        </div>
+                        <notebook>
+                            <page name="information" string="Thông tin chung" icon="fa fa-info">
+                                <group>
+                                    <group>
+                                        <field name="patient" class="text-uppercase" icon="fa fa-user"
+                                               attrs="{'readonly': [('patient','!=',False)]}" force_save="1"
+                                               options="{'no_open':True}"/>
+                                        <field name="doctor" options="{'no_create': True,'no_open': True}"
+                                               icon="fa fa-user"/>
+                                        <field name="services" required="1" widget="many2many_tags" icon="fa fa-list-ul"
+                                               options="{'no_create': True}"/>
+                                        <field name="diagnose" icon="fa fa-info-circle"/>
+                                    </group>
+                                    <group>
+                                        <field name="institution" icon="fa fa-building"/>
+                                        <field name="room_request" domain="[('institution','=',institution)]"
+                                               required="1" icon="fa fa-building-o"
+                                               options="{'no_create': True,'no_open': True}"
+                                               attrs="{'readonly': [('state','in',['Đã xuất thuốc'])]}" force_save="1"/>
+                                        <field name="room_stock_out" required="1" icon="fa fa-info-circle"
+                                               options="{'no_create': True,'no_open': True}"
+                                               attrs="{'readonly': [('state','in',['Đã xuất thuốc'])]}" force_save="1"/>
+                                        <field name="date" string="Ngày làm dịch vụ" icon="fa fa-calendar"/>
+                                        <field name="date_out" icon="fa fa-calendar"/>
+                                        <field name="supply_domain" invisible="1"/>
+                                        <field name="region" invisible="1"/>
+                                    </group>
+                                </group>
+                            </page>
+                            <page string="Chi tiết đơn thuốc" icon="fa fa-list" name="prescription_lines">
+                                <group>
+                                    <group>
+                                        <field name="other_bom" string="CHỌN BOM"
+                                               domain="[('service_id', 'in', services),('region', '=', region),('type', '=', 'Medicine')]"
+                                               options="{'no_create': True,'no_open': True}"
+                                               attrs="{'readonly': [('state','in',['Đã xuất thuốc'])], 'invisible': [('other_bom','=',False)]}"
+                                               force_save="1"/>
+                                        <field name="other_bom_ids" string="Danh sách BOM" widget="many2many_tags"
+                                               domain="[('service_id', 'in', services),('region', '=', region),('type', '=', 'Medicine')]"
+                                               options="{'no_create': True,'no_open': True}"
+                                               attrs="{'readonly': [('state','in',['Đã xuất thuốc'])]}" force_save="1"/>
+                                        <div class="sh-box-control-print">
+                                            <button name="reset_all_prescription_line"
+                                                    attrs="{'invisible':[('state','in',['Đã xuất thuốc'])]}"
+                                                    confirm="Bạn có chắc chắn muốn reset toàn bộ Thuốc/VTTH đã kê bên dưới?"
+                                                    string="Xóa tất cả Thuốc/VTTH" type="object"
+                                                    class="btn-warning fa fa-trash mr-5 oe_edit_only"
+                                                    groups="shealth_all_in_one.group_sh_medical_physician,shealth_all_in_one.group_sh_medical_nurse"/>
+                                        </div>
+                                    </group>
+                                    <group string="Lưu ý:">
+                                        <ul class="text-info">
+                                            <li>
+                                                <i><i class="text-warning">Màu vàng</i>: Vật tư/Thuốc
+                                                    <b>
+                                                        <u>VƯỢT</u>
+                                                        quá định
+                                                        mức
+                                                    </b>
+                                                    hoặc <b>không có trong BOM</b>.
+                                                </i>
+                                            </li>
+                                            <li>
+                                                <i><b>In đậm</b>: Vật tư/Thuốc
+                                                    <b>
+                                                        <u>DƯỚI</u>
+                                                        định mức
+                                                    </b>
+                                                    .
+                                                </i>
+                                            </li>
+                                            <li>
+                                                <i><i class="text-danger">Màu đỏ</i>: Vật tư/Thuốc <b>hết toàn viện</b>.
+                                                </i>
+                                            </li>
+                                            <li>
+                                                <i><i class="fa fa-warning text-warning"/>: Vật tư/Thuốc <b>hết tại khoa
+                                                    phòng</b>.
+                                                </i>
+                                            </li>
+                                        </ul>
+                                    </group>
+                                </group>
+                                <field name="prescription_line"
+                                       context="{'default_patient':patient, 'ignore_expired': date}">
+                                    <form string="Chi tiết đơn thuốc">
+                                        <group>
+                                            <group>
+                                                <field name="name"/>
+                                                <field name="patient" class="text-uppercase"
+                                                       domain="[('id', '=', parent.patient)]" required="1"
+                                                       options="{'no_open':True}"/>
+                                                <field name="qty" required="1"/>
+                                                <field name="dose_unit_related"/>
+                                            </group>
+                                            <group invisible="1">
+                                                <field name="start_treatment"/>
+                                                <field name="end_treatment"/>
+                                            </group>
+                                        </group>
+                                        <group invisible="1">
+                                            <group string="Dosage">
+                                                <field name="qty" required="1"/>
+                                                <label for="dose"/>
+                                                <div>
+                                                    <field name="dose" placeholder="250" style="width: 20%"/>
+                                                    <field name="dose_unit" placeholder="mg" style="width: 40%"/>
+                                                </div>
+                                            </group>
+                                            <group string="Common Dosage">
+                                                <field name="common_dosage"/>
+                                            </group>
+                                        </group>
+                                        <group string="Treatment" invisible="1">
+                                            <p class="oe_grey">
+                                                Treatment period that the patient must take the medication in minutes,
+                                                hours, days, months, years or indefinitely
+                                            </p>
+                                        </group>
+                                        <group invisible="1">
+                                            <group>
+                                                <field name="duration" string="Day(s)"/>
+                                            </group>
+                                            <group>
+                                                <field name="duration_period" string="Period"/>
+                                            </group>
+                                        </group>
+                                        <group string="Comment">
+                                            <field name="info" nolabel="1"/>
+                                        </group>
+                                    </form>
+                                    <tree class="tree_no_open" string="Prescription Lines" editable="bottom"
+                                          decoration-danger="parent.state in ['Draft'] and qty > qty_avail"
+                                          decoration-warning="qty > init_qty"
+                                          decoration-bf="qty &lt; init_qty"
+                                          decoration-info="qty &lt; init_qty">
+                                        <field name="sequence" widget="handle"/>
+                                        <field name="name" domain="[('id', 'in', parent.supply_domain)]"
+                                               attrs="{'readonly': [('init_qty','>',0)]}" force_save="1"
+                                               options="{'no_create': True,'no_open': True}"/>
+                                        <field name="patient" invisible="1"/>
+                                        <field name="init_qty" string="Số lượng định mức" optional="hide"
+                                               force_save="1"/>
+                                        <field name="qty_avail" optional="hide" readonly="1" force_save="1"
+                                               attrs="{'column_invisible':[('parent.state', 'in', ['Done','Signed'])]}"
+                                               groups="shealth_all_in_one.group_sh_medical_manager"/>
+                                        <field name="qty_in_loc" optional="hide" readonly="1" force_save="1"/>
+                                        <field name="is_warning_location" invisible="1" readonly="1" force_save="1"/>
+                                        <field name="qty" string="Số lượng"/>
+                                        <field name="dose" string="Liều dùng" invisible="1"/>
+                                        <field name="dose_unit_related" string="Đơn vị" readonly="1" force_save="1"
+                                               options="{'no_create':True,'no_open': True}"/>
+                                        <field name="common_dosage" string="Tần suất" invisible="1"/>
+                                        <field name="duration" invisible="1"/>
+                                        <field name="duration_period" invisible="1"/>
+                                        <field name="info" required="1" string="Cách sử dụng"/>
+                                        <field name="services" required="1" domain="[('id', 'in', parent.services)]"
+                                               widget="many2many_tags" options="{'no_create': True,'no_open':True}"/>
+                                        <field name="service_related" invisible="1"/>
+                                        <field name="location_id" string="Tủ xuất" optional="hide" readonly="1"
+                                               force_save="1"/>
+                                        <field name="is_buy_out" string="Thuốc mua ngoài" invisible="1"/>
+                                        <field name="note" optional="show"
+                                               attrs="{'required':[('is_diff_bom', '=', True)]}"/>
+                                        <field name="is_diff_bom" invisible="1"/>
+                                        <button readonly="True" icon="fa-warning text-warning"
+                                                title="Tủ trực không đủ số lượng"
+                                                attrs="{'invisible': ['|',('is_warning_location', '=', False),('parent.state','in',['Đã xuất thuốc'])]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Cost Lines" name="cost_lines">
+                                <button string="Compute Cost Line" class="oe_highlight" type="object"
+                                        name="compute_cost_line"/>
+                                <button string="Tạo bút toán" class="oe_highlight" type="object"
+                                        name="generate_journal_entry"/>
+
+                                <field name="production_cost_line_ids">
+                                    <tree create="0" delete="0" editable="bottom">
+                                        <field name="bom_name"/>
+                                        <field name="work_center_id"/>
+                                        <field name="cost_driver_id"/>
+                                        <field name="service_id"/>
+                                        <field name="planned_count"/>
+                                        <field name="planned_cost_per_uom_unit"/>
+                                        <field name="planned_cost_per_bom_unit"/>
+                                        <field name="planned_cost_of_activity" optional="hide"/>
+                                        <field name="actual_count"/>
+                                        <field name="actual_cost_per_uom_unit"/>
+                                        <field name="actual_cost_per_bom_unit" readonly="1"/>
+                                        <!--                            <field name="actual_cost_of_activity" readonly="1"/>-->
+                                        <field name="recomputed_actual_cost_per_uom_unit" optional="hide" readonly="1"/>
+                                        <field name="recomputed_actual_cost_per_bom_unit" optional="hide" readonly="1"/>
+                                        <!--                            <field name="recomputed_actual_cost_of_activity" optional="hide" readonly="1"/>-->
+                                        <field name="uom_id"/>
+                                    </tree>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter" style="display:none;">
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+        <record id="sh_medical_prescription_action_extend" model="ir.actions.act_window">
+            <field name="name">Đơn thuốc</field>
+            <field name="res_model">sh.medical.prescription</field>
+            <field name="view_mode">tree,form</field>
+            <field name="domain">[]</field>
+            <field name="context">{'view_only_name': True}</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('his_extend.sh_medical_prescription_tree_view_extend')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('his_extend.sh_medical_prescription_form_view_extend')})]"/>
+            <field name="help" type="html">
+                <p class="o_view_nocontent_smiling_face">
+                    Click to add a new prescription.
+                </p>
+                <p>
+                    With shealth prescription screen, you can add prescriptions, assign to the patient and directly send
+                    to pharmacies for assignment of medicines
+                </p>
+            </field>
+        </record>
+    </data>
+</odoo>

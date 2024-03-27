@@ -1,0 +1,459 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data>
+
+    <template id="detail" name="Jobs" inherit_id="website_hr_recruitment.detail">
+        <xpath expr="//div[@class='js_hr_recruitment']" position="replace">
+            <div id="wrap" class="js_hr_recruitment">
+                <div class="oe_structure" id="oe_structure_website_hr_recruitment_detail_1"/>
+
+                <!-- Breadcrumb -->
+                <section class="mb16 bg-white">
+                    <div class="container">
+                        <div class="float-right">
+                            <a role="button" t-attf-href="/jobs/apply/#{job.id}"
+                               class="btn btn-primary btn-lg float-right mt32 mb4">Apply Now!
+                            </a>
+                        </div>
+                        <label class="mb0 mt16">
+                            <a href="/jobs">Jobs</a>
+                        </label>
+                        <h1 class="mb0 mt0" t-field="job.name"/>
+                        <h4 class="mt0" t-field="job.address_location"/>
+                    </div>
+                </section>
+
+                <div t-field="job.website_description"/>
+
+                <div class="oe_structure">
+                    <section class="o_job_bottom_bar mt32 mb32">
+                        <div class="text-center">
+                            <a role="button" t-attf-href="/jobs/apply/#{job.id}" class="btn btn-primary btn-lg">Apply
+                                Now!
+                            </a>
+                        </div>
+                    </section>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <record id="website_hr_recruitment.thankyou" model="website.page">
+        <field name="url">/job-thank-you</field>
+        <field name="website_published">True</field>
+        <field name="name">Thank you (Recruitment)</field>
+        <field name="type">qweb</field>
+        <field name="key">website_hr_recruitment.thankyou</field>
+        <field name="arch" type="xml">
+            <t name="Thank you (Recruitment)" t-name="website_hr_recruitment.thankyou">
+                <t t-call="website.layout">
+                    <div id="wrap">
+                        <div class="oe_structure">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12 text-center">
+                                        <p class="text-center" style="font-size: 30px;">
+                                            Your application has been posted successfully.
+                                        </p>
+                                        <img src="/sci_hrms/static/src/img/conrag.png"/>
+                                    </div>
+                                    <t t-if="request.session.get('form_builder_model_model', '') == 'hr.applicant'">
+                                        <t t-set="job"
+                                           t-value="request.website._website_form_last_record().sudo().job_id"/>
+                                        <t t-set="responsible"
+                                           t-value="job and job.user_id.website_published and job.user_id "/>
+                                    </t>
+                                    <t t-if="responsible">
+                                        <div class="col-lg-12">
+                                            <h3 class="mb32 text-center">Your application has been sent to:</h3>
+                                        </div>
+                                        <div class="col-lg-1 offset-lg-4">
+                                            <p t-field="responsible.image_small"
+                                               t-options="{'widget': 'image', 'class': 'rounded-circle d-block mx-auto'}"/>
+                                        </div>
+                                        <div class="col-lg-5 o_responsible_data">
+                                            <h4 class="mt0" t-field="responsible.name"/>
+                                            <p t-field="responsible.function"/>
+                                            <t t-if='responsible.email'>
+                                                <i class="fa fa-envelope" role="img" aria-label="Email"
+                                                   title="Email"></i>
+                                                <a t-attf-href="mailto:#{responsible.email}" t-esc="responsible.email"/>
+                                            </t>
+                                            <t t-if='responsible.phone'>
+                                                <br/>
+                                                <i class="fa fa-phone" role="img" aria-label="Phone" title="Phone"></i>
+                                                <span t-field="responsible.phone"/>
+                                            </t>
+                                        </div>
+                                        <div class="col-lg-12 mt32 text-center">
+                                            <span>
+                                                We usually reply between one and three days.
+                                                <br/>
+                                                Feel free to contact him/her if you have further questions.
+                                            </span>
+                                        </div>
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </t>
+            </t>
+        </field>
+    </record>
+
+    <!--    template list job-->
+    <template id="view_all_jobs_inherit" inherit_id="website_hr_recruitment.index">
+        <xpath expr="//div[@class='oe_structure']" position="replace">
+            <form t-attf-action="/jobs" method="Get" role="search">
+                <div class="row o_search">
+                    <div class="o_item_01">
+                        <input type="text" name="search" placeholder="Tìm việc" class="o_name_search"/>
+                    </div>
+                    <div class="o_item_02">
+                        <select class="o_industry_search" name="industry">
+                            <option value="">Ngành nghề</option>
+                            <t t-foreach="industries" t-as="industry">
+                                <option t-att-value="industry.id">
+                                    <t t-esc="industry.name"/>
+                                </option>
+                            </t>
+                        </select>
+                    </div>
+                    <div class="o_item_03">
+                        <select class="o_location_search" name="location">
+                            <option value="">Nơi làm việc</option>
+                            <optgroup label="Việt Nam">
+                                <option value="1">Hồ Chí Minh</option>
+                                <option value="2">Hà Nội</option>
+                                <option value="3">Bình Dương</option>
+                                <option value="4">Cần Thơ</option>
+                                <option value="5">Đà Nẵng</option>
+                                <option value="6">Hải Phòng</option>
+                                <option value="7">Nghệ An</option>
+                            </optgroup>
+                        </select>
+                    </div>
+                    <div class="o_item_04">
+                        <button class="o_button_search" type="submit">
+                            <font style="color: black"><i class="fa fa-search" style="margin-right:10px;"></i>Tìm kiếm
+                            </font>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </xpath>
+        <xpath expr="//div[@class='container oe_website_jobs']" position="replace">
+            <div class="container oe_website_jobs" style="margin-top: 30px;">
+                <div class="row" t-if="jobs == None">
+                    <h2>Không tìm thấy kết quả phù hợp</h2>
+                </div>
+                <!--result found job-->
+                <t t-if="jobs">
+                    <div class="row">
+                        <t t-if="jobs">
+                            <h3>Tìm thấy
+                                <span t-esc="len(jobs)"/>
+                                công việc
+                            </h3>
+                        </t>
+                    </div>
+                    <div class="row list_jobs">
+                        <t t-foreach="jobs" t-as="job">
+                            <div class="col-md-6 col-lg-4 col-xl-4" style="padding-bottom:15px;">
+                                <div class="box">
+<!--                                    <t t-if="job.root_department == 'kangnam'">-->
+<!--                                        <div class="img text-center">-->
+<!--                                            <img t-attf-src="/sci_hrms/static/description/logo-kn.png"/>-->
+<!--                                        </div>-->
+<!--                                    </t>-->
+<!--                                    <t t-if="job.root_department != 'kangnam'">-->
+<!--                                        <div class="img"-->
+<!--                                             style="width: 130px; height: 70px;padding: 5px;">-->
+<!--                                            <img t-attf-src="/sci_hrms/static/description/logo.png"/>-->
+<!--                                        </div>-->
+<!--                                    </t>-->
+                                    <div class="title" style="font-weight: bold;font-size: 14px;">
+                                        <a t-attf-href="/jobs/detail/#{ slug(job) }">
+                                            <span t-field="job.name" style="font-size:16px;" t-att-title="job.name"/>
+                                        </a>
+                                    </div>
+                                    <div class="descrip">
+                                        <i class="fa fa-map-marker fa-fw"/>
+                                        Vị trí:
+                                        <span t-field="job.address_location"/>
+                                        <br/>
+                                        <span>
+                                            <i class="fa fa-dollar fa-fw"/>
+                                            Lương:
+                                            <span t-if="job.salary_type in ('usd','vnd')">
+                                                <t t-esc="'{0:,.0f}'.format(job.salary_proposed)"/>
+                                                <!--                                                <t t-esc="job.salary_type"/>-->
+                                                <t t-esc="dict(job._fields['salary_type'].selection).get(job.salary_type)"/>
+                                                -
+                                                <t t-esc="'{0:,.0f}'.format(job.salary_proposed_extra)"/>
+                                                <!--                                                <t t-esc="job.salary_type"/>-->
+                                                <t t-esc="dict(job._fields['salary_type'].selection).get(job.salary_type)"/>
+                                            </span>
+                                            <span t-if="job.salary_type == 'ltt' ">
+                                                <t>Lương thỏa thuận</t>
+                                            </span>
+                                            <span t-if="job.salary_type == 'lct' ">
+                                                <t>Lương cạnh tranh</t>
+                                            </span>
+                                        </span>
+                                        <hr/>
+                                        <span>Hạn nộp hồ sơ: từ
+                                            <span t-field="job.date_open"/>
+                                            đến
+                                            <span t-field="job.date_closed"/>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </t>
+                    </div>
+                </t>
+            </div>
+        </xpath>
+    </template>
+
+    <!--detail job-->
+    <template id="view_detail_jobs_inherit" inherit_id="website_hr_recruitment.detail">
+        <xpath expr="//div[@class='js_hr_recruitment']" position="replace">
+            <div class="container" style="padding:30px">
+                <div class="row">
+                    <div class="col-md-8 left-col">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3">
+<!--                                    <t t-if="job.root_department =='kangnam'">-->
+<!--                                        <div class="hr-logo">-->
+<!--                                            <img src="/sci_hrms/static/description/logo-kn.png"/>-->
+<!--                                        </div>-->
+<!--                                    </t>-->
+<!--                                    <t t-if="job.root_department != 'kangnam'">-->
+<!--                                        <div class="hr-logo-kn">-->
+<!--                                            <img src="/sci_hrms/static/description/logo.png"/>-->
+<!--                                        </div>-->
+<!--                                    </t>-->
+                                </div>
+                                <div class="col-md-9 detail-left" style="padding-left:60px;">
+                                    <h1 style="font-size: 24px;">
+                                        <span t-field="job.name"/>
+                                    </h1>
+                                    <table class="detail1">
+                                        <tr>
+                                            <th style="width:200px;">Nơi làm việc</th>
+                                            <td>
+                                                <span t-field="job.address_location"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Bằng cấp</th>
+                                            <td>
+                                                <span t-field="job.type_id"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Kinh nghiệm</th>
+                                            <td>
+                                                <span t-if="job.experience == '0'">
+                                                    <t>Chưa có kinh nghiệm</t>
+                                                </span>
+                                                <span t-if="job.experience == '1'">
+                                                    <!--                                                    <t t-esc="job.experience_from"/>-->
+                                                    <t t-esc="'{0:,.0f}'.format(job.experience_from)"/>
+                                                    -
+                                                    <!--                                                    <t t-esc="job.experience_to"/>-->
+                                                    <t t-esc="'{0:,.0f}'.format(job.experience_to)"/>
+                                                    <span>năm</span>
+                                                </span>
+                                                <span t-if="job.experience == '2'">
+                                                    <t>Không yêu cầu kinh nghiệm</t>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Mức lương</th>
+                                            <td>
+                                                <span t-if="job.salary_type in ('usd','vnd')">
+                                                    <t t-esc="'{0:,.0f}'.format(job.salary_proposed)"/>
+                                                    <t t-if="job.salary_type == 'usd'">
+                                                        <span>USD</span>
+                                                    </t>
+                                                    <t t-if="job.salary_type == 'vnd'">
+                                                        <span>VNĐ</span>
+                                                    </t>
+                                                    -
+                                                    <t t-esc="'{0:,.0f}'.format(job.salary_proposed_extra)"/>
+                                                    <t t-if="job.salary_type == 'usd'">
+                                                        <span>USD</span>
+                                                    </t>
+                                                    <t t-if="job.salary_type == 'vnd'">
+                                                        <span>VNĐ</span>
+                                                    </t>
+                                                </span>
+                                                <span t-if="job.salary_type == 'ltt' ">
+                                                    <t>Lương thỏa thuận</t>
+                                                </span>
+                                                <span t-if="job.salary_type == 'lct' ">
+                                                    <t>Lương cạnh tranh</t>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Ngành nghề</th>
+                                            <td>
+                                                <span t-field="job.job_industry"/>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <th>Hạn chót nộp hồ sơ</th>
+                                            <td>
+<!--                                                &lt;!&ndash;                                                <t t-foreach="job.periods" t-as="jp">&ndash;&gt;-->
+                                                <t t-esc="job.periods[-1].end_date" t-options='{"widget": "date"}'/>
+<!--                                                &lt;!&ndash;                                                </t>&ndash;&gt;-->
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="2">
+                                                <p>
+                                                    <a role="button" t-attf-href="/jobs/apply/#{job.id}"
+                                                       class="btn"
+                                                       style="width:120px; height:35px;font-size:16px;background-color:#007ac1;color:#fff;margin-top:10px;">
+                                                        Nộp đơn
+                                                    </a>
+                                                </p>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                            <hr/>
+
+                            <section>
+                                <div class="row">
+                                    <h3>Phúc lợi</h3>
+                                </div>
+                                <div class="row">
+                                    <t t-foreach="job.welfare_ids" t-as="i">
+                                        <div class="col-md-4">
+                                            <i t-attf-class="fa #{i.icon}"></i>
+                                            <t t-esc="i.name"/>
+                                        </div>
+                                    </t>
+                                </div>
+                            </section>
+
+                            <section style="margin-top:20px;">
+                                <div class="row">
+                                    <h3>Mô tả công việc</h3>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="content1">
+                                            <span t-field="job.description"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section style="margin-top:20px;">
+                                <div class="row">
+                                    <h3>Yêu cầu công việc</h3>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="content_fck">
+                                            <span t-field="job.req_job"/>
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+
+                            <section>
+                                <div class="row tagskilldetail">
+                                    <span>Job tags:</span>
+                                    <t t-foreach="job.categ_ids" t-as="tag">
+                                        <div style="margin-left: 10px;">
+                                            <a t-attf-href="/jobs/tag/#{slug(tag)}">
+                                                <t t-esc="tag.name"/>
+                                            </a>
+                                        </div>
+                                    </t>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                    <div class="col-md-4 right-col">
+                        <h1>Tin nổi bật</h1>
+                        <t t-if="highlight_job">
+                            <t t-foreach="highlight_job" t-as="hlj">
+                                <div class="box mb-3 mt-3">
+                                    <div class="row no-gutters">
+                                        <div class="col-md-3">
+<!--                                            <t t-if="hlj.root_department == 'kangnam'">-->
+<!--                                                <div class="card-img text-center">-->
+<!--                                                    <img t-attf-src="/sci_hrms/static/description/slogo-kangnam.png"/>-->
+<!--                                                </div>-->
+<!--                                            </t>-->
+<!--                                            <t t-if="hlj.root_department != 'kangnam'">-->
+<!--                                                <div class="card-img text-center">-->
+<!--                                                    <img t-attf-src="/sci_hrms/static/description/slogo.png"/>-->
+<!--                                                </div>-->
+<!--                                            </t>-->
+                                        </div>
+                                        <div class="col-md-9" style="padding-left:10px;">
+                                            <i class="fa fa-check-square fa-fw"/>
+                                            <strong>
+                                                <a t-attf-href="/jobs/detail/#{ slug(hlj)}">
+                                                    <span t-esc="hlj.name"/>
+                                                </a>
+                                            </strong>
+                                            <br/>
+                                            <span>
+                                                <i class="fa fa-map-marker fa-fw"/>
+                                                <t t-esc="hlj.address_location"/>
+                                            </span>
+                                            <br/>
+                                            <span>
+                                                <i class="fa fa-money fa-fw"/>
+                                                <span t-if="hlj.salary_type in ('usd','vnd')">
+                                                    <t t-esc="'{0:,.0f}'.format(hlj.salary_proposed)"/>
+                                                    <span>-</span>
+                                                    <!--                                                <t t-esc="job.salary_type"/>-->
+                                                    <!--                                                    <t t-esc="dict(hlj._fields['salary_type'].selection).get(hlj.salary_type)"/>-->
+                                                    <t t-esc="'{0:,.0f}'.format(hlj.salary_proposed_extra)"/>
+                                                    <!--                                                <t t-esc="job.salary_type"/>-->
+                                                    <t t-esc="dict(hlj._fields['salary_type'].selection).get(hlj.salary_type)"/>
+                                                </span>
+                                                <span t-if="hlj.salary_type == 'ltt' ">
+                                                    <t>Lương thỏa thuận</t>
+                                                </span>
+                                                <span t-if="hlj.salary_type == 'lct' ">
+                                                    <t>Lương cạnh tranh</t>
+                                                </span>
+                                            </span>
+                                            <br/>
+                                            <span>
+                                                <i class="fa fa-calendar-check-o fa-fw"/>
+                                                <span>Hạn nhận hồ sơ:</span>
+                                                <t t-esc="hlj.periods[-1].end_date" t-options='{"widget": "date"}'/>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </t>
+                        </t>
+                    </div>
+                </div>
+            </div>
+        </xpath>
+    </template>
+
+    <template id="apply_inherit" inherit_id="website_hr_recruitment.apply">
+        <xpath expr="//div[@class='form-group row form-field']" position="replace">
+        </xpath>
+    </template>
+
+</data>

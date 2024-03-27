@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="account.action_account_moves_ledger_general" model="ir.actions.act_window">
+        <field name="domain">[('display_type', 'not in', ('line_section', 'line_note')),'|',('date','&gt;=','2023-04-01'),('ref','ilike','Số dư đầu kỳ 31.03')]
+        </field>
+    </record>
+
+    <record id="sale.action_orders_to_invoice" model="ir.actions.act_window">
+        <field name="domain">[('invoice_status','=','to invoice'),('date_order','>=','2023/03/31 17:00:00')]
+        </field>
+    </record>
+
+    <record id="view_invoice_customer" model="ir.ui.view">
+            <field name="name">View hóa đơn khách hàng</field>
+            <field name="model">account.move</field>
+            <field name="arch" type="xml">
+                <tree create="true">
+                    <field name="invoice_date" string="Ngày hóa đơn"/>
+                    <field name="name"/>
+                    <field name="invoice_origin" optional="show" string="Tài liệu gốc"/>
+                    <field name="partner_id" string="Chi nhánh"/>
+                    <field name="amount_total"/>
+                    <field name="journal_id" optional="hide"/>
+                    <field name="state"/>
+                    <field name="company_id"/>
+                    <field name="create_uid" optional="hide"/>
+                    <field name="create_date" optional="hide"/>
+                </tree>
+            </field>
+        </record>
+
+    <record id="account.action_move_out_invoice_type" model="ir.actions.act_window">
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('view_invoice_customer')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('account.view_move_form')})]"/>
+    </record>
+
+    <record id="purchase.act_res_partner_2_supplier_invoices" model="ir.actions.act_window">
+            <field name="view_ids" eval="[(5, 0, 0),
+            (0, 0, {'view_mode': 'tree', 'view_id': ref('account.view_invoice_tree')}),
+            (0, 0, {'view_mode': 'form', 'view_id': ref('account.view_move_form')})]"/>
+    </record>
+
+    <record id="view_move_line_tree_grouped_sci_onnet" model="ir.ui.view">
+        <field name="name">Add button view detail</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_tree_grouped"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='tag_ids']" position="after">
+                <field name="balance"/>
+                <button name="view_move_line" type="object" title="Xem chi tiết" icon="fa-file-text-o"/>
+                <button name="view_move" type="object" title="Xem chi tiết bút toán sổ nhật ký" icon="fa-book"/>
+            </xpath>
+            <xpath expr="//field[@name='account_id']" position="after">
+                <field name="cost_code" optional="hide"/>
+            </xpath>
+            <xpath expr="//field[@name='name']" position="after">
+                <field name="product_id" optional="hide"/>
+                <field name="quantity" optional="hide"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_stock_move_tree_grouped_sci_onnet" model="ir.ui.view">
+        <field name="name">Add button view detail</field>
+        <field name="model">stock.move</field>
+        <field name="inherit_id" ref="stock.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='reference']" position="after">
+                    <field name="picking_id" attrs="{'invisible':[('picking_id','=',False)]}"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="view_move_form_sci_onnet" model="ir.ui.view">
+        <field name="name">SCI Onnet Accounting:Bút toán phát sinh</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='partner_id']" position="after">
+                    <field name="cost_code" string="Mã nguồn chi phí"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="readonly_field_account_move_line" model="ir.ui.view">
+        <field name="name">Readonly field state posted</field>
+        <field name="model">account.move.line</field>
+        <field name="inherit_id" ref="account.view_move_line_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="attributes">
+                <attribute name="attrs">{'readonly':[('parent_state','in',['posted', 'cancel'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='account_id']" position="attributes">
+                <attribute name="attrs">{'readonly':[('parent_state','in',['posted', 'cancel'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='date_maturity']" position="attributes">
+                <attribute name="attrs">{'readonly':[('parent_state','in',['posted', 'cancel'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='amount_currency']" position="attributes">
+                <attribute name="attrs">{'readonly':[('parent_state','in',['posted', 'cancel'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='analytic_tag_ids']" position="attributes">
+                <attribute name="attrs">{'readonly':[('parent_state','in',['posted', 'cancel'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='blocked']" position="attributes">
+                <attribute name="attrs">{'readonly':[('parent_state','in',['posted', 'cancel'])]}</attribute>
+            </xpath>
+            <xpath expr="//field[@name='exclude_from_invoice_tab']" position="attributes">
+                <attribute name="attrs">{'readonly':[('parent_state','in',['posted', 'cancel'])]}</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

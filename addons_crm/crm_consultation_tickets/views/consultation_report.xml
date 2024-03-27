@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <report
+                string="PHIẾU TƯ VẤN"
+                id="action_print_consultation_ticket"
+                model="consultation.ticket"
+                report_type="qweb-pdf"
+                name="crm_consultation_tickets.report_consultation_ticket"
+                file="crm_consultation_tickets.report_consultation_ticket"
+                paperformat="crm_consultation_tickets.crm_paperformat_consultation_ticket"
+                menu="True"
+        />
+
+    </data>
+</odoo>
